@@ -1,0 +1,136 @@
+<template>
+  <div class="login" :from="from">
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="loginForm">
+      <label class="label_txt">手机号/邮箱</label><span class="req">*</span>
+      <el-form-item prop="phone">
+        <el-input type="text" v-model="ruleForm.phone" :clearable="true" autocomplete="off"></el-input>
+      </el-form-item>
+      <label class="label_txt">密码</label><span class="req">*</span>
+      <el-form-item prop="pass">
+        <el-input type="password" v-model="ruleForm.pass" :clearable="true" autocomplete="off"></el-input>
+        <router-link to="/resetPassEmail" class="link">忘记密码?</router-link>
+      </el-form-item>        
+    </el-form>
+    <el-button class="login_btn" type="primary" @click="submitForm('ruleForm')">立即登录</el-button>
+    <el-row class="other_login">
+      <el-col :span="8"><div class="login-line grid-content bg-purple"></div></el-col>
+      <el-col :span="8"> <div class="grid-content bg-purple">使用第三方登录</div></el-col>
+      <el-col :span="8"><div class="login-line grid-content bg-purple"></div></el-col>
+    </el-row>
+    <el-row class="other_login_img">
+      <el-col :span="8"><div class="grid-content bg-purple" style="height:1px"></div></el-col>
+      <el-col :span="8"> <div class="grid-content bg-purple"><img src="../../assets/image/wechat.png" style="float:left"/><img src="../../assets/image/fb.png" style="float:right"/></div></el-col>
+      <el-col :span="8"><div class="grid-content bg-purple" style="height:1px"></div></el-col>
+    </el-row>
+    <!--<div class="other_login">
+        <div class="login-line"></div> <div>使用第三方登录</div> <div class="login-line"></div>
+    </div>
+    <div class="other_login_img">    
+      <img src="../../assets/image/wechat.png"/>      
+      <img src="../../assets/image/fb.png"/>
+    </div>-->
+  </div>
+</template>
+
+<script>
+import { mapState } from 'vuex'
+export default {
+  data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else {      
+        callback()
+      }
+    }
+    var validPhone = (rule, value, callback) => {
+      let flag = true
+      // if (value === '') {
+      //   flag = false
+      //   callback(new Error('请正确输入手机号码或邮箱'))
+      // } 
+      // let email = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
+      // let phoneNumber = /^1[34578]\d{9}$/
+      // if (!(phoneNumber.test(value) || email.test(value))){ 
+      //   flag = false
+      //   callback(new Error('请正确输入手机号码或邮箱'))
+      // } 
+      if (flag) {
+        callback()
+      }
+    }
+    return {
+      ruleForm: {
+        pass: '',
+        phone: this.$store.state.login.phone
+      },
+      rules: {
+        pass: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        phone: [
+          { validator: validPhone, trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  computed: {
+    from: function(){
+      return this.fromPath
+    }
+  },
+    ...mapState({
+    // 箭头函数可使代码更简练
+    // phone: state => state.phone
+    // 传字符串参数 'count' 等同于 `state => state.count`
+    // countAlias: 'count',
+
+    // // 为了能够使用 `this` 获取局部状态，必须使用常规函数
+    // countPlusLocalState (state) {
+    //   return state.count + this.localCount
+    // }
+  }),
+  mounted() {
+  },
+  methods: {
+    submitForm(formName) {
+      let me = this
+      let fromPath = this.$router.history.current.query.fromPath
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          let param = {
+            username: me.ruleForm.phone,
+            password: me.ruleForm.pass
+          }     
+          me.$store.dispatch('login/toLogin', param).then(res => {
+            if(res) {
+              localStorage.setItem('userName',res)
+              debugger
+              if(fromPath !== ''){
+                me.$router.push(fromPath)
+              } else {
+                me.$router.push('/home')
+              }
+            }              
+          }).catch(err => {
+            localStorage.setItem('userName', '')
+          })
+        } else{
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    // 忘记密码
+    toPass() {
+      this.$router.push({
+        path: '/resetPassEmail'
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
+@import "./css/index.less";
+</style>
