@@ -6,10 +6,10 @@
         <el-col :span="17">
           <div>
             <span class="loved_text">{{item.txt}}</span>
-            <i class="el-icon-close" @click="delLove"></i>
+            <i class="el-icon-close" @click="delLove(item)"></i>
           </div>
           <div>
-            <span class="loved_color">{{item.color}} - <span  class="loved_code">编号  {{item.code}}</span></span>
+            <span class="loved_color">{{item.color}} - <span  class="loved_code">编号  {{item.prodid}}</span></span>
           </div>
           <div class="loved_country">
             <span class="loved_price">RMB {{item.price}}</span>
@@ -80,7 +80,8 @@ export default {
       } else {
         this.showToLogin = true
       }
-      // this.$store.dispatch('login/queryLovedList') // 喜爱的列表查询
+      let param = {"userid":"admin","status":"1"}
+      this.$store.dispatch('login/queryLovedList', param) // 喜爱的列表查询
     },
     methods: {
       toHome() {
@@ -92,9 +93,14 @@ export default {
       toRegister() {
         this.$router.push('/login/register')        
       },
-      delLove(){
-        this.$store.dispatch('login/delLove').then(() => {
-          this.$store.dispatch('login/queryLovedList')
+      delLove(val){
+        let delParam = {
+          id: val.id,
+          status: "0"
+        }
+        this.$store.dispatch('login/delLove', delParam).then(() => {
+          let param = {"userid":"admin","status":"1"}
+          this.$store.dispatch('login/queryLovedList', param)
         })
 
       },

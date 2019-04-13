@@ -11,15 +11,15 @@
       <el-row :gutter="10">
         <el-col :span="12" v-for="(item, index) in productList" :key="index">
           <div  class="category_list">
-            <img :src="item.url" class="category_img"/>
-            <img src="../../assets/image/loved.png" style="width: 20px;" class="loved" v-if="item.loved">
+            <img :src="item.imgpath" class="category_img"/>
+            <img src="../../assets/image/loved.png" style="width: 20px;" class="loved" v-if="item.status =='1'">
             <img src="../../assets/image/toLove.png" style="width: 20px;" class="toLove" v-else>
-            <p class="category_list_name">{{item.name}}</p>
-            <span class="category_list_price">RMB {{item.price}}</span>
+            <p class="category_list_name">{{item.prodname}}</p>
+            <span class="category_list_price">RMB {{item.tagprice}}</span>
           </div>
           </el-col>
       </el-row>
-      <p class="showTip list_more_tip"  v-if="showMore">显示120中的30件</p>
+      <p class="showTip list_more_tip"  v-if="showMore">显示{{productTotal}}中的30件</p>
       <el-button class="btn ok_btn" type="primary" @click="toMore" v-if="showMore">载入更多</el-button>   
       <p class="showTip"  v-if="!showMore"  @click="toHide"><i class="el-icon-arrow-up"></i>收起</p>
     </div>
@@ -33,22 +33,43 @@ export default {
   },
   data() {
     return {
-      showMore: true,
-      productList: []
+      showMore: true
     }
   },
+  // watch: {
+  //   productLists: {
+  //     handler(val) {
+  //       this.productList = val.slice(0, 30)
+  //     },
+  //     immediate: true
+  //   }
+  // },
   computed: mapState({
-      productLists: state => state.home.productList,
-      showSubMenu: state => state.showSubMenu
+      productList: state => state.home.productTypeList,
+      showSubMenu: state => state.showSubMenu,
+      productTotal: state => state.home.productTotal
       // brandList() {
       //   return this.brandLists.slice(0, 30)
       // }
     }),
   created() {
+    let param = this.searchParam(30, 1)
+    this.$store.dispatch('home/queryProductList', param)
     this.$store.commit('showSubMenu', false)
-    this.productList = this.productLists.slice(0, 30)
   },
   methods: {
+    searchParam(size, page) {
+      let id = this.$router.history.current.params.id
+      let param = {
+        language: 'cn',
+        series: id,
+        listQuery: {
+          pageSize: size,
+          pageNum: page
+        }
+      }
+      return param
+    },
     expand() {
       if(this.showSubMenu){
         this.$store.commit('showSubMenu', false)
@@ -59,12 +80,13 @@ export default {
     // 载入更多
     toMore() {
       this.showMore = false
-      this.productList = this.productLists
-      // this.$store.dispatch('home/queryMoreBrandList')
+      let param = this.searchParam(this.productTotal, 1)
+      this.$store.dispatch('home/queryProductList', param)
     },
     toHide() {
       this.showMore = true
-      this.productList = this.productLists.slice(0, 30)
+      let param = this.searchParam(30, 1)
+      this.$store.dispatch('home/queryProductList', param)
     }
   }
 }

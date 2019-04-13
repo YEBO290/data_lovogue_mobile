@@ -135,32 +135,40 @@ const actions = {
       })
     })
   },
+  // 注册
+  toRegister (context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.insertUser, param).then((res) => {
+        debugger
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+        reject(err)
+      })
+    })
+  },
   // 喜爱的列表
   queryLovedList (context, param) {
     debugger
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get(api.querySituationList, '123').then((res) => {
-          context.commit('lovesList', res.data)
-          resolve(res.data)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
+      post(api.getScreenLove, param).then((res) => {
+        context.commit('lovesList', res)
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
     })
   },
   // 购物车的列表
   queryBagList (context, param) {
     debugger
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get(api.querySituationList, '123').then((res) => {
-          context.commit('bagList', res.data)
-          resolve(res.data)
+        post(api.getScreenCar, param).then((res) => {
+          context.commit('bagList', res)
+          resolve(res)
         }).catch((err) => {
           console.log(err)
         })
-      }, 1000)
     })
   },
   // 推荐列表
@@ -181,14 +189,12 @@ const actions = {
   delLove (context, param) {
     debugger
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get(api.querySituationList, '123').then((res) => {
+        post(api.updateLove, param).then((res) => {
           // context.dispatch('queryLovedList')
-          resolve(res.data)
+          resolve(res)
         }).catch((err) => {
           console.log(err)
         })
-      }, 1000)
     })
   },
   // 喜爱物品加入购物袋
@@ -208,14 +214,12 @@ const actions = {
   delBag (context, param) {
     debugger
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get(api.querySituationList, '123').then((res) => {
-          // context.dispatch('queryLovedList')
-          resolve(res.data)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
+      post(api.updateCar, param).then((res) => {
+        // context.dispatch('queryLovedList')
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
     })
   },
   // 购物袋立即支付

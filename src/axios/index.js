@@ -1,13 +1,12 @@
 /* 引入Vue框架 */
-import Vue from 'vue'
+// import Vue from 'vue'
 /* 引入资源请求插件 */
 import axios from 'axios'
-import QS from 'qs'
+// import QS from 'qs'
 import router from '../router/index.js'
 import store from '../store/index.js'
 
 import {
-  MessageBox,
   Message,
   Loading
 } from 'element-ui'
@@ -18,55 +17,46 @@ axios.defaults.timeout = 10000
 // axios.defaults.headers['Access-Control-Allow-Origin'] = 'http://129.204.202.240:8080'
 
 // 环境的切换
-if (process.env.NODE_ENV == 'development') { 
-  axios.defaults.baseURL = 'http://129.204.202.240:8090'
-  // axios.defaults.baseURL = 'http://lovogue.net:8091'
-} 
- else if (process.env.NODE_ENV == 'debug') { 
+if (process.env.NODE_ENV === 'development') {
+  // axios.defaults.baseURL = 'http://129.204.202.240:8090'
+  axios.defaults.baseURL = 'http://lovogue.net:8091'
+} else if (process.env.NODE_ENV === 'debug') {
   axios.defaults.baseURL = 'https://www.ceshi.com'
- } 
- else if (process.env.NODE_ENV == 'production') { 
+} else if (process.env.NODE_ENV === 'production') {
   axios.defaults.baseURL = 'https://www.production.com'
- }
+}
 
 // 请求拦截器
-axios.interceptors.request.use( 
+axios.interceptors.request.use(
   config => {
-   // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
-   // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
-  //  const token = store.state.token;  
-  //  token && (config.headers.Authorization = token);  
-   config.data = JSON.stringify(config.data)
-   config.headers = {
-    'Content-Type': 'application/json;charset=utf-8'
-   }
-   const loading = Loading.service({
-    lock: true,
-    text: 'Loading',
-    spinner: 'el-icon-loading',
-    background: 'rgba(0, 0, 0, 0.7)'
+  // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
+  // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
+  // const token = store.state.token
+  // token && (config.headers.Authorization = token)
+    config.data = JSON.stringify(config.data)
+    config.headers = {
+      'Content-Type': 'application/json;charset=utf-8'
+    }
+    return config
+  },
+  error => {
+    return Promise.error(error)
   })
-   return config; 
-  }, 
-  error => {  
-   return Promise.error(error); 
-  })
-  
- // 响应拦截器
- axios.interceptors.response.use( 
-  response => { 
+// 响应拦截器
+axios.interceptors.response.use(
+  response => {
     Loading.service({
       lock: true,
       text: 'Loading',
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     }).close()
-  // if (response.status === 200) {   
-  //   return Promise.resolve(response);  
+  // if (response.status === 200) {  
+  // return Promise.resolve(response) 
   //  } else {   
-  //   return Promise.reject(response);  
-  //  }  
-   if (response.status === 200) {   
+  //  return Promise.reject(response)
+  // } 
+   if (response.status === 200) { 
     return response 
    } else {   
     return response
@@ -103,7 +93,7 @@ axios.interceptors.request.use(
        forbidClick: true    
       });     
       // 清除token     
-      localStorage.removeItem('token')   
+      // localStorage.removeItem('token')   
       store.commit('userName', null)     
       // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
       setTimeout(() => {      

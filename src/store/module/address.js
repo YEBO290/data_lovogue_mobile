@@ -71,20 +71,7 @@ const state = {
     way: '免邮'
 },
 // 收货地址列表
-addressList: [{
-  name: '张三',
-  phone: '13800138000',
-  address: '中国 xxxxxx省 xxxxxx市 xxxxxx区 xxxxxx路 xxxxx号'            
-},
-{
-  name: '张三',
-  phone: '13800138000',
-  address: '中国 xxxxxx省 xxxxxx市 xxxxxx区 xxxxxx路 xxxxx号' 
-},{
-  name: '张三',
-  phone: '13800138000',
-  address: '中国 xxxxxx省 xxxxxx市 xxxxxx区 xxxxxx路 xxxxx号' 
-}]
+addressList: []
 
 }
 const actions = {
@@ -144,19 +131,16 @@ const actions = {
       }, 1000)
     })
   }, 
-  // 立即加购
+  // save address
   toSave (context, param) {
     debugger
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get('api/v1/users/my_address/address_edit_before', param).then((res) => {
-          // 
+        post(api.insertAddress, param).then((res) => {
           // context.commit('colorList', res.data)
-          resolve(res.data)
+          resolve(res)
         }).catch((err) => {
           console.log(err)
         })
-      }, 1000)
     })
   },
   // 确认订单详情
@@ -194,10 +178,9 @@ const actions = {
     debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        get('api/v1/users/my_address/address_edit_before', param).then((res) => {
-          // 
-          context.commit('addressList', res.data)
-          resolve(res.data)
+        post(api.getScreenAddress, param).then((res) => {
+          context.commit('addressList', res)
+          resolve(res)
         }).catch((err) => {
           console.log(err)
         })

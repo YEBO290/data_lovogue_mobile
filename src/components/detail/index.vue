@@ -1,5 +1,5 @@
 <template>
-    <div class="detail">    
+    <div class="detail">  
       <el-carousel :interval="5000" arrow="always" height="375px">
         <el-carousel-item v-for="item in queryImg" :key="item">
           <h3>{{ item }}</h3>
@@ -9,8 +9,8 @@
       <span class="Loved" title="取消收藏" @click="cancelLove" v-else></span>
       <p class="loveTip">{{loveTip}}</p>
       <div class="detail_content">
-        <p class="detail_name">{{detail.name}}</p>
-        <p class="detail_price"><span>RMB </span><span>{{detail.price}}</span></p>
+        <p class="detail_name">{{detailInfo.brand}}</p>
+        <p class="detail_price"><span>RMB </span><span>{{detailInfo.tagprice}}</span></p>
         <div class="detail_flag">
           <span class="position_btn" v-for="(item, index) in detail.flags" :key="index">{{item.text}}</span>
           <!--<span class="date_btn">约会必备</span>-->
@@ -195,9 +195,11 @@ export default {
       queryImg: state => state.detail.queryImg,
       colorList: state => state.detail.colorList,
       recommendList: state => state.detailList.recommendList,
-      sizeLists: state => state.detail.sizeLists
+      sizeLists: state => state.detail.sizeLists,
+      detailInfo: state => state.detail.detailInfo
     }),
   created() {
+    this.$store.dispatch('detail/queryDetail', {id: 2})
     // this.$store.dispatch('detail/queryImg') // 获取轮播图列表 
     // this.$store.dispatch('detail/queryColorList') // 获取颜色的下拉值 
   },
@@ -235,6 +237,7 @@ export default {
     },
     // 加入购物袋
     toBag() {
+      
       this.innerVisible = true
       this.flag = 'add'         
     },
@@ -256,6 +259,7 @@ export default {
           num: this.num
         }
         if(this.flag === 'add') { // 加入购物袋
+          // let param = {"prodid":"VR0060DI18R","userid":"admin","amount":"1","status":"1"}
           this.$store.dispatch('detail/toBag', param).then(res => {
             this.$store.commit('shopBagNumber', 1)
             this.$message({

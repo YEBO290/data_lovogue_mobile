@@ -169,8 +169,15 @@ export default {
         let me = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
-            let param = formName
+            let param = {
+              userid: "admin",
+              address: "广东省深圳市福田区",
+              status: "1",
+              addressprovince: this.ruleForm.province || "广东省",
+              addresscity: this.ruleForm.city || "深圳市",
+              name: this.ruleForm.name || "李",
+              phone: this.ruleForm.phone || "13800000000"
+             }
             me.$store.dispatch('address/toSave',param )
               .then(function (response) {
                 console.log(response.data);

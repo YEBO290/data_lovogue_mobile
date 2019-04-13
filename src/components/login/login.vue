@@ -96,6 +96,7 @@ export default {
     submitForm(formName) {
       let me = this
       let fromPath = this.$router.history.current.query.fromPath
+      localStorage.setItem('userName', 'admin')
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let param = {
@@ -113,7 +114,7 @@ export default {
               }
             }              
           }).catch(err => {
-            localStorage.setItem('userName', '')
+            // localStorage.setItem('userName', '')
           })
         } else{
           console.log('error submit!!')

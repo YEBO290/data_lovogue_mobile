@@ -1,6 +1,6 @@
 <template>
   <div class="adress address-content" >
-    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="adressForm">
+    <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="100px" class="adressForm">
       <div class="addAddress_title">
         <span >地址管理</span>
         <el-button @click="toAddAdress" class="addAddress">添加新地址</el-button>
@@ -31,7 +31,8 @@ export default {
       addressList: state => state.address.addressList
     }),
     created() {
-      // this.$store.dispatch('address/queryAddressList')
+      let param = {userid: "admin"}
+      this.$store.dispatch('address/queryAddressList', param)
     },
     methods: {
       back(){

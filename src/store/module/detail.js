@@ -48,7 +48,8 @@ const state = {
   {
     name: 'L',
     title: ''
-  }]
+  }],
+  detailInfo: ''
 
 }
 const actions = {
@@ -57,8 +58,8 @@ const actions = {
     debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        get(api.querySituationList, '123').then((res) => {
-          resolve(res.data)
+        get(api.querySituationList, '123').then((res) => {         
+          resolve(res)
         }).catch((err) => {
           console.log(err)
         })
@@ -78,13 +79,28 @@ const actions = {
       }, 1000)
     })
   },
+  // 查询详情
+  queryDetail (context, param) {
+    debugger
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        post(api.getDetails, param).then((res) => {
+          debugger
+          context.commit('detailInfo', res.product)
+          resolve(res.product)
+        }).catch((err) => {
+          console.log(err)
+        })
+      }, 1000)
+    })
+  },
   // 查询轮播图
   queryImg (context, param) {
     debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        get('api/v1/users/my_address/address_edit_before', param).then((res) => {
-          // 
+        get(api.getDetails, param).then((res) => {
+          debugger 
           context.commit('queryImg', res.data)
           resolve(res.data)
         }).catch((err) => {
@@ -127,15 +143,13 @@ const actions = {
   toBag (context, param) {
     debugger
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get('api/v1/users/my_address/address_edit_before', param).then((res) => {
-          // 
-          // context.commit('colorList', res.data)
-          resolve(res.data)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
+      post(api.insertCar, param).then((res) => {
+        // 
+        // context.commit('colorList', res.data)
+        resolve(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
     })
   },
   // 补货通知
@@ -161,6 +175,9 @@ const mutations = {
   },
   colorList (state, data) {
     state.colorList = data
+  },
+  detailInfo (state, data) {
+    state.detailInfo = data
   }
   
 }

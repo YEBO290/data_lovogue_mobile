@@ -108,7 +108,8 @@ export default {
       } else {
         this.showToLogin = true
       }
-      // this.$store.dispatch('login/queryBagList') // 购物袋的列表查询
+      let param = {"userid":"admin","status":"1"}
+      this.$store.dispatch('login/queryBagList', param) // 购物袋的列表查询
       // this.$store.dispatch('login/queryRecommendList') // 推荐的列表查询 
       
     },

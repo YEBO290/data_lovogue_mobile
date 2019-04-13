@@ -2,15 +2,16 @@
     <div class="home" id="home">   
       <div>
         <el-carousel :interval="4000" arrow="always" height="500px">
-          <el-carousel-item v-for="item in queryImg" :key="item">
-            <h3>{{ item }}</h3>
+          <el-carousel-item v-for="item in queryImg" :key="item.id">
+            <img :src="item.value" style="width:100%;">
+            <div class="img_opeation">
+              <h1 class="list_h1">{{item.name}}</h1>
+              <!--<p class="img_list_p">{{item.name}}</p>-->
+              <el-button class="img_list_btn" @click="toSpecialEditionList(item)">立即选购</el-button>
+            </div>
           </el-carousel-item>
         </el-carousel> 
-        <div class="img_opeation">
-          <h1 class="list_h1">Lorem ipsum dolor</h1>
-          <p class="img_list_p">Style 01</p>
-          <el-button class="img_list_btn" @click="toSpecialEditionList">立即选购</el-button>
-        </div> 
+         
       </div>
 
       <div class="img_list">
@@ -20,7 +21,7 @@
               <img :src="item.url"/>
               <h1 class="list__sub_h1">{{item.title}}</h1>
               <p class="img_list_sub_p">{{item.style}}</p>
-              <el-button class="img_list_sub_btn" @click="toBrandList">立即选购</el-button>
+              <el-button class="img_list_sub_btn" @click="toBrandList(item)">立即选购</el-button>
             </div>
             </el-col>
         </el-row>
@@ -38,19 +39,23 @@
             <p class="productList_txt_style">{{item.style}}</p>
           </div>
         </div>-->
-        <el-carousel  type="card" height="150px" :interval="400000" class="productList">
-          <el-carousel-item v-for="(item, index) in productList" :key="index" :name="item.style">
-            <h3 @click="toProduct">{{ item.series }}</h3>
-            <span @click="toProduct">{{ item.style }}</span>
-          </el-carousel-item>
-        </el-carousel>
+        
+          <el-carousel  type="card" height="150px" :interval="4000" class="productList">
+            <el-carousel-item v-for="item in productList" :key="item.id">
+              <div @click="toProduct(item)">
+                <img :src="item.value"/>
+                <h3>{{ item.name }}</h3>
+                <!--<span>{{ item.name }}</span>-->
+              </div>
+            </el-carousel-item>
+          </el-carousel>
       </div>
       <div class="category_list">
         <p class="category_list_titile">类别</p>
         <el-row>
-          <el-col v-for="(item, index) in categoryList" :key="index" class="category_list_img">
-            <div class="grid-content bg-purple" @click="toCategoryList">
-              <img :src="item.url" style="height:339px;"/>
+          <el-col v-for="item in categoryList" :key="item.id" class="category_list_img">
+            <div class="grid-content bg-purple" @click="toCategoryList(item)">
+              <img :src="item.value" style="height:339px;"/>
               <p class="category_list_img_name text-center">{{item.name}}</p>
             </div>
             </el-col>
@@ -77,14 +82,17 @@ export default {
     }
   },
   computed: mapState({
-      queryImg: state => state.home.queryImg,
+      queryImg: state => state.home.queryImg, // 轮播图
       lists: state => state.home.lists,
-      productList: state => state.home.productList,
-      categoryList: state => state.home.categoryList,
-      showMenu: state => state.showMenu
+      productList: state => state.home.productList, // 产品系列
+      categoryList: state => {
+        debugger
+        return state.home.categoryList
+      }, // 类别
+      showMenu: state => state.showMenu // 菜单
     }),
   created () {
-    // this.$store.dispatch('home/queryImg')  // 轮播图
+    this.$store.dispatch('home/queryImg')  // 轮播图
     // this.$store.dispatch('home/queryProductList')  // 产品系列
     // this.$store.dispatch('home/queryLists')  // 列表
     // this.$store.dispatch('home/queryCategoryList')  // 类别
@@ -103,17 +111,19 @@ export default {
       // 跳转至特辑列表页
       this.$router.push('/specialEditionList')
     },
-    toProduct() {
+    toProduct(val) {
       // 跳转至产品列表页
-      this.$router.push('/productList')
+      let name = val.name
+      this.$router.push(`/productList/${name}`)
     },
-    toSpecialEditionList() {
+    toSpecialEditionList(val) {
       // 跳转至特辑列表页
-      this.$router.push('/specialEditionList')
+      this.$router.push(`/specialEdition/${val.id}`)
     },
-    toCategoryList() {
+    toCategoryList(val) {
       // 跳转至类别列表页
-      this.$router.push('/categoryList')
+      let name = val.name
+      this.$router.push(`/categoryList/${name}`)
     },
     toBrandList() {
       // 跳转至品牌列表页

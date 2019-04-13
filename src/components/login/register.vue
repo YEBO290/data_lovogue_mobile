@@ -138,9 +138,16 @@
     methods: {
         // 提交
       submitForm(formName) {
+        let me = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let param = {
+              userid: "rest",
+              password: this.ruleForm.pass || "123456",
+              username: this.ruleForm.name || "测试者",
+              role: "0"
+            }
+            me.$store.dispatch('login/toRegister', param)
           } else {
             console.log('error submit!!');
             return false;
