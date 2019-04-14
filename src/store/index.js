@@ -117,15 +117,35 @@ const actions = {
         })
       }, 1000)
     })
-  }
+  },
+  // 收藏
+  toLoved (context, param) {
+    debugger
+    return new Promise((resolve, reject) => {
+      post(api.insertLove, param).then((res) => {         
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
+  },
+  // 取消收藏
+  cancelLove (context, param) {
+    debugger
+    return new Promise((resolve, reject) => {
+      post(api.updateLove, param).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
+  },
 }
 
 const mutations = {
   lovedNumber (state, data) {
     state.lovedNumber = data
   },
-  
-  
   showToTop (state, data) {
     state.showToTop = data
   },

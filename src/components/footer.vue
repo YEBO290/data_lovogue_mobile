@@ -156,5 +156,8 @@ export default {
     .writeBgr{
         background: #fff!important;
     }
+    .el-icon-plus, .el-icon-minus, .el-icon-close {
+        left: auto;
+    }
    
 </style>

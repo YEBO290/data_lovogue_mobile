@@ -18,7 +18,6 @@ import productList from "./../components/home/product"; // 产品系列列表
 import categoryList from "./../components/home/category"; // 类别列表
 import loved from "./../components/login/loved"; // 喜爱
 import bag from "./../components/login/bag"; // 购物袋
-import sizeDetail from "./../components/detail/sizeDetail"; // 单个商品的属性
 import search from "./../components/login/search"; // 搜索界面
 Vue.use(Router);
 
@@ -68,7 +67,7 @@ const router = new Router({
         },
         {
             // 特辑列表详情
-            path: "/detailList",
+            path: "/detailList/:id?",
             name: "detailList",
             component: detailList,
             meta: {
@@ -78,9 +77,10 @@ const router = new Router({
         },
         {
             // 详情
-            path: "/detail",
+            path: "/detail/:id?",
             name: "detail",
             component: detail,
+            props: true,
             meta: {
                 fontColor: true
             }
@@ -174,12 +174,6 @@ const router = new Router({
             meta: {
                 fontColor: true
             }
-        },
-        {
-            // 单个商品的属性
-            path: "/sizeDetail",
-            name: "sizeDetail",
-            component: sizeDetail
         },
         {
             // 收货地址列表

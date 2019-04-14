@@ -1,19 +1,19 @@
 <template>
     <div class="special_edition_list">   
-      <div class="menu_filter" v-if="!showMenu">
-        <span class="menu_del" @click="expand"><i class="icon_f_btn"></i>筛选</span>
+      <div class="menu_filter" v-if="!showSubMenu">
+        <span class="menu_del" @click.stop="expand"><i class="icon_f_btn"></i>筛选</span>
       </div>  
-      <div class="menu_filter" @click="del" v-else>
+      <div class="menu_filter" @click.stop="expand" v-else>
         <!--<span class="menu_filter_btn"><i class="icon_f_btn"></i>筛选</span>-->
         <span class="menu_del">清除</span>
       </div>
-      <menuList class="menu_list" v-if="showMenu"/>
+      <menuList class="menu_list" v-if="showSubMenu"/>
       <div class="img_list" v-for="item in queryImg" :key="item.id">
         <img :src="item.value">
         <div  class="img_opeation">
           <h1 class="list_h1">{{item.name}}</h1>
           <!--<p class="img_list_p">{{item.name}}</p>-->
-          <el-button class="img_list_btn">立即选购</el-button>
+          <el-button class="img_list_btn" @click="$router.push(`/detailList/${item.id}`)">立即选购</el-button>
         </div>   
       </div>
       
@@ -33,20 +33,19 @@ export default {
     }
   },
   computed: mapState({
-    queryImg: state => {
-      debugger
-      return state.home.queryImg
-    }
+    queryImg: state => state.home.queryImg,
+    showSubMenu: state => state.showSubMenu
   }),
-  mounted() {
-    debugger
+  created() {
+    this.$store.dispatch('home/queryImg')  // 轮播图
   },
   methods: {
-    del() {
-      this.showMenu = false
-    },
     expand() {
-      this.showMenu = true
+      if(this.showSubMenu){
+        this.$store.commit('showSubMenu', false)
+      }else {
+        this.$store.commit('showSubMenu', true)
+      }  
     }
   }
 }

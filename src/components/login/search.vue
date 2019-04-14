@@ -85,36 +85,36 @@ export default {
 @import "./css/index.less";
 .search{
   text-align: left;
-  padding:25px 18px;
+  padding:0.25rem 0.18rem;
 }
 .search /deep/ .el-input{
   display: inline-block;
   width: 75%;
-  margin-left:10px;
+  margin-left:0.1rem;
 }
 .search /deep/ .el-input input{
-  height:30px;
+  height:0.3rem;
 }
 .search /deep/ .el-input .el-input__icon{
-  height:30px;
-  line-height:30px;
+  height:0.3rem;
+  line-height:0.3rem;
 }
 .search_list{
     text-align:left;
-    border-bottom: 1px solid #F6F6F6;
-    padding-bottom: 10px;
+    border-bottom: 0.01rem solid #F6F6F6;
+    padding-bottom: 0.1rem;
 }
 .search_lists{
-    padding:17px 18px 0px 18px;
+    padding:0.17rem 0.18rem 0rem 0.18rem;
 }
 .search_list img{
-    widht:80px;
-    height:107px;
+    widht:0.8rem;
+    height:1.07rem;
 }
 .search_list .search_text{
     color:#333333;
     font-size:15px;
-    margin-bottom:6px;
+    margin-bottom:0.06rem;
     
 } 
 
@@ -127,7 +127,7 @@ export default {
     font-size:15px;
 }
 .search_list .search_country{
-    margin-top:45px;
+    margin-top:0.45rem;
     color:#C5A480;
     font-weight:'Helvetica';
     font-weight:Bold;
@@ -135,20 +135,20 @@ export default {
 }
 .loved_list /deep/ .el-icon-close,.bag_list /deep/ .el-icon-close{
     position: absolute;
-    right: 18px;
+    right: 0.18rem;
     color: #999;
 }
 .loved_list /deep/ .el-icon-close{
-    top: 20px;
+    top: 0.2rem;
 }
 .search_btn{
-  width: 50px;
+  width: 0.5rem;
   text-align: center;
-  height: 30px;
-  padding: 5px;
+  height: 0.3rem;
+  padding: 0.05rem;
   background: #c5a480;
   color: #fff;
   position: absolute;
-  right: 18px;
+  right: 0.18rem;
 }
 </style>

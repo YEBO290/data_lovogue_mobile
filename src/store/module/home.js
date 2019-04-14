@@ -81,7 +81,6 @@ const actions = {
         return new Promise((resolve, reject) => {
             post(api.getScreenCmsManager, param)
             .then(res => {
-                debugger
                 let list = res.filter(item => item.location === 0) // 首页轮播
                 let listProduct = res.filter(item => item.location === 1) // 首页产品系列
                 let listCategory = res.filter(item => item.location === 2) // 首页类别
@@ -111,7 +110,6 @@ const actions = {
     },
     // 列表
     queryLists(context, param) {
-        debugger;
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 get("api/v1/users/my_address/address_edit_before", param)

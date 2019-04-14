@@ -1,20 +1,20 @@
 <template>
     <div class="category_home">
-      <div class="menu_filter" @click="expand" v-if="!showSubMenu">
+      <div class="menu_filter" @click.stop="expand" v-if="!showSubMenu">
         <span class="menu_del"><i class="icon_f_btn"></i>筛选</span>
       </div>  
-      <div class="menu_filter" @click="expand" v-else>
+      <div class="menu_filter" @click.stop="expand" v-else>
         <!--<span class="menu_filter_btn"><i class="icon_f_btn"></i>筛选</span>-->
         <span class="menu_del">清除</span>
       </div>
       <menuList class="menu_list" v-if="showSubMenu"/>
       <el-row :gutter="10">
         <el-col :span="12" v-for="(item, index) in categoryList" :key="index">
-          <div  class="category_list">
+          <div  class="category_list" @click="toDetail(item)">
             <img :src="item.imgpath" class="category_img"/>
-            <img src="../../assets/image/loved.png" style="width: 20px;" class="loved" v-if="item.status =='1'">
-            <img src="../../assets/image/toLove.png" style="width: 20px;" class="toLove"  @click="addLove(item)" v-else>  
-            <p class="category_list_name">{{item.prodname}}</p>
+            <img src="../../assets/image/loved.png" style="width: 0.2rem;" class="loved" title="取消收藏" v-if="item.status =='1'"  @click="delLove(item)">
+            <img src="../../assets/image/toLove.png" style="width: 0.2rem;" class="toLove" title="收藏"  @click="addLove(item)" v-else>  
+            <p class="category_list_name">{{item.productname}}</p>
             <span class="category_list_price">RMB {{item.tagprice}}</span>
           </div>
           </el-col>
@@ -89,14 +89,26 @@ export default {
       this.$store.dispatch('home/queryCategoryList', param)
     },
     addLove(item) {
-      debugger
         let param = {
           userid: "admin",
           status: "1"
         }
-        this.$store.dispatch('/detail/toLoved', param).then(res => {
+        this.$store.dispatch('toLoved', param).then(res => {
           console.log(res)
         })
+    },
+    delLove(item) {
+      let param = {
+        id: 1,
+        status: '0'
+      }
+      this.$store.dispatch('cancelLove', param).then(res => {
+        console.log(res)
+      })
+    },
+    // 详情
+    toDetail(val) {
+      this.$router.push(`/detail/${val.productid}`)
     }
   }
 }
@@ -105,12 +117,12 @@ export default {
 @import "./css/category.less";
 .about_txt{
   background:#EFDED1;
-  padding-left:18px;
-  padding-right:18px;
+  padding-left:0.18rem;
+  padding-right:0.18rem;
 }
 .about_img img{
     width: 100%;
-    height: 260px;
+    height: 2.6rem;
 }
 .about_static p {
   font-size: 15px;

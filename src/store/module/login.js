@@ -139,7 +139,28 @@ const actions = {
   toRegister (context, param) {
     return new Promise((resolve, reject) => {
       post(api.insertUser, param).then((res) => {
-        debugger
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+        reject(err)
+      })
+    })
+  },
+  // 修改用户信息
+  updateUser (context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.updateUser, param).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+        reject(err)
+      })
+    })
+  },
+  // 获取用户登陆信息
+  queryUseLogin(context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.getScreenUser, param).then((res) => {
         resolve(res)
       }).catch((err) => {
         console.log(err)

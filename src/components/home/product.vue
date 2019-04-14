@@ -1,9 +1,9 @@
 <template>
     <div class="category_home">
-      <div class="menu_filter" @click="expand" v-if="!showSubMenu">
+      <div class="menu_filter" @click.stop="expand" v-if="!showSubMenu">
         <span class="menu_del"><i class="icon_f_btn"></i>筛选</span>
       </div>  
-      <div class="menu_filter" @click="expand" v-else>
+      <div class="menu_filter" @click.stop="expand" v-else>
         <!--<span class="menu_filter_btn"><i class="icon_f_btn"></i>筛选</span>-->
         <span class="menu_del">清除</span>
       </div>
@@ -11,10 +11,10 @@
       <el-row :gutter="10">
         <el-col :span="12" v-for="(item, index) in productList" :key="index">
           <div  class="category_list">
-            <img :src="item.imgpath" class="category_img"/>
-            <img src="../../assets/image/loved.png" style="width: 20px;" class="loved" v-if="item.status =='1'">
-            <img src="../../assets/image/toLove.png" style="width: 20px;" class="toLove" v-else>
-            <p class="category_list_name">{{item.prodname}}</p>
+            <img :src="item.imgpath" class="category_img"  @click="toDetail(item)"/>
+            <img src="../../assets/image/loved.png" style="width: 0.2rem;" title="取消收藏" class="loved" v-if="item.status =='1'" @click="delLove(item)">
+            <img src="../../assets/image/toLove.png" style="width: 0.2rem;" title="收藏" class="toLove" v-else @click="addLove(item)">
+            <p class="category_list_name">{{item.productname}}</p>
             <span class="category_list_price">RMB {{item.tagprice}}</span>
           </div>
           </el-col>
@@ -36,21 +36,10 @@ export default {
       showMore: true
     }
   },
-  // watch: {
-  //   productLists: {
-  //     handler(val) {
-  //       this.productList = val.slice(0, 30)
-  //     },
-  //     immediate: true
-  //   }
-  // },
   computed: mapState({
       productList: state => state.home.productTypeList,
       showSubMenu: state => state.showSubMenu,
       productTotal: state => state.home.productTotal
-      // brandList() {
-      //   return this.brandLists.slice(0, 30)
-      // }
     }),
   created() {
     let param = this.searchParam(30, 1)
@@ -87,6 +76,31 @@ export default {
       this.showMore = true
       let param = this.searchParam(30, 1)
       this.$store.dispatch('home/queryProductList', param)
+    },
+    addLove(item) {
+      debugger
+        let param = {
+          userid: "admin",
+          status: "1"
+        }
+        this.$store.dispatch('toLoved', param).then(res => {
+          console.log(res)
+        })
+    },
+    delLove(item) {
+      debugger
+      let param = {
+        id: 1,
+        status: '0'
+      }
+      this.$store.dispatch('cancelLove', param).then(res => {
+        console.log(res)
+      })
+    },
+    // 详情
+    toDetail(val) {
+      debugger
+      this.$router.push(`/detail/${val.productid}`)
     }
   }
 }
@@ -95,12 +109,12 @@ export default {
 @import "./css/category.less";
 .about_txt{
   background:#EFDED1;
-  padding-left:18px;
-  padding-right:18px;
+  padding-left:0.18rem;
+  padding-right:0.18rem;
 }
 .about_img img{
     width: 100%;
-    height: 260px;
+    height: 2.6rem;
 }
 .about_static p {
   font-size: 15px;

@@ -4,7 +4,7 @@
             <p  class="desc_txt_title">重设密码</p>
             <p  class="desc_txt_p">欲重设密码，您只需在下面的项栏里输入您的手机号码并点击“获取验证码"即可。我们将会向您的手机号码发送难证码。为安全起见，此验证码将会在1小时后立刻失效。之后，您可以再次在下面的项栏里输入手机号码，重获一组新的验证码。</p>
         </div>
-        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="loginForm">
+        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="loginForm">
             <label class="label_txt">手机号码</label><span class="req">*</span>
             <el-form-item prop="phone">
                 <el-input type="text" v-model="ruleForm.phone" :clearable="true" autocomplete="off" ></el-input>

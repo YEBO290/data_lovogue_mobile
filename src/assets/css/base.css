@@ -9,6 +9,29 @@ html{font-family: "Microsoft YaHei",Arial;font-size:13px;}
 .span_txt{
     color:#666666;
 }
+@media screen and (min-width: 320px) {
+    html {font-size: 14px;}
+}
+ 
+@media screen and (min-width: 360px) {
+    html {font-size: 16px;}
+}
+ 
+@media screen and (min-width: 400px) {
+    html {font-size: 18px;}
+}
+ 
+@media screen and (min-width: 440px) {
+    html {font-size: 20px;}
+}
+ 
+@media screen and (min-width: 480px) {
+    html {font-size: 22px;}
+}
+ 
+@media screen and (min-width: 640px) {
+    html {font-size: 28px;}
+}
 body{
     background:#f6f6f6;
     overflow-x: hidden;
@@ -100,11 +123,9 @@ body{
     right: 18px;
     font-weight: bolder;
     color: #C5A480;  
+    left: 50%;
 }
-.el-icon-plus:hover, .el-icon-minus:hover,.el-icon-close:hover {
-    transform: scale(1.2);
-    text-shadow: 1px 1px 1px;
-}
+
 .menuList{
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
     transition: width 2s, height 2s, transform 2s;
@@ -231,7 +252,7 @@ label{
     background-image:url('../image/flag.png');
     background-repeat: no-repeat;
     background-position: center center;
-    /* width: 76px; */
+    min-width: 0.76rem;
     height:26px;
     padding:4px 8px;
     background-size: 68px 18px;

@@ -1,28 +1,28 @@
 <template>
     <div class="login">
-        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="loginForm">
+        <el-form :model="ruleFormRest" status-icon :rules="rules" ref="ruleFormRest" label-width="1rem" class="loginForm" key="rest">
             <label class="label_txt">姓名</label><span class="req">*</span>
-            <el-form-item prop="name">
-                <el-input type="text" v-model="ruleForm.name" :clearable="true" autocomplete="off" ></el-input>
+            <el-form-item prop="username">
+                <el-input type="text" v-model="ruleFormRest.username" :clearable="true" autocomplete="off" key="res_name"></el-input>
             </el-form-item>
             <label class="label_txt">电邮地址</label><span class="req">*</span>
             <el-form-item prop="email">
-                <el-input type="text" v-model="ruleForm.email" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="text" v-model="ruleFormRest.email" :clearable="true" autocomplete="off" key="res_email"></el-input>
             </el-form-item>
             <label class="label_txt">手机号码</label><span class="req">*</span>
-            <el-form-item prop="phone">
-                <el-input type="text" v-model="ruleForm.phone" :clearable="true" autocomplete="off" ></el-input>
+            <el-form-item prop="phoneRes"  key="resPhone">
+                <el-input type="text" v-model.number="ruleFormRest.phoneRes" :clearable="true" autocomplete="off"></el-input>
             </el-form-item>
             <label class="label_txt">密码</label><span class="req">*</span>
-            <el-form-item prop="pass">
-                <el-input type="text" v-model="ruleForm.pass" :clearable="true" autocomplete="off" ></el-input>
+            <el-form-item prop="passwordRes">
+                <el-input type="password" v-model="ruleFormRest.passwordRes" :clearable="true" autocomplete="off" key="resPass"></el-input>
             </el-form-item>
             <label class="label_txt">确认密码</label><span class="req">*</span>
             <el-form-item prop="checkPass">
-                <el-input type="text" v-model="ruleForm.checkPass" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="password" v-model="ruleFormRest.checkPass" :clearable="true" autocomplete="off" key="res_check" ></el-input>
             </el-form-item>
             <el-form-item prop="term" class="term_item">
-                <el-checkbox v-model="ruleForm.term">    
+                <el-checkbox v-model="ruleFormRest.term">    
                     <div class="span_txt">
                         您接受并同意遵守我们的
                         <a class="term_txt" @click="toContact('termsConditions')">条款与条件</a>
@@ -36,7 +36,7 @@
             </el-form-item>
         </el-form>
         <div>
-            <el-button class="btn login_btns" type="primary" @click="submitForm('ruleForm')">立即登录</el-button>
+            <el-button class="btn login_btns" type="primary" @click="submitForm('ruleFormRest')">立即登录</el-button>
         </div>
     </div>
 </template>
@@ -53,13 +53,13 @@
             if(!(reg.test(value))) {
                 callback(new Error('密码需由6位或以上字母、数字组成'))
             } else {
-                if (this.ruleForm.checkPass !== '') {
-                    this.$refs.ruleForm.validateField('checkPass');
+                if (this.ruleFormRest.checkPass !== '') {
+                    this.$refs.ruleFormRest.validateField('checkPass');
                 }
                 callback();
             }                   
         }
-      };
+      }
       // 手机
       var validPhone = (rule, value, callback) => {
         if (value === '') {
@@ -72,7 +72,7 @@
                 callback()
             }
         }     
-      };
+      }
       // 邮箱校验
       var validateEmail =  (rule, value, callback) => {
         if (value === '') {
@@ -85,12 +85,12 @@
                 callback()
             }
         }        
-      };
+      }
       // 确认密码
       var validateCheckPass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm.pass) {
+        } else if (value !== this.ruleFormRest.passwordRes) {
           callback(new Error('两次输入密码不同!'));
         } else {
           callback();
@@ -101,39 +101,42 @@
         if (!value) {
           callback(new Error('请勾选条款与条件'));
         } else {
-          callback();
+          callback()
         }
       }
       return {
-        ruleForm: {
-            name: '',
+        ruleFormRest: {
+            username: '',
             email: '',
-            phone: '',
-            pass: '',
+            phoneRes: '',
+            passwordRes: '',
             checkPass: '',
             term: false
         },
         rules: {
-            name: [
+            username: [
                 { required: true, message: '请输入姓名', trigger: 'blur' }
             ],
             email: [
                 { validator: validateEmail, trigger: 'blur' }
             ],
-            pass: [
+            passwordRes: [
                 { validator: validatePass, trigger: 'blur' }
             ],
             checkPass: [
                 { validator: validateCheckPass, trigger: 'blur' }
             ],
-            phone: [
+            phoneRes: [
                 { validator: validPhone, trigger: 'blur' }
             ],
             term: [
                 { validator: validTerm, trigger: ['blur', 'change'] }
             ],
         }
-      };
+      }
+    },
+    created() {
+      localStorage.clear()
     },
     methods: {
         // 提交
@@ -142,10 +145,12 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let param = {
-              userid: "rest",
-              password: this.ruleForm.pass || "123456",
-              username: this.ruleForm.name || "测试者",
-              role: "0"
+              userid: 'rest',
+              password: this.ruleFormRest.passwordRes || "123456",
+              username: this.ruleFormRest.username || "测试者",
+              role: '0',
+              email: this.ruleFormRest.email,
+              phone: this.ruleFormRest.phoneRes
             }
             me.$store.dispatch('login/toRegister', param)
           } else {
@@ -154,14 +159,6 @@
           }
         });
       },
-      // 条件
-        toTerm() {
-
-        },
-        // 政策
-        toPolicy() {
-
-        },
         // 个人信息
         toMesssge() {
             

@@ -4,7 +4,7 @@
             <p  class="desc_txt_title">重设密码</p>
             <p  class="desc_txt_p">欲重设密码，您只需在下面的项栏里输入您的邮件地址并点击“提交"即可。我们将会向您发送邮件，邮件中将包含一个可以重设密码的链接。为安全起见，此链接将会在24小时后立刻失效。之后，您可以再次在下面的项栏里输入电邮地址，重获一组重设密码的链接。</p>
         </div>
-        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="loginForm">
+        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="loginForm">
             <label class="label_txt">电邮地址</label><span class="req">*</span>
             <el-form-item prop="phone">
                 <el-input type="text" v-model="ruleForm.email" :clearable="true" autocomplete="off"></el-input>
@@ -48,14 +48,29 @@
     },
     methods: {
       submitForm(formName) {
+        let me = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            let param = {
+              role: '1',
+              userid: localStorage.getItem('userName'),
+            }
+            me.$store.dispatch('login/updateUser', param)
             alert('submit!');
           } else {
             console.log('error submit!!');
             return false;
           }
-        });
+        })
+      },
+      // 获取用户登陆信息
+      queryUseLogin() {
+        let me = this
+        let param = {
+            "userid": "admin",
+            "password": "123456"
+        }
+        me.$store.dispatch('login/queryUseLogin', param)
       },
       // 返回
       back() {

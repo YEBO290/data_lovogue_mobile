@@ -2,7 +2,7 @@
   <div class="bag">
     <div class="bag_lists" v-if="!showToLogin && bagList.length > 0">
       <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" class="allCheck">全选</el-checkbox>
-      <div style="margin: 15px 0;"></div>    
+      <div style="margin: 0.15rem 0;"></div>    
         <el-row :gutter="20" class="bag_list" v-for="(item, index) in bagList" :key="index">
           <el-col :span="2">
             <el-checkbox-group v-model="checkedLists" @change="handleCheckedListsChange">          
@@ -22,7 +22,7 @@
             <div class="number">
               <el-input-number v-model="item.num" :min="1" label="数量"></el-input-number>
             </div>
-            <div style="height: 20px; margin-top: 50px;">
+            <div style="height: 0.2rem; margin-top: 0.53rem;">
               <div class="bag_size">
                 <span>size： {{item.size}}; {{item.color}}</span>
               </div>
@@ -37,7 +37,7 @@
         <p class="total_pay">运费<span>RMB  {{totalPay}}</span></p> 
         <p class="total">总计<span>RMB  {{totalCost}}</span></p>       
       </div>
-      <el-button class="btn login_btns" type="primary" @click="toPay" style="margin-top:63px;">立即支付</el-button>
+      <el-button class="btn login_btns" type="primary" @click="toPay" style="margin-top:0.63rem;">立即支付</el-button>
     </div>
     <div class="bag_none" v-if="!showToLogin && bagList.length === 0">
       <span>再也不会找不到购物袋内的风格单品-立即</span>
@@ -184,30 +184,30 @@ export default {
 <style scoped>
 @import "./css/index.less";
 .bag_list /deep/ .el-checkbox__inner{
-  margin-top:50px;
+  margin-top:0.5rem;
 }
 .bag /deep/ .el-checkbox{
     display: inline-block;
     width: 100%;
 }
 .bag_list /deep/ .el-input-number{
-  width: 80px;
-  height: 25px;
-  line-height: 23px;
+  width: 0.8rem;
+  height: 0.25rem;
+  line-height: 0.23rem;
 }
 .bag_list /deep/ .el-input-number__decrease,.bag_list /deep/ .el-input-number__increase{
-  width: 20px!important;
+  width: 0.2rem!important;
 }
 .bag_list /deep/ .el-input-number__decrease i,.bag_list /deep/ .el-input-number__increase i {
     color:#333;
-    top: 6px;
+    top: 0.06rem;
     font-weight: normal;
     position: initial;
 }
 .bag_list /deep/ .el-input-number .el-input__inner {
-    padding-left: 5px;
-    padding-right: 5px;
-    height: 25px;
+    padding-left: 0.05rem;
+    padding-right: 0.05rem;
+    height: 0.25rem;
 }
 .bag_list /deep/ .el-input-number__decrease:hover,.bag_list /deep/ .el-input-number__increase:hover {
     color: #C5A480;
@@ -217,7 +217,7 @@ export default {
 }
 .number{
   position: absolute;
-  top: 70px;
+  top: 0.7rem;
 }
 .allCheck .el-checkbox__label{
   display: inline-block;

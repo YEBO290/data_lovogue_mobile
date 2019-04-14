@@ -53,45 +53,17 @@ const state = {
 
 }
 const actions = {
-  // 收藏
-  toLoved (context, param) {
-    debugger
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get(api.querySituationList, '123').then((res) => {         
-          resolve(res)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
-    })
-  },
-  // 取消收藏
-  cancelLove (context, param) {
-    debugger
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get('api/v1/users/my_address/address_edit_before', param).then((res) => {
-          resolve(res.data)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
-    })
-  },
   // 查询详情
   queryDetail (context, param) {
     debugger
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        post(api.getDetails, param).then((res) => {
-          debugger
-          context.commit('detailInfo', res.product)
-          resolve(res.product)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
+      post(api.getDetails, param).then((res) => {
+        debugger
+        context.commit('detailInfo', res.data)
+        resolve(res.product)
+      }).catch((err) => {
+        console.log(err)
+      })
     })
   },
   // 查询轮播图

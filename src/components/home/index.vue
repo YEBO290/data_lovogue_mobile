@@ -1,20 +1,22 @@
 <template>
     <div class="home" id="home">   
       <div>
-        <el-carousel :interval="4000" arrow="always" height="500px">
+        <el-carousel :interval="4000" arrow="always" height="5rem">
           <el-carousel-item v-for="item in queryImg" :key="item.id">
-            <img :src="item.value" style="width:100%;">
-            <div class="img_opeation">
-              <h1 class="list_h1">{{item.name}}</h1>
-              <!--<p class="img_list_p">{{item.name}}</p>-->
-              <el-button class="img_list_btn" @click="toSpecialEditionList(item)">立即选购</el-button>
+            <div @click="toSpecialEditionList(item)">
+              <img :src="item.value" style="width:100%;">
+              <div class="img_opeation">
+                <h1 class="list_h1">{{item.name}}</h1>
+                <!--<p class="img_list_p">{{item.name}}</p>-->
+                <el-button class="img_list_btn" @click="toSpecialEditionList(item)">立即选购</el-button>
+              </div>
             </div>
           </el-carousel-item>
         </el-carousel> 
          
       </div>
 
-      <div class="img_list">
+      <!--<div class="img_list">
         <el-row :gutter="10">
           <el-col :span="12" v-for="(item, index) in lists" :key="index">
             <div class="grid-content bg-purple">
@@ -25,11 +27,12 @@
             </div>
             </el-col>
         </el-row>
+        </div>-->
        <!-- <div class="img_style"  v-for="(item, index) in lists" :key="index">
 
           
         </div>    -->  
-      </div>
+      
       <div class="product_list">
         <p class="product_list_titile">产品系列</p>
         <!--<div v-for="(item, index) in productList" :key="index" class="productList">
@@ -40,7 +43,7 @@
           </div>
         </div>-->
         
-          <el-carousel  type="card" height="150px" :interval="4000" class="productList">
+          <el-carousel  type="card" height="1.5rem" :interval="4000" class="productList">
             <el-carousel-item v-for="item in productList" :key="item.id">
               <div @click="toProduct(item)">
                 <img :src="item.value"/>
@@ -55,7 +58,7 @@
         <el-row>
           <el-col v-for="item in categoryList" :key="item.id" class="category_list_img">
             <div class="grid-content bg-purple" @click="toCategoryList(item)">
-              <img :src="item.value" style="height:339px;"/>
+              <img :src="item.value" style="height:3.39rem;"/>
               <p class="category_list_img_name text-center">{{item.name}}</p>
             </div>
             </el-col>
@@ -85,10 +88,7 @@ export default {
       queryImg: state => state.home.queryImg, // 轮播图
       lists: state => state.home.lists,
       productList: state => state.home.productList, // 产品系列
-      categoryList: state => {
-        debugger
-        return state.home.categoryList
-      }, // 类别
+      categoryList: state => state.home.categoryList, // 类别
       showMenu: state => state.showMenu // 菜单
     }),
   created () {
@@ -135,4 +135,19 @@ export default {
 
 <style scoped>
 @import "./css/index.less";
+.el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 0;
+  }
+  
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
 </style>

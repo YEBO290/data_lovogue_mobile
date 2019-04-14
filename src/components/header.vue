@@ -54,7 +54,12 @@ export default {
   },
   methods: {
       toHome: function() { //点击logo 跳至首页
-        this.$router.push('/home')
+        let status = localStorage.getItem('userName')
+        if(status !== '' && status !== null && status !== undefined) {
+            this.$router.push('/home')
+        } else {
+            this.$router.push('/login')
+        }   
       },
       showMenu() {
         this.$store.commit('showMenu', true)

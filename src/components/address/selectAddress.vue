@@ -1,6 +1,6 @@
 <template>
   <div class="adress address-content" >
-    <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="100px" class="adressForm">
+    <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="1rem" class="adressForm">
       <div class="addAddress_title">
         <span >地址管理</span>
         <el-button @click="toAddAdress" class="addAddress">添加新地址</el-button>
@@ -15,7 +15,7 @@
         
         <div class="line"></div>
       </div>
-        <el-button class="btn ok_btn" type="primary" @click="back" style="margin-top:45px;">返回</el-button>
+        <el-button class="btn ok_btn" type="primary" @click="back" style="margin-top:0.45rem;">返回</el-button>
     </el-form>
   </div>
 </template>

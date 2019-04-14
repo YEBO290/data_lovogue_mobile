@@ -1,19 +1,19 @@
 <template>
-    <div class="detail">  
-      <el-carousel :interval="5000" arrow="always" height="375px">
-        <el-carousel-item v-for="item in queryImg" :key="item">
-          <h3>{{ item }}</h3>
+    <div class="detail" :descDetail="descDetail">  
+      <el-carousel :interval="5000" arrow="always" height="3.75rem">
+        <el-carousel-item v-for="item in detailInfo.imgurl" :key="item">
+          <img :src="item" style="width:100%">
         </el-carousel-item>
       </el-carousel>
-      <span class="toLove" title="收藏" @click="toLoveFunc" v-if="toLove"></span>
+      <span class="toLove" title="收藏" @click="toLoveFunc" v-if="detailInfo.love === 0"></span>
       <span class="Loved" title="取消收藏" @click="cancelLove" v-else></span>
-      <p class="loveTip">{{loveTip}}</p>
+      <!--<p class="loveTip">{{loveTip}}</p>-->
       <div class="detail_content">
-        <p class="detail_name">{{detailInfo.brand}}</p>
+        <p class="detail_name">{{detailInfo.productname}}</p>
         <p class="detail_price"><span>RMB </span><span>{{detailInfo.tagprice}}</span></p>
         <div class="detail_flag">
-          <span class="position_btn" v-for="(item, index) in detail.flags" :key="index">{{item.text}}</span>
-          <!--<span class="date_btn">约会必备</span>-->
+          <span class="position_btn">{{detailInfo.occasion}}</span>
+          <!--<span class="position_btn" v-for="(item, index) in detail.occasion" :key="index">{{item.text}}</span>-->
         </div>  
       </div>
       <div class="detail_bts">
@@ -34,13 +34,17 @@
         <img src="../../assets/image/friend.png">
       </div>
       <div class="detail_desc">
-        <p class="desc_title">Description</p>
+        <p class="desc_title">描述</p>
         <ul class="detail_desc_list">
-          <li class="detail_desc_sub_one">Safety pin earring with engraved "a" and brass ring post closure.</li>
-          <li>• Dimensions: 5 X 3 cm</li>
-          <li>• 100% Brass</li>
-          <li>• Imported.</li>
-          <li class="detail_desc_sub_last">size guide</li>
+          <li class="detail_desc_sub_one">品牌 ： {{desc.brand}}.</li>
+          <li>• 品类 ： {{desc.category}}.</li>
+          <li>• 售后服务 ：{{desc.vaservie}}.</li>
+          <li>• 场景 ：{{desc.occasion}}.</li>
+          <li>• 增值服务 ：{{desc.service}}.</li>
+          <li>• 尺寸 ：{{desc.sizenum}}.</li>
+          <li>• 总重量 ：{{desc.weight}}.</li>
+          <li>• 材质 ：{{desc.material}}.</li>
+          <!--<li class="detail_desc_sub_last">•款号 {{desc.typeno}}.</li>-->
         </ul>
       </div>     
       <div class="recommend_list">
@@ -53,8 +57,8 @@
           </div> -->
           <el-row :gutter="10">
             <el-col :span="8"  v-for="(item, index) in recommendList" :key="index">
-              <div class="grid-content bg-purple" style="margin-bottom: 25px;">
-                <img :src="item.url" style="width:100%;height:147px;display:block;background:#fff;">
+              <div class="grid-content bg-purple" style="margin-bottom: 0.25rem;">
+                <img :src="item.url" style="width:100%;height:1.47rem;display:block;background:#fff;">
                 <div class="recommend_line"></div>
                 <p class="recommend_text">{{item.text}}</p>
               </div>
@@ -74,16 +78,38 @@
           <a class="link size_link">没有适合的尺码</a>
         </div>-->
         <div class="dialog_content">
+          <el-row :gutter="20">
+            <el-col :span="6">
+              <div class="grid-content bg-purple leftImg">
+                <img :src="detailInfo.imgurl" style="width:68px;height:68px;">
+              </div>
+            </el-col>
+            <el-col :span="6">
+              <div class="grid-content bg-purple rightImg">
+                <p class="price">RMB {{detailInfo.tagprice}}</p>
+                <p class="inventory">库存{{detailInfo.inventory}}件</p>
+              </div>
+              </el-col>
+          </el-row>
+          <div class="showImg">
+
+            
+          </div>
           <div v-if="colorList.length > 0">
-            <div class="select_color"><span class="select_color">颜色分类</span><span style="color: red;margin-left:10px;font-weight:normal" v-if="colorTip">请选择颜色</span></div>
-            <el-tag type="info" v-for="(item, index) in colorList" :key="index" @click="selectColorFunc(item, index)" :class="{'checkedColor': selectColorList[index]}">{{item.label}}</el-tag>   
+            <div class="select_color"><span class="select_color">颜色</span><span style="color: red;margin-left:0.1rem;font-weight:normal" v-if="colorTip">请选择颜色</span></div>
+            <el-tag type="info" v-for="(item, index) in colorList" :key="index" @click="selectColorFunc(item, index)" :class="{'checkedColor': selectColorList[index]}">{{item}}</el-tag>   
              <div class="size_line"></div>
-          </div>         
+          </div>      
+          <div v-if="weightList.length > 0">
+            <div class="select_color"><span class="select_color">重量</span><span style="color: red;margin-left:0.1rem;font-weight:normal" v-if="weightTip">请选择颜色</span></div>
+            <el-tag type="info" v-for="(item, index) in weightList" :key="index" @click="selectWeightFunc(item, index)" :class="{'checkedColor': selectWeightList[index]}">{{item}}</el-tag>   
+             <div class="size_line"></div>
+          </div>    
           <div v-if="sizeLists.length > 0">
-            <div class="select_size"><span class="select_size">尺码</span><span style="color: red;;margin-left:10px;font-weight:normal" v-if="sizeTip">请选择尺码</span></div>
-            <el-tag type="info" v-for="(item, index) in sizeLists" :key="index" @click="selectSizeFunc(item, index)" :class="{'checkedSize': selectSizeList[index]}">{{item.name}} {{item.title? '( ' + item.title + ' )' : ''}}</el-tag>          
+            <div class="select_size"><span class="select_size">尺寸</span><span style="color: red;;margin-left:0.1rem;font-weight:normal" v-if="sizeTip">请选择尺码</span></div>
+            <el-tag type="info" v-for="(item, index) in sizeLists" :key="index" @click="selectSizeFunc(item, index)" :class="{'checkedSize': selectSizeList[index]}">{{item}}</el-tag>          
             <a class="link size_link" @click="noticeVisible = true">没有适合的尺码</a>
-            <div class="size_line" style="margin-top: 20px;"></div>
+            <div class="size_line" style="margin-top: 0.2rem;"></div>
           </div>          
           <!--<a class="link size_link">没有适合的尺码</a>-->
           <p class="select_num">购买数量</p>
@@ -100,8 +126,8 @@
         :visible.sync="noticeVisible"
         width="90.4%"
         :before-close="handleClose">
-        <div style="padding-left:18px;padding-right:18px;">
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <div style="padding-left:0.18rem;padding-right:0.18rem;">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="demo-ruleForm">
             <el-form-item label="" prop="email">
               <el-input type="text" v-model="ruleForm.email" autocomplete="off" placeholder="请输入正确的电邮地址"></el-input>
             </el-form-item>
@@ -164,9 +190,23 @@ export default {
       selectColorList: [],
       selectSize: '',
       selectSizeList: [],
+      selectWeight: '',
+      selectWeightList: [],
       sizeTip: false,
       colorTip: false,
+      weightTip: false,
       noticeVisible: false,
+      desc: {
+          brand: '',
+          category: '',
+          vaservie: '',
+          occasion: '',
+          service: '',
+          sizenum: '',
+          weight: '',
+          material: '',
+          typeno: ''
+      },
       detail:{
         name: 'Consectetur',
         price: 100,
@@ -188,18 +228,35 @@ export default {
           term: [
             { required: true, message: '请勾选条款与协议', trigger: ['blur', 'change'] }
           ]
-        }
+        },
+        colorList: [],
+        sizeLists: [],
+        weightList: []
     }
   },
+  props: ['id'],
   computed: mapState({
       queryImg: state => state.detail.queryImg,
-      colorList: state => state.detail.colorList,
+      // colorList: state => state.detail.colorList,
       recommendList: state => state.detailList.recommendList,
-      sizeLists: state => state.detail.sizeLists,
-      detailInfo: state => state.detail.detailInfo
+      // sizeLists: state => state.detail.sizeLists,
+      detailInfo: function(state) {
+        debugger
+        this.desc = state.detail.detailInfo.describe
+        this.colorList = state.detail.detailInfo.describe.coloravailable.split(" ")
+        this.weightList = state.detail.detailInfo.describe.weight.split(" ")
+        this.sizeLists = state.detail.detailInfo.describe.sizenum.split(" ")
+        return state.detail.detailInfo},
+      descDetail: state => { debugger 
+        this.desc = state.detail.detailInfo.describe
+        return state.detail.detailInfo.describe 
+      }
     }),
   created() {
-    this.$store.dispatch('detail/queryDetail', {id: 2})
+    let param = {
+      productid: this.id
+    }
+    this.$store.dispatch('detail/queryDetail', param)
     // this.$store.dispatch('detail/queryImg') // 获取轮播图列表 
     // this.$store.dispatch('detail/queryColorList') // 获取颜色的下拉值 
   },
@@ -217,8 +274,7 @@ export default {
       this.toLove = false
       this.loveTip = '收藏成功'
       // 发送请求
-      this.$store.dispatch('detailList/toLoved').then(res => {
-        this.$store.commit('lovedNumber', 1)
+      this.$store.dispatch('toLoved').then(res => {
       })
     },
     // 取消收藏
@@ -226,8 +282,7 @@ export default {
       this.toLove = true
       this.loveTip = '收藏'
       // 发送请求
-      this.$store.dispatch('detailList/cancelLove').then(res => {
-        this.$store.commit('lovedNumber', 0)
+      this.$store.dispatch('cancelLove').then(res => {
       })
     },
     // 立即选购
@@ -285,6 +340,18 @@ export default {
         this.$set(this.selectColorList, index, true)        
       }
       console.log(this.selectColor)     
+    },
+    // 重量选择
+    selectWeightFunc(val, index) {     
+      this.weightTip = false     
+      if(this.selectWeightList[index]){
+        this.selectWeight = ''
+        this.$set(this.selectWeightList, index, false)        
+      } else {
+        this.selectWeight = val
+        this.$set(this.selectWeightList, index, true)        
+      }
+      console.log(this.selectWeight)     
     },
     // 尺码选择
     selectSizeFunc(val, index) {

@@ -1,13 +1,13 @@
 <template>
   <div class="login" :from="from">
-    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="loginForm">
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="loginForm" key="login">
       <label class="label_txt">手机号/邮箱</label><span class="req">*</span>
-      <el-form-item prop="phone">
+      <el-form-item prop="phone" key="loginPhone">
         <el-input type="text" v-model="ruleForm.phone" :clearable="true" autocomplete="off"></el-input>
       </el-form-item>
       <label class="label_txt">密码</label><span class="req">*</span>
       <el-form-item prop="pass">
-        <el-input type="password" v-model="ruleForm.pass" :clearable="true" autocomplete="off"></el-input>
+        <el-input type="password" v-model="ruleForm.pass" :clearable="true" autocomplete="off" key="loginPass"></el-input>
         <router-link to="/resetPassEmail" class="link">忘记密码?</router-link>
       </el-form-item>        
     </el-form>
@@ -18,9 +18,9 @@
       <el-col :span="8"><div class="login-line grid-content bg-purple"></div></el-col>
     </el-row>
     <el-row class="other_login_img">
-      <el-col :span="8"><div class="grid-content bg-purple" style="height:1px"></div></el-col>
+      <el-col :span="8"><div class="grid-content bg-purple" style="height:0.01rem"></div></el-col>
       <el-col :span="8"> <div class="grid-content bg-purple"><img src="../../assets/image/wechat.png" style="float:left"/><img src="../../assets/image/fb.png" style="float:right"/></div></el-col>
-      <el-col :span="8"><div class="grid-content bg-purple" style="height:1px"></div></el-col>
+      <el-col :span="8"><div class="grid-content bg-purple" style="height:0.01rem"></div></el-col>
     </el-row>
     <!--<div class="other_login">
         <div class="login-line"></div> <div>使用第三方登录</div> <div class="login-line"></div>
@@ -80,15 +80,6 @@ export default {
     }
   },
     ...mapState({
-    // 箭头函数可使代码更简练
-    // phone: state => state.phone
-    // 传字符串参数 'count' 等同于 `state => state.count`
-    // countAlias: 'count',
-
-    // // 为了能够使用 `this` 获取局部状态，必须使用常规函数
-    // countPlusLocalState (state) {
-    //   return state.count + this.localCount
-    // }
   }),
   mounted() {
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="adress address-content" >
-    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="adressForm">
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="adressForm">
       <p class="addr_title">收货地址</p>
       <label class="label_txt">收件人</label><span class="req">*</span>
       <el-form-item prop="name">
