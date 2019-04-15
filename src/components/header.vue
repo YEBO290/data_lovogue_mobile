@@ -47,8 +47,8 @@ export default {
     }
   },
   computed: mapState({
-      lovedNumber: state => state.lovedNumber,
-      shopBagNumber: state => state.shopBagNumber
+      lovedNumber: state => state.login.lovedNumber,
+      shopBagNumber: state => state.login.shopBagNumber
     }),
   created() {
   },

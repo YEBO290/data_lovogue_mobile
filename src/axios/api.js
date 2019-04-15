@@ -1,6 +1,6 @@
 const base = 'admin'
 var service = {
-    login: base + '/login', // 登录接口
+    login: '/CrmUser/getScreenUser', // 登录接口
     // 内容管理
     getScreenCmsManager: '/Cms/getScreenCmsManager', // 获取首页数据和导航数据
     getScreenFeature: '/Cms/getScreenFeature', // 获取特辑图片和埋点位置

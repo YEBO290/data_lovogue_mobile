@@ -31,7 +31,7 @@ export default {
       addressList: state => state.address.addressList
     }),
     created() {
-      let param = {userid: "admin"}
+      let param = {userid: localStorage.getItem('userName')}
       this.$store.dispatch('address/queryAddressList', param)
     },
     methods: {

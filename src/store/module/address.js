@@ -77,7 +77,6 @@ addressList: []
 const actions = {
   // 国家
   queryCountry (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get(api.querySituationList, '123').then((res) => {
@@ -91,7 +90,6 @@ const actions = {
   },
   // 省份
   queryProvince (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get('api/v1/users/my_address/address_edit_before', param).then((res) => {
@@ -105,7 +103,6 @@ const actions = {
   },
   // 城市
   queryCity (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get('api/v1/users/my_address/address_edit_before', param).then((res) => {
@@ -119,7 +116,6 @@ const actions = {
   },
   // 行政区
   queryArea (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get('api/v1/users/my_address/address_edit_before', param).then((res) => {
@@ -133,7 +129,6 @@ const actions = {
   }, 
   // save address
   toSave (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
         post(api.insertAddress, param).then((res) => {
           // context.commit('colorList', res.data)
@@ -145,7 +140,6 @@ const actions = {
   },
   // 确认订单详情
   detailConfirmInfo (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get('api/v1/users/my_address/address_edit_before', param).then((res) => {
@@ -160,7 +154,6 @@ const actions = {
   },
   // 立即支付
   toBuy (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get('api/v1/users/my_address/address_edit_before', param).then((res) => {
@@ -175,7 +168,6 @@ const actions = {
   },
   // 收货地址列表查询
   queryAddressList(context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         post(api.getScreenAddress, param).then((res) => {

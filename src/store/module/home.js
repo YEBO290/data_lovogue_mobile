@@ -140,7 +140,6 @@ const actions = {
     },
     // 关于我们
     queryAboutList(context, param) {
-        debugger;
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 get("api/v1/users/my_address/address_edit_before", param)
@@ -157,7 +156,6 @@ const actions = {
     },
     // 品牌
     queryBrandList(context, param) {
-        debugger;
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 get("api/v1/users/my_address/address_edit_before", param)
@@ -174,7 +172,6 @@ const actions = {
     },
     // 特辑
     querySpecialEditionList(context, param) {
-        debugger;
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 get("api/v1/users/my_address/address_edit_before", param)
@@ -191,7 +188,6 @@ const actions = {
     },
     // 品牌列表载入更多
     queryMoreBrandList(context, param) {
-        debugger;
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 get("api/v1/users/my_address/address_edit_before", param)

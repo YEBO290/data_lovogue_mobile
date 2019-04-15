@@ -55,10 +55,8 @@ const state = {
 const actions = {
   // 查询详情
   queryDetail (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       post(api.getDetails, param).then((res) => {
-        debugger
         context.commit('detailInfo', res.data)
         resolve(res.product)
       }).catch((err) => {
@@ -68,11 +66,9 @@ const actions = {
   },
   // 查询轮播图
   queryImg (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get(api.getDetails, param).then((res) => {
-          debugger 
           context.commit('queryImg', res.data)
           resolve(res.data)
         }).catch((err) => {
@@ -83,7 +79,6 @@ const actions = {
   },
   // 颜色的下拉值
   queryColorList (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get('api/v1/users/my_address/address_edit_before', param).then((res) => {
@@ -98,7 +93,6 @@ const actions = {
   },
   // 立即加购
   toBuy (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get('api/v1/users/my_address/address_edit_before', param).then((res) => {
@@ -113,12 +107,11 @@ const actions = {
   },
   // 加入购物车
   toBag (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       post(api.insertCar, param).then((res) => {
         // 
         // context.commit('colorList', res.data)
-        resolve(res.data)
+        resolve(res)
       }).catch((err) => {
         console.log(err)
       })
@@ -126,7 +119,6 @@ const actions = {
   },
   // 补货通知
   toNotice (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get('api/v1/users/my_address/address_edit_before', param).then((res) => {

@@ -25,7 +25,7 @@ const router = new Router({
     routes: [{
             // 登录 注册
             path: "/",
-            redirect: "/login"
+            redirect: "/home"
         },
         {
             // 登录 注册
@@ -63,6 +63,14 @@ const router = new Router({
             meta: {
                 flag: "list",
                 showToTop: true
+            },
+            beforeEnter: (to, from, next) => {
+                let status = localStorage.getItem('userName')
+                if(status !== '' && status !== null && status !== undefined) {
+                    next()
+                } else {
+                    next('/login')
+                }
             }
         },
         {
@@ -137,6 +145,14 @@ const router = new Router({
             component: brandList,
             meta: {
                 flag: "list"
+            },
+            beforeEnter: (to, from, next) => {
+                let status = localStorage.getItem('userName')
+                if(status !== '' && status !== null && status !== undefined) {
+                    next()
+                } else {
+                    next('/login')
+                }
             }
         },
         {
@@ -146,6 +162,14 @@ const router = new Router({
             component: productList,
             meta: {
                 flag: "list"
+            },
+            beforeEnter: (to, from, next) => {
+                let status = localStorage.getItem('userName')
+                if(status !== '' && status !== null && status !== undefined) {
+                    next()
+                } else {
+                    next('/login')
+                }
             }
         },
         {
@@ -155,6 +179,14 @@ const router = new Router({
             component: categoryList,
             meta: {
                 flag: "list"
+            },
+            beforeEnter: (to, from, next) => {
+                let status = localStorage.getItem('userName')
+                if(status !== '' && status !== null && status !== undefined) {
+                    next()
+                } else {
+                    next('/login')
+                }
             }
         },
         {

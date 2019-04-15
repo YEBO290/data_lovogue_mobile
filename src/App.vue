@@ -32,7 +32,10 @@ export default {
         bgr: state => state.bgr,
         showMenu: state => state.showMenu,
         showFooter: state => state.showFooter
-    })
+    }),
+    methods: {
+        
+    }
 }
 
 </script>

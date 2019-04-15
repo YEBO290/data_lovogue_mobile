@@ -84,7 +84,7 @@
                 <img :src="detailInfo.imgurl" style="width:68px;height:68px;">
               </div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="18">
               <div class="grid-content bg-purple rightImg">
                 <p class="price">RMB {{detailInfo.tagprice}}</p>
                 <p class="inventory">库存{{detailInfo.inventory}}件</p>
@@ -101,7 +101,7 @@
              <div class="size_line"></div>
           </div>      
           <div v-if="weightList.length > 0">
-            <div class="select_color"><span class="select_color">重量</span><span style="color: red;margin-left:0.1rem;font-weight:normal" v-if="weightTip">请选择颜色</span></div>
+            <div class="select_color"><span class="select_color">重量</span><span style="color: red;margin-left:0.1rem;font-weight:normal" v-if="weightTip">请选择重量</span></div>
             <el-tag type="info" v-for="(item, index) in weightList" :key="index" @click="selectWeightFunc(item, index)" :class="{'checkedColor': selectWeightList[index]}">{{item}}</el-tag>   
              <div class="size_line"></div>
           </div>    
@@ -161,6 +161,7 @@
                     
 <script>
 import { mapState } from 'vuex'
+// import workspace from '../../common.js'
 export default {
   components: {
 
@@ -187,11 +188,11 @@ export default {
       num: 1,
       flag: '',
       selectColor: '',
-      selectColorList: [],
+      selectColorList: [true],
       selectSize: '',
-      selectSizeList: [],
+      selectSizeList: [true],
       selectWeight: '',
-      selectWeightList: [],
+      selectWeightList: [true],
       sizeTip: false,
       colorTip: false,
       weightTip: false,
@@ -205,7 +206,10 @@ export default {
           sizenum: '',
           weight: '',
           material: '',
-          typeno: ''
+          typeno: '',
+          coloravailable: '',
+          weight: '',
+          sizenum: ''
       },
       detail:{
         name: 'Consectetur',
@@ -241,13 +245,15 @@ export default {
       recommendList: state => state.detailList.recommendList,
       // sizeLists: state => state.detail.sizeLists,
       detailInfo: function(state) {
-        debugger
         this.desc = state.detail.detailInfo.describe
-        this.colorList = state.detail.detailInfo.describe.coloravailable.split(" ")
-        this.weightList = state.detail.detailInfo.describe.weight.split(" ")
-        this.sizeLists = state.detail.detailInfo.describe.sizenum.split(" ")
+        this.colorList = this.desc.coloravailable.split(" ")
+        this.weightList = this.desc.weight.split(" ")
+        this.sizeLists = this.desc.sizenum.split(" ")
+        this.selectColor = this.desc.coloravailable
+        this.selectSize = this.desc.sizenum
+        this.selectWeight = this.desc.weight
         return state.detail.detailInfo},
-      descDetail: state => { debugger 
+      descDetail: state => {
         this.desc = state.detail.detailInfo.describe
         return state.detail.detailInfo.describe 
       }
@@ -270,19 +276,62 @@ export default {
       this.showMenu = true
     },
     // 收藏
-    toLoveFunc() {
+    toLoveFunc(item) {
       this.toLove = false
       this.loveTip = '收藏成功'
-      // 发送请求
-      this.$store.dispatch('toLoved').then(res => {
+      let param = {
+        userid: localStorage.getItem('userName'),
+        status: "1",
+        prodid: item.productid,
+        amount: "1"
+      }
+      this.$store.dispatch('toLoved', param).then(res => {
+        if(res == 1) {
+          let queryParam = {
+            userid: localStorage.getItem('userName'),
+            status: "1"
+          }
+          this.$store.dispatch('login/queryLovedList', queryParam)
+          let param = {
+            productid: this.id
+          }
+          this.$store.dispatch('detail/queryDetail', param)
+        } else {
+          this.$message({
+            message: '添加挚爱失败，请重试',
+            type: 'error'
+          })
+        }   
       })
     },
     // 取消收藏
-    cancelLove() {
+    cancelLove(item) {
       this.toLove = true
       this.loveTip = '收藏'
       // 发送请求
-      this.$store.dispatch('cancelLove').then(res => {
+      let param = {
+        userid: localStorage.getItem('userName'),
+        status: "0",
+        prodid: item.productid,
+        amount: "1"
+      }
+      this.$store.dispatch('cancelLove', param).then(res => {
+        if(res == 1) {
+          let queryParam = {
+            userid: localStorage.getItem('userName'),
+            status: "1"
+          }
+          this.$store.dispatch('login/queryLovedList', queryParam)
+          let param = {
+            productid: this.id
+          }
+          this.$store.dispatch('detail/queryDetail', param)
+        } else {
+          this.$message({
+            message: '移除挚爱失败，请重试',
+            type: 'error'
+          })
+        }   
       })
     },
     // 立即选购
@@ -300,28 +349,48 @@ export default {
     save(){
       this.colorTip = false
       this.sizeTip = false
+      this.weightTip = false
       if(this.selectColor == '' || this.selectColor == null) {
         this.colorTip = true
         return false
       } 
+      if (this.selectWeight === '' || this.selectWeight == null) {
+        this.weightTip = true
+        return false
+      }  
       if (this.selectSize === '' || this.selectSize == null) {
         this.sizeTip = true
         return false
-      }  
+      }
       let param = {
           selectColor: this.selectColor,
           selectSize: this.selectSize,
-          num: this.num
+          amount: this.num,
+          prodid: this.id,
+          userid: localStorage.getItem('userName'),
+          status: "1"
         }
         if(this.flag === 'add') { // 加入购物袋
           // let param = {"prodid":"VR0060DI18R","userid":"admin","amount":"1","status":"1"}
           this.$store.dispatch('detail/toBag', param).then(res => {
-            this.$store.commit('shopBagNumber', 1)
-            this.$message({
-              message: '添加成功，在购物车等着亲~',
-              type: 'success'
-            });
-            this.innerVisible = false
+            if(res == 1) {
+              this.$store.commit('shopBagNumber', 1)
+              this.$message({
+                message: '添加成功，在购物车等着亲~',
+                type: 'success'
+              })
+              let queryParam = {
+                userid: localStorage.getItem('userName'),
+                status: "1"
+              }
+              this.$store.dispatch('login/queryBagList', queryParam)
+              this.innerVisible = false
+            } else {
+              this.$message({
+                message: '添加失败，请重试',
+                type: 'error'
+              })
+            }       
           })
         } else {
           this.$store.dispatch('detail/toBuy', param).then(res => {
@@ -380,7 +449,7 @@ export default {
               message: '一定会通知亲~',
               type: 'success'
             })
-            this.noticeVisible = false
+            me.noticeVisible = false
           })
         } else {
           console.log('error submit!!');

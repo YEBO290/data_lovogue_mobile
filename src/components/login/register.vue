@@ -136,7 +136,6 @@
       }
     },
     created() {
-      localStorage.clear()
     },
     methods: {
         // 提交

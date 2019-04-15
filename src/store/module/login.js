@@ -1,35 +1,9 @@
 import {get, post} from '../../axios/index'
 import api from '../../axios/api.js'
 const state = {
-  userName: 'admin',
-  phone: 'admin',
-  lovesList: [{
-    url: require('../../assets/logo.png'),
-    code: 12345,
-    txt: '女神耳环',
-    price: 230,
-    color: '银色'
-  },
-  {
-    url: require('../../assets/logo.png'),
-    code: 12345,
-    txt: '女神耳环',
-    price: 230,
-    color: '银色'
-  },
-  {
-    url: require('../../assets/logo.png'),
-    code: 12345,
-    txt: '女神耳环',
-    price: 230,
-    color: '银色'
-  },{
-    url: require('../../assets/logo.png'),
-    code: 12345,
-    txt: '女神耳环',
-    price: 230,
-    color: '银色'
-  }],
+  userName: '',
+  phone: '',
+  lovesList: [],
   searchList: [{
     url: require('../../assets/logo.png'),
     code: 12345,
@@ -58,49 +32,6 @@ const state = {
     color: '银色'
   }],
   bagList: [],
-  // bagList: [{
-  //   id: 1,
-  //   url: require('../../assets/logo.png'),
-  //   code: 1234344345,
-  //   txt: '女神耳环',
-  //   price: 230,
-  //   color: '银色',
-  //   size: 'M',
-  //   pay: 0,
-  //   num: 2
-  // },
-  // {
-  //   id: 2,
-  //   url: require('../../assets/logo.png'),
-  //   code: 1233333335,
-  //   txt: '女神耳环',
-  //   price: 230,
-  //   color: '银色',
-  //   size: 'M',
-  //   pay: 10,
-  //   num:5
-  // },
-  // {
-  //   id: 3,
-  //   url: require('../../assets/logo.png'),
-  //   code: 12333333345,
-  //   txt: '女神耳环',
-  //   price: 230,
-  //   color: '银色',
-  //   size: 'M',
-  //   pay: 0,
-  //   num:1
-  // },{
-  //   id: 4,
-  //   url: require('../../assets/logo.png'),
-  //   code: 1234333335,
-  //   txt: '女神耳环',
-  //   price: 230,
-  //   color: '银色',
-  //   size: 'M',
-  //   pay: 8,
-  //   num: 2
-  // }],
   recommendList: [{
     url: require('../../assets/logo.png'),
     code: 12345,
@@ -120,7 +51,9 @@ const state = {
     name: '女神耳环',
     price: 230,
     color: '银色'
-  }]
+  }],
+  lovedNumber: 0, // 成功收藏的数量
+  shopBagNumber: 0, // 购物袋数量
 
 }
 const actions = {
@@ -170,7 +103,6 @@ const actions = {
   },
   // 喜爱的列表
   queryLovedList (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       post(api.getScreenLove, param).then((res) => {
         context.commit('lovesList', res)
@@ -182,7 +114,6 @@ const actions = {
   },
   // 购物车的列表
   queryBagList (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
         post(api.getScreenCar, param).then((res) => {
           context.commit('bagList', res)
@@ -194,7 +125,6 @@ const actions = {
   },
   // 推荐列表
   queryRecommendList (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get(api.querySituationList, '123').then((res) => {
@@ -208,7 +138,6 @@ const actions = {
   },
   // 删除喜爱物品
   delLove (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
         post(api.updateLove, param).then((res) => {
           // context.dispatch('queryLovedList')
@@ -220,7 +149,6 @@ const actions = {
   },
   // 喜爱物品加入购物袋
   addBag (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get(api.querySituationList, '123').then((res) => {
@@ -233,7 +161,6 @@ const actions = {
   },
   // 删除购物袋物品
   delBag (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       post(api.updateCar, param).then((res) => {
         // context.dispatch('queryLovedList')
@@ -245,7 +172,6 @@ const actions = {
   },
   // 购物袋立即支付
   toPay (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get(api.querySituationList, '123').then((res) => {
@@ -259,7 +185,6 @@ const actions = {
   },
   // 搜索的列表
   querySearchList (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get(api.querySituationList, '123').then((res) => {
@@ -279,9 +204,11 @@ const mutations = {
   },
   lovesList (state, data) {
     state.lovesList = data
+    state.lovedNumber = data.length
   },
   bagList (state, data) {
     state.bagList = data
+    state.shopBagNumber = data.length
   },
   recommendList (state, data) {
     state.recommendList = data

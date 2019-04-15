@@ -67,7 +67,7 @@
       queryUseLogin() {
         let me = this
         let param = {
-            "userid": "admin",
+            "userid": localStorage.getItem('userName'),
             "password": "123456"
         }
         me.$store.dispatch('login/queryUseLogin', param)

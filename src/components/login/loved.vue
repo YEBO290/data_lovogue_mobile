@@ -1,19 +1,19 @@
 <template>
   <div class="loved">
     <div class="loved_lists" v-if="!showToLogin && lovesList.length > 0">
-      <el-row :gutter="20" class="loved_list" v-for="(item, index) in lovesList" :key="index">
-        <el-col :span="7"><img :src="item.url" class="loved_img"/></el-col>
+      <el-row :gutter="20" class="loved_list" v-for="(item, index) in lovesList" :key="index" @click="toDetail(item)">
+        <el-col :span="7"><img :src="item.imgpath" class="loved_img" style="width:100%;"/></el-col>
         <el-col :span="17">
           <div>
-            <span class="loved_text">{{item.txt}}</span>
-            <i class="el-icon-close" @click="delLove(item)"></i>
+            <span class="loved_text">{{item.name}}</span>
+            <i class="el-icon-close" @click.stop="delLove(item)"></i>
           </div>
           <div>
             <span class="loved_color">{{item.color}} - <span  class="loved_code">编号  {{item.prodid}}</span></span>
           </div>
           <div class="loved_country">
-            <span class="loved_price">RMB {{item.price}}</span>
-            <i class="icon_bag" @click="addBag"></i>
+            <span class="loved_price">RMB {{item.tagprice}}</span>
+            <i class="icon_bag" @click.stop="addBag"></i>
           </div>
         </el-col>
       </el-row>
@@ -80,7 +80,10 @@ export default {
       } else {
         this.showToLogin = true
       }
-      let param = {"userid":"admin","status":"1"}
+      let param = {
+        userid: localStorage.getItem('userName'),
+        status: "1"
+      }
       this.$store.dispatch('login/queryLovedList', param) // 喜爱的列表查询
     },
     methods: {
@@ -99,13 +102,21 @@ export default {
           status: "0"
         }
         this.$store.dispatch('login/delLove', delParam).then(() => {
-          let param = {"userid":"admin","status":"1"}
+          let param = {
+            userid: localStorage.getItem('userName'),
+            status: "1"
+          }
           this.$store.dispatch('login/queryLovedList', param)
         })
 
       },
       addBag(){
-        this.$store.dispatch('login/addBag')
+        // this.$store.dispatch('login/addBag')
+        this.$router.push('/bag')
+      },
+       // 详情
+      toDetail(val) {
+        this.$router.push(`/detail/${val.prodid}`)
       }
     }
   }
@@ -113,4 +124,7 @@ export default {
 
 <style scoped>
 @import "./css/index.less";
+.el-icon-plus, .el-icon-minus, .el-icon-close{
+  left:auto;
+}
 </style>

@@ -87,17 +87,26 @@ export default {
     submitForm(formName) {
       let me = this
       let fromPath = this.$router.history.current.query.fromPath
-      localStorage.setItem('userName', 'admin')
+      // localStorage.setItem('userName', 'admin')
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let param = {
-            username: me.ruleForm.phone,
+            userid: me.ruleForm.phone,
             password: me.ruleForm.pass
           }     
           me.$store.dispatch('login/toLogin', param).then(res => {
             if(res) {
-              localStorage.setItem('userName',res)
-              debugger
+              localStorage.setItem('userName',res[0].userid)
+              let loveParam = {
+                userid: localStorage.getItem('userName'),
+                status: "1"
+              }
+              me.$store.dispatch('login/queryLovedList', loveParam) // 喜爱的列表查询
+              let queryParam = {
+                userid: localStorage.getItem('userName'),
+                status: "1"
+              }
+              me.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
               if(fromPath !== ''){
                 me.$router.push(fromPath)
               } else {
@@ -105,7 +114,7 @@ export default {
               }
             }              
           }).catch(err => {
-            // localStorage.setItem('userName', '')
+            localStorage.setItem('userName', '')
           })
         } else{
           console.log('error submit!!')

@@ -256,7 +256,6 @@ label{
     height:26px;
     padding:4px 8px;
     background-size: 68px 18px;
-    margin-right: 17px;
   }
   .el-loading-mask{
     height: 60px;
@@ -267,4 +266,5 @@ label{
     margin-top: -30px;
     position:absolute!important;
   }
+
   

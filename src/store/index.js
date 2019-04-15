@@ -15,8 +15,6 @@ vue.use(vuex)
  * 公共模块
  */
 const state = {
-  lovedNumber: 200, // 成功收藏的数量
-  shopBagNumber: 10, // 购物袋数量
   showToTop: false, // 返回顶部按钮
   bgr: false, // 脚部背景色
   showMenu: false, // 主菜单
@@ -63,7 +61,6 @@ const state = {
 const actions = {
   // 关于我们
   queryAboutDetail (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get(api.querySituationList, '123').then((res) => {
@@ -77,7 +74,6 @@ const actions = {
   },
   // 联系我们
   queryContactDetail (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         console.log(api)
@@ -92,7 +88,6 @@ const actions = {
   },
   // 提交客服
   saveCustomerSservice (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         console.log(api)
@@ -106,7 +101,6 @@ const actions = {
   },
   // 提交重置密码
   savePassWord (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         console.log(api)
@@ -120,7 +114,6 @@ const actions = {
   },
   // 收藏
   toLoved (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       post(api.insertLove, param).then((res) => {         
         resolve(res)
@@ -131,7 +124,6 @@ const actions = {
   },
   // 取消收藏
   cancelLove (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       post(api.updateLove, param).then((res) => {
         resolve(res)

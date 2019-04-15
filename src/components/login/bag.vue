@@ -1,33 +1,36 @@
 <template>
   <div class="bag">
     <div class="bag_lists" v-if="!showToLogin && bagList.length > 0">
+      <!--暂不考虑全选，多选-->
       <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" class="allCheck">全选</el-checkbox>
       <div style="margin: 0.15rem 0;"></div>    
-        <el-row :gutter="20" class="bag_list" v-for="(item, index) in bagList" :key="index">
+        <el-row :gutter="20" class="bag_list" v-for="(item, index) in bagList" :key="index" @click="toDetail(item)">
+          <!--暂不考虑全选，多选-->
           <el-col :span="2">
             <el-checkbox-group v-model="checkedLists" @change="handleCheckedListsChange">          
               <el-checkbox :label="item.id">
               </el-checkbox>
             </el-checkbox-group> 
-          </el-col>        
-          <el-col :span="8"><img :src="item.url" class="loved_img"/></el-col>
+          </el-col>
+          <el-col :span="8"><img :src="item.imgpath" class="loved_img" style="width:100%;"/></el-col>
           <el-col :span="14">
             <div>
-              <span class="bag_text">{{item.txt}}</span>
-              <i class="el-icon-close" @click="delBag"></i>
+              <span class="bag_text">{{item.name}}</span>
+              <i class="el-icon-close" @click.stop="delBag(item)"></i>
             </div>
             <div>
-              <span class="bag_color">{{item.color}} - <span  class="bag_code">编号  {{item.code}}</span></span>
+              <span class="bag_color">{{item.coloravailable}} - <span  class="bag_code">编号  {{item.prodid}}</span></span>
             </div>
-            <div class="number">
-              <el-input-number v-model="item.num" :min="1" label="数量"></el-input-number>
-            </div>
+            <!--暂不考虑数量的加减-->
+            <!--<div class="number">
+              <el-input-number v-model="item.amount" :min="1" label="数量"></el-input-number>
+            </div>-->
             <div style="height: 0.2rem; margin-top: 0.53rem;">
               <div class="bag_size">
-                <span>size： {{item.size}}; {{item.color}}</span>
+                <span>size:{{item.sizenum}};  {{item.coloravailable}}</span>
               </div>
               <div class="bag_country">
-                <span class="bag_price">RMB {{item.price}}</span>
+                <span class="bag_price">RMB {{item.tagprice}}</span>
               </div>
             </div>
           </el-col>         
@@ -108,8 +111,11 @@ export default {
       } else {
         this.showToLogin = true
       }
-      let param = {"userid":"admin","status":"1"}
-      this.$store.dispatch('login/queryBagList', param) // 购物袋的列表查询
+      let queryParam = {
+        userid: localStorage.getItem('userName'),
+        status: "1"
+      }
+      this.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
       // this.$store.dispatch('login/queryRecommendList') // 推荐的列表查询 
       
     },
@@ -123,10 +129,24 @@ export default {
       toRegister() {
         this.$router.push('/login/register')        
       },
-      delBag() {
-        let param = {}
+      delBag(val) {
+        let param = {
+          productid: val.prodid,
+          status: "0"
+        }
         this.$store.dispatch('login/delBag', param).then(res => {
-          this.$store.dispatch('login/queryBagList')
+          if(res == 1) {
+            let queryParam = {
+              userid: localStorage.getItem('userName'),
+              status: "1"
+            }
+            this.$store.dispatch('login/queryBagList', queryParam)
+          } else {
+            this.$message({
+                message: '删除失败，请重试',
+                type: 'error'
+              })
+          }        
         })
       },
       toPay() {
@@ -141,7 +161,8 @@ export default {
         this.checkedLists = val ? list : []
         this.isIndeterminate = false
         this.bagList.forEach(item => {
-          me.totalPay = me.totalPay + parseFloat(item.pay)
+          // 暂不考虑运费
+          // me.totalPay = me.totalPay + parseFloat(item.pay)
           me.totalNmubel = me.totalNmubel + parseInt(item.num)
           me.totalCost = me.totalCost + (parseInt(item.num) * parseFloat(item.price)) + parseFloat(item.pay)
         })
@@ -161,31 +182,34 @@ export default {
         })
         console.log(newList)
         newList.forEach(item => {
-          me.totalPay = me.totalPay + parseFloat(item.pay)
-          me.totalNmubel = me.totalNmubel + parseInt(item.num)
-          me.totalCost = me.totalCost + (parseInt(item.num) * parseFloat(item.price)) + parseFloat(item.pay)
+          // me.totalPay = me.totalPay + parseFloat(item.tagprice)
+          me.totalNmubel = me.totalNmubel + parseInt(1)
+          me.totalCost = me.totalCost + (parseInt(1) * parseFloat(item.tagprice))
+          // 是否考虑运费
+          // me.totalCost = me.totalCost + (parseInt(1) * parseFloat(item.tagprice)) + parseFloat(item.pay)
         })
         me.totalCost = me.thousandBitSeparator(me.totalCost)
         me.checkedLists = newList
       },
       // 千位分割
       thousandBitSeparator(num) {
-          return num && (num
-            .toString().indexOf('.') != -1 ? num.toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {
-              return $1 + ","
-            }) : num.toString().replace(/(\d)(?=(\d{3}))/g, function($0, $1) {
-              return $1 + ",";
-            }))
-        }
+        return num && (num
+          .toString().indexOf('.') != -1 ? num.toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {
+            return $1 + ","
+          }) : num.toString().replace(/(\d)(?=(\d{3}))/g, function($0, $1) {
+            return $1 + ",";
+          }))
+      },
+         // 详情
+      toDetail(val) {
+        this.$router.push(`/detail/${val.prodid}`)
+      }
     }
   }
 </script>
 
 <style scoped>
 @import "./css/index.less";
-.bag_list /deep/ .el-checkbox__inner{
-  margin-top:0.5rem;
-}
 .bag /deep/ .el-checkbox{
     display: inline-block;
     width: 100%;
@@ -221,5 +245,8 @@ export default {
 }
 .allCheck .el-checkbox__label{
   display: inline-block;
+}
+.el-icon-plus, .el-icon-minus, .el-icon-close {
+  left: auto;
 }
 </style>

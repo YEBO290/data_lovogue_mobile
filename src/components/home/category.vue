@@ -12,7 +12,7 @@
         <el-col :span="12" v-for="(item, index) in categoryList" :key="index">
           <div  class="category_list" @click="toDetail(item)">
             <img :src="item.imgpath" class="category_img"/>
-            <img src="../../assets/image/loved.png" style="width: 0.2rem;" class="loved" title="取消收藏" v-if="item.status =='1'"  @click="delLove(item)">
+            <img src="../../assets/image/loved.png" style="width: 0.2rem;" class="loved" title="取消收藏" v-if="item.love =='1'"  @click="delLove(item)">
             <img src="../../assets/image/toLove.png" style="width: 0.2rem;" class="toLove" title="收藏"  @click="addLove(item)" v-else>  
             <p class="category_list_name">{{item.productname}}</p>
             <span class="category_list_price">RMB {{item.tagprice}}</span>
@@ -89,21 +89,51 @@ export default {
       this.$store.dispatch('home/queryCategoryList', param)
     },
     addLove(item) {
-        let param = {
-          userid: "admin",
-          status: "1"
-        }
-        this.$store.dispatch('toLoved', param).then(res => {
-          console.log(res)
-        })
+      let param = {
+        userid: localStorage.getItem('userName'),
+        status: "1",
+        prodid: item.productid,
+        amount: "1"
+      }
+      this.$store.dispatch('toLoved', param).then(res => {
+        if(res == 1) {
+          let queryParam = {
+            userid: localStorage.getItem('userName'),
+            status: "1"
+          }
+          this.$store.dispatch('login/queryLovedList', queryParam)
+          let param =  this.searchParam(30, 1)
+          this.$store.dispatch('home/queryCategoryList', param)
+        } else {
+          this.$message({
+            message: '添加挚爱失败，请重试',
+            type: 'error'
+          })
+        }   
+      })
     },
     delLove(item) {
       let param = {
-        id: 1,
-        status: '0'
+        userid: localStorage.getItem('userName'),
+        status: "0",
+        prodid: item.productid,
+        amount: "1"
       }
       this.$store.dispatch('cancelLove', param).then(res => {
-        console.log(res)
+        if(res == 1) {
+          let queryParam = {
+            userid: localStorage.getItem('userName'),
+            status: "1"
+          }
+          this.$store.dispatch('login/queryLovedList', queryParam)
+          let param =  this.searchParam(30, 1)
+          this.$store.dispatch('home/queryCategoryList', param)
+        } else {
+          this.$message({
+            message: '移除挚爱失败，请重试',
+            type: 'error'
+          })
+        }   
       })
     },
     // 详情

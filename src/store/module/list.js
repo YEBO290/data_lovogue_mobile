@@ -50,7 +50,6 @@ const actions = {
   },
   // 按穿着场合列表
   querySituationList (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get(api.querySituationList, '123').then((res) => {
@@ -64,7 +63,6 @@ const actions = {
   },
   // 按颜色列表
   queryColorList (context, param) {
-    debugger
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         get('api/v1/users/my_address/address_edit_before', param).then((res) => {
