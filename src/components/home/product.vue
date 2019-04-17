@@ -22,6 +22,7 @@
       <p class="showTip list_more_tip"  v-if="showMore">显示{{productTotal}}中的30件</p>
       <el-button class="btn ok_btn" type="primary" @click="toMore" v-if="showMore">载入更多</el-button>   
       <p class="showTip"  v-if="!showMore"  @click="toHide"><i class="el-icon-arrow-up"></i>收起</p>
+      <span><i class="el-icon-delete"></i></span>
     </div>
 </template>
 <script>

@@ -3,7 +3,8 @@
         <div class="confirm_content">
             <div class="addAddress_title">
                 <span class="adress_txt">收件地址</span>
-                <el-button @click="toAddress" class="addAddress">添加新地址</el-button>
+                <i class="el-icon-arrow-right" @click="selectAddress"></i>
+                <!--<el-button @click="toAddress" class="addAddress">添加新地址</el-button>-->
             </div>
             <div class="confirm_message">
                 <span class="confirm_name">{{confirmData.name}}</span>
@@ -46,7 +47,7 @@ import { mapState } from 'vuex'
       confirmData: state => state.address.confirmData
     }),
     created() {
-        // this.$store.dispatch('address/detailConfirmInfo')
+        this.$store.dispatch('address/detailConfirmInfo')
     },
     methods: {
         toBuy() {
@@ -54,6 +55,9 @@ import { mapState } from 'vuex'
         },
         toAddress() {
             this.$router.push('/address')
+        },
+        selectAddress() {
+            this.$router.push('/selectAddress')
         }
     }
   }
@@ -61,4 +65,12 @@ import { mapState } from 'vuex'
 
 <style scoped>
 @import "./css/index.less";
+.confirm /deep/ .el-icon-arrow-right{
+  position: absolute;
+  right: 34px;
+  margin-top: 2px;
+}
+.confirm /deep/ .el-icon-arrow-right:hover{
+  transform: scale(1.2);
+}
 </style>

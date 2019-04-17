@@ -19,7 +19,7 @@
               <i class="el-icon-close" @click.stop="delBag(item)"></i>
             </div>
             <div>
-              <span class="bag_color">{{item.coloravailable}} - <span  class="bag_code">编号  {{item.prodid}}</span></span>
+              <span class="bag_color"> - <span  class="bag_code">编号  {{item.prodid}}</span></span>
             </div>
             <!--暂不考虑数量的加减-->
             <!--<div class="number">
@@ -153,6 +153,7 @@ export default {
         this.$store.dispatch('login/toPay', this.checkedLists)
       },
       handleCheckAllChange(val) {
+        debugger
         let me = this
         let list = []
         this.bagList.forEach(el => {
@@ -160,15 +161,18 @@ export default {
         })
         this.checkedLists = val ? list : []
         this.isIndeterminate = false
+        me.totalNmubel = this.bagList.length
         this.bagList.forEach(item => {
           // 暂不考虑运费
           // me.totalPay = me.totalPay + parseFloat(item.pay)
-          me.totalNmubel = me.totalNmubel + parseInt(item.num)
-          me.totalCost = me.totalCost + (parseInt(item.num) * parseFloat(item.price)) + parseFloat(item.pay)
+          // me.totalNmubel = me.totalNmubel + parseInt(item.num)
+          // me.totalCost = me.totalCost + (parseInt(item.num) * parseFloat(item.tagprice)) + parseFloat(item.pay)
+          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice)
         })
-        me.totalCost = me.thousandBitSeparator(me.totalCost)
+        me.totalCost = me.numFormat(me.totalCost)
       },
       handleCheckedListsChange(value) {
+        debugger
         let me = this
         let checkedCount = value.length;
         this.checkAll = checkedCount === this.bagList.length;
@@ -183,22 +187,21 @@ export default {
         console.log(newList)
         newList.forEach(item => {
           // me.totalPay = me.totalPay + parseFloat(item.tagprice)
-          me.totalNmubel = me.totalNmubel + parseInt(1)
-          me.totalCost = me.totalCost + (parseInt(1) * parseFloat(item.tagprice))
+          // me.totalNmubel = me.totalNmubel + parseInt(1)
+          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice)
           // 是否考虑运费
           // me.totalCost = me.totalCost + (parseInt(1) * parseFloat(item.tagprice)) + parseFloat(item.pay)
         })
-        me.totalCost = me.thousandBitSeparator(me.totalCost)
-        me.checkedLists = newList
+        me.totalCost = me.numFormat(me.totalCost)
       },
       // 千位分割
-      thousandBitSeparator(num) {
-        return num && (num
-          .toString().indexOf('.') != -1 ? num.toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {
-            return $1 + ","
-          }) : num.toString().replace(/(\d)(?=(\d{3}))/g, function($0, $1) {
-            return $1 + ",";
-          }))
+      numFormat(num){
+        var res=num.toString().replace(/\d+/, function(n){ // 先提取整数部分
+            return n.replace(/(\d)(?=(\d{3})+$)/g,function($1){
+                return $1+",";
+              });
+        })
+        return res;
       },
          // 详情
       toDetail(val) {

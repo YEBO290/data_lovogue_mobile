@@ -36,14 +36,14 @@
       <div class="detail_desc">
         <p class="desc_title">描述</p>
         <ul class="detail_desc_list">
-          <li class="detail_desc_sub_one">品牌 ： {{desc.brand}}.</li>
-          <li>• 品类 ： {{desc.category}}.</li>
-          <li>• 售后服务 ：{{desc.vaservie}}.</li>
-          <li>• 场景 ：{{desc.occasion}}.</li>
-          <li>• 增值服务 ：{{desc.service}}.</li>
-          <li>• 尺寸 ：{{desc.sizenum}}.</li>
-          <li>• 总重量 ：{{desc.weight}}.</li>
-          <li>• 材质 ：{{desc.material}}.</li>
+          <li class="detail_desc_sub_one"> {{desc.brand}}.</li>
+          <li>• {{desc.category}}.</li>
+          <li>• {{desc.vaservie}}.</li>
+          <li>• {{desc.occasion}}.</li>
+          <li>• {{desc.service}}.</li>
+          <li>• {{desc.sizenum}}.</li>
+          <li>• {{desc.weight}}.</li>
+          <li>• {{desc.material}}.</li>
           <!--<li class="detail_desc_sub_last">•款号 {{desc.typeno}}.</li>-->
         </ul>
       </div>     
@@ -395,6 +395,7 @@ export default {
         } else {
           this.$store.dispatch('detail/toBuy', param).then(res => {
             this.innerVisible = false
+            this.$router.push('/confirmAddress')
           })
         }     
     },

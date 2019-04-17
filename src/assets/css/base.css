@@ -218,7 +218,8 @@ label{
     border-color: #C5A480;
     outline: 0;
 }
-.el-button:focus, .el-button:hover {
+
+.el-button--primary,.el-button--primary:hover,.el-button--primary:focus {
     color: #EFDED1;
     border-color: #C5A480;
     background-color: #C5A480;
@@ -266,5 +267,16 @@ label{
     margin-top: -30px;
     position:absolute!important;
   }
-
-  
+  .el-message-box{
+    width:60%!important;
+}
+  .el-message-box__btns button:nth-child(1){
+    margin-right:15px!important;
+}
+.el-message-box__headerbtn{
+    right:25px!important;
+}
+.el-button--text:focus,.el-button--text:hover{
+    border: none!important;
+    background: none!important;
+}

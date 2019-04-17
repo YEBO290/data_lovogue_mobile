@@ -154,7 +154,7 @@ export default {
         padding-top: 75px!important;
     }
     .writeBgr{
-        background: #fff!important;
+        /* background: #fff!important; */
     }
     .el-icon-plus, .el-icon-minus, .el-icon-close {
         left: auto;

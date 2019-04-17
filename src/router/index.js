@@ -9,7 +9,8 @@ import detailList from "./../components/specialEdition/detailList"; // 特辑列
 import detail from "./../components/detail"; // 特辑列表详情
 import address from "./../components/address"; // 收货地址
 import confirmAddress from "./../components/address/confirmAddress"; // 收货确认
-import selectAddress from "./../components/address/selectAddress"; // 收货地址列表
+import selectAddress from "./../components/address/selectAddress"; // 收货地址列表 
+import editAddress from "./../components/address/editAddress"; // 修改收货地址
 import home from "./../components/home"; // 收货确认
 import about from "./../components/static/about"; // 关于我们
 import contact from "./../components/static/contact"; // 联系我们
@@ -221,6 +222,11 @@ const router = new Router({
             path: "/search",
             name: "search",
             component: search
+        },
+        { // 修改收货地址 
+            path: "/editAddress",
+            name: "editAddress",
+            component: editAddress
         }
     ]
 });
