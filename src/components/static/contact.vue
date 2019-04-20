@@ -2,7 +2,7 @@
     <div class="contact">
       <p class="contact_txt" :class="{'active_static': id === 'customerService'}" @click="showDetail('customerService')">客服</p>
       <div class="contact_detail" v-if="id === 'customerService'">{{contactDetail.AdvisoryCategory}}
-        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="loginForm">
+        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="loginForm">
             <label class="label_txt">姓名</label><span class="req">*</span>
             <el-form-item prop="name">
                 <el-input type="text" v-model="ruleForm.name" :clearable="true" autocomplete="off" ></el-input>
@@ -32,7 +32,7 @@
                 </el-input>
             </el-form-item>             
         </el-form>
-        <el-button class="btn ok_btn" type="primary" @click="submitForm('ruleForm')" style="margin-top:5px">提交</el-button>
+        <el-button class="btn ok_btn" type="primary" @click="submitForm('ruleForm')" style="margin-top:0.05rem">提交</el-button>
       </div>
       <p class="contact_txt" :class="{'active_static': id === 'orderSend'}" @click="showDetail('orderSend')">订单与配送</p>
       <div class="contact_detail" v-if="id === 'orderSend'">
@@ -41,8 +41,8 @@
       </div>
       <p class="contact_txt" :class="{'active_static': id === 'resetPassWord'}" @click="showDetail('resetPassWord')">重设密码</p>
       <div class="contact_detail" v-if="id === 'resetPassWord'">
-        <p style="margin-bottom:30px;">欲重设密码，您只需在下面的项栏里输入您的初始密码，验证通过后即可重设密码。</p>
-        <el-form :model="rulePassWordForm" status-icon :rules="rulesPassWord" ref="rulePassWordForm" label-width="100px" class="loginForm">
+        <p style="margin-bottom:0.3rem;">欲重设密码，您只需在下面的项栏里输入您的初始密码，验证通过后即可重设密码。</p>
+        <el-form :model="rulePassWordForm" status-icon :rules="rulesPassWord" ref="rulePassWordForm" label-width="1rem" class="loginForm">
             <label class="label_txt">原始密码</label><span class="req">*</span>
             <el-form-item prop="oldPass">
                 <el-input type="text" v-model="rulePassWordForm.oldPass" :clearable="true" autocomplete="off" ></el-input>
@@ -56,7 +56,7 @@
                 <el-input type="text" v-model="rulePassWordForm.checkPass" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>           
         </el-form>
-        <el-button class="ok_btn btn" type="primary" @click="submitPassWord('rulePassWordForm')" style="margin-top:15px;margin-bottom:0px;">确认更改</el-button>
+        <el-button class="ok_btn btn" type="primary" @click="submitPassWord('rulePassWordForm')" style="margin-top:0.15rem;margin-bottom:0rem;">确认更改</el-button>
       </div>
       <p class="contact_txt" :class="{'active_static': id === 'returnRefund'}" @click="showDetail('returnRefund')">退货与退款</p>
       <div class="contact_detail returnRefund" v-if="id === 'returnRefund'">
@@ -273,9 +273,9 @@ export default {
 </script>
 <style scoped>
 .contact{
-  padding-top: 25px;
-  padding-left:18px;
-  padding-right:18px;
+  padding-top: 0.25rem;
+  padding-left:0.18rem;
+  padding-right:0.18rem;
   background: #f6f6f6;
   text-align:left;
 }
@@ -291,47 +291,47 @@ export default {
   color:#666;
 }
 .contact_detail{
-  padding-left:18px;
-  padding-right:18px;
-  padding-bottom:20px;
-  margin-top:13px;
+  padding-left:0.18rem;
+  padding-right:0.18rem;
+  padding-bottom:0.2rem;
+  margin-top:0.13rem;
 }
 .contact_detail:before{
   content: ''; /*伪类下的属性*/
     display:block;
     position:relative;
-    top: -20px;
-    left: 0px;
+    top: -0.2rem;
+    left: 0rem;
     width:0;
     height:0;
     overflow:hidden;
     font-size: 0;     /*是因为, 虽然宽高度为0, 但在IE6下会具有默认的 */
     line-height: 0;  /* 字体大小和行高, 导致盒子呈现被撑开的长矩形 */
-    border:10px;
+    border:0.1rem;
     border-style:dashed dashed solid dashed;
     border-color:transparent transparent #fff transparent;
 }
 .contact_txt{
-  margin-top:13px;
+  margin-top:0.13rem;
 }
 .contact_detail strong{
-  margin-bottom:10px;
+  margin-bottom:0.1rem;
   display: inline-block;
 }
 .wechat{
-  margin-top:15px;
+  margin-top:0.15rem;
 }
 .returnRefund p,.privacyPolicy p{
   color:#666;
   font-size:12px;
-  line-height:18px;
+  line-height:0.18rem;
 }
 .sub_title{
   color:#333!important;
-  line-height:18px;
-  margin-bottom:25px;
+  line-height:0.18rem;
+  margin-bottom:0.25rem;
 }
 .sub_title_top,.sub_txt{
-  margin-top:25px;
+  margin-top:0.25rem;
 }
 </style>

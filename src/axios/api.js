@@ -24,7 +24,7 @@ var service = {
 
     addInsertLove: '/pmsShop/insertLove',  // 添加挚爱
     getUserInsertLove: '/pmsShop/getScreenLove',  // 获取客户挚爱
-    
+    searchProduct: 'pms/searchProduct', // 搜索
 
 }
 export default service

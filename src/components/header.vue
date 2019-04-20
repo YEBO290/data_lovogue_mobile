@@ -81,10 +81,10 @@ export default {
 <style scoped>
     .header{
         width:100%;
-        height:50px;
-        line-height:18px;
+        height:0.5rem;
+        line-height:0.18rem;
         background: #C5A480;
-        padding:16px 18px;
+        padding:0.16rem 0.18rem;
     }
     .header_menu{
         /* display: inline-block;
@@ -94,7 +94,7 @@ export default {
         width: 18px;
         height:18px; */
         position: absolute;
-        left: 18px;
+        left: 0.18rem;
     }
     .header_search{
         /* display: inline-block;
@@ -104,18 +104,18 @@ export default {
         width: 18px;
         height:18px; */
         position: absolute;
-        left: 61px;
+        left: 0.61rem;
     }
     .header_logo{
         display: inline-block;
         /* background-image:url('../assets/image/menu.png');
         background-repeat: no-repeat;
         background-position: center center; */
-        width: 128px;
-        height:18px;
+        width: 1.28rem;
+        height:0.18rem;
         /* background: red; */
         position: absolute;
-        left: 124px;
+        left: 1.24rem;
 
     }
     .header_loved{
@@ -126,7 +126,7 @@ export default {
         width: 18px;
         height:18px; */
         position: absolute;
-        left: 302px;
+        left: 3.02rem;
 
     }
     .header_shop_bag{
@@ -137,18 +137,18 @@ export default {
         width: 18px;
         height:18px; */
         position: absolute;
-        right: 18px;
+        right: 0.18rem;
 
     }
     .lovedNumber{
-        height: 14px;
+        height: 0.14rem;
         /* padding: 2px; */
-        padding-left: 3px;
-        padding-right: 3px;
-        padding-bottom: 2px;
+        padding-left: 0.03rem;
+        padding-right: 0.03rem;
+        padding-bottom: 0.02rem;
         display: inline-block;
         border-radius: 50%;
-        border: 1px solid red;
+        border: 0.01rem solid red;
         font-size: 10px;
     }
 </style>

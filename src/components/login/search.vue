@@ -68,7 +68,17 @@ export default {
     },
     methods: {
       search() {
-        let param = this.searchVal.trim()
+        debugger
+        let param = {
+          data: {
+              language: "cn",
+              productname: this.searchVal.trim()
+            },
+            listQuery: {
+              pageSize: 30,
+              pageNum: 1
+            }
+        }
         this.$store.dispatch('login/querySearchList', param)
       },
       toLogin() {

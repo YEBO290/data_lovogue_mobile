@@ -1,7 +1,7 @@
 <template>
   <div class="adress address-content" >
     <div class="edit_title"><i class="el-icon-arrow-left" @click="back"></i><span>编辑收货地址</span><el-button type="text" @click="save" class="save">保存</el-button></div>
-        <el-form :model="editInfo" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm edit_content">
+        <el-form :model="editInfo" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="demo-ruleForm edit_content">
             <el-form-item label="" prop="name">
                 <el-input
                     suffix-icon="glyphicon glyphicon-user"
@@ -109,28 +109,28 @@ export default {
 }
 .edit_content{
     background: #fff;
-    padding: 0px 10px 20px 10px;
+    padding: 0rem 0.1rem 0.2rem 0.1rem;
 }
 .el-icon-arrow-left{
     position: absolute;
-    left: 18px;
-    margin-top:8px;
+    left: 0.18rem;
+    margin-top:0.08rem;
 }
 .save{
     position: absolute;
-    right: 24px;
-    margin-top: -5px;
+    right: 0.24rem;
+    margin-top: -0.05rem;
 }
 .edit_title{
-    height: 30px;
-    line-height: 30px;
+    height: 0.3rem;
+    line-height: 0.3rem;
 }
 .del_btn{
-    height: 40px;
-    margin-top: 15px;
+    height: 0.4rem;
+    margin-top: 0.15rem;
     text-align: left;
     color: red;
-    padding-left:10px;
+    padding-left:0.1rem;
     background:#fff;
 }
 .del{

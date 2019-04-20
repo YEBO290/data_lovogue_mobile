@@ -81,7 +81,7 @@
           <el-row :gutter="20">
             <el-col :span="6">
               <div class="grid-content bg-purple leftImg">
-                <img :src="detailInfo.imgurl" style="width:68px;height:68px;">
+                <img :src="detailInfo.imgurl" style="width:0.68rem;height:0.68rem;">
               </div>
             </el-col>
             <el-col :span="18">

@@ -11,10 +11,10 @@
                 <span class="confirm_phone">{{confirmData.phone}}</span>
                 <p class="confirm_address">{{confirmData.address}}</p>
             </div>
-            <div style="margin-top: 45px;">
+            <div style="margin-top: 0.45rem;">
                 <div class="confirm_info"  v-for="(item, index) in confirmData.baseInfo" :key="index">
                     <div class="confirm_img">
-                        <img :src="item.url" style="width:80px;height:90px;"/>
+                        <img :src="item.url" style="width:0.8rem;height:0.9rem;"/>
                     </div>
                     <div class="confirm_base_info">
                         <p class="confirm_title">{{item.title}}</p>
@@ -67,8 +67,8 @@ import { mapState } from 'vuex'
 @import "./css/index.less";
 .confirm /deep/ .el-icon-arrow-right{
   position: absolute;
-  right: 34px;
-  margin-top: 2px;
+  right: 0.34rem;
+  margin-top: 0.02rem;
 }
 .confirm /deep/ .el-icon-arrow-right:hover{
   transform: scale(1.2);

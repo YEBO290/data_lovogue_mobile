@@ -139,7 +139,7 @@ export default {
     color: #475669;
     font-size: 14px;
     opacity: 0.75;
-    line-height: 200px;
+    line-height: 2rem;
     margin: 0;
   }
   

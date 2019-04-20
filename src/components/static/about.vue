@@ -41,16 +41,16 @@ export default {
   background:#EFDED1;
 }
 .about_txt{ 
-  padding-left:18px;
-  padding-right:18px;
+  padding-left:0.18rem;
+  padding-right:0.18rem;
 }
 .about_img img{
     width: 100%;
-    height: 260px;
+    height: 2.6rem;
 }
 .about_static p {
     font-size: 15px;
     color: #C5A480;
-    margin-top:20px;
+    margin-top:0.2rem;
 }
 </style>

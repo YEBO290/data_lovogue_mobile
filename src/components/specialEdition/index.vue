@@ -53,4 +53,7 @@ export default {
 
 <style scoped>
 @import "./css/index.less";
+img{
+  width:100%;
+}
 </style>

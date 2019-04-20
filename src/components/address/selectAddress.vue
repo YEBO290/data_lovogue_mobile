@@ -62,7 +62,7 @@ export default {
 <style scoped>
 @import "./css/index.less";
 .adress /deep/ .el-row {
-  margin-bottom: 10px;
+  margin-bottom: 0.01rem;
   
 }
 .adress /deep/ .el-row:last-child {

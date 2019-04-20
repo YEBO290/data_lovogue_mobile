@@ -86,23 +86,23 @@ export default {
         background-color: #f6f6f6;
     }
     .footer_remark{
-        height: 120px;
+        height: 1.2rem;
         word-wrap: break-word;
         text-align: center;
         /* color: #654E30; */
         color:#C5A480;
         font-size: 10px!important;
         /* margin-bottom: 10px; */
-        padding-top: 80px;
-        width: 280px;
+        padding-top: 0.8rem;
+        width: 2.8rem;
         margin: 0 auto;
-        padding-bottom: 10px;
+        padding-bottom: 0.1rem;
     }
     .footer_txt_one{
     }
     .el-icon-plus,.el-icon-minus{
         position: absolute;
-        right: 18px;
+        right: 0.18rem;
         font-weight: bolder;
         color:#C5A480;
     }
@@ -110,11 +110,11 @@ export default {
         background: #C5A480;
         color:#EFDED1;
         width:100%;
-        height:40px;
-        border-radius: 3px;
+        height:0.4rem;
+        border-radius: 0.03rem;
     }
     .toTop{
-        padding:25px 18px 30px 18px;
+        padding:0.25rem 0.18rem 0.3rem 0.18rem;
     }
     .bgr{
         background: #EFDED1!important;
@@ -122,10 +122,10 @@ export default {
     .expand p{
         color:#C5A480;
         font-size:12px;
-        line-height:13px;
+        line-height:0.13rem;
         text-align:left;
-        margin-left:18px;
-        margin-top:13px;
+        margin-left:0.18rem;
+        margin-top:0.13rem;
     }
     .active_color{
         color:#c0c4cc!important;
@@ -133,12 +133,12 @@ export default {
     .foot_line{
         background:#C5A480;
         width: 100%;
-        height:1px;
+        height:0.01rem;
     }
     .footer_txt {
-        padding-left:18px;
-        padding-right:18px;
-        padding-top:25px;
+        padding-left:0.18rem;
+        padding-right:0.18rem;
+        padding-top:0.25rem;
         color: #C5A480;
         font-weight: bold;
         font-size: 13px;
@@ -151,7 +151,7 @@ export default {
         color:#654E30!important;    
     }
     .fontColor{
-        padding-top: 75px!important;
+        padding-top: 0.75rem!important;
     }
     .writeBgr{
         /* background: #fff!important; */

@@ -186,14 +186,14 @@ const actions = {
   // 搜索的列表
   querySearchList (context, param) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get(api.querySituationList, '123').then((res) => {
-          context.commit('searchList', res.data)
-          resolve(res.data)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
+      debugger
+      post(api.searchProduct, param).then((res) => {
+        debugger
+        context.commit('searchList', res.data)
+        resolve(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
     })
   },
 }

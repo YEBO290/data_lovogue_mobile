@@ -30,7 +30,7 @@
           <el-col :span="8" v-for="(item, index) in recommendList" :key="index" class="recommend_list_div">
             <div class="grid-content bg-purple">
               
-              <img :src="item.url" style="width:110px;height:147px;display:block;background:#fff;">
+              <img :src="item.url" style="width:1.1rem;height:1.47rem;display:block;background:#fff;">
               <div class="recommend_line"></div>
               <p class="recommend_text">{{item.text}}</p>
             </div>
@@ -39,7 +39,7 @@
       </div>
       <div>
         <el-row  justify="center" :style="{backgroundImage: 'url(' + specialBackImg + ')', backgroundSize:'100%'}">
-          <el-col :span="8" v-for="item in specialImg" :key="item.id" class="subImg" :style="{top: (item.row-1)*195+'px', left:(item.col - 1)*33+'%'}">
+          <el-col :span="8" v-for="item in specialImg" :key="item.id" class="subImg" :style="{top: (item.row-1)*195/100+'rem', left:(item.col - 1)*33+'%'}">
             <div class="grid-content bg-purple showImg" @click="showImg(item)">    
               <div v-if="showList[item.col*item.row]" class="selectList" :class="selectItem(item)">         
                 <div class="select_btn"></div>
