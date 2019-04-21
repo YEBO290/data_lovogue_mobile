@@ -37,15 +37,7 @@
       <div class="detail_desc">
         <p class="desc_title">描述</p>
         <ul class="detail_desc_list">
-          <li class="detail_desc_sub_one"> {{desc.brand}}.</li>
-          <li>• {{desc.category}}.</li>
-          <li>• {{desc.vaservie}}.</li>
-          <li>• {{desc.occasion}}.</li>
-          <li>• {{desc.service}}.</li>
-          <li>• {{desc.sizenum}}.</li>
-          <li>• {{desc.weight}}.</li>
-          <li>• {{desc.material}}.</li>
-          <!--<li class="detail_desc_sub_last">•款号 {{desc.typeno}}.</li>-->
+          <li v-for="(key, value) in desc" :key="value">• {{key}}.</li>
         </ul>
       </div>     
       <div class="recommend_list">
