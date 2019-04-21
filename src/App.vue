@@ -8,6 +8,7 @@
         <div class="content-footer" :class="{'bgr': bgr}" v-if="showFooter"> 
             <footer-tab/>
         </div>
+        <to-top/>
     </div>
 </template>
 
@@ -16,6 +17,7 @@ import HeaderTab from './components/header.vue'
 import FooterTab from './components/footer.vue'
 import { mapState } from 'vuex'
 import menuList from './components/menu'
+import toTop from './components/common/toTop'
 let data = () => {
     return {
     }
@@ -26,7 +28,8 @@ export default {
     components:{
         HeaderTab,
         FooterTab,
-        menuList
+        menuList,
+        toTop
     },
     computed: mapState({
         bgr: state => state.bgr,

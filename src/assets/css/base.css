@@ -291,4 +291,13 @@ label{
     border: 1px solid #c5a480;
     background: #fff;
     opacity: 0.6;
+    border-radius: 50%;
+    text-align: center;
 }
+input::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    color: #C5A480!important;
+    /* placeholder字体大小  */
+    font-size: 12px;
+    /* placeholder位置  */
+  }

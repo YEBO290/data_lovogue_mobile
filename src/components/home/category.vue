@@ -19,9 +19,12 @@
           </div>
           </el-col>
       </el-row>
-      <p class="showTip list_more_tip"  v-if="showMore">显示{{categoryTotal}}中的30件</p>
-      <el-button class="btn ok_btn" type="primary" @click="toMore" v-if="showMore">载入更多</el-button>   
-      <p class="showTip"  v-if="!showMore"  @click="toHide"><i class="el-icon-arrow-up"></i>收起</p>
+      <el-row v-if="categoryTotal > 30">
+        <el-col :span="24">
+          <p class="showTip list_more_tip"  v-if="showMore">显示{{categoryTotal}}中的30件</p>
+          <el-button class="btn ok_btn" type="primary" @click="toMore" v-if="showMore">载入更多</el-button>   
+        </el-col>
+      </el-row>
     </div>
 </template>
 <script>
@@ -138,7 +141,7 @@ export default {
     },
     // 详情
     toDetail(val) {
-      this.$router.push(`/detail/${val.productid}`)
+      this.$router.push(`/detail/${val.typeno}`)
     }
   }
 }

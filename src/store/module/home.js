@@ -67,7 +67,7 @@ const state = {
 const actions = {
     // 查询轮播图
     queryImg(context, param) {
-        param = param || {};
+        param = param || {}
         return new Promise((resolve, reject) => {
             post(api.getScreenCmsManager, param)
             .then(res => {

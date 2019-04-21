@@ -1,7 +1,7 @@
 <template>
     <div class="detail" :descDetail="descDetail">  
       <el-carousel :interval="5000" arrow="always" height="3.75rem">
-        <el-carousel-item v-for="item in detailInfo.imgurl" :key="item">
+        <el-carousel-item v-for="(item, index) in detailInfo.imgurl" :key="index">
           <img :src="item" style="width:100%">
         </el-carousel-item>
       </el-carousel>
@@ -17,14 +17,15 @@
         </div>  
       </div>
       <div class="detail_bts">
-       <!-- <el-select v-model="detail.color" placeholder="选择颜色" class="color_select">
+       <el-select v-model="detail.color" placeholder="选择颜色" class="color_select" @change="handlerSelectColor">
           <el-option
-            v-for="item in colorList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in detailInfo.choice"
+            :key="item.productid"
+            :label="item.color"
+            :value="item.productid">
           </el-option>
-        </el-select>-->
+        </el-select>
+        <span class="req" v-if="showColor">请选择颜色</span>
         <el-button class="btn ok_btn" type="primary" @click="toBuy">立即选购</el-button>
         <el-button class="btn addBag_btn" @click="toBag">加入购物袋</el-button>
       </div>
@@ -78,6 +79,36 @@
           <a class="link size_link">没有适合的尺码</a>
         </div>-->
         <div class="dialog_content">
+          <div v-if="sizeLists.length > 0">
+            <div class="select_size"><span class="select_size">选择尺码</span><span style="color: red;;margin-left:0.1rem;font-weight:normal" v-if="sizeTip">请选择尺码</span></div>
+            <div v-for="(item, index) in sizeChoiceList" :key="index" @click="sizeChoiceFunc">
+              <p></p><span></span>
+            </div>   
+          </div>                     
+        </div>
+        <div slot="footer" class="dialog-footer">
+          <div class="size_line" style="margin-top: 0.2rem;"></div> 
+          <a class="link size_link" @click="noticeVisible = true">没有适合的尺码？</a>
+          <div v-if="showBtn"> 
+            <el-button class="btn ok_btn" type="primary" @click="save" v-if="flag === 'add'">加入购物袋</el-button>
+            <el-button class="btn ok_btn" type="primary" @click="save" v-else>立即选购</el-button>            
+          </div>          
+        </div>   
+        <div v-if="false">
+          <h3 class="addSuccess">商品已加入购物袋</h3>
+          <div>
+            <p style="margin-bottom:10px;">尺码: <span>{{ addDetailInfo.size}}</span></p>
+            <p>RMB <span>{{ addDetailInfo.tagprice }}</span></p>
+          </div>
+          <div><el-button class="btn addBag_btn" @click="$router.push('/bag')">前往购物袋</el-button></div>
+        </div>  
+      </el-dialog>
+      <!--模拟淘宝的购物-->
+      <!-- <el-dialog
+        width="100%"
+        :visible.sync="innerVisible"
+        append-to-body class="select">
+        <div class="dialog_content">
           <el-row :gutter="20">
             <el-col :span="6">
               <div class="grid-content bg-purple leftImg">
@@ -92,8 +123,6 @@
               </el-col>
           </el-row>
           <div class="showImg">
-
-            
           </div>
           <div v-if="colorList.length > 0">
             <div class="select_color"><span class="select_color">颜色</span><span style="color: red;margin-left:0.1rem;font-weight:normal" v-if="colorTip">请选择颜色</span></div>
@@ -111,7 +140,6 @@
             <a class="link size_link" @click="noticeVisible = true">没有适合的尺码</a>
             <div class="size_line" style="margin-top: 0.2rem;"></div>
           </div>          
-          <!--<a class="link size_link">没有适合的尺码</a>-->
           <p class="select_num">购买数量</p>
           <el-input-number v-model="num" :min="1" label="数量"></el-input-number>             
         </div>
@@ -119,7 +147,7 @@
           <div class="size_line"></div>    
           <el-button class="btn ok_btn" type="primary" @click="save">确定</el-button>
         </div>
-      </el-dialog>
+      </el-dialog> -->
       <!--补货上架-->   
       <el-dialog
         title="补货上架，请通知我"
@@ -181,7 +209,13 @@ export default {
       }        
     }
     return {
+      showColor: false,
       showMenu:false,
+      showBtn: false,
+      addDetailInfo: {
+        size: '',
+        tagprice: 0
+      },
       toLove: true,
       loveTip: '收藏',
       innerVisible: false,
@@ -212,10 +246,10 @@ export default {
           sizenum: ''
       },
       detail:{
-        name: 'Consectetur',
-        price: 100,
+        name: '',
+        price: 0,
         color: '',
-        flags: [{text: '职场刚需'},{text: '约会必备'}]
+        flags: []
       },
        ruleForm: {
           email: '',
@@ -235,7 +269,9 @@ export default {
         },
         colorList: [],
         sizeLists: [],
-        weightList: []
+        weightList: [],
+        choiceList: [],
+        sizeChoiceList: []
     }
   },
   props: ['id'],
@@ -249,10 +285,11 @@ export default {
         this.colorList = this.desc.coloravailable.split(" ")
         this.weightList = this.desc.weight.split(" ")
         this.sizeLists = this.desc.sizenum.split(" ")
-        this.selectColor = this.desc.coloravailable
-        this.selectSize = this.desc.sizenum
-        this.selectWeight = this.desc.weight
-        return state.detail.detailInfo},
+        this.selectColor = this.desc.coloravailable || []
+        this.selectSize = this.desc.sizenum || []
+        this.selectWeight = this.desc.weight || []
+        return state.detail.detailInfo
+      },
       descDetail: state => {
         this.desc = state.detail.detailInfo.describe
         return state.detail.detailInfo.describe 
@@ -260,7 +297,7 @@ export default {
     }),
   created() {
     let param = {
-      productid: this.id
+      typeno: this.id
     }
     this.$store.dispatch('detail/queryDetail', param)
     // this.$store.dispatch('detail/queryImg') // 获取轮播图列表 
@@ -334,34 +371,55 @@ export default {
         }   
       })
     },
+    vaildFunc() {
+      debugger
+      let flag = true
+      this.showColor = false
+      if (this.detail.color === '' || this.detail.color === null) {
+        this.showColor = true
+        flag = false
+      }
+      return flag
+    },
     // 立即选购
-    toBuy() {    
+    toBuy() { 
+      if(!this.vaildFunc()) {
+        return faslse
+      }
+      this.showColor = false
+      if (this.detail.color === '' || this.detail.color === null) {
+        this.showColor = true
+        return false
+      }   
       this.innerVisible = true
       this.flag = 'buy'
     },
     // 加入购物袋
-    toBag() {
-      
+    toBag() {    
+      if(!this.vaildFunc()) {
+        return faslse
+      }  
       this.innerVisible = true
       this.flag = 'add'         
     },
     // 确定
     save(){
-      this.colorTip = false
-      this.sizeTip = false
-      this.weightTip = false
-      if(this.selectColor == '' || this.selectColor == null) {
-        this.colorTip = true
-        return false
-      } 
-      if (this.selectWeight === '' || this.selectWeight == null) {
-        this.weightTip = true
-        return false
-      }  
-      if (this.selectSize === '' || this.selectSize == null) {
-        this.sizeTip = true
-        return false
-      }
+      // 模拟淘宝风格数据
+      // this.colorTip = false
+      // this.sizeTip = false
+      // this.weightTip = false
+      // if(this.selectColor == '' || this.selectColor == null) {
+      //   this.colorTip = true
+      //   return false
+      // } 
+      // if (this.selectWeight === '' || this.selectWeight == null) {
+      //   this.weightTip = true
+      //   return false
+      // }  
+      // if (this.selectSize === '' || this.selectSize == null) {
+      //   this.sizeTip = true
+      //   return false
+      // }      
       let param = {
           selectColor: this.selectColor,
           selectSize: this.selectSize,
@@ -463,7 +521,16 @@ export default {
     },
     toMesssge() {
 
-    }
+    },
+    // 颜色选择
+    handlerSelectColor(val) {
+      val && (this.showColor = false)
+    },
+    // 尺码选择
+    sizeChoiceFunc() {
+      this.showBtn = true
+    },
+    
   }
 }
 </script>

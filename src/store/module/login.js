@@ -4,33 +4,10 @@ const state = {
   userName: '',
   phone: '',
   lovesList: [],
-  searchList: [{
-    url: require('../../assets/logo.png'),
-    code: 12345,
-    txt: '女神耳环',
-    price: 230,
-    color: '银色'
+  searchList: {
+    data: [],
+    total: 0
   },
-  {
-    url: require('../../assets/logo.png'),
-    code: 12345,
-    txt: '女神耳环',
-    price: 230,
-    color: '银色'
-  },
-  {
-    url: require('../../assets/logo.png'),
-    code: 12345,
-    txt: '女神耳环',
-    price: 230,
-    color: '银色'
-  },{
-    url: require('../../assets/logo.png'),
-    code: 12345,
-    txt: '女神耳环',
-    price: 230,
-    color: '银色'
-  }],
   bagList: [],
   recommendList: [{
     url: require('../../assets/logo.png'),
@@ -210,9 +187,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       debugger
       post(api.searchProduct, param).then((res) => {
-        debugger
-        context.commit('searchList', res.data)
-        resolve(res.data)
+        context.commit('searchList', res)
+        resolve(res)
       }).catch((err) => {
         console.log(err)
       })
