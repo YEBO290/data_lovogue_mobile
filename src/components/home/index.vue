@@ -13,9 +13,9 @@
           </el-carousel-item>
         </el-carousel>          
       </div>
-      <!-- <div class="img_list">
+      <div class="img_list">
         <el-row :gutter="10">
-          <el-col :span="12" v-for="item in queryImg" :key="item.id">
+          <el-col :span="12" v-for="item in specialImg" :key="item.id">
             <div class="grid-content bg-purple">
               <img :src="item.value"/>
               <h1 class="list__sub_h1">{{item.name}}</h1>
@@ -23,7 +23,7 @@
             </div>
             </el-col>
         </el-row>
-      </div>   -->
+      </div>  
       <div class="product_list">
         <p class="product_list_titile">产品系列</p>
         <!--<div v-for="(item, index) in productList" :key="index" class="productList">
@@ -56,7 +56,7 @@
         <el-row>
           <el-col v-for="item in categoryList" :key="item.id" class="category_list_img">
             <div class="grid-content bg-purple" @click="toCategoryList(item)">
-              <img :src="item.value" style="height:3.39rem;"/>
+              <img :src="item.value" style="width:100%;height:3.39rem;"/>
               <p class="category_list_img_name text-center">{{item.name}}</p>
             </div>
             </el-col>
@@ -84,13 +84,12 @@ export default {
   },
   computed: mapState({
       queryImg: state => state.home.queryImg, // 轮播图
-      lists: state => state.home.lists,
+      specialImg: state => state.home.specialImg,
       productList: state => state.home.productList, // 产品系列
       categoryList: state => state.home.categoryList, // 类别
       showMenu: state => state.showMenu // 菜单
     }),
   created () {
-    debugger
     this.$store.dispatch('home/queryImg')  // 轮播图
     this._intSwiper()
     // this.$store.dispatch('home/queryProductList')  // 产品系列

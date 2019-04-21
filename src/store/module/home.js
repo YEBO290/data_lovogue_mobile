@@ -4,17 +4,7 @@ const state = {
     queryImg: [], // 轮播图
     productList: [], // 产品系列
     categoryList: [], // 类别   
-    lists: [{
-            title: "Lorem ipsum dolor",
-            style: "style01",
-            url: require("../../assets/logo.png")
-        },
-        {
-            title: "Lorem ipsum dolor",
-            style: "style01",
-            url: require("../../assets/logo.png")
-        }
-    ],
+    specialImg: [], //首页特辑双图
     specialEditionList: [{
             // 特辑
             name: "耳环",
@@ -81,12 +71,14 @@ const actions = {
         return new Promise((resolve, reject) => {
             post(api.getScreenCmsManager, param)
             .then(res => {
-                let list = res.filter(item => item.location === 0) // 首页轮播
-                let listProduct = res.filter(item => item.location === 1) // 首页产品系列
-                let listCategory = res.filter(item => item.location === 2) // 首页类别
+                let list = res.data.SpecialRotation // 首页轮播
+                let lists = res.data.SpecialBigraph // 首页特辑双图
+                let listProduct = res.data.PageProductSeries // 首页产品系列
+                let listCategory = res.data.PageCategory // 首页类别                       
                 context.commit("queryImg", list)
                 context.commit("productList", listProduct)
-                context.commit("categoryList", listCategory)        
+                context.commit("categoryList", listCategory)   
+                context.commit("specialImg", lists)      
                 resolve(res);
             })
             .catch(err => {
@@ -212,8 +204,8 @@ const mutations = {
     productList(state, data) {
         state.productList = data
     },
-    lists(state, data) {
-        state.lists = data
+    specialImg(state, data) {
+        state.specialImg = data
     },
     // 类别
     categoryList(state, data) {
