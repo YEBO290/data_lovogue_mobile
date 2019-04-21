@@ -7,32 +7,23 @@
               <img :src="item.value" style="width:100%;">
               <div class="img_opeation">
                 <h1 class="list_h1">{{item.name}}</h1>
-                <!--<p class="img_list_p">{{item.name}}</p>-->
                 <el-button class="img_list_btn" @click="toSpecialEditionList(item)">立即选购</el-button>
               </div>
             </div>
           </el-carousel-item>
-        </el-carousel> 
-         
+        </el-carousel>          
       </div>
-
-      <!--<div class="img_list">
+      <!-- <div class="img_list">
         <el-row :gutter="10">
-          <el-col :span="12" v-for="(item, index) in lists" :key="index">
+          <el-col :span="12" v-for="item in queryImg" :key="item.id">
             <div class="grid-content bg-purple">
-              <img :src="item.url"/>
-              <h1 class="list__sub_h1">{{item.title}}</h1>
-              <p class="img_list_sub_p">{{item.style}}</p>
-              <el-button class="img_list_sub_btn" @click="toBrandList(item)">立即选购</el-button>
+              <img :src="item.value"/>
+              <h1 class="list__sub_h1">{{item.name}}</h1>
+              <el-button class="img_list_sub_btn" @click="toSpecialEditionList(item)">立即选购</el-button>
             </div>
             </el-col>
         </el-row>
-        </div>-->
-       <!-- <div class="img_style"  v-for="(item, index) in lists" :key="index">
-
-          
-        </div>    -->  
-      
+      </div>   -->
       <div class="product_list">
         <p class="product_list_titile">产品系列</p>
         <!--<div v-for="(item, index) in productList" :key="index" class="productList">
@@ -55,7 +46,7 @@
             <div class="swiper-wrapper">
               <div v-for="item in productList" class="swiper-slide" :key="item.id"  @click="toProduct(item)">
                 <img :src="item.value" style="width:200px;height:200px;"/>
-                <h3>{{ item.name }}</h3>
+                <h5>{{ item.name }}</h5>
               </div>
              </div>
         </div>
@@ -196,7 +187,23 @@ export default {
     background-color: #d3dce6;
   }
   #home /deep/ .swiper-slide{
-    width:60%!important;
+    width: 150px!important;
+    height: 150px!important;
+    margin-right:10px!important;
+    position: relative;
+    text-align:center;
 
+  }
+  #home /deep/ .swiper-slide img{
+    width: 150px!important;
+    height: 150px!important;
+
+  }
+  #home /deep/ .swiper-slide h5{
+    position: absolute;
+    margin-top: -44px;
+    color: #EFDED1;
+    width: 100%;
+    text-align: center;
   }
 </style>

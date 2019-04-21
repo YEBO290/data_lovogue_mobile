@@ -24,10 +24,11 @@ var service = {
 
     addInsertLove: '/pmsShop/insertLove',  // 添加挚爱
     getUserInsertLove: '/pmsShop/getScreenLove',  // 获取客户挚爱
-    searchProduct: 'pms/searchProduct', // 搜索
+    searchProduct: '/pms/searchProduct', // 搜索
 
     //密码修改
     resetPassword: '/CrmUser/insertPassword', //邮箱重置密码
+    resetPasswordMessage: '/CrmUser/updateUser', // 短信重置密码
 
 }
 export default service

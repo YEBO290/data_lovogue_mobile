@@ -101,6 +101,17 @@ const actions = {
       })
     })
   },
+   // 短信重置密码
+   resetPwMessage (context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.resetPasswordMessage, param).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+        reject(err)
+      })
+    })
+  },
   // 获取用户登陆信息
   queryUseLogin(context, param) {
     return new Promise((resolve, reject) => {

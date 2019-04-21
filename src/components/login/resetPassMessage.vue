@@ -96,9 +96,29 @@
     },
     methods: {
       submitForm(formName) {
+        let me = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let param = {
+              password: me.ruleForm.pass,
+              userid: localStorage.getItem('userName'),
+              uuid: me.ruleForm.verificationCode
+            }
+            me.$store.dispatch('login/resetPwMessage', param).then(res => {
+              if(res === 1) {
+                me.$message({
+                  message: '密码重设成功',
+                  type: 'success'
+                })
+              } else {
+                me.$message({
+                  message: '操作失败',
+                  type: 'error'
+                })
+              }
+            }).catch(err => {
+              
+            })
           } else {
             console.log('error submit!!');
             return false;

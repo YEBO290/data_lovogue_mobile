@@ -151,4 +151,23 @@ export default {
         border: 0.01rem solid red;
         font-size: 10px;
     }
+    .el-badge /deep/ .el-badge__content{
+         border-radius: 50%/50%;
+        color: #FFF;
+        display: inline-block;
+        font-size: 10px;
+        height: 13px;
+        line-height: 2px;
+        padding: 7px 2px;
+        text-align: center;
+        white-space: nowrap;
+        background-color: red;
+    }
+    .el-badge /deep/ .is-fixed{
+        position: absolute;
+        top: -4px;
+        right: 5px;
+        -webkit-transform: translateY(-50%) translateX(100%);
+        transform: translateY(-50%) translateX(100%);
+    }
 </style>

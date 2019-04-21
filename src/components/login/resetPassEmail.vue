@@ -58,7 +58,17 @@
               userid: localStorage.getItem('userName'),
             }
             me.$store.dispatch('login/resetPwEmail', param).then(res => {
-
+              if(res === 1) {
+                me.$message({
+                  message: '链接已发送至您邮箱，请前往邮箱重设密码',
+                  type: 'success'
+                })
+              } else {
+                me.$message({
+                  message: '操作失败',
+                  type: 'error'
+                })
+              }
             }).catch(err => {
               
             })
