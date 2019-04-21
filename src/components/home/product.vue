@@ -21,8 +21,7 @@
       </el-row>
       <p class="showTip list_more_tip"  v-if="showMore">显示{{productTotal}}中的30件</p>
       <el-button class="btn ok_btn" type="primary" @click="toMore" v-if="showMore">载入更多</el-button>   
-      <p class="showTip"  v-if="!showMore"  @click="toHide"><i class="el-icon-arrow-up"></i>收起</p>
-      <span><i class="el-icon-delete"></i></span>
+      <div class="top"><i class="glyphicon glyphicon-triangle-top" @click="toTop"></i></div>
     </div>
 </template>
 <script>
@@ -73,10 +72,9 @@ export default {
       let param = this.searchParam(this.productTotal, 1)
       this.$store.dispatch('home/queryProductList', param)
     },
-    toHide() {
-      this.showMore = true
-      let param = this.searchParam(30, 1)
-      this.$store.dispatch('home/queryProductList', param)
+    toTop() {
+        document.body.scrollTop = 0
+        document.documentElement.scrollTop = 0
     },
     addLove(item) {
       let param = {

@@ -37,7 +37,8 @@
       return {
         ruleForm: {
           pass: '',
-          phone: ''
+          phone: '',
+          email:''
         },
         rules: {
             email: [
@@ -48,15 +49,19 @@
     },
     methods: {
       submitForm(formName) {
+        debugger
         let me = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let param = {
-              role: '1',
+              email: me.ruleForm.email,
               userid: localStorage.getItem('userName'),
             }
-            me.$store.dispatch('login/updateUser', param)
-            alert('submit!');
+            me.$store.dispatch('login/resetPwEmail', param).then(res => {
+
+            }).catch(err => {
+              
+            })
           } else {
             console.log('error submit!!');
             return false;

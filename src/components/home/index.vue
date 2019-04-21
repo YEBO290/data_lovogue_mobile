@@ -1,7 +1,7 @@
 <template>
     <div class="home" id="home">   
       <div>
-        <el-carousel :interval="4000" arrow="always" height="5rem">
+        <el-carousel :interval="40000000" arrow="always" height="5rem">
           <el-carousel-item v-for="item in queryImg" :key="item.id">
             <div @click="toSpecialEditionList(item)">
               <img :src="item.value" style="width:100%;">
@@ -43,15 +43,22 @@
           </div>
         </div>-->
         
-          <el-carousel  type="card" height="1.5rem" :interval="4000" class="productList">
+          <!-- <el-carousel  type="card" height="1.5rem" :interval="4000" class="productList">
             <el-carousel-item v-for="item in productList" :key="item.id">
               <div @click="toProduct(item)">
                 <img :src="item.value"/>
                 <h3>{{ item.name }}</h3>
-                <!--<span>{{ item.name }}</span>-->
               </div>
             </el-carousel-item>
-          </el-carousel>
+          </el-carousel> -->
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div v-for="item in productList" class="swiper-slide" :key="item.id"  @click="toProduct(item)">
+                <img :src="item.value" style="width:200px;height:200px;"/>
+                <h3>{{ item.name }}</h3>
+              </div>
+             </div>
+        </div>
       </div>
       <div class="category_list">
         <p class="category_list_titile">类别</p>
@@ -68,13 +75,13 @@
           <p class="category_list_img_name">{{item.name}}</p>
         </div>-->
       </div>
-      
     </div>
 </template>
 
 <script>
 import menuList from '../menu'
 import { mapState } from 'vuex'
+import Swiper from 'swiper'
 
 export default {
   components: {
@@ -92,13 +99,27 @@ export default {
       showMenu: state => state.showMenu // 菜单
     }),
   created () {
+    debugger
     this.$store.dispatch('home/queryImg')  // 轮播图
+    this._intSwiper()
     // this.$store.dispatch('home/queryProductList')  // 产品系列
     // this.$store.dispatch('home/queryLists')  // 列表
     // this.$store.dispatch('home/queryCategoryList')  // 类别
      // this.$store.dispatch('home/querySpecialEditionList')  // 特辑
     // this.$store.dispatch('home/queryBrandList')  // 品牌
     // this.$store.dispatch('home/queryAboutList')  // 关于我们
+  },
+  mounted() {
+    new Swiper ('.swiper-container', {
+      loop: true,
+      // 如果需要分页器
+      pagination: '.swiper-pagination',
+      // 如果需要前进后退按钮
+      nextButton: '.swiper-button-next',
+      prevButton: '.swiper-button-prev',
+      // 如果需要滚动条
+      scrollbar: '.swiper-scrollbar',
+    }) 
   },
   methods: {
     del() {
@@ -128,6 +149,29 @@ export default {
     toBrandList() {
       // 跳转至品牌列表页
       this.$router.push('/brandList')
+    },
+    _intSwiper() {
+      var mySwiper = new Swiper ('.swiper-container', {
+        direction: 'vertical', // 垂直切换选项
+        loop: true, // 循环模式选项
+        
+        // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        
+        // 如果需要前进后退按钮
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        
+        // 如果需要滚动条
+        scrollbar: {
+          el: '.swiper-scrollbar',
+        },
+      })
+      
     }
   }
 }
@@ -135,6 +179,7 @@ export default {
 
 <style scoped>
 @import "./css/index.less";
+/* @import '../../node_modules/swiper/dist/css/swiper.min.css'; */
 .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;
@@ -149,5 +194,9 @@ export default {
   
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
+  }
+  #home /deep/ .swiper-slide{
+    width:60%!important;
+
   }
 </style>

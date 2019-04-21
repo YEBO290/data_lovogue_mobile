@@ -33,6 +33,21 @@ export default {
         showMenu: state => state.showMenu,
         showFooter: state => state.showFooter
     }),
+    created() {
+        let me = this
+        if(localStorage.getItem('userName')) {       
+            let loveParam = {
+            userid: localStorage.getItem('userName'),
+            status: "1"
+            }
+            me.$store.dispatch('login/queryLovedList', loveParam) // 喜爱的列表查询
+            let queryParam = {
+            userid: localStorage.getItem('userName'),
+            status: "1"
+            }
+            me.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
+        }
+    },
     methods: {
         
     }

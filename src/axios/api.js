@@ -26,5 +26,8 @@ var service = {
     getUserInsertLove: '/pmsShop/getScreenLove',  // 获取客户挚爱
     searchProduct: 'pms/searchProduct', // 搜索
 
+    //密码修改
+    resetPassword: '/CrmUser/insertPassword', //邮箱重置密码
+
 }
 export default service

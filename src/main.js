@@ -6,6 +6,7 @@ import router from './router/index.js'
 import store from './store/index.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/css/base.css'
+import 'swiper/dist/css/swiper.css'
 import {
     Pagination,
     Dialog,

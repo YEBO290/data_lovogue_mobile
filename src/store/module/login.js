@@ -90,6 +90,17 @@ const actions = {
       })
     })
   },
+   // 邮箱重置密码
+   resetPwEmail (context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.resetPassword, param).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+        reject(err)
+      })
+    })
+  },
   // 获取用户登陆信息
   queryUseLogin(context, param) {
     return new Promise((resolve, reject) => {
