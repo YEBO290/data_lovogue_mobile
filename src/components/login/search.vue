@@ -38,7 +38,6 @@
       <el-button class="btn ok_btn" type="primary" @click="toLogin">登录</el-button>
       <el-button class="btn cancel_btn" type="primary" @click="toRegister">注册</el-button>
     </div>
-    <div class="top" v-if="searchList.data.length > 10"><i class="glyphicon glyphicon-triangle-top" @click="toTop"></i></div>
   </div>
 </template>
 
@@ -104,11 +103,6 @@ export default {
       },
       toRegister() {
         this.$router.push('/login/register')        
-      },
-      toTop() {
-        document.body.scrollTop = 0
-        document.documentElement.scrollTop = 0
-        this.showMore = true
       },
       // 载入更多
       toMore() {
