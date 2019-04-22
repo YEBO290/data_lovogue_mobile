@@ -40,15 +40,17 @@
       <div>
         <el-row  justify="center" :style="{backgroundImage: 'url(' + specialBackImg + ')', backgroundSize:'100%'}">
           <el-col :span="8" v-for="item in specialImg" :key="item.id" class="subImg" :style="{top: (item.row-1)*195/100+'rem', left:(item.col - 1)*33+'%'}">
-            <div class="grid-content bg-purple showImg" @click="showImg(item)">    
-              <div v-if="showList[item.col*item.row]" class="selectList" :class="selectItem(item)">         
-                <div class="select_btn"></div>
-                <div class="select_line"></div>
-                <div class="select_img">
-                  <i class="el-icon-close icon" @click.stop="hideImg(item)"></i>
-                  <img :src="item.imgpath" class="backImg" style="width:100%">
+            <div class="grid-content bg-purple showImg" @click="showImg(item)">
+              <transition name="el-zoom-in-center">    
+                <div v-if="showList[item.col*item.row]" class="selectList" :class="selectItem(item)">         
+                  <div class="select_btn"></div>
+                  <div class="select_line"></div>
+                  <div class="select_img">
+                    <i class="el-icon-close icon" @click.stop="hideImg(item)"></i>
+                    <img :src="item.imgpath" class="backImg" style="width:100%">
+                  </div>
                 </div>
-              </div>
+              </transition>
             </div>
             </el-col>
         </el-row>
