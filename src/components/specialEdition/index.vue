@@ -8,12 +8,12 @@
         <span class="menu_del">清除</span>
       </div>
       <menuList class="menu_list" v-if="showSubMenu"/>
-      <div class="img_list" v-for="item in queryImg" :key="item.id">
-        <img :src="item.value">
+      <div class="img_list" v-for="(item, index) in specialList" :key="index">
+        <img :src="item.backpng">
         <div  class="img_opeation">
-          <h1 class="list_h1">{{item.name}}</h1>
+          <h1 class="list_h1">{{item.prodname}}</h1>
           <!--<p class="img_list_p">{{item.name}}</p>-->
-          <el-button class="img_list_btn" @click="$router.push(`/detailList/${item.id}`)">立即选购</el-button>
+          <el-button class="img_list_btn" @click="$router.push(`/detailList/${item.prodname}`)">立即选购</el-button>
         </div>   
       </div>
       
@@ -33,11 +33,11 @@ export default {
     }
   },
   computed: mapState({
-    queryImg: state => state.home.queryImg,
+    specialList: state => state.specialEdition.specialList,
     showSubMenu: state => state.showSubMenu
   }),
   created() {
-    this.$store.dispatch('home/queryImg')  // 轮播图
+    this.$store.dispatch('specialEdition/querySpecialList')  // 轮播图
   },
   methods: {
     expand() {

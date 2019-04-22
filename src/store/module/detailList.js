@@ -41,8 +41,8 @@ const actions = {
       let params = param || {}
       post(api.getScreenFeature, params).then((res) => {
         // 
-        context.commit('specialImg', res)
-        resolve(res)
+        context.commit('specialImg', res.data)
+        resolve(res.data)
       }).catch((err) => {
         console.log(err)
       })

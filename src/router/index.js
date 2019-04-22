@@ -82,7 +82,8 @@ const router = new Router({
             meta: {
                 flag: "list",
                 showToTop: true
-            }
+            },
+            props: true
         },
         {
             // 详情

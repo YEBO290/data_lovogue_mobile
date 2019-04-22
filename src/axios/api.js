@@ -29,6 +29,7 @@ var service = {
     //密码修改
     resetPassword: '/CrmUser/insertPassword', //邮箱重置密码
     resetPasswordMessage: '/CrmUser/updateUser', // 短信重置密码
-
+    // 特辑
+    getScreenFeatureList: '/Cms/getScreenFeatureList', // 特辑列表
 }
 export default service

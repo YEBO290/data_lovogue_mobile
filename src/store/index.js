@@ -7,6 +7,7 @@ import detailList from './module/detailList'
 import detail from './module/detail' 
 import address from './module/address' 
 import home from './module/home' // 首页
+import specialEdition from './module/specialEdition'
 import {get, post} from '../axios/index'
 import api from '../axios/api.js'
 vue.use(vuex)
@@ -188,6 +189,7 @@ export default new vuex.Store({
     detailList,
     detail,
     address,
-    home
+    home,
+    specialEdition
   }
 })

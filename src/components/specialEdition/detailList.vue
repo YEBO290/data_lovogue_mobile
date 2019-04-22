@@ -62,6 +62,7 @@ export default {
   components: {
 
   },
+  props: ['id'],
   data() {
     return {
       showMenu:false,
@@ -84,8 +85,12 @@ export default {
       }
     }),
   created() {
+    debugger
     // this.$store.dispatch('detailList/queryImg') // 获取轮播图列表
-    this.$store.dispatch('detailList/querySpecialImg') // 获取特辑图片
+    let param = {
+      prodname: this.id
+    }
+    this.$store.dispatch('detailList/querySpecialImg', param) // 获取特辑图片
   },
   methods: {
     // 清除
