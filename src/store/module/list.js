@@ -2,34 +2,9 @@ import {get, post} from '../../axios/index'
 import api from '../../axios/api.js'
 const state = {
   // 穿着列表
-  situationList: [{
-    id: 1,
-    name: '商务'
-  },
-  {
-    id: 2,
-    name: '约会'
-  },
-  {
-    id: 3,
-    name: '宴席'
-  },{
-    id: 4,
-    name: '运动'
-  }],
+  situationList: [],
   // 颜色列表
-  colorList: [{
-    id: 1,
-    name: '卡其色'
-  },
-  {
-    id: 2,
-    name: '白色'
-  },
-  {
-    id: 3,
-    name: '蓝色'
-  }],
+  colorList: [],
   // 查看更多
   moreList: []
 

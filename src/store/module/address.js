@@ -138,6 +138,17 @@ const actions = {
         })
     })
   },
+  // 编辑地址
+  editAddress (context, param) {
+    return new Promise((resolve, reject) => {
+        post(api.updateAddress, param).then((res) => {
+          // context.commit('colorList', res.data)
+          resolve(res)
+        }).catch((err) => {
+          console.log(err)
+        })
+    })
+  },
   // 确认订单详情
   detailConfirmInfo (context, param) {
     return new Promise((resolve, reject) => {
@@ -171,8 +182,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         post(api.getScreenAddress, param).then((res) => {
-          context.commit('addressList', res)
-          resolve(res)
+          context.commit('addressList', res.data)
+          resolve(res.data)
         }).catch((err) => {
           console.log(err)
         })

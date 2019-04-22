@@ -9,7 +9,7 @@
           <span class="address_name">{{item.name}}</span>
           <span class="address_phone">{{item.phone}}</span>
           <div class="address_message">
-            <p>{{item.address}}</p>
+            <p>{{item.addressprovince}}{{item.addresscity}}{{item.addressdistrict}}{{item.address}}</p>
             <span class="edit_list" @click="edit(item, index)">|  修改</span>
           </div>
         <div class="line"></div>
@@ -35,7 +35,8 @@ export default {
     }),
     created() {
       let param = {
-        userid: localStorage.getItem('userName')
+        userid: localStorage.getItem('userName'),
+        status: 1
       }
       this.$store.dispatch('address/queryAddressList', param)
     },
@@ -46,7 +47,7 @@ export default {
       toAddAdress() {
         this.$router.push('/address')
       },
-      edit(val, index) {
+      edit(val, index) {        
         this.editInfo = val
         this.showEdit = true
         let param = encodeURIComponent(JSON.stringify(val))

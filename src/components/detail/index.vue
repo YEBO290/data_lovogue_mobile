@@ -364,7 +364,6 @@ export default {
       })
     },
     vaildFunc() {
-      debugger
       let flag = true
       this.showColor = false
       if (this.detail.color === '' || this.detail.color === null) {

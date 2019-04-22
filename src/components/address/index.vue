@@ -10,7 +10,7 @@
       <el-form-item prop="phone">
         <el-input type="text" v-model="ruleForm.phone" :clearable="true" autocomplete="off"></el-input>
       </el-form-item>
-      <label class="label_txt">配送国家</label><span class="req">*</span>
+      <!--<label class="label_txt">配送国家</label><span class="req">*</span>
       <el-form-item prop="country">
         <el-select v-model="ruleForm.country" placeholder="选择国家" clearable>
           <el-option
@@ -21,39 +21,39 @@
           </el-option>
         </el-select>
       </el-form-item>
-      
+      -->
       <label class="label_txt">配送地址地区</label><span class="req">*</span>
-      <el-form-item prop="province">
-        <el-select v-model="ruleForm.province" placeholder="选择省份" clearable no-data-text="请先选择配送国家">
+      <el-form-item prop="addressprovince">
+        <el-select v-model="ruleForm.addressprovince" placeholder="选择省份" clearable  @change="addressprovinceFunc">
         <el-option
           v-for="item in provinceList"
           :key="item.value"
           :label="item.label"
-          :value="item.value">
+          :value="item.label">
         </el-option>
       </el-select>
       </el-form-item>
       
       <label class="label_txt">配送地址城市</label><span class="req">*</span>
-      <el-form-item prop="city">
-        <el-select v-model="ruleForm.city" placeholder="选择城市" clearable no-data-text="请先选择配送国家、地区">
+      <el-form-item prop="addresscity">
+        <el-select v-model="ruleForm.addresscity" placeholder="选择城市" clearable no-data-text="请先选择配送省份" @change="addresscityFunc">
         <el-option
           v-for="item in cityList"
           :key="item.value"
           :label="item.label"
-          :value="item.value">
+          :value="item.label">
         </el-option>
       </el-select>
       </el-form-item>
       
       <label class="label_txt">配送地址行政区</label><span class="req">*</span>
-       <el-form-item prop="area">
-        <el-select v-model="ruleForm.area" placeholder="选择区" clearable no-data-text="请先选择配送国家、地区、城市">
+       <el-form-item prop="addressdistrict">
+        <el-select v-model="ruleForm.addressdistrict" placeholder="选择区" clearable no-data-text="请先选择配送省份、城市" @change="addressdistrictFunc">
         <el-option
           v-for="item in areaList"
           :key="item.value"
           :label="item.label"
-          :value="item.value">
+          :value="item.label">
         </el-option>
       </el-select>
       </el-form-item>
@@ -75,7 +75,7 @@
           </el-checkbox>
         </el-form-item> 
         <el-button class="adress_btn btn ok_btn" type="primary" @click="submitForm('ruleForm')">保存</el-button>
-        <el-button class="btn cancel_btn" type="primary" @click="back">返回</el-button>
+        <el-button class="btn cancel_btn" @click="back">返回</el-button>
     </el-form>
   </div>
 </template>
@@ -109,9 +109,9 @@ export default {
           name: '', //收件人姓名
           phone: '',  // 手机号
           country: '', // 国家
-          province: '', // 省份
-          city: '', // 城市
-          area: '',// 地区/行政区
+          addressprovince: '', // 省份
+          addresscity: '', // 城市
+          addressdistrict: '',// 地区/行政区
           address: '', // 街道地址   
           term: false 
         },
@@ -125,13 +125,13 @@ export default {
           country: [
             {required: true, message: '请选择配送国家', trigger: ['blur', 'change']}
           ],
-          province: [
+          addressprovince: [
             {required: true, message: '请选择配送地区', trigger: ['blur', 'change']}
           ],
-          city: [
+          addresscity: [
             {required: true, message: '请选择配送城市', trigger: ['blur', 'change']}
           ],
-          area: [
+          addressdistrict: [
             {required: true, message: '请选择配送行政地区', trigger: ['blur', 'change']}
           ],
           address: [
@@ -170,16 +170,29 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let param = {
-              userid: "admin",
-              address: "广东省深圳市福田区",
+              userid: localStorage.getItem('userName'),
+              address: me.ruleForm.address,
               status: "1",
-              addressprovince: this.ruleForm.province || "广东省",
-              addresscity: this.ruleForm.city || "深圳市",
-              name: this.ruleForm.name || "李",
-              phone: this.ruleForm.phone || "13800000000"
+              addressprovince: me.ruleForm.addressprovince,
+              addresscity: me.ruleForm.addresscity,
+              addressdistrict: me.ruleForm.addressdistrict,
+              name: me.ruleForm.name,
+              phone: me.ruleForm.phone
              }
             me.$store.dispatch('address/toSave',param )
-              .then(function (response) {
+              .then(function (res) {
+                if (res.msg == 1) {
+                  me.$message({
+                    message: '新增成功',
+                    type: 'success'
+                  })
+                  me.$router.push('/selectAddress')
+                } else {
+                  me.$message({
+                    message: '操作失败',
+                    type: 'error'
+                  })
+                }
                 console.log(response.data);
               })
               .catch(function (error) {
@@ -190,7 +203,7 @@ export default {
             console.log('error submit!!')
             return false
           }
-        });
+        })
       },
       toContact(param) {      
         this.$router.push(`/contact/${param}`)
@@ -209,6 +222,22 @@ export default {
       },
       back(){
         this.$router.push('/selectAddress')
+      },
+      // 选择省份
+      addressprovinceFunc(val) {
+        this.editInfo.addresscity = ''
+        this.editInfo.addressdistrict = ''
+        this.editInfo.address =''
+
+      },
+      // 选择城市
+      addresscityFunc(val) {
+        this.editInfo.addressdistrict = ''
+        this.editInfo.address =''
+      },
+      // 选择城市区
+      addressdistrictFunc(val) {
+        this.editInfo.address =''
       }
     }
   }

@@ -7,6 +7,10 @@ import store from './store/index.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/css/base.css'
 import 'swiper/dist/css/swiper.css'
+// fade/zoom 等
+import 'element-ui/lib/theme-chalk/base.css'
+// collapse 展开折叠
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 import $ from 'jquery'
 import {
     Pagination,
@@ -78,7 +82,7 @@ import {
     Notification
   } from 'element-ui'
 
-
+Vue.component(CollapseTransition.name, CollapseTransition)
 Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Autocomplete)

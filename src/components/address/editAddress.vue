@@ -1,7 +1,7 @@
 <template>
-  <div class="adress address-content" >
+  <div class="address address-content" >
     <div class="edit_title"><i class="el-icon-arrow-left" @click="back"></i><span>编辑收货地址</span><el-button type="text" @click="save" class="save">保存</el-button></div>
-        <el-form :model="editInfo" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="demo-ruleForm edit_content">
+        <el-form :model="editInfo" status-icon :rules="rules" ref="editInfo" label-width="1rem" class="demo-ruleForm edit_content">
             <el-form-item label="" prop="name">
                 <el-input
                     suffix-icon="glyphicon glyphicon-user"
@@ -12,7 +12,54 @@
                 <el-input v-model="editInfo.phone"></el-input>
             </el-form-item>
             <el-form-item label="" prop="address">
-                <el-input type="textarea" :rows="2" v-model="editInfo.address"></el-input>
+              <div class="detailInfo" v-if="!showEdit" @click="showEdit = true">
+                <el-row :gutter="20">
+                  <el-col :span="20">
+                    <div class="grid-content bg-purple">
+                      <p>{{editInfo.addressprovince}}</p>
+                      <p>{{editInfo.addresscity}}</p>
+                      <p>{{editInfo.addressdistrict}}</p>
+                      <p>{{editInfo.address}}</p> 
+                    </div>
+                    </el-col>
+                  <el-col :span="4">
+                    <div class="grid-content bg-purple" @click="showEdit = true">
+                      <i class="el-icon-arrow-down"></i>
+                    </div>
+                    </el-col>
+                </el-row>
+              </div>
+              <div>
+                <el-collapse-transition>   
+                  <div v-if="showEdit"> 
+                    <el-select v-model="editInfo.addressprovince" placeholder="选择省份" @change="addressprovinceFunc">
+                      <el-option
+                        v-for="item in provinceList"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.label">
+                      </el-option>
+                    </el-select>
+                    <el-select v-model="editInfo.addresscity" placeholder="选择城市" no-data-text="请先选择配送省份" @change="addresscityFunc">
+                      <el-option
+                        v-for="item in cityList"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.label">
+                      </el-option>
+                    </el-select> 
+                    <el-select v-model="editInfo.addressdistrict" placeholder="选择区" no-data-text="请先选择配送省份、城市" @change="addressdistrictFunc">
+                      <el-option
+                        v-for="item in areaList"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.label">
+                      </el-option>
+                    </el-select>
+                    <el-input type="textarea" v-model="editInfo.address"></el-input>
+                    </div>
+                  </el-collapse-transition>
+              </div>
             </el-form-item>   
         </el-form>
         <div class="del_btn"><el-button type="text" @click="del" class="del">删除收货地址</el-button></div>
@@ -25,7 +72,6 @@ export default {
     data() {  
     // 手机
       var validPhone = (rule, value, callback) => {
-          debugger
         if (value === '') {
             callback(new Error('请输入手机号码'))
         } else {
@@ -41,7 +87,10 @@ export default {
         editInfo: {
             phone: '',
             name: '',
-            address: ''
+            addressprovince: '', // 省份
+            addresscity: '', // 城市
+            addressdistrict: '',// 地区/行政区
+            address: '', // 街道地址  
         },
         showEdit: false,
         editList: [],
@@ -52,14 +101,25 @@ export default {
             name: [
                 { required: true, message: '请输入收货人姓名', trigger: 'blur' }
             ],
+            addressprovince: [
+            {required: true, message: '请选择配送地区', trigger: ['blur', 'change']}
+            ],
+            addresscity: [
+              {required: true, message: '请选择配送城市', trigger: ['blur', 'change']}
+            ],
+            addressdistrict: [
+              {required: true, message: '请选择配送行政地区', trigger: ['blur', 'change']}
+            ],
             address: [
-                { required: true, message: '请输入收货地址', trigger: 'blur' }
+              {required: true, message: '请输入街道及详细地址', trigger: 'blur'}
             ]}
         }
     },
     computed: mapState({
-      // 箭头函数可使代码更简练
-      addressList: state => state.address.addressList
+      countryList: state => state.address.country,   
+      provinceList: state => state.address.provinceList,   
+      cityList: state => state.address.cityList,   
+      areaList:  state => state.address.areaList,
     }),
     created() {
         this.editInfo = this.$route.query.param && JSON.parse(decodeURIComponent(this.$route.query.param))
@@ -77,24 +137,96 @@ export default {
         this.$set(this. editList, index, false)
       },
       save() {
-
+        let me = this
+        this.$refs['editInfo'].validate((valid) => {
+          if (valid) {
+            let param = {
+              id: me.editInfo.id,
+              userid: localStorage.getItem('userName'),
+              address: me.editInfo.address,
+              status: "1",
+              addressprovince: me.editInfo.addressprovince,
+              addresscity: me.editInfo.addresscity,
+              addressdistrict: me.editInfo.addressdistrict,
+              name: me.editInfo.name,
+              phone: me.editInfo.phone
+            }
+            me.$store.dispatch('address/editAddress',param )
+              .then(function (res) {
+                if (res.msg == 1) {
+                  me.$message({
+                    message: '修改成功',
+                    type: 'success'
+                  })
+                  me.$router.push('/selectAddress')
+                } else {
+                  me.$message({
+                    message: '操作失败',
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
       },
       del() {
-          this.$confirm('是否继续?', '提示', {
+        let me = this
+        this.$confirm('是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
+          let param = {
+            id: me.editInfo.id,
+            userid: localStorage.getItem('userName'),
+            status: 0
+          }
+          me.$store.dispatch('address/editAddress',param )
+            .then(function (res) {
+              if (res.msg == 1) {
+                me.$message({
+                  message: '删除成功',
+                  type: 'success'
+                })
+                me.$router.push('/selectAddress')
+              } else {
+                me.$message({
+                  message: '操作失败',
+                  type: 'error'
+                })
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'
-          });          
+          })        
         })
+      },
+      // 选择省份
+      addressprovinceFunc(val) {
+        this.editInfo.addresscity = ''
+        this.editInfo.addressdistrict = ''
+        this.editInfo.address =''
+
+      },
+      // 选择城市
+      addresscityFunc(val) {
+        this.editInfo.addressdistrict = ''
+        this.editInfo.address =''
+      },
+      // 选择城市区
+      addressdistrictFunc(val) {
+        this.editInfo.address =''
       }
     }
   }
@@ -140,6 +272,14 @@ export default {
 .save{
     color:#C5A480;
 }
-
+.detailInfo{
+  text-align: left;
+  margin-left: 0.18rem;
+}
+.address /deep/ .el-input input,.address /deep/ .el-textarea textarea{  
+  border: none;
+  border-bottom: 1px solid #DCDFE6;
+  border-radius: inherit!important;
+}
 
 </style>

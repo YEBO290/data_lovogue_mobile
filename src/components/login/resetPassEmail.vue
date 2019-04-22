@@ -49,7 +49,6 @@
     },
     methods: {
       submitForm(formName) {
-        debugger
         let me = this
         this.$refs[formName].validate((valid) => {
           if (valid) {

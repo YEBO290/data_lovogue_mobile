@@ -104,7 +104,7 @@ const actions = {
   queryLovedList (context, param) {
     return new Promise((resolve, reject) => {
       post(api.getScreenLove, param).then((res) => {
-        context.commit('lovesList', res)
+        context.commit('lovesList', res.data)
         resolve(res)
       }).catch((err) => {
         console.log(err)
@@ -115,8 +115,8 @@ const actions = {
   queryBagList (context, param) {
     return new Promise((resolve, reject) => {
         post(api.getScreenCar, param).then((res) => {
-          context.commit('bagList', res)
-          resolve(res)
+          context.commit('bagList', res.data)
+          resolve(res.data)
         }).catch((err) => {
           console.log(err)
         })
@@ -185,7 +185,6 @@ const actions = {
   // 搜索的列表
   querySearchList (context, param) {
     return new Promise((resolve, reject) => {
-      debugger
       post(api.searchProduct, param).then((res) => {
         context.commit('searchList', res)
         resolve(res)

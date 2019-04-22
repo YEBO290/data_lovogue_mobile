@@ -153,7 +153,6 @@ export default {
         this.$store.dispatch('login/toPay', this.checkedLists)
       },
       handleCheckAllChange(val) {
-        debugger
         let me = this
         let list = []
         this.bagList.forEach(el => {
@@ -172,7 +171,6 @@ export default {
         me.totalCost = me.numFormat(me.totalCost)
       },
       handleCheckedListsChange(value) {
-        debugger
         let me = this
         let checkedCount = value.length;
         this.checkAll = checkedCount === this.bagList.length;
