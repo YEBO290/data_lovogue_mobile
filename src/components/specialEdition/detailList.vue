@@ -48,7 +48,7 @@
                   <div class="select_line"></div>
                   <div class="select_img">
                     <i class="el-icon-close icon" @click.stop="hideImg(item, index)"></i>
-                    <img :src="item.imgpath" class="backImg" style="width:100%">
+                    <img :src="item.imgpath" class="backImg" style="width:100%" @click.stop="$router.push(`/detail/${item.typeno}`)">
                   </div>
                 </div>
               </transition>
@@ -235,7 +235,7 @@ export default {
     margin-left: -0.2rem;
     position: relative;
     box-shadow: 0.05rem 0.05rem 0.05rem #888888;
-    transition: all 1s;
+    z-index:100;
 }
 .select_img{
   width: 1.37rem;
@@ -272,6 +272,7 @@ export default {
   box-shadow: 0.05rem 0.05rem 0.05rem #888888;
   transition: all 1s;
   margin-top: -1.755rem;
+  z-index:100;
 }
 .selectTop .select_btn{
   position: relative;
@@ -298,6 +299,7 @@ export default {
   right: 100%;
   width:100%;
   box-shadow: 0.05rem 0.05rem 0.05rem #888888;
+  z-index:100;
 }
 .selectLeftTop .select_img{
   position: relative;
@@ -305,6 +307,7 @@ export default {
   box-shadow: 0.05rem 0.05rem 0.05rem #888888;
   margin-top: -1.755rem;
   width:100%;
+  z-index:100;
 }
 .selectLeftTop .select_line{
   position: relative;
@@ -314,7 +317,8 @@ export default {
     border-left: 1px solid #fff;
     right: 50%;
     margin-top: -0.365rem;
-    margin-left: 0.105rem
+    margin-left: 0.105rem;
+    
 }
 .selectLeftTop .select_btn{
   position: relative;
