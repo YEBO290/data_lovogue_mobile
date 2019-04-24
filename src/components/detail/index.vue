@@ -420,6 +420,7 @@ export default {
       //     userid: localStorage.getItem('userName'),
       //     status: "1"
       //   }
+      
         if(this.flag === 'add') { // 加入购物袋
           let param = {
             prodid: this.detail.color,
@@ -448,6 +449,7 @@ export default {
             }       
           })
         } else {
+          let param = {}
           this.$store.dispatch('detail/toBuy', param).then(res => {
             this.innerVisible = false
             this.$router.push('/confirmAddress')
