@@ -41,7 +41,7 @@
         <el-row :style="{backgroundImage: 'url(' + specialBackImg + ')', backgroundSize:'100%'}">
           <!--<el-col :span="8" v-for="(item, index) in specialImg" :key="item.id" class="subImg">-->
           <el-col :span="8" v-for="(item, index) in specialImg" :key="item.id" class="subImg" :style="{top: (item.row-1)*195/100+'rem', left:(item.col - 1)*33+'%'}">
-            <div class="grid-content bg-purple showImg" @click="showImg(item, index)">
+            <div class="grid-content bg-purple showImg" @click.stop="showImg(item, index)">
               <transition name="el-zoom-in-center">    
                 <div v-if="showList[index]" class="selectList" :class="selectItem(item, index)">         
                   <div class="select_btn"></div>
@@ -248,9 +248,12 @@ export default {
   width: 100%;
   height: 1.4rem;
 }
-.selectRight{
+.selectRight,.selectLeft,.selectLeftTop,.selectTop{
   position: relative;
   top: 50%;
+}
+.selectTop,{
+  position: relative;
 }
 .selectTop .select_line{
   position: relative;
@@ -259,8 +262,7 @@ export default {
   border-bottom: 0.01rem solid #fff;
   border-right: 0.01rem solid #fff;
   left: 50%;
-  top: 50%;
-  margin-top: -0.24rem;
+  margin-top: -0.34rem;
 }
 .selectTop .select_img{
   width: 100%;
@@ -269,50 +271,54 @@ export default {
   position: relative;
   box-shadow: 0.05rem 0.05rem 0.05rem #888888;
   transition: all 1s;
-  margin-top:-1.71rem;
-  top: 50%;
+  margin-top: -1.755rem;
 }
 .selectTop .select_btn{
   position: relative;
-  margin-top: 50%;
+  margin-top: -0.105rem;
+  margin-left: -0.105rem;
 }
 .selectLeft .select_line{
   border-top: 1px solid #fff;
   position: relative;
-  top: 50%;
   right: 50%;
   width: 1.1rem;
   height:0.25rem;
   border-left: 1px solid #fff;
+  margin-top: -0.105rem;
+  margin-left: 0.105rem;
 }
 .selectLeft .select_btn{
   position: relative;
+  margin-top: -0.105rem;
+  margin-left: -0.105rem;
 }
 .selectLeft .select_img{
   position: relative;
   right: 100%;
-  top: 50%;
-  margin-top: 0.25rem;
+  width:100%;
   box-shadow: 0.05rem 0.05rem 0.05rem #888888;
 }
 .selectLeftTop .select_img{
-  position: absolute;
-  right: 83%;
-  margin-top: 0.2rem;
+  position: relative;
+  right: 100%;
   box-shadow: 0.05rem 0.05rem 0.05rem #888888;
-  top:-50%;
+  margin-top: -1.755rem;
+  width:100%;
 }
 .selectLeftTop .select_line{
-  position: absolute;
+  position: relative;
     width: 1.1rem;
     height: 0.25rem;
     border-bottom: 1px solid #fff;
     border-left: 1px solid #fff;
     right: 50%;
-    top: 50%;
-    margin-top: -0.25rem;
+    margin-top: -0.365rem;
+    margin-left: 0.105rem
 }
 .selectLeftTop .select_btn{
-  position: absolute;
+  position: relative;
+  margin-left: -0.105rem;
+  margin-top: -0.105rem;
 }
 </style>
