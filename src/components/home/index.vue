@@ -1,6 +1,6 @@
 <template>
     <div class="home" id="home">   
-      <div>
+      <div class="carousel_img">
         <el-carousel :interval="40000000" arrow="always" height="5rem">
           <el-carousel-item v-for="item in queryImg" :key="item.id">
             <div @click="toSpecialEditionList(item)">
@@ -186,16 +186,16 @@ export default {
     background-color: #d3dce6;
   }
   #home /deep/ .swiper-slide{
-    width: 150px!important;
-    height: 150px!important;
+    width: 1.5rem!important;
+    height: 1.5rem!important;
     margin-right:10px!important;
     position: relative;
     text-align:center;
 
   }
   #home /deep/ .swiper-slide img{
-    width: 150px!important;
-    height: 150px!important;
+    width: 1.5rem!important;
+    height: 1.5rem!important;
 
   }
   #home /deep/ .swiper-slide h5{
@@ -204,5 +204,12 @@ export default {
     color: #EFDED1;
     width: 100%;
     text-align: center;
+  }
+  .carousel_img{
+    position: relative;
+  }
+  .carousel_img .img_opeation{
+    position: absolute;
+    bottom: 0.50rem;
   }
 </style>

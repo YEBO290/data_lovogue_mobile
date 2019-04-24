@@ -26,7 +26,7 @@
       </div>
       <div class="recommend_list">
         <p class="recommend">搭配单品推荐</p>
-        <el-row :gutter="5"  justify="center">
+        <el-row :gutter="5">
           <el-col :span="8" v-for="(item, index) in recommendList" :key="index" class="recommend_list_div">
             <div class="grid-content bg-purple">
               
@@ -38,15 +38,16 @@
         </el-row>
       </div>
       <div>
-        <el-row  justify="center" :style="{backgroundImage: 'url(' + specialBackImg + ')', backgroundSize:'100%'}">
-          <el-col :span="8" v-for="item in specialImg" :key="item.id" class="subImg" :style="{top: (item.row-1)*195/100+'rem', left:(item.col - 1)*33+'%'}">
-            <div class="grid-content bg-purple showImg" @click="showImg(item)">
+        <el-row :style="{backgroundImage: 'url(' + specialBackImg + ')', backgroundSize:'100%'}">
+          <!--<el-col :span="8" v-for="(item, index) in specialImg" :key="item.id" class="subImg">-->
+          <el-col :span="8" v-for="(item, index) in specialImg" :key="item.id" class="subImg" :style="{top: (item.row-1)*195/100+'rem', left:(item.col - 1)*33+'%'}">
+            <div class="grid-content bg-purple showImg" @click="showImg(item, index)">
               <transition name="el-zoom-in-center">    
-                <div v-if="showList[item.col*item.row]" class="selectList" :class="selectItem(item)">         
+                <div v-if="showList[index]" class="selectList" :class="selectItem(item, index)">         
                   <div class="select_btn"></div>
                   <div class="select_line"></div>
                   <div class="select_img">
-                    <i class="el-icon-close icon" @click.stop="hideImg(item)"></i>
+                    <i class="el-icon-close icon" @click.stop="hideImg(item, index)"></i>
                     <img :src="item.imgpath" class="backImg" style="width:100%">
                   </div>
                 </div>
@@ -92,7 +93,7 @@ export default {
     let param = {
       prodname: this.id
     }
-    this.$store.dispatch('detailList/querySpecialImg', param) // 获取特辑图片
+    // this.$store.dispatch('detailList/querySpecialImg', param) // 获取特辑图片
   },
   methods: {
     // 清除
@@ -157,19 +158,20 @@ export default {
         }   
       })
     },
-    showImg(val) {
+    showImg(val, index) {
       this.showList = []
-      this.$set(this.showList, val.col * val.row, true)
+      debugger
+      this.$set(this.showList, index, true)
       // if(this.showList[val.col * val.row]) {
       //   this.$set(this.showList, val.col * val.row, false)
       // } else {
       //   this.$set(this.showList, val.col * val.row, true)
       // }
     },
-    hideImg(val) {
-      this.$set(this.showList, val.col * val.row, false)
+    hideImg(val, index) {
+      this.$set(this.showList, index, false)
     },
-    selectItem(val) {
+    selectItem(val, index) {
       if(val.row == 1 && val.col == 1 || val.row == 1 && val.col == 2 || val.row == 2 && val.col == 1 || val.row == 2 && val.col == 2) {
         return 'selectRight'
       } else if(val.row == 3 && val.col == 1 || val.row == 3 && val.col == 2) {
@@ -214,9 +216,7 @@ export default {
   background: #fff;
   border-radius: 50%;
   top:50%;
-  margin-top: -0.105rem;
   left: 50%;
-  margin-left: -0.105rem;
   position: relative;
 }
 .selectRight .select_line{
@@ -238,7 +238,7 @@ export default {
     transition: all 1s;
 }
 .select_img{
-  width: 1.37ewm;
+  width: 1.37rem;
   height: 1.5rem;
   padding: 0.05rem;
   border: 0.01rem solid #fff;
@@ -259,14 +259,60 @@ export default {
   border-bottom: 0.01rem solid #fff;
   border-right: 0.01rem solid #fff;
   left: 50%;
+  top: 50%;
+  margin-top: -0.24rem;
 }
 .selectTop .select_img{
   width: 100%;
   left: 100%;
   margin-left: -0.2rem;
-  position: absolute;
+  position: relative;
   box-shadow: 0.05rem 0.05rem 0.05rem #888888;
   transition: all 1s;
   margin-top:-1.71rem;
+  top: 50%;
+}
+.selectTop .select_btn{
+  position: relative;
+  margin-top: 50%;
+}
+.selectLeft .select_line{
+  border-top: 1px solid #fff;
+  position: relative;
+  top: 50%;
+  right: 50%;
+  width: 1.1rem;
+  height:0.25rem;
+  border-left: 1px solid #fff;
+}
+.selectLeft .select_btn{
+  position: relative;
+}
+.selectLeft .select_img{
+  position: relative;
+  right: 100%;
+  top: 50%;
+  margin-top: 0.25rem;
+  box-shadow: 0.05rem 0.05rem 0.05rem #888888;
+}
+.selectLeftTop .select_img{
+  position: absolute;
+  right: 83%;
+  margin-top: 0.2rem;
+  box-shadow: 0.05rem 0.05rem 0.05rem #888888;
+  top:-50%;
+}
+.selectLeftTop .select_line{
+  position: absolute;
+    width: 1.1rem;
+    height: 0.25rem;
+    border-bottom: 1px solid #fff;
+    border-left: 1px solid #fff;
+    right: 50%;
+    top: 50%;
+    margin-top: -0.25rem;
+}
+.selectLeftTop .select_btn{
+  position: absolute;
 }
 </style>

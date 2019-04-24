@@ -130,22 +130,27 @@ export default {
         this.$router.push('/login/register')        
       },
       delBag(val) {
+        let me = this
         let param = {
-          productid: val.prodid,
+          id: val.id,
           status: "0"
         }
-        this.$store.dispatch('login/delBag', param).then(res => {
-          if(res == 1) {
+        me.$store.dispatch('login/delBag', param).then(res => {
+          if(res.msg == 1) {
+            me.$message({
+              message: '删除成功',
+              type: 'success'
+            })
             let queryParam = {
               userid: localStorage.getItem('userName'),
               status: "1"
             }
-            this.$store.dispatch('login/queryBagList', queryParam)
+            me.$store.dispatch('login/queryBagList', queryParam)
           } else {
-            this.$message({
-                message: '删除失败，请重试',
-                type: 'error'
-              })
+            me.$message({
+              message: '删除失败，请重试',
+              type: 'error'
+            })
           }        
         })
       },

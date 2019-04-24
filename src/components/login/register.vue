@@ -11,7 +11,7 @@
             </el-form-item>
             <label class="label_txt">手机号码</label><span class="req">*</span>
             <el-form-item prop="phoneRes"  key="resPhone">
-                <el-input type="text" v-model.number="ruleFormRest.phoneRes" :clearable="true" autocomplete="off"></el-input>
+                <el-input type="text" v-model="ruleFormRest.phoneRes" :clearable="true" autocomplete="off"></el-input>
             </el-form-item>
             <label class="label_txt">密码</label><span class="req">*</span>
             <el-form-item prop="passwordRes">
@@ -148,6 +148,7 @@
               password: this.ruleFormRest.passwordRes || "123456",
               username: this.ruleFormRest.username || "测试者",
               role: '0',
+              // stauts: '1',
               email: this.ruleFormRest.email,
               phone: this.ruleFormRest.phoneRes
             }

@@ -81,7 +81,8 @@
         <div slot="footer" class="dialog-footer">
           <div class="size_line" style="margin-top: 0.2rem;"></div> 
           <a class="link size_link" @click="noticeVisible = true">没有适合的尺码？</a>
-          <div v-if="showBtn"> 
+          <!--<div v-if="showBtn"> -->
+          <div> 
             <el-button class="btn ok_btn" type="primary" @click="save" v-if="flag === 'add'">加入购物袋</el-button>
             <el-button class="btn ok_btn" type="primary" @click="save" v-else>立即选购</el-button>            
           </div>          
@@ -375,7 +376,7 @@ export default {
     // 立即选购
     toBuy() { 
       if(!this.vaildFunc()) {
-        return faslse
+        return false
       }
       this.showColor = false
       if (this.detail.color === '' || this.detail.color === null) {
@@ -411,21 +412,26 @@ export default {
       //   this.sizeTip = true
       //   return false
       // }      
-      let param = {
-          selectColor: this.selectColor,
-          selectSize: this.selectSize,
-          amount: this.num,
-          prodid: this.id,
-          userid: localStorage.getItem('userName'),
-          status: "1"
-        }
+      // let param = {
+      //     selectColor: this.selectColor,
+      //     selectSize: this.selectSize,
+      //     amount: this.num,
+      //     prodid: this.id,
+      //     userid: localStorage.getItem('userName'),
+      //     status: "1"
+      //   }
         if(this.flag === 'add') { // 加入购物袋
-          // let param = {"prodid":"VR0060DI18R","userid":"admin","amount":"1","status":"1"}
+          let param = {
+            prodid: this.detail.color,
+            userid: localStorage.getItem('userName'),
+            amount: "1",
+            status: "1"
+          }
           this.$store.dispatch('detail/toBag', param).then(res => {
-            if(res == 1) {
+            if(res.msg == 1) {
               this.$store.commit('shopBagNumber', 1)
               this.$message({
-                message: '添加成功，在购物车等着亲~',
+                message: '添加成功',
                 type: 'success'
               })
               let queryParam = {
@@ -436,7 +442,7 @@ export default {
               this.innerVisible = false
             } else {
               this.$message({
-                message: '添加失败，请重试',
+                message: '操作失败',
                 type: 'error'
               })
             }       

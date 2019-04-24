@@ -1,44 +1,131 @@
-(function flexible (window, document) {
-    var docEl = document.documentElement
-    var dpr = window.devicePixelRatio || 1
+;(function(win, lib) {
+  var doc = win.document;
+  var docEl = doc.documentElement;
+  var metaEl = doc.querySelector('meta[name="viewport"]');
+  var flexibleEl = doc.querySelector('meta[name="flexible"]');
+  var dpr = 0;
+  var scale = 0;
+  var tid;
+  var flexible = lib.flexible || (lib.flexible = {});
   
-    // adjust body font size
-    function setBodyFontSize () {
-      if (document.body) {
-        document.body.style.fontSize = (12 * dpr) + 'px'
+  if (metaEl) {
+      // console.warn('灏嗘牴鎹凡鏈夌殑meta鏍囩鏉ヨ缃缉鏀炬瘮渚�');
+      var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+      if (match) {
+          scale = parseFloat(match[1]);
+          dpr = parseInt(1 / scale);
       }
-      else {
-        document.addEventListener('DOMContentLoaded', setBodyFontSize)
+  } else if (flexibleEl) {
+      var content = flexibleEl.getAttribute('content');
+      if (content) {
+          var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+          var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+          if (initialDpr) {
+              dpr = parseFloat(initialDpr[1]);
+              scale = parseFloat((1 / dpr).toFixed(2));    
+          }
+          if (maximumDpr) {
+              dpr = parseFloat(maximumDpr[1]);
+              scale = parseFloat((1 / dpr).toFixed(2));    
+          }
       }
-    }
-    setBodyFontSize();
-  
-    // set 1rem = viewWidth / 10
-    function setRemUnit () {
-      var rem = docEl.clientWidth / 10
-      docEl.style.fontSize = rem + 'px'
-    }
-  
-    setRemUnit()
-  
-    // reset rem unit on page resize
-    window.addEventListener('resize', setRemUnit)
-    window.addEventListener('pageshow', function (e) {
-      if (e.persisted) {
-        setRemUnit()
+  }
+
+  if (!dpr && !scale) {
+      var isAndroid = win.navigator.appVersion.match(/android/gi);
+      var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+      var isIPad = win.navigator.appVersion.match(/ipad/gi);
+      var devicePixelRatio = win.devicePixelRatio;
+      if (isIPhone) {
+          // iOS涓嬶紝瀵逛簬2鍜�3鐨勫睆锛岀敤2鍊嶇殑鏂规锛屽叾浣欑殑鐢�1鍊嶆柟妗�
+          if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {                
+              dpr = 2;
+          } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)){
+              dpr = 2;
+          } else {
+              dpr = 1;
+          }
+      } else {
+          // 鍏朵粬璁惧涓嬶紝浠嶆棫浣跨敤1鍊嶇殑鏂规
+          // Android 涓嬮噰鐢╠pr 1鏂规
+          dpr = 1;
       }
-    })
-  
-    // detect 0.5px supports
-    if (dpr >= 2) {
-      var fakeBody = document.createElement('body')
-      var testElement = document.createElement('div')
-      testElement.style.border = '.5px solid transparent'
-      fakeBody.appendChild(testElement)
-      docEl.appendChild(fakeBody)
-      if (testElement.offsetHeight === 1) {
-        docEl.classList.add('hairlines')
+      scale = 1 / dpr;
+  }
+
+  docEl.setAttribute('data-dpr', dpr);
+  if (!metaEl) {
+      metaEl = doc.createElement('meta');
+      metaEl.setAttribute('name', 'viewport');
+      metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+      if (docEl.firstElementChild) {
+          docEl.firstElementChild.appendChild(metaEl);
+      } else {
+          var wrap = doc.createElement('div');
+          wrap.appendChild(metaEl);
+          doc.write(wrap.innerHTML);
       }
-      docEl.removeChild(fakeBody)
-    }
-  }(window, document))
+  }
+  function IsPC() 
+  { 
+      var userAgentInfo = navigator.userAgent; 
+      var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"); 
+      var flag = true; 
+      for (var v = 0; v < Agents.length; v++) { 
+      if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; } 
+      } 
+      return flag; 
+  }
+  function refreshRem(){
+      var width = docEl.getBoundingClientRect().width;
+      // if (width / dpr> 540) {
+      //     width = 540 * dpr;
+      // }
+      // if (IsPC() && width < 2047) {
+      //     width = 540;
+      // }
+      var rem = width / 7.5;
+      docEl.style.fontSize = rem + 'px';
+      flexible.rem = win.rem = rem;
+  }
+  // (function(){
+  //     win.addEventListener('resize', function() {
+  //         clearTimeout(tid);
+  //         tid = setTimeout(refreshRem, 300);
+  //     }, false);
+  //     win.addEventListener('pageshow', function(e) {
+  //         if (e.persisted) {
+  //             clearTimeout(tid);
+  //             tid = setTimeout(refreshRem, 300);
+  //         }
+  //     }, false);
+  // })()
+
+  if (doc.readyState === 'complete') {
+      doc.body.style.fontSize = 14 * dpr + 'px';
+  } else {
+      doc.addEventListener('DOMContentLoaded', function(e) {
+          doc.body.style.fontSize = 14 * dpr + 'px';
+      }, false);
+  }
+  
+
+  refreshRem();
+
+  flexible.dpr = win.dpr = dpr;
+  flexible.refreshRem = refreshRem;
+  flexible.rem2px = function(d) {
+      var val = parseFloat(d) * this.rem;
+      if (typeof d === 'string' && d.match(/rem$/)) {
+          val += 'px';
+      }
+      return val;
+  }
+  flexible.px2rem = function(d) {
+      var val = parseFloat(d) / this.rem;
+      if (typeof d === 'string' && d.match(/px$/)) {
+          val += 'rem';
+      }
+      return val;
+  }
+})(window, window['lib'] || (window['lib'] = {}));

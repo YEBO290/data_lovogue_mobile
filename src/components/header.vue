@@ -1,29 +1,36 @@
 <template>
     <div class="header">
-        <!--<img src="../assets/image/menu.png" class="header_menu" @click.stop="showMenu"/>   
-        <img src="../assets/image/search.png" class="header_search"/>
-        <img src="../assets/image/logo_home.png" class="header_logo" @click="toHome"/>-->
-        <!--<img src="../assets/image/love.png" class="header_logo"/>-->
-        <!--<el-badge :value="lovedNumber" class="item header_loved"  size="small">
-            <img src="../assets/image/love.png" class="" @click="toLoved"/>
-        </el-badge>        
-        <el-badge :value="shopBagNumber" class="item header_shop_bag"  size="small" >
-        <img src="../assets/image/shopBag.png" class="" @click="toBag"/>
-        </el-badge>-->    
-        <img src="../assets/image/menu.png" class="header_menu" @click.stop="showMenu"/>   
-        <img src="../assets/image/search.png" class="header_search" @click="$router.push('/search')"/>
-        <img src="../assets/image/logo_home.png" class="header_logo" @click="toHome"/>  
-        <span @click="toLoved">
-            <el-badge :value="lovedNumber" class="item header_loved" size="small">
-                <img src="../assets/image/love.png" class=""/>
-                <!--<span class="header_loved"></span>-->
-            </el-badge>
-        </span>
-        <span @click="toBag">   
-            <el-badge :value="shopBagNumber" class="item header_shop_bag" size="small">
-                <img src="../assets/image/shopBag.png" class=""/>
-            </el-badge>
-        </span>   
+        <el-row :gutter="20">
+            <el-col :span="3">
+                <div class="grid-content bg-purple">
+                    <img src="../assets/image/menu.png" class="header_menu" @click.stop="showMenu"/>
+                </div>
+            </el-col>
+            <el-col :span="3">
+                <div class="grid-content bg-purple">
+                    <img src="../assets/image/search.png" class="header_search" @click="$router.push('/search')"/>
+                </div>
+                </el-col>
+            <el-col :span="12">
+                <div class="grid-content bg-purple">
+                    <img src="../assets/image/logo_home.png" class="header_logo" @click="toHome" style="width:80%"/>
+                </div>
+                </el-col>
+            <el-col :span="3">
+                <div class="grid-content bg-purple"  @click="toLoved">
+                    <el-badge :value="lovedNumber" class="item header_loved" size="small">
+                        <img src="../assets/image/love.png" class=""/>
+                    </el-badge>
+                </div>
+            </el-col>
+            <el-col :span="3">
+                <div class="grid-content bg-purple" @click="toBag">
+                    <el-badge :value="shopBagNumber" class="item header_shop_bag" size="small">
+                        <img src="../assets/image/shopBag.png" class=""/>
+                    </el-badge>
+                </div>
+            </el-col>
+        </el-row> 
     </div>
 </template>
 
@@ -85,61 +92,28 @@ export default {
         line-height:0.18rem;
         background: #C5A480;
         padding:0.16rem 0.18rem;
+        position: relative;
     }
-    .header_menu{
-        /* display: inline-block;
-        background-image:url('../assets/image/menu.png');
-        background-repeat: no-repeat;
-        background-position: center center;
-        width: 18px;
-        height:18px; */
+    /* .header_menu{
         position: absolute;
         left: 0.18rem;
-    }
-    .header_search{
-        /* display: inline-block;
-        background-image:url('../assets/image/search.png');
-        background-repeat: no-repeat;
-        background-position: center center;
-        width: 18px;
-        height:18px; */
+    } */
+    /* .header_search{
         position: absolute;
         left: 0.61rem;
-    }
-    .header_logo{
-        display: inline-block;
-        /* background-image:url('../assets/image/menu.png');
-        background-repeat: no-repeat;
-        background-position: center center; */
+    } */
+    /* .header_logo{
         width: 1.28rem;
         height:0.18rem;
-        /* background: red; */
-        position: absolute;
-        left: 1.24rem;
-
-    }
-    .header_loved{
-        /* display: inline-block;
-        background-image:url('../assets/image/love.png');
-        background-repeat: no-repeat;
-        background-position: center center;
-        width: 18px;
-        height:18px; */
-        position: absolute;
-        left: 3.02rem;
-
-    }
-    .header_shop_bag{
-        /* display: inline-block;
-        background-image:url('../assets/image/shopBag.png');
-        background-repeat: no-repeat;
-        background-position: center center;
-        width: 18px;
-        height:18px; */
+    } */
+    /* .header_loved{
         position: absolute;
         right: 0.18rem;
-
-    }
+    } */
+    /* .header_shop_bag{
+        position: absolute;
+        right: 0.59rem;
+    } */
     .lovedNumber{
         height: 0.14rem;
         /* padding: 2px; */
