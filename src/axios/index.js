@@ -20,11 +20,11 @@ axios.defaults.timeout = 10000
 if (process.env.NODE_ENV === 'development') {
   // axios.defaults.baseURL = 'http://129.204.202.240:8090'
   axios.defaults.baseURL = 'http://lovogue.net:8091'
-} else if (process.env.NODE_ENV === 'debug') {
-  axios.defaults.baseURL = 'https://www.ceshi.com'
-} else if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = 'https://www.production.com'
-}
+  } else if (process.env.NODE_ENV === 'debug') {
+  axios.defaults.baseURL = 'http://lovogue.net:8091'
+  } else if (process.env.NODE_ENV === 'production') {
+  axios.defaults.baseURL = 'http://lovogue.net:8091'
+  }
 
 // 请求拦截器
 axios.interceptors.request.use(
@@ -64,7 +64,8 @@ axios.interceptors.response.use(
   },
   // 服务器状态码不是200的情况 
   error => {  
-    Message.error(error.message)
+    debugger
+    error.response.data.msg && Message.error(error.response.data.msg) || Message.error(error.message)
     Loading.service({
       lock: true,
       text: 'Loading',

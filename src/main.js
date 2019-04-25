@@ -11,6 +11,7 @@ import 'swiper/dist/css/swiper.css'
 import 'element-ui/lib/theme-chalk/base.css'
 // collapse 展开折叠
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
+import CryptoJS from "crypto-js" 
 import $ from 'jquery'
 import {
     Pagination,

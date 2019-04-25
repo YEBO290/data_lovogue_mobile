@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import CryptoJS from "crypto-js"
   export default {
     data() {
         // 密码
@@ -141,12 +142,15 @@
         // 提交
       submitForm(formName) {
         let me = this
+         // Encrypt 加密 
+      var cipherText = CryptoJS.AES.encrypt(me.ruleFormRest.passwordRes, "password").toString()
+      console.log(cipherText)
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let param = {
-              userid: 'rest',
-              password: this.ruleFormRest.passwordRes || "123456",
-              username: this.ruleFormRest.username || "测试者",
+              userid: this.ruleFormRest.username,
+              password: cipherText,
+              username: this.ruleFormRest.username,
               role: '0',
               // stauts: '1',
               email: this.ruleFormRest.email,
@@ -157,7 +161,7 @@
             console.log('error submit!!');
             return false;
           }
-        });
+        })
       },
         // 个人信息
         toMesssge() {

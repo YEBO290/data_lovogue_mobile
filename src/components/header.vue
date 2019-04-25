@@ -13,7 +13,7 @@
                 </el-col>
             <el-col :span="12">
                 <div class="grid-content bg-purple">
-                    <img src="../assets/image/logo_home.png" class="header_logo" @click="toHome" style="width:80%"/>
+                    <img src="../assets/image/logo_home.png" class="header_logo" @click="toHome"/>
                 </div>
                 </el-col>
             <el-col :span="3">
@@ -60,7 +60,7 @@ export default {
   created() {
   },
   methods: {
-      toHome: function() { //点击logo 跳至首页
+      toHome() { //点击logo 跳至首页
         let status = localStorage.getItem('userName')
         if(status !== '' && status !== null && status !== undefined) {
             this.$router.push('/home')

@@ -34,6 +34,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import CryptoJS from "crypto-js"
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -88,6 +89,14 @@ export default {
       let me = this
       let fromPath = this.$router.history.current.query.fromPath
       // localStorage.setItem('userName', 'admin')
+      // Encrypt 加密 
+      var cipherText = CryptoJS.AES.encrypt(me.ruleForm.pass, "password").toString()
+      console.log(cipherText)
+      // Decrypt 解密
+      var bytes = CryptoJS.AES.decrypt(cipherText, "password")
+      var originalText = bytes.toString(CryptoJS.enc.Utf8)
+      console.log(originalText); // 'my message'
+
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let param = {
@@ -95,7 +104,9 @@ export default {
             password: me.ruleForm.pass
           }     
           me.$store.dispatch('login/toLogin', param).then(res => {
+            debugger
             if(res) {
+              me.$router.push('/home')
               localStorage.setItem('userName',res[0].userid)
               let loveParam = {
                 userid: localStorage.getItem('userName'),
@@ -107,12 +118,9 @@ export default {
                 status: "1"
               }
               me.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
-              if(fromPath !== ''){
-                me.$router.push(fromPath)
-              } else {
-                me.$router.push('/home')
-              }
-            }              
+            } else {
+              me.$message.error('操作失败')
+            }           
           }).catch(err => {
             localStorage.setItem('userName', '')
           })

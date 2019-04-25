@@ -38,7 +38,7 @@ const actions = {
   toLogin (context, param) {
     return new Promise((resolve, reject) => {
       post(api.login, param).then((res) => {
-        resolve(res)
+        resolve(res.data)
       }).catch((err) => {
         console.log(err)
         reject(err)
