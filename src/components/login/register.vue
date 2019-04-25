@@ -43,6 +43,7 @@
 
 <script>
 import CryptoJS from "crypto-js"
+import md5 from "js-md5"
   export default {
     data() {
         // 密码
@@ -139,6 +140,10 @@ import CryptoJS from "crypto-js"
     created() {
     },
     methods: {
+      calcuMD5(pwd) {
+        let pass = pwd.toUpperCase()
+        return md5(pass)
+      },
         // 提交
       submitForm(formName) {
         let me = this
@@ -149,7 +154,7 @@ import CryptoJS from "crypto-js"
           if (valid) {
             let param = {
               userid: this.ruleFormRest.username,
-              password: cipherText,
+              password: this.calcuMD5(me.ruleFormRest.passwordRes),
               username: this.ruleFormRest.username,
               role: '0',
               // stauts: '1',

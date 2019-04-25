@@ -35,6 +35,8 @@
 <script>
 import { mapState } from 'vuex'
 import CryptoJS from "crypto-js"
+import md5 from "js-md5"
+
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -85,6 +87,10 @@ export default {
   mounted() {
   },
   methods: {
+    calcuMD5(pwd) {
+      let pass = pwd.toUpperCase()
+      return md5(pass)
+    },
     submitForm(formName) {
       let me = this
       let fromPath = this.$router.history.current.query.fromPath
@@ -101,7 +107,7 @@ export default {
         if (valid) {
           let param = {
             userid: me.ruleForm.phone,
-            password: me.ruleForm.pass
+            password: me.calcuMD5(me.ruleForm.pass)
           }     
           me.$store.dispatch('login/toLogin', param).then(res => {
             debugger
