@@ -95,7 +95,12 @@ export default {
     },
     computed: mapState({
       // 箭头函数可使代码更简练
-      bagList: state => state.login.bagList,
+      bagList: function(state){
+        state.login.bagList.forEach(item => {
+          item.tagprice = workspace.thousandBitSeparator(item.tagprice)
+        })
+        return state.login.bagList
+      },
       recommendList: state => state.login.recommendList
       // 传字符串参数 'count' 等同于 `state => state.count`
       // countAlias: 'count',

@@ -100,16 +100,20 @@ export default {
     // this.$store.dispatch('home/queryAboutList')  // 关于我们
   },
   mounted() {
-    new Swiper ('.swiper-container', {
+    var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 3,
+      spaceBetween: 40,
+      slidesPerGroup: 3,
       loop: true,
-      // 如果需要分页器
-      pagination: '.swiper-pagination',
-      // 如果需要前进后退按钮
-      nextButton: '.swiper-button-next',
-      prevButton: '.swiper-button-prev',
-      // 如果需要滚动条
-      scrollbar: '.swiper-scrollbar',
-    }) 
+      loopFillGroupWithBlank: true,
+      paginationType : 'custom',//自定义-分页器样式类型（前提）
+      observer:true,//修改swiper自己或子元素时，自动初始化swiper
+      observeParents:true,//修改swiper的父元素时，自动初始化swiper
+      pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+      },
+    })
   },
   methods: {
     del() {

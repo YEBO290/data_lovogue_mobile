@@ -5,7 +5,7 @@ import axios from 'axios'
 // import QS from 'qs'
 import router from '../router/index.js'
 import store from '../store/index.js'
-
+import workspace from '../common.js'
 import {
   Message,
   Loading
@@ -66,6 +66,9 @@ axios.interceptors.response.use(
   error => {  
     debugger
     error.response.data.msg && Message.error(error.response.data.msg) || Message.error(error.message)
+    workspace.clearCookie()
+    store.commit('login/lovesList', []) // 喜爱的列表查询
+    store.commit('login/bagList', []) // 购物的列表查询
     Loading.service({
       lock: true,
       text: 'Loading',

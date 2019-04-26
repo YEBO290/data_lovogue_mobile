@@ -22,12 +22,12 @@ const state = {
   showFooter: true,
   aboutDetail: { // 关于我们
     url: require('../assets/image/about.png'),
-    txt: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum',
-    text: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum'
+    txt: '  中国广东省深圳市尚盟文化发展有限公司（简称尚盟文化）；以珠宝为主业务的全方位零售营运平台；尚盟文化认为现时传统零售珠宝行业的两大核心是注重婚庆及材质投资属性；而消费者需求点已从材质转移到款式设计上；雷同旧式设计款式依旧泛滥市场；珠宝回归时装搭配的属性正在兴起；尚盟文化诣在传播珠宝与服装搭配的时尚文化；坚持多品类搭配风格与多元场景应用属性为经营核心；同时以高性价比满足女性不同场景服装搭配需求；通过珠宝与服装专业搭配应用，令女性更显独立自信的价值。',
+    // text: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum'
   },
   contactDetail: { // 联系我们
-    phone: 133133133,
-    address: 'xxxxx',
+    phone: '+86 136 3105 7040 / +86 755 8217 4455',
+    address: '中国广东省深圳市罗湖区南湖路3005号国贸商住大厦16F 518001',
     time: '9:00~18:00',
     privacyPolicy: '本应用尊重并保护所有使用服务用户的个人隐私权。为了给您提供更准确、更有个性化的服务，本应用会按照本隐私权政策的规定使用和披露您的个人信息。但本应用将以高度的勤勉、审慎义务对待这些信息。除本隐私权政策另有规定外，在未征得您事先许可的情况下，本应用不会将这些信息对外披露或向第三方提供。本应用会不时更新本隐私权政策。 您在同意本应用服务使用协议之时，即视为您已经同意本隐私权政策全部内容。本隐私权政策属于本应用服务使用协议不可分割的一部分。1. 适用范围(a) 在您注册本应用帐号时，您根据本应用要求提供的个人注册信息(b) 在您使用本应用网络服务',
     termsConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar sic tempor. Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus pronin sapien nunc accuan eget.',

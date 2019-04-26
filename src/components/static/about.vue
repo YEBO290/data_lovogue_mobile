@@ -8,9 +8,10 @@
           </el-col>
       </el-row>
       <!--<div class="about_img"><img :src="aboutDetail.url" alt=""></div>-->
-      <div class="about_txt">
-         <p class="txt txt_one text-left">{{aboutDetail.txt}}</p>
-        <p class="txt txt_last text-left">{{aboutDetail.text}}</p>
+      <div class="about_txt" style="margin-top:0.1rem;">
+        <span style="text-align: left;"><i class="glyphicon glyphicon-hand-right" style="float: left;line-height: 28px;font-size: 18px;margin-right: 10px;"></i><h3 style="font-size: 16px;font-weight: bold;line-height: 28px;">尚盟的介绍</h3></span>
+        <p class="txt txt_one text-left" style="text-indent:0.24rem;">{{aboutDetail.txt}}</p>
+        <!-- <p class="txt txt_last text-left">{{aboutDetail.text}}</p> -->
       </div>    
     </div>
 </template>

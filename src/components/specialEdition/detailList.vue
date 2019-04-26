@@ -116,7 +116,11 @@ export default {
         amount: "1"
       }
       this.$store.dispatch('toLoved', param).then(res => {
-        if(res == 1) {
+        if(res.msg == 1) {
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          })
           let queryParam = {
             userid: workspace.getCookie().name,
             status: "1"
@@ -126,7 +130,7 @@ export default {
           this.$store.dispatch('home/queryProductList', param)
         } else {
           this.$message({
-            message: '添加挚爱失败，请重试',
+            message: '操作失败，请重试',
             type: 'error'
           })
         }   
@@ -143,7 +147,11 @@ export default {
         amount: "1"
       }
       this.$store.dispatch('cancelLove', param).then(res => {
-        if(res == 1) {
+        if(res.msg == 1) {
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          })
           let queryParam = {
             userid: workspace.getCookie().name,
             status: "1"

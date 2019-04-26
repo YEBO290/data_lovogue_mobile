@@ -2,7 +2,7 @@
     <div class="login_home">
         <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="登录" name="login"><login/></el-tab-pane>
-            <el-tab-pane label="注册" name="register"><register v-if="showRes"/></el-tab-pane>
+            <el-tab-pane label="注册" name="register"><register/></el-tab-pane>
         </el-tabs>       
     </div>
 </template>
@@ -14,7 +14,6 @@ import register from './register'
     data() {
       return {
           activeName: 'login',
-          showRes: false
       }
     },
     props: ['id'],
@@ -25,7 +24,7 @@ import register from './register'
     methods: {
         handleClick(tab, event) {
             console.log(tab, event)
-            tab.index == '1' && (this.showRes = true)
+            // tab.index == '1' && (this.showRes = true)
         }
     },
     beforeRouteEnter(to, from, next) {   

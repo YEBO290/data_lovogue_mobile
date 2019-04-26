@@ -127,6 +127,8 @@ export default {
               }
               me.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
             } else {
+              me.$store.commit('login/lovesList', []) // 喜爱的列表查询
+              me.$store.commit('login/bagList', []) // 购物的列表查询
               me.$message.error('操作失败')
               this.clearCookie()
             }           
