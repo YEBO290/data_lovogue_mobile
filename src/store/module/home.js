@@ -149,18 +149,16 @@ const actions = {
     // 品牌
     queryBrandList(context, param) {
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                get("api/v1/users/my_address/address_edit_before", param)
-                    .then(res => {
-                        //
-                        context.commit("brandList", res.data);
-                        resolve(res.data);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            }, 1000);
-        });
+            post(api.getScreen, param)
+            .then(res => {
+                //
+                context.commit("brandList", res);
+                resolve(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        })
     },
     // 特辑
     querySpecialEditionList(context, param) {

@@ -65,7 +65,12 @@ export default {
     },
     computed: mapState({
       // 箭头函数可使代码更简练
-      lovesList: state => state.login.lovesList
+      lovesList: function(state){
+        state.login.lovesList.forEach(item => {
+          item.tagprice = workspace.thousandBitSeparator(item.tagprice)
+        })
+        return state.login.lovesList
+      }
       // 传字符串参数 'count' 等同于 `state => state.count`
       // countAlias: 'count',
 

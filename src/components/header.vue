@@ -18,14 +18,14 @@
                 </el-col>
             <el-col :span="3">
                 <div class="grid-content bg-purple"  @click="toLoved">
-                    <el-badge :value="lovedNumber" class="item header_loved" size="small">
+                    <el-badge :value="lovedNumber" class="item header_loved" size="small" :hidden="lovedNumber < 1">
                         <img src="../assets/image/love.png" class=""/>
                     </el-badge>
                 </div>
             </el-col>
             <el-col :span="3">
                 <div class="grid-content bg-purple" @click="toBag">
-                    <el-badge :value="shopBagNumber" class="item header_shop_bag" size="small">
+                    <el-badge :value="shopBagNumber" class="item header_shop_bag" size="small" :hidden="shopBagNumber < 1">
                         <img src="../assets/image/shopBag.png" class=""/>
                     </el-badge>
                 </div>
@@ -126,7 +126,7 @@ export default {
         border: 0.01rem solid red;
         font-size: 10px;
     }
-    .el-badge /deep/ .el-badge__content{
+    /* .el-badge /deep/ .el-badge__content{
          border-radius: 50%/50%;
         color: #FFF;
         display: inline-block;
@@ -137,12 +137,10 @@ export default {
         text-align: center;
         white-space: nowrap;
         background-color: red;
-    }
+    } */
     .el-badge /deep/ .is-fixed{
         position: absolute;
         top: -4px;
         right: 5px;
-        -webkit-transform: translateY(-50%) translateX(100%);
-        transform: translateY(-50%) translateX(100%);
     }
 </style>

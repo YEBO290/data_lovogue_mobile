@@ -30,20 +30,37 @@ export default {
   data() {
     return {
       showMore: true,
-      brandList: []
     }
   },
   computed: mapState({
-      brandLists: state => state.home.brandList,
+      brandList: state => {
+        debugger
+        return state.home.brandList
+      },
       showSubMenu: state => state.showSubMenu
       // brandList() {
       //   return this.brandLists.slice(0, 30)
       // }
     }),
   created() {
-    this.brandList = this.brandLists.slice(0, 30)
+    let param = this.searchParam(30, 1)
+    this.$store.dispatch('home/queryBrandList', param)
+    this.$store.commit('showSubMenu', false)
   },
   methods: {
+    searchParam(size, page) {
+      let id = this.$router.history.current.params.id
+      let param = {
+        language: 'cn',
+        brand: 'lovogue',
+        userid: workspace.getCookie().name,
+        listQuery: {
+          pageSize: size,
+          pageNum: page
+        }
+      }
+      return param
+    },
     expand() {
       if(this.showSubMenu){
         this.$store.commit('showSubMenu', false)
