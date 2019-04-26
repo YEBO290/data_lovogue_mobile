@@ -12,7 +12,7 @@
         <el-col :span="12" v-for="(item, index) in productList" :key="index">
           <div  class="category_list">
             <img :src="item.imgpath" class="category_img"  @click="toDetail(item)"/>
-            <img src="../../assets/image/loved.png" style="width: 0.2rem;" title="取消收藏" class="loved" v-if="item.love =='1'" @click.stop="delLove(item)">
+            <img src="../../assets/image/loved.png" style="width: 0.2rem;" title="取消收藏" class="loved" v-if="item.love != 0" @click.stop="delLove(item)">
             <img src="../../assets/image/toLove.png" style="width: 0.2rem;" title="收藏" class="toLove" v-else @click.stop="addLove(item)">
             <p class="category_list_name">{{item.productname}}</p>
             <span class="category_list_price">RMB {{item.tagprice}}</span>
@@ -61,6 +61,7 @@ export default {
       let param = {
         language: 'cn',
         series: id,
+        userid: workspace.getCookie().name,
         listQuery: {
           pageSize: size,
           pageNum: page
@@ -91,13 +92,7 @@ export default {
       this.$store.dispatch('toLoved', param).then(res => {
         debugger
         if(res.msg == 1) {
-          let queryParam = {
-            userid: workspace.getCookie().name,
-            status: "1"
-          }
-          this.$store.dispatch('login/queryLovedList', queryParam)
-          let param = this.searchParam(30, 1)
-          this.$store.dispatch('home/queryProductList', param)
+          this.searchLoveList()
         } else {
           this.$message({
             message: '添加挚爱失败，请重试',
@@ -111,18 +106,12 @@ export default {
       let param = {
         userid: workspace.getCookie().name,
         status: "0",
-        id: item.typeno,
-        amount: "1"
+        id: item.love
       }
       this.$store.dispatch('cancelLove', param).then(res => {
-        if(res == 1) {
-          let queryParam = {
-            userid: workspace.getCookie().name,
-            status: "1"
-          }
-          this.$store.dispatch('login/queryLovedList', queryParam)
-          let param = this.searchParam(30, 1)
-          this.$store.dispatch('home/queryProductList', param)
+        debugger
+        if(res.msg == 1) {
+          this.searchLoveList()
         } else {
           this.$message({
             message: '移除挚爱失败，请重试',
@@ -130,6 +119,15 @@ export default {
           })
         }   
       })
+    },
+    searchLoveList() {
+      let queryParam = {
+        userid: workspace.getCookie().name,
+        status: "1"
+      }
+      this.$store.dispatch('login/queryLovedList', queryParam)
+      let param = this.searchParam(30, 1)
+      this.$store.dispatch('home/queryProductList', param)
     },
     // 详情
     toDetail(val) {

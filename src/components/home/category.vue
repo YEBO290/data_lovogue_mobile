@@ -12,7 +12,7 @@
         <el-col :span="12" v-for="(item, index) in categoryList" :key="index">
           <div  class="category_list" @click="toDetail(item)">
             <img :src="item.imgpath" class="category_img"/>
-            <img src="../../assets/image/loved.png" style="width: 0.2rem;" class="loved" title="取消收藏" v-if="item.love =='1'"  @click.stop="delLove(item)">
+            <img src="../../assets/image/loved.png" style="width: 0.2rem;" class="loved" title="取消收藏" v-if="item.love != 0"  @click.stop="delLove(item)">
             <img src="../../assets/image/toLove.png" style="width: 0.2rem;" class="toLove" title="收藏"  @click.stop="addLove(item)" v-else>  
             <p class="category_list_name">{{item.productname}}</p>
             <span class="category_list_price">RMB {{item.tagprice}}</span>
@@ -72,6 +72,7 @@ export default {
       let param =  {
         language: 'cn',
         category: id,
+        userid: workspace.getCookie().name,
         listQuery: {
           pageSize: size,
           pageNum: page

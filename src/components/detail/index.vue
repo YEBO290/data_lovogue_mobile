@@ -5,7 +5,7 @@
           <img :src="item" style="width:100%">
         </el-carousel-item>
       </el-carousel>
-      <span class="toLove" title="收藏" @click="toLoveFunc" v-if="detailInfo.love === 0"></span>
+      <span class="toLove" title="收藏" @click="toLoveFunc" v-if="detailInfo.love == 0"></span>
       <span class="Loved" title="取消收藏" @click="cancelLove" v-else></span>
       <!--<p class="loveTip">{{loveTip}}</p>-->
       <div class="detail_content">
