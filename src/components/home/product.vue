@@ -30,6 +30,7 @@
 <script>
 import { mapState } from 'vuex'
 import menuList from '../specialEdition/menu'
+import workspace from '../../common.js'
 export default {
   components: {
     menuList
@@ -40,7 +41,12 @@ export default {
     }
   },
   computed: mapState({
-      productList: state => state.home.productTypeList,
+      productList: function(state){
+        state.home.productTypeList.forEach(item => {
+          item.tagprice = workspace.thousandBitSeparator(item.tagprice)
+        })
+        return state.home.productTypeList
+      },
       showSubMenu: state => state.showSubMenu,
       productTotal: state => state.home.productTotal
     }),

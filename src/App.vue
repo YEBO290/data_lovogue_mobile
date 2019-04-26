@@ -79,6 +79,10 @@ export default {
     bottom: 0;
     position: relative;
 }
+#app{
+    max-width: 750px;
+    position: relative;
+}
 </style>
 <style scoped>
 @import "./assets/css/base.css";

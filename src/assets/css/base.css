@@ -256,6 +256,7 @@ label{
     min-width: 0.76rem;
     height:26px;
     padding:4px 8px;
+    line-height: 18px;
     background-size: 68px 18px;
   }
   .el-loading-mask{

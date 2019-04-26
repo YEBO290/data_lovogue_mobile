@@ -40,14 +40,9 @@
           <li v-for="(key, value) in desc" :key="value">• {{key}}.</li>
         </ul>
       </div>     
-      <div class="recommend_list">
+      <!--<div class="recommend_list">
         <p class="recommend">为您推荐相关搭配</p>
         <div>
-          <!-- <div v-for="(item, index) in recommendList" :key="index" class="recommend_list_div">
-            <img :src="item.url" style="width:110px;height:147px;display:block;background:#fff;">
-            <div class="recommend_line"></div>
-            <p class="recommend_text">{{item.text}}</p>
-          </div> -->
           <el-row :gutter="10">
             <el-col :span="8"  v-for="(item, index) in recommendList" :key="index">
               <div class="grid-content bg-purple" style="margin-bottom: 0.25rem;">
@@ -58,7 +53,7 @@
             </el-col>
           </el-row>
         </div>
-      </div>
+      </div>-->
       <div></div>
       <el-dialog
         width="100%"
@@ -182,7 +177,7 @@
                     
 <script>
 import { mapState } from 'vuex'
-// import workspace from '../../common.js'
+import workspace from '../../common.js'
 export default {
   components: {
 
@@ -274,13 +269,16 @@ export default {
       recommendList: state => state.detailList.recommendList,
       // sizeLists: state => state.detail.sizeLists,
       detailInfo: function(state) {
+        let price = workspace.thousandBitSeparator(state.detail.detailInfo.tagprice)
+        this.$set(state.detail.detailInfo, 'tagprice', price)
         this.desc = state.detail.detailInfo.describe
-        this.colorList = this.desc.coloravailable.split(" ")
-        this.weightList = this.desc.weight.split(" ")
-        this.sizeLists = this.desc.sizenum.split(" ")
-        this.selectColor = this.desc.coloravailable || []
-        this.selectSize = this.desc.sizenum || []
-        this.selectWeight = this.desc.weight || []
+        this.sizeChoiceList = state.detail.detailInfo.choice
+        // this.colorList = this.desc.coloravailable.split(" ")
+        // this.weightList = this.desc.weight.split(" ")
+        // this.sizeLists = this.desc.sizenum.split(" ")
+        // this.selectColor = this.desc.coloravailable || []
+        // this.selectSize = this.desc.sizenum || []
+        // this.selectWeight = this.desc.weight || []
         return state.detail.detailInfo
       },
       descDetail: state => {
@@ -383,16 +381,18 @@ export default {
         this.showColor = true
         return false
       }   
-      this.innerVisible = true
+      // this.innerVisible = true
       this.flag = 'buy'
+      this.save()   
     },
     // 加入购物袋
     toBag() {    
       if(!this.vaildFunc()) {
         return faslse
       }  
-      this.innerVisible = true
-      this.flag = 'add'         
+      // this.innerVisible = true
+      this.flag = 'add'      
+      this.save()   
     },
     // 确定
     save(){
