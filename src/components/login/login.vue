@@ -36,6 +36,7 @@
 import { mapState } from 'vuex'
 import CryptoJS from "crypto-js"
 import md5 from "js-md5"
+import workspace from '../../common.js'
 
 export default {
   data() {
@@ -111,7 +112,9 @@ export default {
           }     
           me.$store.dispatch('login/toLogin', param).then(res => {
             debugger
-            if(res) {
+            if(res.length > 0) {
+              //判断用户是否勾选了记住密码选项rememberPsw，传入保存的账号currentPortId，密码password，天数30
+              workspace.setCookie(me.ruleForm.phone, me.ruleForm.pass, 30)
               me.$router.push('/home')
               localStorage.setItem('userName',res[0].userid)
               let loveParam = {
@@ -126,9 +129,11 @@ export default {
               me.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
             } else {
               me.$message.error('操作失败')
+              this.clearCookie()
             }           
           }).catch(err => {
             localStorage.setItem('userName', '')
+            workspace.clearCookie()
           })
         } else{
           console.log('error submit!!')

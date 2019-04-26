@@ -310,7 +310,7 @@ export default {
       let param = {
         userid: localStorage.getItem('userName'),
         status: "1",
-        prodid: item.productid,
+        prodid: detailInfo.typeno,
         amount: "1"
       }
       this.$store.dispatch('toLoved', param).then(res => {

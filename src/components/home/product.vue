@@ -12,8 +12,8 @@
         <el-col :span="12" v-for="(item, index) in productList" :key="index">
           <div  class="category_list">
             <img :src="item.imgpath" class="category_img"  @click="toDetail(item)"/>
-            <img src="../../assets/image/loved.png" style="width: 0.2rem;" title="取消收藏" class="loved" v-if="item.love =='1'" @click="delLove(item)">
-            <img src="../../assets/image/toLove.png" style="width: 0.2rem;" title="收藏" class="toLove" v-else @click="addLove(item)">
+            <img src="../../assets/image/loved.png" style="width: 0.2rem;" title="取消收藏" class="loved" v-if="item.love =='1'" @click.stop="delLove(item)">
+            <img src="../../assets/image/toLove.png" style="width: 0.2rem;" title="收藏" class="toLove" v-else @click.stop="addLove(item)">
             <p class="category_list_name">{{item.productname}}</p>
             <span class="category_list_price">RMB {{item.tagprice}}</span>
           </div>
@@ -51,6 +51,8 @@ export default {
       productTotal: state => state.home.productTotal
     }),
   created() {
+    debugger
+    let c = workspace.getCookie()
     let param = this.searchParam(30, 1)
     this.$store.dispatch('home/queryProductList', param)
     this.$store.commit('showSubMenu', false)
@@ -89,7 +91,8 @@ export default {
         amount: "1"
       }
       this.$store.dispatch('toLoved', param).then(res => {
-        if(res == 1) {
+        debugger
+        if(res.msg == 1) {
           let queryParam = {
             userid: localStorage.getItem('userName'),
             status: "1"

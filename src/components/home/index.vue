@@ -124,7 +124,7 @@ export default {
     },
     toProduct(val) {
       // 跳转至产品列表页
-      let name = val.name
+      let name = val.prodlink
       this.$router.push(`/productList/${name}`)
     },
     toSpecialEditionList(val) {
@@ -133,7 +133,7 @@ export default {
     },
     toCategoryList(val) {
       // 跳转至类别列表页
-      let name = val.name
+      let name = val.prodlink
       this.$router.push(`/categoryList/${name}`)
     },
     toBrandList() {

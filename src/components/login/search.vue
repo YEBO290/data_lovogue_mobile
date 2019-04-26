@@ -43,6 +43,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import workspace from '../../common.js'
 export default {
     data() {
       return {
@@ -52,7 +53,12 @@ export default {
     },
     computed: mapState({
       // 箭头函数可使代码更简练
-      searchList: state => state.login.searchList,
+      searchList: function(state){
+        state.login.searchList.data.forEach(el => {
+          el.tagprice = workspace.thousandBitSeparator(el.tagprice)
+        })
+        return state.login.searchList
+      },
       tipList: state => state.home.specialEditionList,
       
       // phone: state => state.phone

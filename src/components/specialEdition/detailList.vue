@@ -24,7 +24,7 @@
           <span class="date_btn">约会必备</span>
         </div>  -->
       </div>
-      <div class="recommend_list">
+      <!--<div class="recommend_list">
         <p class="recommend">搭配单品推荐</p>
         <el-row :gutter="5">
           <el-col :span="8" v-for="(item, index) in recommendList" :key="index" class="recommend_list_div">
@@ -36,7 +36,7 @@
             </div>
             </el-col>
         </el-row>
-      </div>
+      </div>-->
       <div>
         <el-row :style="{backgroundImage: 'url(' + specialBackImg + ')', backgroundSize:'100%'}">
           <!--<el-col :span="8" v-for="(item, index) in specialImg" :key="item.id" class="subImg">-->
@@ -93,7 +93,7 @@ export default {
     let param = {
       prodname: this.id
     }
-    // this.$store.dispatch('detailList/querySpecialImg', param) // 获取特辑图片
+    this.$store.dispatch('detailList/querySpecialImg', param) // 获取特辑图片
   },
   methods: {
     // 清除
