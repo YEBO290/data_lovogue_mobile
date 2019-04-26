@@ -308,7 +308,7 @@ export default {
       this.toLove = false
       this.loveTip = '收藏成功'
       let param = {
-        userid: localStorage.getItem('userName'),
+        userid: workspace.getCookie().name,
         status: "1",
         prodid: detailInfo.typeno,
         amount: "1"
@@ -316,7 +316,7 @@ export default {
       this.$store.dispatch('toLoved', param).then(res => {
         if(res == 1) {
           let queryParam = {
-            userid: localStorage.getItem('userName'),
+            userid: workspace.getCookie().name,
             status: "1"
           }
           this.$store.dispatch('login/queryLovedList', queryParam)
@@ -338,7 +338,7 @@ export default {
       this.loveTip = '收藏'
       // 发送请求
       let param = {
-        userid: localStorage.getItem('userName'),
+        userid: workspace.getCookie().name,
         status: "0",
         prodid: item.productid,
         amount: "1"
@@ -346,7 +346,7 @@ export default {
       this.$store.dispatch('cancelLove', param).then(res => {
         if(res == 1) {
           let queryParam = {
-            userid: localStorage.getItem('userName'),
+            userid: workspace.getCookie().name,
             status: "1"
           }
           this.$store.dispatch('login/queryLovedList', queryParam)
@@ -424,7 +424,7 @@ export default {
         if(this.flag === 'add') { // 加入购物袋
           let param = {
             prodid: this.detail.color,
-            userid: localStorage.getItem('userName'),
+            userid: workspace.getCookie().name,
             amount: "1",
             status: "1"
           }
@@ -436,7 +436,7 @@ export default {
                 type: 'success'
               })
               let queryParam = {
-                userid: localStorage.getItem('userName'),
+                userid: workspace.getCookie().name,
                 status: "1"
               }
               this.$store.dispatch('login/queryBagList', queryParam)

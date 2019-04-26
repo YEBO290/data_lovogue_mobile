@@ -20,6 +20,7 @@ import categoryList from "./../components/home/category"; // 类别列表
 import loved from "./../components/login/loved"; // 喜爱
 import bag from "./../components/login/bag"; // 购物袋
 import search from "./../components/login/search"; // 搜索界面
+import workspace from '../common.js'
 Vue.use(Router);
 
 const router = new Router({
@@ -66,7 +67,7 @@ const router = new Router({
                 showToTop: true
             },
             beforeEnter: (to, from, next) => {
-                let status = localStorage.getItem('userName')
+                let status = workspace.getCookie().name
                 if(status !== '' && status !== null && status !== undefined) {
                     next()
                 } else {
@@ -149,7 +150,7 @@ const router = new Router({
                 flag: "list"
             },
             beforeEnter: (to, from, next) => {
-                let status = localStorage.getItem('userName')
+                let status = workspace.getCookie().name
                 if(status !== '' && status !== null && status !== undefined) {
                     next()
                 } else {
@@ -166,7 +167,7 @@ const router = new Router({
                 flag: "list"
             },
             beforeEnter: (to, from, next) => {
-                let status = localStorage.getItem('userName')
+                let status = workspace.getCookie().name
                 if(status !== '' && status !== null && status !== undefined) {
                     next()
                 } else {
@@ -183,7 +184,7 @@ const router = new Router({
                 flag: "list"
             },
             beforeEnter: (to, from, next) => {
-                let status = localStorage.getItem('userName')
+                let status = workspace.getCookie().name
                 if(status !== '' && status !== null && status !== undefined) {
                     next()
                 } else {

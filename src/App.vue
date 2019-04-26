@@ -18,6 +18,7 @@ import FooterTab from './components/footer.vue'
 import { mapState } from 'vuex'
 import menuList from './components/menu'
 import toTop from './components/common/toTop'
+import workspace from './common.js'
 let data = () => {
     return {
     }
@@ -38,14 +39,15 @@ export default {
     }),
     created() {
         let me = this
-        if(localStorage.getItem('userName')) {       
+        let useName = workspace.getCookie().name
+        if(useName) {       
             let loveParam = {
-            userid: localStorage.getItem('userName'),
+            userid: useName,
             status: "1"
             }
             me.$store.dispatch('login/queryLovedList', loveParam) // 喜爱的列表查询
             let queryParam = {
-            userid: localStorage.getItem('userName'),
+            userid: useName,
             status: "1"
             }
             me.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询

@@ -71,7 +71,7 @@ export default {
       // }
     }),
     created() {
-      let status = localStorage.getItem('userName')
+      let status = workspace.getCookie().name
       if(status !== '' && status !== null && status !== undefined) {
         this.showToLogin = false
       } else {

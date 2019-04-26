@@ -68,6 +68,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import workspace from '../../common.js'
 export default {    
     data() {  
     // 手机
@@ -142,7 +143,7 @@ export default {
           if (valid) {
             let param = {
               id: me.editInfo.id,
-              userid: localStorage.getItem('userName'),
+              userid: workspace.getCookie().name,
               address: me.editInfo.address,
               status: "1",
               addressprovince: me.editInfo.addressprovince,
@@ -184,7 +185,7 @@ export default {
         }).then(() => {
           let param = {
             id: me.editInfo.id,
-            userid: localStorage.getItem('userName'),
+            userid: workspace.getCookie().name,
             status: 0
           }
           me.$store.dispatch('address/editAddress',param )

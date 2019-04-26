@@ -69,6 +69,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import workspace from '../../common.js'
 export default {
     data() {
       return {
@@ -105,14 +106,14 @@ export default {
       // }
     }),
     created() {
-      let status = localStorage.getItem('userName')
+      let status = workspace.getCookie().name
       if(status !== '' && status !== null && status !== undefined) {
         this.showToLogin = false
       } else {
         this.showToLogin = true
       }
       let queryParam = {
-        userid: localStorage.getItem('userName'),
+        userid: workspace.getCookie().name,
         status: "1"
       }
       this.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
@@ -142,7 +143,7 @@ export default {
               type: 'success'
             })
             let queryParam = {
-              userid: localStorage.getItem('userName'),
+              userid: workspace.getCookie().name,
               status: "1"
             }
             me.$store.dispatch('login/queryBagList', queryParam)

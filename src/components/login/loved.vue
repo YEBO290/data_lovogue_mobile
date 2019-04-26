@@ -45,6 +45,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import workspace from '../../common.js'
 export default {
     data() {
       return {
@@ -74,14 +75,14 @@ export default {
       // }
     }),
     created() {
-      let status = localStorage.getItem('userName')
+      let status = workspace.getCookie().name
       if(status !== '' && status !== null && status !== undefined) {
         this.showToLogin = false
       } else {
         this.showToLogin = true
       }
       let param = {
-        userid: localStorage.getItem('userName'),
+        userid: workspace.getCookie().name,
         status: "1"
       }
       this.$store.dispatch('login/queryLovedList', param) // 喜爱的列表查询
@@ -103,7 +104,7 @@ export default {
         }
         this.$store.dispatch('login/delLove', delParam).then(() => {
           let param = {
-            userid: localStorage.getItem('userName'),
+            userid: workspace.getCookie().name,
             status: "1"
           }
           this.$store.dispatch('login/queryLovedList', param)

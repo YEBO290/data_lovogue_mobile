@@ -51,8 +51,6 @@ export default {
       productTotal: state => state.home.productTotal
     }),
   created() {
-    debugger
-    let c = workspace.getCookie()
     let param = this.searchParam(30, 1)
     this.$store.dispatch('home/queryProductList', param)
     this.$store.commit('showSubMenu', false)
@@ -85,7 +83,7 @@ export default {
     },
     addLove(item) {
       let param = {
-        userid: localStorage.getItem('userName'),
+        userid: workspace.getCookie().name,
         status: "1",
         prodid: item.typeno,
         amount: "1"
@@ -94,7 +92,7 @@ export default {
         debugger
         if(res.msg == 1) {
           let queryParam = {
-            userid: localStorage.getItem('userName'),
+            userid: workspace.getCookie().name,
             status: "1"
           }
           this.$store.dispatch('login/queryLovedList', queryParam)
@@ -111,7 +109,7 @@ export default {
     delLove(item) {
       // 发送请求
       let param = {
-        userid: localStorage.getItem('userName'),
+        userid: workspace.getCookie().name,
         status: "0",
         id: item.typeno,
         amount: "1"
@@ -119,7 +117,7 @@ export default {
       this.$store.dispatch('cancelLove', param).then(res => {
         if(res == 1) {
           let queryParam = {
-            userid: localStorage.getItem('userName'),
+            userid: workspace.getCookie().name,
             status: "1"
           }
           this.$store.dispatch('login/queryLovedList', queryParam)

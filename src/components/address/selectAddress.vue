@@ -21,6 +21,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import workspace from '../../common.js'
 export default {
     data() {     
       return {
@@ -35,7 +36,7 @@ export default {
     }),
     created() {
       let param = {
-        userid: localStorage.getItem('userName'),
+        userid: workspace.getCookie().name,
         status: 1
       }
       this.$store.dispatch('address/queryAddressList', param)

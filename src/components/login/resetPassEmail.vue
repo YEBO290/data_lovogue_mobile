@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import workspace from '../../common.js'
   export default {
     data() {
       // 邮箱校验
@@ -54,7 +55,7 @@
           if (valid) {
             let param = {
               email: me.ruleForm.email,
-              userid: localStorage.getItem('userName'),
+              userid: workspace.getCookie().name,
             }
             me.$store.dispatch('login/resetPwEmail', param).then(res => {
               if(res === 1) {
@@ -81,7 +82,7 @@
       queryUseLogin() {
         let me = this
         let param = {
-            "userid": localStorage.getItem('userName'),
+            "userid": workspace.getCookie().name,
             "password": "123456"
         }
         me.$store.dispatch('login/queryUseLogin', param)

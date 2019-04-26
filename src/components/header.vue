@@ -37,6 +37,7 @@
 <script>
 import store from '../store'
 import { mapState } from 'vuex'
+import workspace from '../common.js'
 document.onclick=function(){
     store.commit('showMenu', false)
     store.commit('showSubMenu', false)
@@ -61,7 +62,7 @@ export default {
   },
   methods: {
       toHome() { //点击logo 跳至首页
-        let status = localStorage.getItem('userName')
+        let status = workspace.getCookie().name
         if(status !== '' && status !== null && status !== undefined) {
             this.$router.push('/home')
         } else {

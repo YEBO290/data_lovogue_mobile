@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import workspace from '../../common.js'
   export default {
     data() {
        // 密码
@@ -101,7 +102,7 @@
           if (valid) {
             let param = {
               password: me.ruleForm.pass,
-              userid: localStorage.getItem('userName'),
+              userid: workspace.getCookie().name,
               uuid: me.ruleForm.verificationCode
             }
             me.$store.dispatch('login/resetPwMessage', param).then(res => {

@@ -116,14 +116,13 @@ export default {
               //判断用户是否勾选了记住密码选项rememberPsw，传入保存的账号currentPortId，密码password，天数30
               workspace.setCookie(me.ruleForm.phone, me.ruleForm.pass, 30)
               me.$router.push('/home')
-              localStorage.setItem('userName',res[0].userid)
               let loveParam = {
-                userid: localStorage.getItem('userName'),
+                userid: workspace.getCookie().name,
                 status: "1"
               }
               me.$store.dispatch('login/queryLovedList', loveParam) // 喜爱的列表查询
               let queryParam = {
-                userid: localStorage.getItem('userName'),
+                userid: workspace.getCookie().name,
                 status: "1"
               }
               me.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
@@ -132,7 +131,6 @@ export default {
               this.clearCookie()
             }           
           }).catch(err => {
-            localStorage.setItem('userName', '')
             workspace.clearCookie()
           })
         } else{

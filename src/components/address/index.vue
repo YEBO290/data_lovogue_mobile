@@ -82,6 +82,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import workspace from '../../common.js'
 export default {
     data() {     
       var validatePass = (rule, value, callback) => {
@@ -170,7 +171,7 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let param = {
-              userid: localStorage.getItem('userName'),
+              userid: workspace.getCookie().name,
               address: me.ruleForm.address,
               status: "1",
               addressprovince: me.ruleForm.addressprovince,
