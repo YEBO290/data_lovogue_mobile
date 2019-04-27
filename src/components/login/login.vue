@@ -88,9 +88,9 @@ export default {
   mounted() {
   },
   methods: {
-    calcuMD5(pwd) {
-      let pass = pwd.toUpperCase()
-      return md5(pass)
+    calcuMD5(val) {
+      let data = val.toUpperCase()
+      return md5(data)
     },
     submitForm(formName) {
       let me = this
@@ -107,7 +107,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let param = {
-            userid: me.ruleForm.phone,
+            userid: me.calcuMD5(me.ruleForm.phone),
             password: me.calcuMD5(me.ruleForm.pass)
           }     
           me.$store.dispatch('login/toLogin', param).then(res => {
@@ -133,8 +133,8 @@ export default {
             }           
           }).catch(err => {
             workspace.clearCookie()
-              store.commit('login/lovesList', []) // 喜爱的列表查询
-              store.commit('login/bagList', []) // 购物的列表查询
+              me.$store.commit('login/lovesList', []) // 喜爱的列表查询
+              me.$store.commit('login/bagList', []) // 购物的列表查询
           })
         } else{
           console.log('error submit!!')

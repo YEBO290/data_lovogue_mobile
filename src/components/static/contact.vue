@@ -126,7 +126,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-
+import workspace from '../../common.js'
 export default {
   components: {
 
@@ -240,6 +240,10 @@ export default {
     console.log(this.id)
   },
   methods: {
+    calcuMD5(val) {
+      let data = val.toUpperCase()
+      return md5(data)
+    },
     toResetPassWord() {
       this.$router.push('/resetPassMessage')
     },
@@ -252,12 +256,35 @@ export default {
           console.log('error submit!!');
           return false;
         }
-      });      
+      }) 
     },
     // 提交更改密码
     submitPassWord() {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          let me = this
+          // Encrypt 加密 
+          var cipherText = CryptoJS.AES.encrypt(rulePassWordForm.pass, "password").toString()
+          console.log(cipherText)
+          this.$refs[formName].validate((valid) => {
+            if (valid) {
+              let param = {
+                userid: workspace.getCookie().name,
+                password: this.calcuMD5(me.rulePassWordForm.pass),
+                role: '0',
+                // stauts: '1',
+              }
+              me.$store.dispatch('login/toRegister', param).then(res => {
+                debugger
+                if(res.mag == 1) {
+                  me.$router.push('/login')
+                }
+              })
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          })
           // this.$store.dispatch('savePassWord') // 提交客服
         } else {
           console.log('error submit!!');

@@ -98,7 +98,7 @@ export default {
           this.searchLoveList()
         } else {
           this.$message({
-            message: '添加挚爱失败，请重试',
+            message: '操作失败，请重试',
             type: 'error'
           })
         }   

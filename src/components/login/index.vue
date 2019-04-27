@@ -2,7 +2,7 @@
     <div class="login_home">
         <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="登录" name="login"><login/></el-tab-pane>
-            <el-tab-pane label="注册" name="register"><register/></el-tab-pane>
+            <el-tab-pane label="注册" name="register"><register @setActive="setActive"/></el-tab-pane>
         </el-tabs>       
     </div>
 </template>
@@ -25,6 +25,9 @@ import register from './register'
         handleClick(tab, event) {
             console.log(tab, event)
             // tab.index == '1' && (this.showRes = true)
+        },
+        setActive(val) {
+            this.activeName = val
         }
     },
     beforeRouteEnter(to, from, next) {   

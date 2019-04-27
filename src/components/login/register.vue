@@ -140,28 +140,37 @@ import md5 from "js-md5"
     created() {
     },
     methods: {
-      calcuMD5(pwd) {
-        let pass = pwd.toUpperCase()
-        return md5(pass)
+      calcuMD5(val) {
+        let data = val.toUpperCase()
+        return md5(data)
       },
         // 提交
       submitForm(formName) {
         let me = this
          // Encrypt 加密 
-      var cipherText = CryptoJS.AES.encrypt(me.ruleFormRest.passwordRes, "password").toString()
-      console.log(cipherText)
+        var cipherText = CryptoJS.AES.encrypt(me.ruleFormRest.passwordRes, "password").toString()
+        console.log(cipherText)
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let param = {
-              userid: this.ruleFormRest.username,
+              userid: this.calcuMD5(this.ruleFormRest.username),
               password: this.calcuMD5(me.ruleFormRest.passwordRes),
-              username: this.ruleFormRest.username,
+              username: this.calcuMD5(this.ruleFormRest.username),
               role: '0',
               // stauts: '1',
               email: this.ruleFormRest.email,
               phone: this.ruleFormRest.phoneRes
             }
-            me.$store.dispatch('login/toRegister', param)
+            me.$store.dispatch('login/toRegister', param).then(res => {
+              if(res.msg == 1) {
+                me.$emit('setActive', 'login')
+              } else {
+                me.$message({
+                  message: '操作失败，请重试',
+                  type: 'error'
+                })
+              }
+            })
           } else {
             console.log('error submit!!');
             return false;
