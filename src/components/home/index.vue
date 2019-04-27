@@ -6,8 +6,8 @@
             <div @click="toSpecialEditionList(item)">
               <img :src="item.value" style="width:100%;">
               <div class="img_opeation">
-                <h1 class="list_h1">{{item.name}}</h1>
-                <el-button class="img_list_btn" @click="toSpecialEditionList(item)">立即选购</el-button>
+                <!-- <h1 class="list_h1">{{item.name}}</h1> -->
+                <!-- <el-button class="img_list_btn" @click="toSpecialEditionList(item)">立即选购</el-button> -->
               </div>
             </div>
           </el-carousel-item>
@@ -19,7 +19,7 @@
             <div class="grid-content bg-purple">
               <img :src="item.value"/>
               <h1 class="list__sub_h1">{{item.name}}</h1>
-              <el-button class="img_list_sub_btn" @click="toSpecialEditionList(item)">立即选购</el-button>
+              <!-- <el-button class="img_list_sub_btn" @click="toSpecialEditionList(item)">立即选购</el-button> -->
             </div>
             </el-col>
         </el-row>

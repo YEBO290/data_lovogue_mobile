@@ -378,26 +378,39 @@ export default {
     },
     // 立即选购
     toBuy() { 
-      if(!this.vaildFunc()) {
-        return false
-      }
-      this.showColor = false
-      if (this.detail.color === '' || this.detail.color === null) {
-        this.showColor = true
-        return false
-      }   
-      // this.innerVisible = true
-      this.flag = 'buy'
-      this.save()   
+      this.$message({
+        message: '支付接口搭建中,敬请关注！',
+        type: 'success'
+      })
+      //临时注释 start
+      // if(!this.vaildFunc()) {
+      //   return false
+      // }
+      // this.showColor = false
+      // if (this.detail.color === '' || this.detail.color === null) {
+      //   this.showColor = true
+      //   return false
+      // }   
+      // // this.innerVisible = true
+      // this.flag = 'buy'
+      // this.save()  
+      //临时注释 end 
     },
     // 加入购物袋
-    toBag() {    
+    toBag() { 
+      this.$message({
+        message: '支付接口搭建中,敬请关注！',
+        type: 'success'
+      })
+
+      //临时注释 start
       if(!this.vaildFunc()) {
         return false
       }  
       // this.innerVisible = true
       this.flag = 'add'      
-      this.save()   
+      this.save() 
+      //临时注释 end   
     },
     // 确定
     save(){
