@@ -31,5 +31,7 @@ var service = {
     resetPasswordMessage: '/CrmUser/updateUser', // 短信重置密码
     // 特辑
     getScreenFeatureList: '/Cms/getScreenFeatureList', // 特辑列表
+    // 菜单导航栏
+    getNavigation: 'Cms/getNavigation'
 }
 export default service

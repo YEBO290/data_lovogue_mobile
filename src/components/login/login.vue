@@ -133,6 +133,8 @@ export default {
             }           
           }).catch(err => {
             workspace.clearCookie()
+              store.commit('login/lovesList', []) // 喜爱的列表查询
+              store.commit('login/bagList', []) // 购物的列表查询
           })
         } else{
           console.log('error submit!!')

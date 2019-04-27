@@ -82,7 +82,7 @@ export default {
     position: relative;
 }
 #app{
-    max-width: 500px;
+    max-width: 500rem;
     margin:0 auto;
     position: relative;
 }

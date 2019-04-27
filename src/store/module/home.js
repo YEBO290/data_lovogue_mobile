@@ -4,25 +4,7 @@ const state = {
     queryImg: [], // 轮播图
     productList: [], // 产品系列
     categoryList: [], // 类别   
-    specialImg: [], //首页特辑双图
-    specialEditionList: [{
-            // 特辑
-            name: "耳环",
-            url: require("../../assets/logo.png")
-        },
-        {
-            name: "戒指",
-            url: require("../../assets/logo.png")
-        },
-        {
-            name: "项链",
-            url: require("../../assets/logo.png")
-        },
-        {
-            name: "鞋包",
-            url: require("../../assets/logo.png")
-        }
-    ],     
+    specialImg: [], //首页特辑双图  
     productTypeList: [], // 产品某系列表     
     categoryTypeList: [], // 某个类别列表
     brandList: [{
@@ -62,7 +44,8 @@ const state = {
         }
     ],
     categoryTotal: 0,
-    productTotal: 0
+    productTotal: 0,
+    menuList: []
 };
 const actions = {
     // 查询轮播图
@@ -160,22 +143,6 @@ const actions = {
             })
         })
     },
-    // 特辑
-    querySpecialEditionList(context, param) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                get("api/v1/users/my_address/address_edit_before", param)
-                    .then(res => {
-                        //
-                        context.commit("specialEditionList", res.data);
-                        resolve(res.data);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            }, 1000);
-        });
-    },
     // 品牌列表载入更多
     queryMoreBrandList(context, param) {
         return new Promise((resolve, reject) => {
@@ -190,7 +157,22 @@ const actions = {
                         console.log(err);
                     });
             }, 1000);
-        });
+        })
+    },
+    // 菜单
+    queryMenuList(context, param) {
+        return new Promise((resolve, reject) => {
+            let params = param || {}
+            post(api.getNavigation, params)
+            .then(res => {
+                //
+                context.commit("menuList", res.data);
+                resolve(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        })
     }
 };
 
@@ -217,10 +199,6 @@ const mutations = {
     aboutList(state, data) {
         state.aboutList = data
     },
-    // 特辑
-    specialEditionList(state, data) {
-        state.specialEditionList = data
-    },
     categoryTypeList(state, data) {
         state.categoryTypeList = data
     },
@@ -234,7 +212,11 @@ const mutations = {
     // 产品列表数量
     productTotal(state, data) {
         state.productTotal = data
-    }
+    },
+    // 菜单栏列表
+    menuList(state, data) {
+        state.menuList = data
+    },
 };
 const getters = {};
 export default {

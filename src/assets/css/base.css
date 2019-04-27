@@ -302,6 +302,6 @@ input::-webkit-input-placeholder {
     font-size: 12px;
     /* placeholder位置  */
   }
-  img:hover{
+ .header :hover img{
     transform:scale(1.1)
   }

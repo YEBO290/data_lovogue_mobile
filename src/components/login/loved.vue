@@ -1,19 +1,21 @@
 <template>
   <div class="loved">
     <div class="loved_lists" v-if="!showToLogin && lovesList.length > 0">
-      <el-row :gutter="20" class="loved_list" v-for="(item, index) in lovesList" :key="index" @click="toDetail(item)">
-        <el-col :span="7"><img :src="item.imgpath" class="loved_img" style="width:100%;"/></el-col>
-        <el-col :span="17">
-          <div>
-            <span class="loved_text">{{item.name}}</span>
-            <i class="el-icon-close" @click.stop="delLove(item)"></i>
-          </div>
-          <div>
-            <span class="loved_color">{{item.color}} - <span  class="loved_code">编号  {{item.prodid}}</span></span>
-          </div>
-          <div class="loved_country">
-            <span class="loved_price">RMB {{item.tagprice}}</span>
-            <i class="icon_bag" @click.stop="addBag"></i>
+      <el-row :gutter="20" class="loved_list" v-for="(item, index) in lovesList" :key="index">
+        <el-col :span="8"><img :src="item.imgpath" class="loved_img" style="width:100%;"  @click="toDetail(item)"/></el-col>
+        <el-col :span="16">
+          <div  @click="toDetail(item)">
+            <div>
+              <span class="loved_text">{{item.name}}</span>
+              <i class="el-icon-close" @click.stop="delLove(item)"></i>
+            </div>
+            <div>
+              <span class="loved_color">{{item.color}} - <span  class="loved_code">编号  {{item.prodid}}</span></span>
+            </div>
+            <div class="loved_country">
+              <span class="loved_price">RMB {{item.tagprice}}</span>
+              <i class="icon_bag" @click.stop="addBag"></i>
+            </div>
           </div>
         </el-col>
       </el-row>

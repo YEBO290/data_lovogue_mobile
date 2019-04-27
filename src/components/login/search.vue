@@ -2,43 +2,53 @@
   <div class="search">
     <img src="../../assets/image/back.png" @click="$router.push('/home')">
     <el-input
-    placeholder="搜索" class="productname"
+    placeholder="搜索..." class="productname"
     v-model.trim="productname" @change="search">
     <i slot="prefix" class="el-input__icon el-icon-search"></i>
   </el-input>
-  <div>
-    <p v-for="(item, index) in tipList" :key="index"></p>
+  <div class="login_none" v-if="showToLogin">
+    <el-button class="btn ok_btn" type="primary" @click="toLogin">登录</el-button>
+    <el-button class="btn cancel_btn" type="primary" @click="toRegister">注册</el-button>
   </div>
-  <div class="search_lists" v-if="!showToLogin && searchList.data.length > 0">
-      <el-row :gutter="20" class="search_list" v-for="(item, index) in searchList.data" :key="index">
-        <el-col :span="8"><img :src="item.imgpath" class="search_img" @click="$router.push(`/detail/${item.typeno}`)"/></el-col>
-        <el-col :span="16">
-          <div @click="$router.push(`/detail/${item.typeno}`)">
-            <div>
-              <span class="search_text">{{item.productname}}</span>
-            </div>
-            <div>
-              <span class="search_color">{{item.color}} - <span  class="search_code">编号  {{item.typeno}}</span></span>
-            </div>
-            <div class="search_country">
-              <span class="search_price">RMB {{item.tagprice}}</span>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row v-if="searchList.data.total > 30">
-        <el-col :span="24">
-          <p class="showTip list_more_tip"  v-if="showMore">显示{{searchList.data.total}}中的30件</p>
-          <el-button class="btn ok_btn" type="primary" @click="toMore" v-if="showMore">载入更多</el-button>            
-        </el-col>
-      </el-row>
+  <div v-else>
+    <div class="tip_searchList" v-if="showTip">
+      <div v-for="(item, index) in tipList" :key="index">
+        <p class="menu_title" @click.stop="toMenu(item, index)">{{item.name}}</p>  
+        <div v-if="item.next">
+          <ul v-if="expand[index]">
+            <li v-for="(el, index) in item.next" :key="index" class="menu_txt" @click.stop="toSubMenu(el)">{{el.name}}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="search_none" v-if="!showToLogin && searchList.data.length === 0">
-      <p>暂时没找到相关的产品</p>
-    </div>
-    <div class="login_none" v-if="showToLogin">
-      <el-button class="btn ok_btn" type="primary" @click="toLogin">登录</el-button>
-      <el-button class="btn cancel_btn" type="primary" @click="toRegister">注册</el-button>
+    <div class="search_lists" v-if="!showTip && searchList.data.length > 0">
+        <el-row :gutter="20" class="search_list" v-for="(item, index) in searchList.data" :key="index">
+          <el-col :span="8"><img :src="item.imgpath" class="search_img" @click="$router.push(`/detail/${item.typeno}`)"/></el-col>
+          <el-col :span="16">
+            <div @click="$router.push(`/detail/${item.typeno}`)">
+              <div>
+                <span class="search_text">{{item.productname}}</span>
+              </div>
+              <div>
+                <span class="search_color">{{item.color}} - <span  class="search_code">编号  {{item.typeno}}</span></span>
+              </div>
+              <div class="search_country">
+                <span class="search_price">RMB {{item.tagprice}}</span>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row v-if="!showTip && searchList.data.total > 30">
+          <el-col :span="24">
+            <p class="showTip list_more_tip"  v-if="showMore">显示{{searchList.data.total}}中的30件</p>
+            <el-button class="btn ok_btn" type="primary" @click="toMore" v-if="showMore">载入更多</el-button>            
+          </el-col>
+        </el-row>
+      </div>
+      <div class="search_none" v-if="!showTip && searchList.data.length === 0">
+        <p>暂时没找到相关的产品</p>
+      </div>
     </div>
   </div>
 </template>
@@ -50,7 +60,9 @@ export default {
     data() {
       return {
         productname: '',
-        showMore: true
+        showMore: true,
+        expand: [],
+        showTip: true
       }
     },
     computed: mapState({
@@ -61,18 +73,10 @@ export default {
         })
         return state.login.searchList
       },
-      tipList: state => state.home.specialEditionList,
-      
-      // phone: state => state.phone
-      // 传字符串参数 'count' 等同于 `state => state.count`
-      // countAlias: 'count',
-
-      // // 为了能够使用 `this` 获取局部状态，必须使用常规函数
-      // countPlusLocalState (state) {
-      //   return state.count + this.localCount
-      // }
+      tipList: state => state.home.menuList
     }),
     created() {
+      this.$store.dispatch('home/queryMenuList')
       let status = workspace.getCookie().name
       if(status !== '' && status !== null && status !== undefined) {
         this.showToLogin = false
@@ -87,6 +91,7 @@ export default {
     methods: {
       search() {
         let me = this
+        me.showTip = false
         let param = {
           data: {
               language: "cn",
@@ -133,6 +138,23 @@ export default {
         }
         me.$store.dispatch('login/querySearchList', param)
       },
+      expandFunc(val, index) {
+        if (this.expand[index]) {
+          this.$set(this.expand, index, false)
+        } else {
+          this.$set(this.expand, index, true)
+        }
+      },
+      toMenu(val, index) {
+        if (val.next && !this.expand[index]) {
+          this.expandFunc(val, index)
+        } else {
+          this.$router.push(val.prodlink)
+        }  
+      },
+      toSubMenu(val) {
+        this.$router.push(val.prodlink)
+      }
     }
 }
 </script>
@@ -212,5 +234,18 @@ export default {
   border-bottom: 1px solid #333;
   border-radius: inherit;
   background: #f6f6f6;
+}
+.tip_searchList{
+  text-align: center;
+  padding-top: 45px;
+}
+.tip_searchList .menu_title{
+  font-size:15px;
+  color:#111;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+ul>li {
+  margin-bottom: 10px;
 }
 </style>

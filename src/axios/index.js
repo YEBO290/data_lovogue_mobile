@@ -65,9 +65,9 @@ axios.interceptors.response.use(
   // 服务器状态码不是200的情况 
   error => {  
     error.response.data.msg && Message.error(error.response.data.msg) || Message.error(error.message)
-    workspace.clearCookie()
-    store.commit('login/lovesList', []) // 喜爱的列表查询
-    store.commit('login/bagList', []) // 购物的列表查询
+    // workspace.clearCookie()
+    // store.commit('login/lovesList', []) // 喜爱的列表查询
+    // store.commit('login/bagList', []) // 购物的列表查询
     Loading.service({
       lock: true,
       text: 'Loading',

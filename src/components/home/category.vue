@@ -71,7 +71,7 @@ export default {
       let id = this.$router.history.current.params.id
       let param =  {
         language: 'cn',
-        category: id,
+        category: id || '',
         userid: workspace.getCookie().name,
         listQuery: {
           pageSize: size,

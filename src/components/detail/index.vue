@@ -270,7 +270,7 @@ export default {
       // sizeLists: state => state.detail.sizeLists,
       detailInfo: function(state) {
         let price = workspace.thousandBitSeparator(state.detail.detailInfo.tagprice)
-        this.$set(state.detail.detailInfo, 'tagprice', price)
+        state.detail.detailInfo.tagprice && (this.$set(state.detail.detailInfo, 'tagprice', price))
         this.desc = state.detail.detailInfo.describe
         this.sizeChoiceList = state.detail.detailInfo.choice
         // this.colorList = this.desc.coloravailable.split(" ")
@@ -287,10 +287,7 @@ export default {
       }
     }),
   created() {
-    let param = {
-      typeno: this.id
-    }
-    this.$store.dispatch('detail/queryDetail', param)
+    this.searchDetail()
     // this.$store.dispatch('detail/queryImg') // 获取轮播图列表 
     // this.$store.dispatch('detail/queryColorList') // 获取颜色的下拉值 
   },
@@ -303,16 +300,19 @@ export default {
     expand() {
       this.showMenu = true
     },
+    searchDetail() {
+      let param = {
+        typeno: this.id,
+        userid: workspace.getCookie().name
+      }
+      this.$store.dispatch('detail/queryDetail', param)
+    },
     searchList() {
       let queryParam = {
         userid: workspace.getCookie().name,
         status: "1"
       }
-      this.$store.dispatch('login/queryLovedList', queryParam)
-      let param = {
-        typeno: this.id
-      }
-      this.$store.dispatch('detail/queryDetail', param)
+      this.$store.dispatch('login/queryLovedList', queryParam)    
     },
     // 收藏
     toLoveFunc(item) {
@@ -330,6 +330,7 @@ export default {
             message: '操作成功',
             type: 'success'
           })
+          this.searchDetail()
           this.searchList()
         } else {
           this.$message({
@@ -356,6 +357,7 @@ export default {
             message: '操作成功',
             type: 'success'
           })
+          this.searchDetail()
           this.searchList()
         } else {
           this.$message({
