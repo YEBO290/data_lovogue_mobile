@@ -31,8 +31,8 @@
       </div>
       <div class="share">
         <p>分享至</p>
-        <img src="../../assets/image/weChatNew.png">
-        <img src="../../assets/image/friend.png">
+        <img src="../../assets/image/weChatNew.png" @click="devIng">
+        <img src="../../assets/image/friend.png" @click="devIng">
       </div>
       <div class="detail_desc">
         <p class="desc_title">描述</p>
@@ -546,6 +546,12 @@ export default {
     sizeChoiceFunc() {
       this.showBtn = true
     },
+    devIng() {
+      this.$message({
+        message: '模块建设中...',
+        type: 'success'
+      })
+    }
     
   }
 }

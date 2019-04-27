@@ -11,8 +11,8 @@
                 <div class="expand" v-if="expandSer">
                     <p @click="toContact('customerService')">客服</p>
                     <p @click="toContact('orderSend')">订单与配送</p>
-                    <p @click="toContact('termsConditions')">条款与条件</p>
-                    <p @click="toContact('privacyPolicy')">隐私政策</p>
+                    <!-- <p @click="toContact('termsConditions')">条款与条件</p>
+                    <p @click="toContact('privacyPolicy')">隐私政策</p> -->
                 </div>
             </div>
             <!--<div style="background:#C5A480;height:1px;margin-bottom:18px;width:100%;"  v-if="showContact && expandSer"></div>-->
