@@ -12,25 +12,27 @@
               </el-checkbox>
             </el-checkbox-group> 
           </el-col>
-          <el-col :span="8"><img :src="item.imgpath" class="loved_img" style="width:100%;"/></el-col>
+          <el-col :span="8"><img :src="item.imgpath" class="loved_img" style="width:100%;" @click="$router.push(`/detail/${item.typeno}`)"/></el-col>
           <el-col :span="14">
-            <div>
-              <span class="bag_text">{{item.name}}</span>
-              <i class="el-icon-close" @click.stop="delBag(item)"></i>
-            </div>
-            <div>
-              <span class="bag_color"> - <span  class="bag_code">编号  {{item.prodid}}</span></span>
-            </div>
-            <!--暂不考虑数量的加减-->
-            <!--<div class="number">
-              <el-input-number v-model="item.amount" :min="1" label="数量"></el-input-number>
-            </div>-->
-            <div style="height: 0.2rem; margin-top: 0.53rem;">
-              <div class="bag_size">
-                <span>size:{{item.sizenum}};  {{item.coloravailable}}</span>
+            <div @click="$router.push(`/detail/${item.typeno}`)">
+              <div>
+                <span class="bag_text">{{item.name}}</span>
+                <i class="el-icon-close" @click.stop="delBag(item)"></i>
               </div>
-              <div class="bag_country">
-                <span class="bag_price">RMB {{item.tagprice}}</span>
+              <div>
+                <span class="bag_color"> - <span  class="bag_code">编号  {{item.prodid}}</span></span>
+              </div>
+              <!--暂不考虑数量的加减-->
+              <!--<div class="number">
+                <el-input-number v-model="item.amount" :min="1" label="数量"></el-input-number>
+              </div>-->
+              <div style="height: 0.2rem; margin-top: 0.53rem;">
+                <div class="bag_size">
+                  <span>数量: {{item.amount}}</span>
+                </div>
+                <div class="bag_country">
+                  <span class="bag_price">RMB {{item.tagprice}}</span>
+                </div>
               </div>
             </div>
           </el-col>         

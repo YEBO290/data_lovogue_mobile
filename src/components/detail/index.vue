@@ -310,7 +310,7 @@ export default {
       }
       this.$store.dispatch('login/queryLovedList', queryParam)
       let param = {
-        productid: this.id
+        typeno: this.id
       }
       this.$store.dispatch('detail/queryDetail', param)
     },

@@ -11,16 +11,18 @@
   </div>
   <div class="search_lists" v-if="!showToLogin && searchList.data.length > 0">
       <el-row :gutter="20" class="search_list" v-for="(item, index) in searchList.data" :key="index">
-        <el-col :span="7"><img :src="item.imgpath" class="search_img"/></el-col>
-        <el-col :span="17">
-          <div>
-            <span class="search_text">{{item.productname}}</span>
-          </div>
-          <div>
-            <span class="search_color">{{item.color}} - <span  class="search_code">编号  {{item.typeno}}</span></span>
-          </div>
-          <div class="search_country">
-            <span class="search_price">RMB {{item.tagprice}}</span>
+        <el-col :span="8"><img :src="item.imgpath" class="search_img" @click="$router.push(`/detail/${item.typeno}`)"/></el-col>
+        <el-col :span="16">
+          <div @click="$router.push(`/detail/${item.typeno}`)">
+            <div>
+              <span class="search_text">{{item.productname}}</span>
+            </div>
+            <div>
+              <span class="search_color">{{item.color}} - <span  class="search_code">编号  {{item.typeno}}</span></span>
+            </div>
+            <div class="search_country">
+              <span class="search_price">RMB {{item.tagprice}}</span>
+            </div>
           </div>
         </el-col>
       </el-row>
