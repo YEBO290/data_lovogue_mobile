@@ -101,7 +101,7 @@ import workspace from '../../common.js'
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let param = {
-              password: me.ruleForm.pass,
+              password: workspace.calcuMD5(me.ruleForm.pass),
               userid: workspace.getCookie().name,
               uuid: me.ruleForm.verificationCode
             }

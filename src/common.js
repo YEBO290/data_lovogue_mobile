@@ -62,6 +62,11 @@ var workspace = {
    //清除cookie
    clearCookie: function() {
     this.setCookie("", "", -1); 
-  }
+  },
+  // 加密
+  calcuMD5(val) {
+    let data = val.toUpperCase()
+    return md5(data)
+  },
 }
 export default workspace

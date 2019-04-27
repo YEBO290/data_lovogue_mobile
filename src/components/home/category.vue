@@ -1,14 +1,13 @@
 <template>
     <div class="category_home">
-      <div class="menu_filter" @click.stop="expand" v-if="!showSubMenu">
+     <!-- <div class="menu_filter" @click.stop="expand" v-if="!showSubMenu">
         <span class="menu_del"><i class="icon_f_btn"></i>筛选</span>
       </div>  
       <div class="menu_filter" @click.stop="expand" v-else>
-        <!--<span class="menu_filter_btn"><i class="icon_f_btn"></i>筛选</span>-->
         <span class="menu_del">清除</span>
-      </div>
+      </div>-->
       <menuList class="menu_list" v-if="showSubMenu"/>
-      <el-row :gutter="10">
+      <el-row :gutter="10" style="margin-top:17px;">
         <el-col :span="12" v-for="(item, index) in categoryList" :key="index">
           <div  class="category_list" @click="toDetail(item)">
             <img :src="item.imgpath" class="category_img"/>
