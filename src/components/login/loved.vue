@@ -82,9 +82,10 @@ export default {
     created() {
       let status = workspace.getCookie().name
       if(status !== '' && status !== null && status !== undefined) {
-        this.showToLogin = false
+        this.showToLogin = false    
       } else {
         this.showToLogin = true
+        return false
       }
       let param = {
         userid: workspace.getCookie().name,

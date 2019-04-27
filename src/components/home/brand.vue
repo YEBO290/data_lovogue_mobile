@@ -34,7 +34,6 @@ export default {
   },
   computed: mapState({
       brandList: state => {
-        debugger
         return state.home.brandList
       },
       showSubMenu: state => state.showSubMenu

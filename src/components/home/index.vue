@@ -55,8 +55,8 @@
         <p class="category_list_titile">类别</p>
         <el-row>
           <el-col v-for="item in categoryList" :key="item.id" class="category_list_img">
-            <div class="grid-content bg-purple" @click="toCategoryList(item)">
-              <img :src="item.value" style="width:100%;height:3.39rem;"/>
+            <div class="grid-content bg-purple category_content" @click="toCategoryList(item)">
+              <img :src="item.value" style="width:100%;"/>
               <p class="category_list_img_name text-center">{{item.name}}</p>
             </div>
             </el-col>
