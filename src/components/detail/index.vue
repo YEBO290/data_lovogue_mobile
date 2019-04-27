@@ -304,13 +304,13 @@ export default {
       this.showMenu = true
     },
     // 收藏
-    toLoveFunc() {
+    toLoveFunc(item) {
       this.toLove = false
       this.loveTip = '收藏成功'
       let param = {
         userid: workspace.getCookie().name,
         status: "1",
-        prodid: this.detailInfo.typeno,
+        prodid: detailInfo.typeno,
         amount: "1"
       }
       this.$store.dispatch('toLoved', param).then(res => {
@@ -325,26 +325,26 @@ export default {
           }
           this.$store.dispatch('login/queryLovedList', queryParam)
           let param = {
-            typeno: this.id
+            productid: this.id
           }
           this.$store.dispatch('detail/queryDetail', param)
         } else {
           this.$message({
-            message: '操作失败，请重试',
+            message: '添加挚爱失败，请重试',
             type: 'error'
           })
         }   
       })
     },
     // 取消收藏
-    cancelLove() {
+    cancelLove(item) {
       this.toLove = true
       this.loveTip = '收藏'
       // 发送请求
       let param = {
-        id: this.detailInfo.love,
         userid: workspace.getCookie().name,
         status: "0",
+        prodid: item.productid,
         amount: "1"
       }
       this.$store.dispatch('cancelLove', param).then(res => {
@@ -359,7 +359,7 @@ export default {
           }
           this.$store.dispatch('login/queryLovedList', queryParam)
           let param = {
-            typeno: this.id
+            productid: this.id
           }
           this.$store.dispatch('detail/queryDetail', param)
         } else {

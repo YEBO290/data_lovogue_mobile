@@ -111,6 +111,7 @@ export default {
             password: me.calcuMD5(me.ruleForm.pass)
           }     
           me.$store.dispatch('login/toLogin', param).then(res => {
+            debugger
             if(res.length > 0) {
               //判断用户是否勾选了记住密码选项rememberPsw，传入保存的账号currentPortId，密码password，天数30
               workspace.setCookie(me.ruleForm.phone, me.ruleForm.pass, 30)

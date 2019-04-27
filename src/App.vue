@@ -40,6 +40,7 @@ export default {
     created() {
         let me = this
         let useName = workspace.getCookie().name
+        debugger
         if(useName) {       
             let loveParam = {
             userid: useName,
@@ -82,10 +83,9 @@ export default {
     position: relative;
 }
 #app{
-    max-width: 5rem;
+    max-width: 500px;
     margin:0 auto;
     position: relative;
-    min-height:7rem;
 }
 </style>
 <style scoped>

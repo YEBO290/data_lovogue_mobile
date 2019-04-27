@@ -89,6 +89,7 @@ export default {
       }
     }),
   created() {
+    debugger
     // this.$store.dispatch('detailList/queryImg') // 获取轮播图列表
     let param = {
       prodname: this.id
@@ -168,6 +169,7 @@ export default {
     },
     showImg(val, index) {
       this.showList = []
+      debugger
       this.$set(this.showList, index, true)
       // if(this.showList[val.col * val.row]) {
       //   this.$set(this.showList, val.col * val.row, false)

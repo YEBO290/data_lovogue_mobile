@@ -27,7 +27,7 @@
             </div>-->
             <div style="height: 0.2rem; margin-top: 0.53rem;">
               <div class="bag_size">
-                <span>数量：{{item.amount}}</span>
+                <span>size:{{item.sizenum}};  {{item.coloravailable}}</span>
               </div>
               <div class="bag_country">
                 <span class="bag_price">RMB {{item.tagprice}}</span>
@@ -49,7 +49,7 @@
       <p>您的购物袋暂无单品</p>
       <el-button class="login_btn pay_btn" type="primary" @click="toHome">前往选购</el-button>    
     </div>
-    <!--<div class="recommend" v-if="!showToLogin && bagList.length === 0">
+    <div class="recommend" v-if="!showToLogin && bagList.length === 0">
         <p class="titlt">为您推荐的搭配</p>
         <el-row>
           <el-col :span="8"  v-for="(item, index) in recommendList" :key="index">
@@ -58,7 +58,7 @@
             <p class="recommend_name">{{item.name}}</p>
           </el-col>
         </el-row>
-      </div>-->
+      </div>
     <div class="login_none" v-if="showToLogin">
       <p>创建您的购物清单</p>
       <el-button class="btn ok_btn" type="primary" @click="toLogin">登录</el-button>
@@ -116,7 +116,6 @@ export default {
         this.showToLogin = false
       } else {
         this.showToLogin = true
-        return false
       }
       let queryParam = {
         userid: workspace.getCookie().name,
@@ -178,7 +177,7 @@ export default {
           // me.totalPay = me.totalPay + parseFloat(item.pay)
           // me.totalNmubel = me.totalNmubel + parseInt(item.num)
           // me.totalCost = me.totalCost + (parseInt(item.num) * parseFloat(item.tagprice)) + parseFloat(item.pay)
-          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice.replace(',', ''))
+          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice)
         })
         me.totalCost = me.numFormat(me.totalCost)
       },
@@ -197,8 +196,8 @@ export default {
         console.log(newList)
         newList.forEach(item => {
           // me.totalPay = me.totalPay + parseFloat(item.tagprice)
-          me.totalNmubel = me.totalNmubel + parseInt(1)
-          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice.replace(',', ''))
+          // me.totalNmubel = me.totalNmubel + parseInt(1)
+          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice)
           // 是否考虑运费
           // me.totalCost = me.totalCost + (parseInt(1) * parseFloat(item.tagprice)) + parseFloat(item.pay)
         })
