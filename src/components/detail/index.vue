@@ -303,6 +303,17 @@ export default {
     expand() {
       this.showMenu = true
     },
+    searchList() {
+      let queryParam = {
+        userid: workspace.getCookie().name,
+        status: "1"
+      }
+      this.$store.dispatch('login/queryLovedList', queryParam)
+      let param = {
+        productid: this.id
+      }
+      this.$store.dispatch('detail/queryDetail', param)
+    },
     // 收藏
     toLoveFunc(item) {
       this.toLove = false
@@ -310,7 +321,7 @@ export default {
       let param = {
         userid: workspace.getCookie().name,
         status: "1",
-        prodid: detailInfo.typeno,
+        prodid: this.detailInfo.typeno,
         amount: "1"
       }
       this.$store.dispatch('toLoved', param).then(res => {
@@ -319,18 +330,10 @@ export default {
             message: '操作成功',
             type: 'success'
           })
-          let queryParam = {
-            userid: workspace.getCookie().name,
-            status: "1"
-          }
-          this.$store.dispatch('login/queryLovedList', queryParam)
-          let param = {
-            productid: this.id
-          }
-          this.$store.dispatch('detail/queryDetail', param)
+          this.searchList()
         } else {
           this.$message({
-            message: '添加挚爱失败，请重试',
+            message: '操作失败，请重试',
             type: 'error'
           })
         }   
@@ -344,7 +347,7 @@ export default {
       let param = {
         userid: workspace.getCookie().name,
         status: "0",
-        prodid: item.productid,
+        id: this.detailInfo.love,
         amount: "1"
       }
       this.$store.dispatch('cancelLove', param).then(res => {
@@ -353,15 +356,7 @@ export default {
             message: '操作成功',
             type: 'success'
           })
-          let queryParam = {
-            userid: workspace.getCookie().name,
-            status: "1"
-          }
-          this.$store.dispatch('login/queryLovedList', queryParam)
-          let param = {
-            productid: this.id
-          }
-          this.$store.dispatch('detail/queryDetail', param)
+          this.searchList()
         } else {
           this.$message({
             message: '操作失败，请重试',
@@ -396,7 +391,7 @@ export default {
     // 加入购物袋
     toBag() {    
       if(!this.vaildFunc()) {
-        return faslse
+        return false
       }  
       // this.innerVisible = true
       this.flag = 'add'      
@@ -438,7 +433,6 @@ export default {
           }
           this.$store.dispatch('detail/toBag', param).then(res => {
             if(res.msg == 1) {
-              this.$store.commit('shopBagNumber', 1)
               this.$message({
                 message: '添加成功',
                 type: 'success'

@@ -40,7 +40,6 @@ export default {
     created() {
         let me = this
         let useName = workspace.getCookie().name
-        debugger
         if(useName) {       
             let loveParam = {
             userid: useName,

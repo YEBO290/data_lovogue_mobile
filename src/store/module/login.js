@@ -200,12 +200,10 @@ const mutations = {
       state.userName = data
   },
   lovesList (state, data) {
-    debugger
     state.lovesList = data
     state.lovedNumber = data.length
   },
   bagList (state, data) {
-    debugger
     state.bagList = data
     state.shopBagNumber = data.length
   },

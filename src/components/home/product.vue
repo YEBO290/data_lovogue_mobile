@@ -120,7 +120,7 @@ export default {
           this.searchLoveList()
         } else {
           this.$message({
-            message: '移除挚爱失败，请重试',
+            message: '操作失败，请重试',
             type: 'error'
           })
         }   

@@ -175,9 +175,9 @@ export default {
         this.bagList.forEach(item => {
           // 暂不考虑运费
           // me.totalPay = me.totalPay + parseFloat(item.pay)
-          // me.totalNmubel = me.totalNmubel + parseInt(item.num)
+          me.totalNmubel = me.totalNmubel + parseInt(item.num)
           // me.totalCost = me.totalCost + (parseInt(item.num) * parseFloat(item.tagprice)) + parseFloat(item.pay)
-          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice)
+          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice.replace(',', ''))
         })
         me.totalCost = me.numFormat(me.totalCost)
       },
@@ -196,8 +196,8 @@ export default {
         console.log(newList)
         newList.forEach(item => {
           // me.totalPay = me.totalPay + parseFloat(item.tagprice)
-          // me.totalNmubel = me.totalNmubel + parseInt(1)
-          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice)
+          me.totalNmubel = me.totalNmubel + parseInt(1)
+          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice.replace(',', ''))
           // 是否考虑运费
           // me.totalCost = me.totalCost + (parseInt(1) * parseFloat(item.tagprice)) + parseFloat(item.pay)
         })

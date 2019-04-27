@@ -98,6 +98,15 @@ export default {
       let param =  this.searchParam(30, 1)
       this.$store.dispatch('home/queryCategoryList', param)
     },
+    searchLove() {
+      let queryParam = {
+        userid: workspace.getCookie().name,
+        status: "1"
+      }
+      this.$store.dispatch('login/queryLovedList', queryParam)
+      let param =  this.searchParam(30, 1)
+      this.$store.dispatch('home/queryCategoryList', param)
+    },
     addLove(item) {
       let param = {
         userid: workspace.getCookie().name,
@@ -111,13 +120,7 @@ export default {
             message: '操作成功',
             type: 'success'
           })
-          let queryParam = {
-            userid: workspace.getCookie().name,
-            status: "1"
-          }
-          this.$store.dispatch('login/queryLovedList', queryParam)
-          let param =  this.searchParam(30, 1)
-          this.$store.dispatch('home/queryCategoryList', param)
+          this.searchLove()
         } else {
           this.$message({
             message: '操作失败，请重试',
@@ -130,7 +133,7 @@ export default {
       let param = {
         userid: workspace.getCookie().name,
         status: "0",
-        prodid: item.productid,
+        id: item.love,
         amount: "1"
       }
       this.$store.dispatch('cancelLove', param).then(res => {
@@ -139,13 +142,7 @@ export default {
             message: '操作成功',
             type: 'success'
           })
-          let queryParam = {
-            userid: workspace.getCookie().name,
-            status: "1"
-          }
-          this.$store.dispatch('login/queryLovedList', queryParam)
-          let param =  this.searchParam(30, 1)
-          this.$store.dispatch('home/queryCategoryList', param)
+          this.searchLove()
         } else {
           this.$message({
             message: '操作失败，请重试',

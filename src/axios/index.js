@@ -64,7 +64,6 @@ axios.interceptors.response.use(
   },
   // 服务器状态码不是200的情况 
   error => {  
-    debugger
     error.response.data.msg && Message.error(error.response.data.msg) || Message.error(error.message)
     workspace.clearCookie()
     store.commit('login/lovesList', []) // 喜爱的列表查询
