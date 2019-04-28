@@ -32,6 +32,8 @@ var service = {
     // 特辑
     getScreenFeatureList: '/Cms/getScreenFeatureList', // 特辑列表
     // 菜单导航栏
-    getNavigation: 'Cms/getNavigation'
+    getNavigation: 'Cms/getNavigation',
+    //关于我们
+    getAboutUs:'/Cms/getAboutUs',
 }
 export default service
