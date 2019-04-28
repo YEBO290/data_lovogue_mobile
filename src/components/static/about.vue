@@ -21,7 +21,9 @@
         ></i>
         <h3 style="font-size: 16px;font-weight: bold;line-height: 28px;">尚盟的介绍</h3>
       </span>
-      <p class="txt txt_one text-left" style="text-indent:0.24rem;">{{aboutDetail.txt}}</p>
+      <p class="txt txt_one text-left" style="text-indent:0.24rem;padding-left: 18px;
+    padding-right: 18px;
+    padding-bottom: 10px;">{{aboutDetail.txt}}</p>
       <!-- <p class="txt txt_last text-left">{{aboutDetail.text}}</p> -->
     </div>
   </div>

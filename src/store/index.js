@@ -64,7 +64,7 @@ const actions = {
   queryAboutDetail (context, param) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        get(api.getAboutUs, '123').then((res) => {
+        post(api.getAboutUs, {}).then((res) => {
           context.commit('aboutDetail', res.data)
           resolve(res.data)
         }).catch((err) => {

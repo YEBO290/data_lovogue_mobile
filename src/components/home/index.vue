@@ -1,7 +1,7 @@
 <template>
     <div class="home" id="home">   
       <div class="carousel_img">
-        <el-carousel :interval="4000" arrow="always" height="5rem">
+        <el-carousel :interval="4000" arrow="always" height="3.75rem">
           <el-carousel-item v-for="item in queryImg" :key="item.id">
             <div @click="toSpecialEditionList(item)">
               <img :src="item.value" style="width:100%;">
@@ -181,13 +181,8 @@ export default {
     line-height: 2rem;
     margin: 0;
   }
-  
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
-  
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
+  #home /deep/ .el-carousel__item{
+    min-height:3.75rem;
   }
   #home /deep/ .swiper-slide{
     width: 1.5rem!important;
