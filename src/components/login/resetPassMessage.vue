@@ -212,7 +212,38 @@ import workspace from '../../common.js'
         // if(num <= 0) {
         //     clearInterval(inter)
         // }
-      }
+      },
+      // 发送短信
+    sendMsg(phoneNum) {
+      this.$refs.ruleForm.validateField('name', (phoneError) => {
+        console.log(`${phoneError}***************************`);
+ 
+        if (!phoneError) {
+          this.auth_time = 120;
+          this.sendAuthCode = false;
+          api.sendMsg({
+            params: {
+              params: {
+                phone: phoneNum,
+                reason: 'developerReg',
+              },
+            },
+          }).then(() => {
+            this.getAuthCode();
+            this.$confirm('验证码已发送至登记手机号上，请查收。', {
+              confirmButtonText: '确定',
+              center: true,
+            });
+          }).catch((err) => {
+            this.sendAuthCode = true;
+            this.$message({
+              message: err.response.message,
+              type: 'error',
+            });
+          });
+        }
+      });
+    },
     }
   }
 </script>
