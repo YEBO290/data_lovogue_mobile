@@ -11,8 +11,10 @@
         <el-col :span="12" v-for="(item, index) in productList" :key="index">
           <div  class="category_list">
             <img :src="item.imgpath" class="category_img"  @click="toDetail(item)"/>
-            <img src="../../assets/image/loved.png" style="width: 0.2rem;" title="取消收藏" class="loved" v-if="item.love != 0" @click.stop="delLove(item)">
-            <img src="../../assets/image/toLove.png" style="width: 0.2rem;" title="收藏" class="toLove" v-else @click.stop="addLove(item)">
+            <transition name="el-zoom-in-center">
+              <img src="../../assets/image/loved.png" style="width: 0.2rem;" title="取消收藏" class="loved" v-if="item.love != 0" @click.stop="delLove(item)">
+              <img src="../../assets/image/toLove.png" style="width: 0.2rem;" title="收藏" class="toLove" v-else @click.stop="addLove(item)">
+            </transition>
             <p class="category_list_name">{{item.productname}}</p>
             <span class="category_list_price">RMB {{item.tagprice}}</span>
           </div>
@@ -92,10 +94,6 @@ export default {
       }
       this.$store.dispatch('toLoved', param).then(res => {
         if(res.msg == 1) {
-          this.$message({
-            message: '操作成功',
-            type: 'success'
-          })
           this.searchLoveList()
         } else {
           this.$message({
@@ -114,10 +112,6 @@ export default {
       }
       this.$store.dispatch('cancelLove', param).then(res => {
         if(res.msg == 1) {
-          this.$message({
-            message: '操作成功',
-            type: 'success'
-          })
           this.searchLoveList()
         } else {
           this.$message({

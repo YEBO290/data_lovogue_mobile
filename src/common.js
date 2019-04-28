@@ -1,4 +1,5 @@
 import CryptoJS from "crypto-js"
+import md5 from "js-md5"
 var workspace = {
     // 千位分割
     thousandBitSeparator(num) {

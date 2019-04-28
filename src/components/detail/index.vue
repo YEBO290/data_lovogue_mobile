@@ -5,8 +5,10 @@
           <img :src="item" style="width:100%">
         </el-carousel-item>
       </el-carousel>
-      <span class="toLove" title="收藏" @click="toLoveFunc" v-if="detailInfo.love == 0"></span>
-      <span class="Loved" title="取消收藏" @click="cancelLove" v-else></span>
+      <transition name="el-zoom-in-center">
+        <span class="toLove" title="收藏" @click="toLoveFunc" v-if="detailInfo.love == 0"></span>
+        <span class="Loved" title="取消收藏" @click="cancelLove" v-else></span>
+      </transition>
       <!--<p class="loveTip">{{loveTip}}</p>-->
       <div class="detail_content">
         <p class="detail_name">{{detailInfo.productname}}</p>
@@ -326,10 +328,6 @@ export default {
       }
       this.$store.dispatch('toLoved', param).then(res => {
         if(res.msg == 1) {
-          this.$message({
-            message: '操作成功',
-            type: 'success'
-          })
           this.searchDetail()
           this.searchList()
         } else {
@@ -353,10 +351,6 @@ export default {
       }
       this.$store.dispatch('cancelLove', param).then(res => {
         if(res.msg == 1) {
-          this.$message({
-            message: '操作成功',
-            type: 'success'
-          })
           this.searchDetail()
           this.searchList()
         } else {
@@ -549,7 +543,7 @@ export default {
     devIng() {
       this.$message({
         message: '模块建设中...',
-        type: 'success'
+        type: 'warning'
       })
     }
     

@@ -18,13 +18,13 @@
 
             <el-form-item prop="phone" v-if="false">
                 <el-input type="text" v-model="ruleForm.phone" :clearable="true" autocomplete="off" ></el-input>
-                <el-button class="verificationCode" @click="queryCode" :disabled="codeDis">{{code}}</el-button>
+                <el-button class="verificationCode" @click="sendMsg" :disabled="codeDis">{{code}}</el-button>
                 <router-link to="/resetPassEmail" class="link" v-if="false">使用邮箱接收链接?</router-link>
             </el-form-item>
 
             <el-form-item prop="email">
                 <el-input type="text" v-model="ruleForm.email" :clearable="true" autocomplete="off" ></el-input>
-                <el-button class="verificationCode" @click="queryCode" :disabled="codeDis">{{code}}</el-button>
+                <el-button class="verificationCode" @click="sendMsg" :disabled="codeDis">{{code}}</el-button>
                 <router-link to="/resetPassMessage" class="link" v-if="false">使用短信验证码?</router-link>
             </el-form-item>
 
@@ -114,19 +114,19 @@ import md5 from "js-md5"
         },
         rules: {
             name: [{
-              required: true, message: '请选择用户名', trigger: 'blur'
+              required: true, message: '请选择用户名', trigger: ['blur', 'change']
             }],
             pass: [
-                { validator: validatePass, trigger: 'blur' }
+                { validator: validatePass, trigger: ['blur', 'change'] }
             ],
             checkPass: [
-                { validator: validateCheckPass, trigger: 'blur' }
+                { validator: validateCheckPass, trigger: ['blur', 'change'] }
             ],
             phone: [
-                { validator: validPhone, trigger: 'blur' }
+                { validator: validPhone, trigger: ['blur', 'change'] }
             ],
             email: [
-                { validator: validateEmail, trigger: 'blur' }
+                { validator: validateEmail, trigger: ['blur', 'change'] }
             ]
         },
         code: '获取验证码',
@@ -137,6 +137,7 @@ import md5 from "js-md5"
       submitForm(formName) {
         let me = this
         this.$refs[formName].validate((valid) => {
+            debugger
           if (valid) {
             let param = {
               password: workspace.calcuMD5(me.ruleForm.pass),
@@ -144,7 +145,7 @@ import md5 from "js-md5"
               uuid: me.ruleForm.verificationCode
             }
             me.$store.dispatch('login/resetPwMessage', param).then(res => {
-              if(res === 1) {
+              if(res.msg === 1) {
                 me.$message({
                   message: '密码重设成功',
                   type: 'success'
@@ -159,8 +160,8 @@ import md5 from "js-md5"
               
             })
           } else {
-            console.log('error submit!!');
-            return false;
+            console.log('error submit!!')
+            return false
           }
         });
       },
@@ -179,7 +180,7 @@ import md5 from "js-md5"
           userid: me.ruleForm.name,
         }
         me.$store.dispatch('login/resetPwEmail', param).then(res => {
-          if(res === 1) {
+          if(res.msg === 1) {
             me.$message({
               message: '验证码已发送至登记邮箱上，请查收。',
               type: 'success'
@@ -215,10 +216,10 @@ import md5 from "js-md5"
         // }
       },
       // 发送短信
-    sendMsg(phoneNum) {
+    sendMsg(val) {
         let me = this
+        debugger
         this.$refs.ruleForm.validateField('name', (nameError) => {
-            console.log(`${phoneError}***************************`);
             if (!nameError) {
                 this.$refs.ruleForm.validateField('email', (emailError) => {
                     if(!emailError) {
