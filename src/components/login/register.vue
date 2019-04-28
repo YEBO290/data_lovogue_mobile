@@ -153,9 +153,9 @@ import md5 from "js-md5"
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let param = {
-              userid: this.calcuMD5(this.ruleFormRest.username),
+              userid: this.ruleFormRest.username,
               password: this.calcuMD5(me.ruleFormRest.passwordRes),
-              username: this.calcuMD5(this.ruleFormRest.username),
+              username: this.ruleFormRest.username,
               role: '0',
               // stauts: '1',
               email: this.ruleFormRest.email,

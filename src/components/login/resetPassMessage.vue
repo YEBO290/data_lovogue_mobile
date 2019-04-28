@@ -50,6 +50,7 @@
 
 <script>
 import workspace from '../../common.js'
+import md5 from "js-md5"
   export default {
     data() {
        // 密码
@@ -175,12 +176,12 @@ import workspace from '../../common.js'
         let me = this
         let param = {
           email: me.ruleForm.email,
-          userid: workspace.calcuMD5(me.ruleForm.name),
+          userid: me.ruleForm.name,
         }
         me.$store.dispatch('login/resetPwEmail', param).then(res => {
           if(res === 1) {
             me.$message({
-              message: '链接已发送至您邮箱，请前往邮箱重设密码',
+              message: '验证码已发送至登记邮箱上，请查收。',
               type: 'success'
             })
           } else {
@@ -215,34 +216,17 @@ import workspace from '../../common.js'
       },
       // 发送短信
     sendMsg(phoneNum) {
-      this.$refs.ruleForm.validateField('name', (phoneError) => {
-        console.log(`${phoneError}***************************`);
- 
-        if (!phoneError) {
-          this.auth_time = 120;
-          this.sendAuthCode = false;
-          api.sendMsg({
-            params: {
-              params: {
-                phone: phoneNum,
-                reason: 'developerReg',
-              },
-            },
-          }).then(() => {
-            this.getAuthCode();
-            this.$confirm('验证码已发送至登记手机号上，请查收。', {
-              confirmButtonText: '确定',
-              center: true,
-            });
-          }).catch((err) => {
-            this.sendAuthCode = true;
-            this.$message({
-              message: err.response.message,
-              type: 'error',
-            });
-          });
-        }
-      });
+        let me = this
+        this.$refs.ruleForm.validateField('name', (nameError) => {
+            console.log(`${phoneError}***************************`);
+            if (!nameError) {
+                this.$refs.ruleForm.validateField('email', (emailError) => {
+                    if(!emailError) {
+                        me.queryCode()
+                    }
+                })
+            }
+        })
     },
     }
   }

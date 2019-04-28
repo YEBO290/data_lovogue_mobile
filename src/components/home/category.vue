@@ -7,7 +7,7 @@
         <span class="menu_del">清除</span>
       </div>-->
       <menuList class="menu_list" v-if="showSubMenu"/>
-      <el-row :gutter="10" style="margin-top:17px;">
+      <el-row :gutter="10" style="padding-top:17px;">
         <el-col :span="12" v-for="(item, index) in categoryList" :key="index">
           <div  class="category_list" @click="toDetail(item)">
             <img :src="item.imgpath" class="category_img"/>
@@ -69,13 +69,15 @@ export default {
     searchParam(size, page) {
       let id = this.$router.history.current.params.id
       let param =  {
-        language: 'cn',
-        category: id || '',
+        data: {
+          language: 'cn',
+          category: id || ''
+        },
         userid: workspace.getCookie().name,
         listQuery: {
           pageSize: size,
           pageNum: page
-        }
+        }      
       }
       return param
     },

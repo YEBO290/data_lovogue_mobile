@@ -107,7 +107,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let param = {
-            userid: me.calcuMD5(me.ruleForm.phone),
+            userid: me.ruleForm.phone,
             password: me.calcuMD5(me.ruleForm.pass)
           }     
           me.$store.dispatch('login/toLogin', param).then(res => {
