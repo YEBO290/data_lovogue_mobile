@@ -100,6 +100,17 @@ const actions = {
       })
     })
   },
+  // 旧密码重置新密码
+  changePass (context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.setPassRe, param).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+        reject(err)
+      })
+    })
+  },
   // 喜爱的列表
   queryLovedList (context, param) {
     return new Promise((resolve, reject) => {

@@ -86,7 +86,7 @@ import md5 from "js-md5"
       var validateCheckPass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm.pass) {
+        } else if (value && value !== this.ruleForm.pass) {
           callback(new Error('两次输入密码不同!'));
         } else {
           callback();
@@ -137,7 +137,6 @@ import md5 from "js-md5"
       submitForm(formName) {
         let me = this
         this.$refs[formName].validate((valid) => {
-            debugger
           if (valid) {
             let param = {
               password: workspace.calcuMD5(me.ruleForm.pass),

@@ -45,15 +45,15 @@
         <el-form :model="rulePassWordForm" status-icon :rules="rulesPassWord" ref="rulePassWordForm" label-width="1rem" class="loginForm">
             <label class="label_txt">原始密码</label><span class="req">*</span>
             <el-form-item prop="oldPass">
-                <el-input type="text" v-model="rulePassWordForm.oldPass" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="password" v-model="rulePassWordForm.oldPass" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>
             <label class="label_txt">新密码</label><span class="req">*</span>
             <el-form-item prop="pass">
-                <el-input type="text" v-model="rulePassWordForm.pass" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="password" v-model="rulePassWordForm.pass" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>
             <label class="label_txt">确认新密码</label><span class="req">*</span>
             <el-form-item prop="checkPass">
-                <el-input type="text" v-model="rulePassWordForm.checkPass" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="password" v-model="rulePassWordForm.checkPass" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>           
         </el-form>
         <el-button class="ok_btn btn" type="primary" @click="submitPassWord('rulePassWordForm')" style="margin-top:0.15rem;margin-bottom:0rem;">确认更改</el-button>
@@ -127,6 +127,8 @@
 <script>
 import { mapState } from 'vuex'
 import workspace from '../../common.js'
+import CryptoJS from "crypto-js"
+import md5 from "js-md5"
 export default {
   components: {
 
@@ -253,31 +255,33 @@ export default {
         if (valid) {
           // this.$store.dispatch('saveCustomerSservice') // 提交客服
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log('error submit!!')
+          return false
         }
       }) 
     },
     // 提交更改密码
-    submitPassWord() {
+    submitPassWord(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let me = this
-          // Encrypt 加密 
-          var cipherText = CryptoJS.AES.encrypt(rulePassWordForm.pass, "password").toString()
-          console.log(cipherText)
           this.$refs[formName].validate((valid) => {
             if (valid) {
               let param = {
                 userid: workspace.getCookie().name,
-                password: this.calcuMD5(me.rulePassWordForm.pass),
-                role: '0',
+                password: this.calcuMD5(me.rulePassWordForm.oldPass),
+                newpassword: this.calcuMD5(me.rulePassWordForm.pass),
                 // stauts: '1',
               }
-              me.$store.dispatch('login/toRegister', param).then(res => {
-                debugger
-                if(res.mag == 1) {
-                  me.$router.push('/login')
+              me.$store.dispatch('login/changePass', param).then(res => {
+                if(res.msg == 1) {
+                  me.successTip()
+                  me.$refs[formName].resetFields()
+                } else {
+                  me.$message({
+                    message: '操作失败！',
+                    type: 'warning'
+                  })
                 }
               })
             } else {
@@ -294,6 +298,17 @@ export default {
     },
     showDetail(val) {
       this.$router.push(`/contact/${val}`)
+    },
+    successTip() {
+      let me = this
+      this.$confirm('密码重置成功，是否前往登录页面?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        me.$router.push('/login')
+      }).catch(() => {         
+      })
     }
   }
 }

@@ -35,5 +35,7 @@ var service = {
     getNavigation: 'Cms/getNavigation',
     //关于我们
     getAboutUs:'/Cms/getAboutUs',
+    // 旧密码改新密码
+    setPassRe: 'CrmUser/setPassRe'
 }
 export default service
