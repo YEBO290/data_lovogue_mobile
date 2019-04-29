@@ -41,6 +41,13 @@ export default {
       showMore: true
     }
   },
+  watch: {
+  '$route' (to, from) {   //监听路由是否变化
+      let param =  this.searchParam(30, 1)
+      this.$store.dispatch('home/queryCategoryList', param)
+      this.$store.commit('showSubMenu', false)
+    }
+  },
   computed: mapState({
     categoryList: function(state) {
       state.home.categoryTypeList.forEach(item => {
@@ -63,9 +70,7 @@ export default {
   //   }
   // },
   created() {
-    let param =  this.searchParam(30, 1)
-    this.$store.dispatch('home/queryCategoryList', param)
-    this.$store.commit('showSubMenu', false)
+    
   },
   methods: {
     searchParam(size, page) {
