@@ -374,7 +374,7 @@ export default {
     toBuy() { 
       this.$message({
         message: '支付接口搭建中,敬请关注！',
-        type: 'success'
+        type: 'warning'
       })
       //临时注释 start
       // if(!this.vaildFunc()) {
@@ -392,11 +392,6 @@ export default {
     },
     // 加入购物袋
     toBag() { 
-      this.$message({
-        message: '支付接口搭建中,敬请关注！',
-        type: 'success'
-      })
-
       //临时注释 start
       if(!this.vaildFunc()) {
         return false
@@ -441,17 +436,14 @@ export default {
             status: "1"
           }
           this.$store.dispatch('detail/toBag', param).then(res => {
-            if(res.msg == 1) {
-              this.$message({
-                message: '添加成功',
-                type: 'success'
-              })
+            if(res.msg == 1) {              
               let queryParam = {
                 userid: workspace.getCookie().name,
                 status: "1"
               }
               this.$store.dispatch('login/queryBagList', queryParam)
               this.innerVisible = false
+              this.successTip()
             } else {
               this.$message({
                 message: '操作失败',
@@ -460,6 +452,11 @@ export default {
             }       
           })
         } else {
+          this.$message({
+            message: '支付接口搭建中,敬请关注！',
+            type: 'warning'
+          })
+          return false
           let param = {}
           this.$store.dispatch('detail/toBuy', param).then(res => {
             this.innerVisible = false
@@ -544,6 +541,16 @@ export default {
       this.$message({
         message: '模块建设中...',
         type: 'warning'
+      })
+    },
+    successTip() {
+      this.$confirm('操作成功,是否前往购物车页面?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$router.push('/bag')
+      }).catch(() => {         
       })
     }
     

@@ -198,7 +198,8 @@ const router = new Router({
             name: "loved",
             component: loved,
             meta: {
-                fontColor: true
+                fontColor: true,
+                writeBgr: true
             }
         },
         {
@@ -207,7 +208,8 @@ const router = new Router({
             name: "bag",
             component: bag,
             meta: {
-                fontColor: true
+                fontColor: true,
+                writeBgr: true
             }
         },
         {
@@ -290,6 +292,11 @@ router.beforeEach((to, from, next) => {
         store.commit("showFooter", false);
     } else {
         store.commit("showFooter", true);
+    }
+    if(to.meta.writeBgr) {
+        store.commit("writeBgr", true);
+    } else {
+        store.commit("writeBgr", false);
     }
     next(); // 必须使用 next ,执行效果依赖 next 方法的调用参数
 });

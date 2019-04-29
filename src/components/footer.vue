@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="footer_remark">Copyright © 2019 LOVOGUE有限公司 保留所有权利 
-    粤ICP备15050324号</div>
+    粤ICP备19021728号-1</div>
         </div>
     </div>
 </template>
@@ -154,7 +154,7 @@ export default {
         padding-top: 0.75rem!important;
     }
     .writeBgr{
-        /* background: #fff!important; */
+        background: #fff!important;
     }
     .el-icon-plus, .el-icon-minus, .el-icon-close {
         left: auto;

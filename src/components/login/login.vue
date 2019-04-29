@@ -8,7 +8,7 @@
       <label class="label_txt">密码</label><span class="req">*</span>
       <el-form-item prop="pass">
         <el-input type="password" v-model="ruleForm.pass" :clearable="true" autocomplete="off" key="loginPass"></el-input>
-        <router-link to="/resetPassEmail" class="link">忘记密码?</router-link>
+        <router-link to="/resetPassMessage" class="link">忘记密码?</router-link>
       </el-form-item>        
     </el-form>
     <el-button class="login_btn" type="primary" @click="submitForm('ruleForm')">立即登录</el-button>
@@ -19,7 +19,7 @@
     </el-row>
     <el-row class="other_login_img">
       <el-col :span="8"><div class="grid-content bg-purple" style="height:0.01rem"></div></el-col>
-      <el-col :span="8"> <div class="grid-content bg-purple"><img src="../../assets/image/wechat.png" style="float:left"/><img src="../../assets/image/fb.png" style="float:right"/></div></el-col>
+      <el-col :span="8"> <div class="grid-content bg-purple" @click="devIng"><img src="../../assets/image/wechat.png" style="float:left"/><img src="../../assets/image/fb.png" style="float:right"/></div></el-col>
       <el-col :span="8"><div class="grid-content bg-purple" style="height:0.01rem"></div></el-col>
     </el-row>
     <!--<div class="other_login">
@@ -147,7 +147,13 @@ export default {
       this.$router.push({
         path: '/resetPassEmail'
       })
-    }
+    },
+    devIng() {
+      this.$message({
+        message: '模块建设中...',
+        type: 'warning'
+      })
+    },
   }
 }
 </script>

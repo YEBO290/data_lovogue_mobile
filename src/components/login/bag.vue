@@ -3,7 +3,8 @@
     <div class="bag_lists" v-if="!showToLogin && bagList.length > 0">
       <!--暂不考虑全选，多选-->
       <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" class="allCheck">全选</el-checkbox>
-      <div style="margin: 0.15rem 0;"></div>    
+      <div style="margin: 0.15rem 0;"></div>  
+      <div class="topayList">  
         <el-row :gutter="20" class="bag_list" v-for="(item, index) in bagList" :key="index" @click="toDetail(item)">
           <!--暂不考虑全选，多选-->
           <el-col :span="2">
@@ -36,22 +37,22 @@
               </div>
             </div>
           </el-col>         
-      </el-row> 
-      <div class="total_div">
-        <p class="total_number">数量<span>{{totalNmubel}}</span></p>
-        <p class="total_pay">运费<span>RMB  {{totalPay}}</span></p> 
-        <p class="total">总计<span>RMB  {{totalCost}}</span></p>       
+        </el-row> 
       </div>
-      <el-button class="btn login_btns" type="primary" @click="toPay" style="margin-top:0.63rem;">立即支付</el-button>
+      <div class="pay">
+        <div class="total_div">
+          <p class="total_number">数量<span>{{totalNmubel}}</span></p>
+          <p class="total_pay">运费<span>RMB  {{totalPay}}</span></p> 
+          <p class="total">总计<span>RMB  {{totalCost}}</span></p>       
+        </div>
+        <el-button class="btn login_btns" type="primary" @click="toPay" style="margin-top:0.63rem;">立即支付</el-button>
+      </div>
     </div>
-    <div class="bag_none" v-if="!showToLogin && bagList.length === 0">
-      <span>再也不会找不到购物袋内的风格单品-立即</span>
-      <a @click="toLogin">登录</a> / <a @click="toRegister">注册</a>
-      <span>保留单品至您的账户</span>
+    <div class="bag_none" v-if="!showToLogin && bagList.length === 0">      
       <p>您的购物袋暂无单品</p>
       <el-button class="login_btn pay_btn" type="primary" @click="toHome">前往选购</el-button>    
     </div>
-    <div class="recommend" v-if="!showToLogin && bagList.length === 0">
+    <!--<div class="recommend" v-if="!showToLogin && bagList.length === 0">
         <p class="titlt">为您推荐的搭配</p>
         <el-row>
           <el-col :span="8"  v-for="(item, index) in recommendList" :key="index">
@@ -60,11 +61,14 @@
             <p class="recommend_name">{{item.name}}</p>
           </el-col>
         </el-row>
-      </div>
+      </div>-->
     <div class="login_none" v-if="showToLogin">
       <p>创建您的购物清单</p>
-      <el-button class="btn ok_btn" type="primary" @click="toLogin">登录</el-button>
-      <el-button class="btn cancel_btn" type="primary" @click="toRegister">注册</el-button>
+      <span>再也不会找不到购物袋内的风格单品-立即</span>
+      <a @click="toLogin">登录</a> / <a @click="toRegister">注册</a>
+      <span>保留单品至您的账户</span>
+      <!--<el-button class="btn ok_btn" type="primary" @click="toLogin">登录</el-button>
+      <el-button class="btn cancel_btn" type="primary" @click="toRegister">注册</el-button>-->
     </div>  
   </div>
 </template>
@@ -163,6 +167,19 @@ export default {
         })
       },
       toPay() {
+        let len = this.checkedLists.length
+        if (len == 0 ) {
+          this.$message({
+            message: '请先勾选好商品！',
+            type: 'warning'
+          })
+          return false
+        }
+        this.$message({
+            message: '支付接口搭建中,敬请关注！',
+            type: 'warning'
+          })
+          return false
         this.$store.dispatch('login/toPay', this.checkedLists)
       },
       handleCheckAllChange(val) {

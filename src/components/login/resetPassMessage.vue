@@ -34,11 +34,11 @@
             </el-form-item>
             <label class="label_txt">密码</label><span class="req">*</span>
             <el-form-item prop="pass">
-                <el-input type="text" v-model="ruleForm.pass" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="password" v-model="ruleForm.pass" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>
             <label class="label_txt">确认密码</label><span class="req">*</span>
             <el-form-item prop="checkPass">
-                <el-input type="text" v-model="ruleForm.checkPass" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="password" v-model="ruleForm.checkPass" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>        
         </el-form>
         <div class="btns">
@@ -145,17 +145,9 @@ import md5 from "js-md5"
               uuid: me.ruleForm.verificationCode
             }
             me.$store.dispatch('login/resetPwMessage', param).then(res => {
-              if(res.msg === 1) {
-                me.$message({
-                  message: '密码重设成功',
-                  type: 'success'
-                })
-              } else {
-                me.$message({
-                  message: '操作失败',
-                  type: 'error'
-                })
-              }
+                if(res.msg === 1) {
+                    me.successTip()
+                }
             }).catch(err => {
               
             })
@@ -218,7 +210,6 @@ import md5 from "js-md5"
       // 发送短信
     sendMsg(val) {
         let me = this
-        debugger
         this.$refs.ruleForm.validateField('name', (nameError) => {
             if (!nameError) {
                 this.$refs.ruleForm.validateField('email', (emailError) => {
@@ -229,6 +220,16 @@ import md5 from "js-md5"
             }
         })
     },
+    successTip() {
+        this.$confirm('密码重置成功,是否前往登录页面?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push('/login')
+        }).catch(() => {         
+        })
+      }
     }
   }
 </script>

@@ -21,7 +21,7 @@
             <el-form-item prop="checkPass">
                 <el-input type="password" v-model="ruleFormRest.checkPass" :clearable="true" autocomplete="off" key="res_check" ></el-input>
             </el-form-item>
-            <el-form-item prop="term" class="term_item">
+            <!--<el-form-item prop="term" class="term_item">
                 <el-checkbox v-model="ruleFormRest.term">    
                     <div class="span_txt">
                         您接受并同意遵守我们的
@@ -33,7 +33,7 @@
                     </div>             
                 </el-checkbox>
                 
-            </el-form-item>
+            </el-form-item>-->
         </el-form>
         <div>
             <el-button class="btn login_btns" type="primary" @click="submitForm('ruleFormRest')">立即登录</el-button>
@@ -92,7 +92,7 @@ import md5 from "js-md5"
       var validateCheckPass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleFormRest.passwordRes) {
+        } else if (this.ruleFormRest.passwordRes && value !== this.ruleFormRest.passwordRes) {
           callback(new Error('两次输入密码不同!'));
         } else {
           callback();
