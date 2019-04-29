@@ -13,7 +13,7 @@
       </el-col>
     </el-row>
     <!--<div class="about_img"><img :src="aboutDetail.url" alt=""></div>-->
-    <div class="about_txt" style="margin-top:0.1rem;">
+    <!-- <div class="about_txt" style="margin-top:0.1rem;">
       <span style="text-align: left;">
         <i
           class="glyphicon glyphicon-hand-right"
@@ -24,8 +24,8 @@
       <p class="txt txt_one text-left" style="text-indent:0.24rem;padding-left: 18px;
     padding-right: 18px;
     padding-bottom: 10px;">{{aboutDetail.txt}}</p>
-      <!-- <p class="txt txt_last text-left">{{aboutDetail.text}}</p> -->
-    </div>
+    <p class="txt txt_last text-left">{{aboutDetail.text}}</p>
+    </div> -->
   </div>
 </template>
 <script>

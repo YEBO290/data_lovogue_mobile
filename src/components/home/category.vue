@@ -7,25 +7,28 @@
         <span class="menu_del">清除</span>
       </div>-->
       <menuList class="menu_list" v-if="showSubMenu"/>
-      <el-row :gutter="10" style="padding-top:17px;">
-        <el-col :span="12" v-for="(item, index) in categoryList" :key="index">
-          <div  class="category_list" @click="toDetail(item)">
-            <img :src="item.imgpath" class="category_img"/>
-             <transition name="el-zoom-in-center">
-              <img src="../../assets/image/loved.png" style="width: 0.2rem;" class="loved" title="取消收藏" v-if="item.love != 0"  @click.stop="delLove(item)">
-              <img src="../../assets/image/toLove.png" style="width: 0.2rem;" class="toLove" title="收藏"  @click.stop="addLove(item)" v-else>  
-            </transition>
-            <p class="category_list_name">{{item.productname}}</p>
-            <span class="category_list_price">RMB {{item.tagprice}}</span>
-          </div>
+      <img src="~@/assets/image/timg.png" style="width:100%" v-if="categoryTotal == 0"/>
+      <div v-else>
+        <el-row :gutter="10" style="padding-top:17px;">
+          <el-col :span="12" v-for="(item, index) in categoryList" :key="index">
+            <div  class="category_list" @click="toDetail(item)">
+              <img :src="item.imgpath" class="category_img"/>
+              <transition name="el-zoom-in-center">
+                <img src="../../assets/image/loved.png" style="width: 0.2rem;" class="loved" title="取消收藏" v-if="item.love != 0"  @click.stop="delLove(item)">
+                <img src="../../assets/image/toLove.png" style="width: 0.2rem;" class="toLove" title="收藏"  @click.stop="addLove(item)" v-else>  
+              </transition>
+              <p class="category_list_name">{{item.productname}}</p>
+              <span class="category_list_price">RMB {{item.tagprice}}</span>
+            </div>
+            </el-col>
+        </el-row>
+        <el-row v-if="categoryTotal > 30">
+          <el-col :span="24">
+            <p class="showTip list_more_tip"  v-if="showMore">显示{{categoryTotal}}中的30件</p>
+            <el-button class="btn ok_btn" type="primary" @click="toMore" v-if="showMore">载入更多</el-button>   
           </el-col>
-      </el-row>
-      <el-row v-if="categoryTotal > 30">
-        <el-col :span="24">
-          <p class="showTip list_more_tip"  v-if="showMore">显示{{categoryTotal}}中的30件</p>
-          <el-button class="btn ok_btn" type="primary" @click="toMore" v-if="showMore">载入更多</el-button>   
-        </el-col>
-      </el-row>
+        </el-row>
+      </div>
     </div>
 </template>
 <script>
@@ -42,11 +45,14 @@ export default {
     }
   },
   watch: {
-  '$route' (to, from) {   //监听路由是否变化
+  '$route': {
+    handler(to, from) {   //监听路由是否变化
       let param =  this.searchParam(30, 1)
       this.$store.dispatch('home/queryCategoryList', param)
       this.$store.commit('showSubMenu', false)
-    }
+    },
+    immediate: true
+    } 
   },
   computed: mapState({
     categoryList: function(state) {
