@@ -141,7 +141,7 @@ import md5 from "js-md5"
           if (valid) {
             let param = {
               password: workspace.calcuMD5(me.ruleForm.pass),
-              userid: workspace.getCookie().name,
+              userid: me.ruleForm.name,
               uuid: me.ruleForm.verificationCode
             }
             me.$store.dispatch('login/resetPwMessage', param).then(res => {
