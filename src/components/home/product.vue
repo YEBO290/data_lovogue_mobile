@@ -41,6 +41,13 @@ export default {
       showMore: true
     }
   },
+  watch: {
+  '$route' (to, from) {   //监听路由是否变化
+    let param = this.searchParam(30, 1)
+    this.$store.dispatch('home/queryProductList', param)
+    this.$store.commit('showSubMenu', false)
+    }
+  },
   computed: mapState({
       productList: function(state){
         state.home.productTypeList.forEach(item => {
@@ -52,9 +59,7 @@ export default {
       productTotal: state => state.home.productTotal
     }),
   created() {
-    let param = this.searchParam(30, 1)
-    this.$store.dispatch('home/queryProductList', param)
-    this.$store.commit('showSubMenu', false)
+    
   },
   methods: {
     searchParam(size, page) {
