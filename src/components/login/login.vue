@@ -113,7 +113,7 @@ export default {
           me.$store.dispatch('login/toLogin', param).then(res => {
             if(res.length > 0) {
               //判断用户是否勾选了记住密码选项rememberPsw，传入保存的账号currentPortId，密码password，天数30
-              workspace.setCookie(me.ruleForm.phone, me.ruleForm.pass, 30)
+              workspace.setCookie(res[0].userid, me.ruleForm.pass, 30)
               me.$router.push('/home')
               let loveParam = {
                 userid: workspace.getCookie().name,
