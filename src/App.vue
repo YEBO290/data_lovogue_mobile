@@ -85,14 +85,8 @@ export default {
     max-width: 500rem;
     margin:0 auto;
     position: relative;
-    width:100%;
-    min-height:100%;
+    min-height:700px;
 }
-.content{
-    min-height:2.7rem;
-}
-
-.content-footer{min-height:3rem;position:relative;bottom:0px;left:0px;width: 100%;}
 </style>
 <style scoped>
 @import "./assets/css/base.css";

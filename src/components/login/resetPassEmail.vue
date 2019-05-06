@@ -8,7 +8,7 @@
             <label class="label_txt">电邮地址</label><span class="req">*</span>
             <el-form-item prop="email">
                 <el-input type="text" v-model="ruleForm.email" :clearable="true" autocomplete="off"></el-input>
-                <!--<router-link to="/resetPassMessage" class="link">使用短信验证码?</router-link>-->
+                <router-link to="/resetPassMessage" class="link">使用短信验证码?</router-link>
             </el-form-item>
         </el-form>
         <div class="btns">

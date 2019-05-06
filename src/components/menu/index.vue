@@ -69,7 +69,6 @@ export default {
       this.$router.push('/home')
     },
     toLogin() {
-      debugger
       workspace.clearCookie()
       console.log(workspace.getCookie().name)
       this.$router.push('/login')

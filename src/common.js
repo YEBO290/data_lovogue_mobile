@@ -37,6 +37,10 @@ var workspace = {
    },
    //读取cookie
    getCookie: function() {
+    var obj = {
+      name: '',
+      password: ''
+    }
     if (document.cookie.length > 0) {
      var arr = document.cookie.split("; ") //这里显示的格式请根据自己的代码更改
      for (var i = 0; i < arr.length; i++) {
@@ -52,12 +56,12 @@ var workspace = {
        this.password = bytes.toString(CryptoJS.enc.Utf8)
       }
      }
-    }
-    var obj = {
-      name: this.currentPortId,
-      password: this.password
+      obj = {
+        name: this.currentPortId,
+        password: this.password
 
-    }
+      }
+    }    
     return obj
    },
    //清除cookie
