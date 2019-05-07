@@ -251,9 +251,30 @@ export default {
     },
     // 提交
     submitForm(formName) {
+      let me = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // this.$store.dispatch('saveCustomerSservice') // 提交客服
+          let param = {
+            userid: workspace.getCookie().name,
+            email: me.ruleForm.email,
+            type: me.ruleForm.category,
+            username: me.ruleForm.name,
+            value: me.ruleForm.message
+          }
+          // 提交客服
+          me.$store.dispatch('login/saveCusService', param).then(res => {
+            if (res.msg == 1) {
+              me.$message({
+                message: '操作成功！',
+                type: 'success'
+              })
+            } else {
+              me.$message({
+                message: '操作失败！',
+                type: 'error'
+              })
+            }
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -280,7 +301,7 @@ export default {
                 } else {
                   me.$message({
                     message: '操作失败！',
-                    type: 'warning'
+                    type: 'error'
                   })
                 }
               })

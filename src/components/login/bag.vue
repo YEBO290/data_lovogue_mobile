@@ -38,8 +38,10 @@
             </div>
           </el-col>         
         </el-row> 
-      </div>
-      <div class="pay">
+      </div>   
+    </div>
+    <div class="pay" v-if="!showToLogin && bagList.length > 0">   
+      <div style="width:100%;padding:0 18px;text-align:left;">    
         <div class="total_div">
           <p class="total_number">数量<span>{{totalNmubel}}</span></p>
           <p class="total_pay">运费<span>RMB  {{totalPay}}</span></p> 
@@ -279,5 +281,16 @@ export default {
 }
 .el-icon-plus, .el-icon-minus, .el-icon-close {
   left: auto;
+}
+.pay{
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 100;
+  margin-bottom: 18px;
+  background: #fff;
+}
+.pay{
+  border-top: 1px solid #EFDED1;
 }
 </style>

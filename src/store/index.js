@@ -87,19 +87,6 @@ const actions = {
       }, 1000)
     })
   },
-  // 提交客服
-  saveCustomerSservice (context, param) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        console.log(api)
-        get(api.querySituationList, '123').then((res) => {
-          resolve(res.data)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
-    })
-  },
   // 提交重置密码
   savePassWord (context, param) {
     return new Promise((resolve, reject) => {

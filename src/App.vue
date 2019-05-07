@@ -78,14 +78,21 @@ export default {
     
 }
 .content-footer{
+    position: absolute;
     bottom: 0;
-    position: relative;
+    width: 100%;
+    min-height: 281px;
 }
 #app{
     max-width: 500rem;
     margin:0 auto;
     position: relative;
     min-height:700px;
+}
+html{height:100%;}
+#app{min-height:100%;margin:0;padding:0;position:relative;}
+.content{
+    padding-bottom: 302px;
 }
 </style>
 <style scoped>

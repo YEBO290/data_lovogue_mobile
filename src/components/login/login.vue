@@ -128,7 +128,7 @@ export default {
             } else {
               me.$store.commit('login/lovesList', []) // 喜爱的列表查询
               me.$store.commit('login/bagList', []) // 购物的列表查询
-              me.$message.error('操作失败')
+              me.$message.error('操作失败！')
               this.clearCookie()
             }           
           }).catch(err => {

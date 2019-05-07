@@ -36,6 +36,7 @@ var service = {
     //关于我们
     getAboutUs:'/Cms/getAboutUs',
     // 旧密码改新密码
-    setPassRe: 'CrmUser/setPassRe'
+    setPassRe: 'CrmUser/setPassRe',
+    insertComments: '/CrmUser/insertComments' // 客服
 }
 export default service

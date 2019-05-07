@@ -204,6 +204,16 @@ const actions = {
       })
     })
   },
+  // 客服
+  saveCusService (context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.insertComments, param).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
+  },
 }
 
 const mutations = {

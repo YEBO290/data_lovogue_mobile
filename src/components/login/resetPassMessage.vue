@@ -1,10 +1,10 @@
 <template>
     <div class="resetPass content_text">
-        <div class="desc_txt" v-if="false">
+        <div class="desc_txt" v-if="showMessage">
             <p  class="desc_txt_title">重设密码</p>
             <p  class="desc_txt_p">欲重设密码，您只需在下面的项栏里输入您的手机号码并点击“获取验证码"即可。我们将会向您的手机号码发送难证码。为安全起见，此验证码将会在1小时后立刻失效。之后，您可以再次在下面的项栏里输入手机号码，重获一组新的验证码。</p>
         </div>
-        <div class="desc_txt">
+        <div class="desc_txt" v-if="!showMessage">
             <p  class="desc_txt_title">重设密码</p>
             <p  class="desc_txt_p">欲重设密码，您只需在下面的项栏里输入您的邮件地址并点击“提交"即可。我们将会向您发送邮件，邮件中将包含一个可以重设密码的链接。为安全起见，此链接将会在24小时后立刻失效。之后，您可以再次在下面的项栏里输入电邮地址，重获一组重设密码的链接。</p>
         </div>
@@ -13,19 +13,19 @@
             <el-form-item prop="name">
                 <el-input type="text" v-model="ruleForm.name" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>
-            <label class="label_txt" v-if="false">手机号码</label><span class="req"  v-if="false">*</span>
-            <label class="label_txt">电邮地址</label><span class="req">*</span>
+            <label class="label_txt" v-if="showMessage">手机号码</label><span class="req"  v-if="false">*</span>
+            <label class="label_txt" v-if="!showMessage">电邮地址</label><span class="req">*</span>
 
-            <el-form-item prop="phone" v-if="false">
+            <el-form-item prop="phone" v-if="showMessage">
                 <el-input type="text" v-model="ruleForm.phone" :clearable="true" autocomplete="off" ></el-input>
                 <el-button class="verificationCode" @click="sendMsg" :disabled="codeDis">{{code}}</el-button>
-                <router-link to="/resetPassEmail" class="link" v-if="false">使用邮箱接收链接?</router-link>
+                <a class="link" @click="showMessage = true" style="color:#C5A480">使用邮箱接收链接?</a>
             </el-form-item>
 
-            <el-form-item prop="email">
+            <el-form-item prop="email" v-if="!showMessage">
                 <el-input type="text" v-model="ruleForm.email" :clearable="true" autocomplete="off" ></el-input>
                 <el-button class="verificationCode" @click="sendMsg" :disabled="codeDis">{{code}}</el-button>
-                <router-link to="/resetPassMessage" class="link" v-if="false">使用短信验证码?</router-link>
+                <a class="link" @click="showMessage = false" style="color:#C5A480">使用短信验证码?</a>
             </el-form-item>
 
             <label class="label_txt">填写验证码</label><span class="req">*</span>
@@ -106,6 +106,7 @@ import md5 from "js-md5"
         }        
       };
       return {
+        showMessage: false,
         ruleForm: {
           pass: '',
           phone: '',
@@ -178,7 +179,7 @@ import md5 from "js-md5"
             })
           } else {
             me.$message({
-              message: '操作失败',
+              message: '操作失败！',
               type: 'error'
             })
           }

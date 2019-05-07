@@ -162,7 +162,7 @@ export default {
                   me.$router.push('/selectAddress')
                 } else {
                   me.$message({
-                    message: '操作失败',
+                    message: '操作失败！',
                     type: 'error'
                   })
                 }
@@ -198,7 +198,7 @@ export default {
                 me.$router.push('/selectAddress')
               } else {
                 me.$message({
-                  message: '操作失败',
+                  message: '操作失败！',
                   type: 'error'
                 })
               }

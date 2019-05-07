@@ -142,7 +142,6 @@ export default {
         position: absolute;
         top: -4px;
         right: 5px;
-        display: none;   /* 临时，需删除*/
     }
     .el-badge {    /* 临时，需删除*/
         position: relative;

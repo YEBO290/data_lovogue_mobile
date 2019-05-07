@@ -19,7 +19,7 @@ axios.defaults.timeout = 10000
 // 环境的切换
 if (process.env.NODE_ENV === 'development') {
   // axios.defaults.baseURL = 'http://129.204.202.240:8090'
-  axios.defaults.baseURL = 'http://lovogue.net:8091'
+  axios.defaults.baseURL = 'http://lovogue.net:8093'
   } else if (process.env.NODE_ENV === 'debug') {
   axios.defaults.baseURL = 'http://lovogue.net:8091'
   } else if (process.env.NODE_ENV === 'production') {

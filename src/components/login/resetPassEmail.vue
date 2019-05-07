@@ -65,7 +65,7 @@ import workspace from '../../common.js'
                 })
               } else {
                 me.$message({
-                  message: '操作失败',
+                  message: '操作失败！',
                   type: 'error'
                 })
               }

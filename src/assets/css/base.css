@@ -1,5 +1,5 @@
 
-body, html, div, blockquote, img, label, p, h1, h2, h3, h4, h5, h6, pre, ul, ol,
+html, blockquote, img, label, p, h1, h2, h3, h4, h5, h6, pre, ul, ol,
 li, dl, dt, dd, form, a, fieldset, input, th, td
 {margin: 0; padding: 0; border: 0; outline: none;}
 ul, ol{list-style: none;}
@@ -305,3 +305,9 @@ input::-webkit-input-placeholder {
  .header :hover img{
     transform:scale(1.1)
   }
+  .el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
+    cursor: not-allowed;
+    background: #C5A480;
+    border-color: #C5A480;
+    color: #EFDED1;
+}

@@ -8,7 +8,8 @@
         </el-col>
         <el-col :span="12">
           <div class="grid-content bg-purple-dark">
-            <p style="font-size: 15px;font-weight: bold;">{{user}}</p>
+            <p style="font-size: 15px;font-weight: bold;" v-if="user">{{user}}</p>
+            <p style="font-size: 15px;font-weight: bold;" v-else @click="toLogin">登录</p>
             <p @click="toLogin" style="font-size: 12px;text-decoration: underline;color:#666;" v-if="showLogin">切换账号</p>
           </div>
         </el-col>
@@ -43,7 +44,7 @@ export default {
   data() {
     return {
       expand: [],
-      user: workspace.getCookie().name || '登录',
+      user: workspace.getCookie().name,
       showLogin: workspace.getCookie().name ? true: false,
     }
   },

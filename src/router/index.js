@@ -198,8 +198,7 @@ const router = new Router({
             name: "loved",
             component: loved,
             meta: {
-                fontColor: true,
-                writeBgr: true
+                fontColor: true
             }
         },
         {
@@ -208,8 +207,7 @@ const router = new Router({
             name: "bag",
             component: bag,
             meta: {
-                fontColor: true,
-                writeBgr: true
+                fontColor: true
             }
         },
         {
@@ -288,7 +286,7 @@ router.beforeEach((to, from, next) => {
     } else {
         store.commit("fontColor", false);
     }
-    if (to.fullPath.indexOf("/search") > -1) {
+    if (to.fullPath.indexOf("/search") > -1  || to.fullPath.indexOf("/loved") > -1 || to.fullPath.indexOf("/bag") > -1) {
         store.commit("showFooter", false);
     } else {
         store.commit("showFooter", true);
