@@ -37,6 +37,8 @@ var service = {
     getAboutUs:'/Cms/getAboutUs',
     // 旧密码改新密码
     setPassRe: 'CrmUser/setPassRe',
-    insertComments: '/CrmUser/insertComments' // 客服
+    insertComments: '/CrmUser/insertComments', // 客服
+    getAddress: 'CrmUser/getAddress', // 省级
+
 }
 export default service

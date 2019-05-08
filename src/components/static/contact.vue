@@ -1,7 +1,7 @@
 <template>
     <div class="contact">
-      <p class="contact_txt" :class="{'active_static': id === 'customerService'}" @click="showDetail('customerService')">客服</p>
-      <div class="contact_detail" v-if="id === 'customerService'">{{contactDetail.AdvisoryCategory}}
+      <p class="contact_txt" :class="{'active_static': id === 'customerService'}" @click="showDetail('customerService')"  v-if="isUser">客服</p>
+      <div class="contact_detail" v-if="id === 'customerService' && isUser">{{contactDetail.AdvisoryCategory}}
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="loginForm">
             <label class="label_txt">姓名</label><span class="req">*</span>
             <el-form-item prop="name">
@@ -39,8 +39,8 @@
         <div>{{contactDetail.orderSend}}</div>
         <!--<el-button class="ok_btn btn" type="primary" @click="toResetPassWord">立即登录</el-button>-->
       </div>
-      <p class="contact_txt" :class="{'active_static': id === 'resetPassWord'}" @click="showDetail('resetPassWord')">重设密码</p>
-      <div class="contact_detail" v-if="id === 'resetPassWord'">
+      <p class="contact_txt" :class="{'active_static': id === 'resetPassWord'}" @click="showDetail('resetPassWord')" v-if="isUser">重设密码</p>
+      <div class="contact_detail" v-if="id === 'resetPassWord' && isUser">
         <p style="margin-bottom:0.3rem;">欲重设密码，您只需在下面的项栏里输入您的初始密码，验证通过后即可重设密码。</p>
         <el-form :model="rulePassWordForm" status-icon :rules="rulesPassWord" ref="rulePassWordForm" label-width="1rem" class="loginForm">
             <label class="label_txt">原始密码</label><span class="req">*</span>
@@ -195,6 +195,7 @@ export default {
         }
       }
     return {
+      isUser: workspace.getCookie().name !== undefined && workspace.getCookie().name !== null && workspace.getCookie().name !== '',
       active_static: true,
       ruleForm: {
             name: '', // 名称

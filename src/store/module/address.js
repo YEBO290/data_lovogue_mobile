@@ -91,40 +91,37 @@ const actions = {
   // 省份
   queryProvince (context, param) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get('api/v1/users/my_address/address_edit_before', param).then((res) => {
-          context.commit('queryProvince', res.data)
-          resolve(res.data)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
+      let params = param || {}
+      post(api.getAddress, params).then((res) => {
+        context.commit('queryProvince', res.data)
+        resolve(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
     })
   },
   // 城市
   queryCity (context, param) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get('api/v1/users/my_address/address_edit_before', param).then((res) => {
-          context.commit('queryCity', res.data)
-          resolve(res.data)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
+      let params = param || {}
+      post(api.getAddress, params).then((res) => {
+        context.commit('queryCity', res.data)
+        resolve(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
     })
   },
   // 行政区
   queryArea (context, param) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get('api/v1/users/my_address/address_edit_before', param).then((res) => {
-          context.commit('queryArea', res.data)
-          resolve(res.data)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
+      let params = param || {}
+      post(api.getAddress, params).then((res) => {
+        context.commit('queryArea', res.data)
+        resolve(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
     })
   }, 
   // save address

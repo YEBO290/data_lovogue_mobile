@@ -24,43 +24,43 @@
       -->
       <label class="label_txt">配送地址地区</label><span class="req">*</span>
       <el-form-item prop="addressprovince">
-        <el-select v-model="ruleForm.addressprovince" placeholder="选择省份" clearable  @change="addressprovinceFunc">
+        <el-select v-model="ruleForm.addressprovince" filterable placeholder="选择省份"  @change="addressprovinceFunc">
         <el-option
           v-for="item in provinceList"
-          :key="item.value"
-          :label="item.label"
-          :value="item.label">
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
         </el-option>
       </el-select>
       </el-form-item>
       
       <label class="label_txt">配送地址城市</label><span class="req">*</span>
       <el-form-item prop="addresscity">
-        <el-select v-model="ruleForm.addresscity" placeholder="选择城市" clearable no-data-text="请先选择配送省份" @change="addresscityFunc">
+        <el-select v-model="ruleForm.addresscity" filterable placeholder="选择城市" no-data-text="请先选择配送省份" @change="addresscityFunc">
         <el-option
           v-for="item in cityList"
-          :key="item.value"
-          :label="item.label"
-          :value="item.label">
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
         </el-option>
       </el-select>
       </el-form-item>
       
       <label class="label_txt">配送地址行政区</label><span class="req">*</span>
        <el-form-item prop="addressdistrict">
-        <el-select v-model="ruleForm.addressdistrict" placeholder="选择区" clearable no-data-text="请先选择配送省份、城市" @change="addressdistrictFunc">
+        <el-select v-model="ruleForm.addressdistrict" filterable placeholder="选择区" no-data-text="请先选择配送省份、城市" @change="addressdistrictFunc">
         <el-option
           v-for="item in areaList"
-          :key="item.value"
-          :label="item.label"
-          :value="item.label">
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
         </el-option>
       </el-select>
       </el-form-item>
       
       <label class="label_txt">配送地址街道名称</label><span class="req">*</span>
       <el-form-item prop="address">
-        <el-input type="text" v-model="ruleForm.address" :clearable="true" autocomplete="off"></el-input>
+        <el-input type="text" v-model="ruleForm.address" autocomplete="off"></el-input>
       </el-form-item>    
         <el-form-item prop="term" class="term_item">
           <el-checkbox v-model="ruleForm.term">    
@@ -161,9 +161,7 @@ export default {
     }),
     created() {
       // this.$store.dispatch('address/queryCountry')
-      // this.$store.dispatch('address/queryProvince')
-      // this.$store.dispatch('address/queryCity')
-      // this.$store.dispatch('address/queryArea')
+      this.$store.dispatch('address/queryProvince', {level: "0"})
     },
     methods: {
       submitForm(formName) {
@@ -226,19 +224,28 @@ export default {
       },
       // 选择省份
       addressprovinceFunc(val) {
-        this.editInfo.addresscity = ''
-        this.editInfo.addressdistrict = ''
-        this.editInfo.address =''
+        debugger
+        this.$store.dispatch('address/queryCity', {
+          level: "1",
+          parent: val
+        })
+        this.ruleForm.addresscity = ''
+        this.ruleForm.addressdistrict = ''
+        this.ruleForm.address =''
 
       },
       // 选择城市
       addresscityFunc(val) {
-        this.editInfo.addressdistrict = ''
-        this.editInfo.address =''
+        this.$store.dispatch('address/queryArea', {
+          level: "2",
+          parent: val
+        })
+        this.ruleForm.addressdistrict = ''
+        this.ruleForm.address =''
       },
       // 选择城市区
       addressdistrictFunc(val) {
-        this.editInfo.address =''
+        this.ruleForm.address =''
       }
     }
   }
