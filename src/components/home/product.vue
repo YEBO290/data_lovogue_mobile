@@ -1,11 +1,11 @@
 <template>
     <div class="category_home">
-      <!--<div class="menu_filter" @click.stop="expand" v-if="!showSubMenu">
+      <div class="menu_filter" @click.stop="expand" v-if="!showSubMenu">
         <span class="menu_del"><i class="icon_f_btn"></i>筛选</span>
       </div>  
       <div class="menu_filter" @click.stop="expand" v-else>
         <span class="menu_del">清除</span>
-      </div>-->
+      </div>
       <menuList class="menu_list" v-if="showSubMenu"/>
       <img src="~@/assets/image/timg.png" style="width:100%" v-if="productTotal == 0"/>
       <div v-else>

@@ -5,8 +5,8 @@
           <img :src="item.imgpath" style="width:100%">
         </el-carousel-item>
       </el-carousel>
-      <span class="toLove" title="收藏" @click="toLoveFunc" v-if="specialImg.love == 0"></span>
-      <span class="Loved" title="取消收藏" @click="cancelLove" v-else></span>
+      <!--<span class="toLove" title="收藏" @click="toLoveFunc" v-if="specialImg.love == 0"></span>
+      <span class="Loved" title="取消收藏" @click="cancelLove" v-else></span>-->
       <!--<p class="loveTip">{{loveTip}}</p>-->
       <div class="detail_list_content">
         <h1 class="detail_list_h1">Lorem ipsum dolor</h1>
@@ -15,14 +15,9 @@
         </div>
         <div class="detail_flag">
           <span class="position_btn" v-for="(item, index) in specialImg.tag" :key="index">{{item.tag}}</span>
-          <!--<span class="date_btn">约会必备</span>-->
         </div>
-        <!--<div>
-          <span class="position_btn">职场刚需</span>
-          <span class="date_btn">约会必备</span>
-        </div>  -->
       </div>
-      <!--<div class="recommend_list">
+      <div class="recommend_list">
         <p class="recommend">搭配单品推荐</p>
         <el-row :gutter="5">
           <el-col :span="8" v-for="(item, index) in recommendList" :key="index" class="recommend_list_div">
@@ -34,7 +29,7 @@
             </div>
             </el-col>
         </el-row>
-      </div>-->
+      </div>
       <div>
         <el-row :style="{backgroundImage: 'url(' + specialImg.feature.backimg + ')', backgroundSize:'100%'}">
           <!--<el-col :span="8" v-for="(item, index) in specialImg" :key="item.id" class="subImg">-->
