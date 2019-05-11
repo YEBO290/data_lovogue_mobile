@@ -52,6 +52,12 @@ import { mapState } from 'vuex'
     methods: {
         toBuy() {
             // this.$store.dispatch('address/toBuy')
+            if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
+            var baseUrl = 'http://lovogue.net:8093'
+            } else if (process.env.NODE_ENV === 'production'|| window.location.port == '8091') {
+            var baseUrl = 'http://lovogue.net:8091'
+            }
+            window.open(`${baseUrl}/api/ali_pay/pay`)
         },
         toAddress() {
             this.$router.push('/address')

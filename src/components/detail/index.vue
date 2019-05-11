@@ -442,9 +442,7 @@ export default {
       //     userid: localStorage.getItem('userName'),
       //     status: "1"
       //   }
-      
-        if(this.flag === 'add') { // 加入购物袋
-          let param = {
+        let param = {
             prodid: this.detail.color.join(),
             userid: workspace.getCookie().name,
             amount: "1",
@@ -458,28 +456,14 @@ export default {
               }
               this.$store.dispatch('login/queryBagList', queryParam)
               this.innerVisible = false
-              this.successTip()
+              this.successTip()             
             } else {
               this.$message({
                 message: '操作失败！',
                 type: 'error'
               })
             }       
-          })
-        } else {
-          if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
-            var baseUrl = 'http://lovogue.net:8093'
-          }  else if (process.env.NODE_ENV === 'production'|| window.location.port == '8091') {
-            var baseUrl = 'http://lovogue.net:8091'
-          }
-          window.open(`${baseUrl}/api/ali_pay/pay`)
-          return false
-          let param = {}
-          this.$store.dispatch('detail/toBuy', param).then(res => {
-            this.innerVisible = false
-            this.$router.push('/confirmAddress')
-          })
-        }     
+          })            
     },
     // 颜色选择
     selectColorFunc(val, index) {     
@@ -561,14 +545,22 @@ export default {
       })
     },
     successTip() {
-      this.$confirm('操作成功,是否前往购物车页面?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
+      if(this.flag === 'add') { // 加入购物袋
+        this.$message({
+          message: '操作成功',
+          type: 'success'
+        })
+      } else {
         this.$router.push('/bag')
-      }).catch(() => {         
-      })
+      }
+      // this.$confirm('操作成功,是否前往购物车页面?', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   type: 'warning'
+      // }).then(() => {
+      //   this.$router.push('/bag')
+      // }).catch(() => {         
+      // })
     }
     
   }

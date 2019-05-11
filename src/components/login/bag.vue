@@ -13,24 +13,27 @@
               </el-checkbox>
             </el-checkbox-group> 
           </el-col>
-          <el-col :span="8"><img :src="item.imgpath" class="loved_img" style="width:100%;" @click="$router.push(`/detail/${item.typeno}`)"/></el-col>
+          <el-col :span="8"><img :src="item.imgpath" class="loved_img" style="width:100%;"  @click="$router.push(`/detail/${item.typeno}`)"/></el-col>
           <el-col :span="14">
-            <div @click="$router.push(`/detail/${item.typeno}`)">
-              <div>
-                <span class="bag_text">{{item.name}}</span>
-                <i class="el-icon-close" @click.stop="delBag(item)"></i>
-              </div>
-              <div>
-                <span class="bag_color"> - <span  class="bag_code">编号  {{item.prodid}}</span></span>
+            <div>
+              <div @click="$router.push(`/detail/${item.typeno}`)">
+                <div>
+                  <span class="bag_text">{{item.name}}</span>
+                  <i class="el-icon-close" @click.stop="delBag(item)"></i>
+                </div>
+                <div>
+                  <span class="bag_color"> - <span  class="bag_code">编号  {{item.prodid}}</span></span>
+                </div>
               </div>
               <!--暂不考虑数量的加减-->
-              <!--<div class="number">
-                <el-input-number v-model="item.amount" :min="1" label="数量"></el-input-number>
-              </div>-->
+              <div class="number">
+                <label style="font-size:13px;">数量： </label>
+                <el-input-number v-model="item.amount" :min="1" label="数量"  :disabled="item.showAmount"></el-input-number>
+              </div>
               <div style="height: 0.2rem; margin-top: 0.53rem;">
-                <div class="bag_size">
+                <!--<div class="bag_size">
                   <span>数量: {{item.amount}}</span>
-                </div>
+                </div>-->
                 <div class="bag_country">
                   <span class="bag_price">RMB {{item.tagprice}}</span>
                 </div>
@@ -105,6 +108,7 @@ export default {
       // 箭头函数可使代码更简练
       bagList: function(state){
         state.login.bagList.forEach(item => {
+          this.$set(item, 'showAmount', true)
           item.tagprice = workspace.thousandBitSeparator(item.tagprice)
         })
         return state.login.bagList
@@ -177,30 +181,37 @@ export default {
           })
           return false
         }
-        this.$message({
-            message: '支付接口搭建中,敬请关注！',
-            type: 'warning'
-          })
-          return false
-        this.$store.dispatch('login/toPay', this.checkedLists)
+        // this.$store.dispatch('login/toPay', this.checkedLists).then(res => {
+        //   this.$router.push('/confirmAddress')
+        // })
+        this.$router.push('/confirmAddress')
       },
       handleCheckAllChange(val) {
         let me = this
-        let list = []
-        this.bagList.forEach(el => {
-          list.push(el.id)
-        })
-        this.checkedLists = val ? list : []
-        this.isIndeterminate = false
-        me.totalNmubel = this.bagList.length
-        this.bagList.forEach(item => {
-          // 暂不考虑运费
-          // me.totalPay = me.totalPay + parseFloat(item.pay)
-          me.totalNmubel = me.totalNmubel + parseInt(item.num)
-          // me.totalCost = me.totalCost + (parseInt(item.num) * parseFloat(item.tagprice)) + parseFloat(item.pay)
-          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice.replace(',', ''))
-        })
-        me.totalCost = me.numFormat(me.totalCost)
+        if (val) {
+          let list = []
+          this.bagList.forEach(el => {
+            list.push(el.id)
+          })
+          this.checkedLists = val ? list : []
+          this.isIndeterminate = false
+          me.totalNmubel = this.bagList.length
+          this.bagList.forEach(item => {
+            me.$set(item, 'showAmount', false)
+            // 暂不考虑运费
+            // me.totalPay = me.totalPay + parseFloat(item.pay)
+            me.totalNmubel = me.totalNmubel + parseInt(item.num)
+            // me.totalCost = me.totalCost + (parseInt(item.num) * parseFloat(item.tagprice)) + parseFloat(item.pay)
+            me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice.replace(',', ''))
+          })
+          me.totalCost = workspace.thousandBitSeparator(me.totalCost)
+        } else {
+          me.totalNmubel = 0
+          me.totalCost = 0
+          this.bagList.forEach(el => {
+            me.$set(el, 'showAmount', true)
+          })
+        } 
       },
       handleCheckedListsChange(value) {
         let me = this
@@ -211,27 +222,22 @@ export default {
         this.totalPay = 0
         this.totalNmubel = 0
         let newList = [] // 选中的数组
+        this.bagList.forEach(item => {   
+          me.$set(item, 'showAmount', true)    
+        })
         value.forEach(el => {
           newList = newList.concat(this.bagList.filter(item => item.id === el ))
         })
         console.log(newList)
         newList.forEach(item => {
+          me.$set(item, 'showAmount', false)
           // me.totalPay = me.totalPay + parseFloat(item.tagprice)
           me.totalNmubel = me.totalNmubel + parseInt(1)
           me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice.replace(',', ''))
           // 是否考虑运费
           // me.totalCost = me.totalCost + (parseInt(1) * parseFloat(item.tagprice)) + parseFloat(item.pay)
         })
-        me.totalCost = me.numFormat(me.totalCost)
-      },
-      // 千位分割
-      numFormat(num){
-        var res=num.toString().replace(/\d+/, function(n){ // 先提取整数部分
-            return n.replace(/(\d)(?=(\d{3})+$)/g,function($1){
-                return $1+",";
-              });
-        })
-        return res;
+        me.totalCost = workspace.thousandBitSeparator(me.totalCost)
       },
          // 详情
       toDetail(val) {

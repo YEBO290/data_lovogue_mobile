@@ -81,7 +81,6 @@ export default {
     position: absolute;
     bottom: 0;
     width: 100%;
-    min-height: 281px;
 }
 #app{
     max-width: 500rem;
@@ -92,7 +91,7 @@ export default {
 html{height:100%;}
 #app{min-height:100%;margin:0;padding:0;position:relative;}
 .content{
-    padding-bottom: 302px;
+    padding-bottom: 2.58rem;
 }
 </style>
 <style scoped>
