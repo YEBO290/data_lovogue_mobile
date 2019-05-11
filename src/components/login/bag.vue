@@ -41,7 +41,7 @@
       </div>   
     </div>
     <div class="pay" v-if="!showToLogin && bagList.length > 0">   
-      <div style="width:100%;padding:0 18px;text-align:left;">    
+      <div style="" class="pat_content">    
         <div class="total_div">
           <p class="total_number">数量<span>{{totalNmubel}}</span></p>
           <p class="total_pay">运费<span>RMB  {{totalPay}}</span></p> 
@@ -54,7 +54,7 @@
       <p>您的购物袋暂无单品</p>
       <el-button class="login_btn pay_btn" type="primary" @click="toHome">前往选购</el-button>    
     </div>
-    <!--<div class="recommend" v-if="!showToLogin && bagList.length === 0">
+    <div class="recommend" v-if="!showToLogin && bagList.length === 0">
         <p class="titlt">为您推荐的搭配</p>
         <el-row>
           <el-col :span="8"  v-for="(item, index) in recommendList" :key="index">
@@ -63,7 +63,7 @@
             <p class="recommend_name">{{item.name}}</p>
           </el-col>
         </el-row>
-      </div>-->
+      </div>
     <div class="login_none" v-if="showToLogin">
       <p>创建您的购物清单</p>
       <span>再也不会找不到购物袋内的风格单品-立即</span>
@@ -288,9 +288,16 @@ export default {
   bottom: 0;
   z-index: 100;
   margin-bottom: 18px;
-  background: #fff;
+  
+  padding-left:10px;
+  padding-right:10px;
 }
-.pay{
+.pay .pat_content{
   border-top: 1px solid #EFDED1;
+  width:100%;padding:0 18px;text-align:left;
+  -moz-box-shadow:2px 2px 5px #333333; -webkit-box-shadow:2px 2px 5px #333333; box-shadow:2px 2px 5px #333333;
+  padding-bottom: 10px;
+  border-radius: 3px;
+  background: #fff;
 }
 </style>

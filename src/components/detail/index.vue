@@ -19,14 +19,20 @@
         </div>  
       </div>
       <div class="detail_bts">
-       <el-select v-model="detail.color" placeholder="选择颜色" class="color_select" @change="handlerSelectColor">
+      <el-cascader placeholder="选择颜色" class="color_select"
+        expand-trigger="hover"
+        :options="detailInfo.choice"
+        v-model="detail.color" change-on-select
+        @change="handleChange">
+      </el-cascader>
+      <!-- <el-select v-model="detail.color" placeholder="选择颜色" class="color_select" @change="handlerSelectColor">
           <el-option
             v-for="item in detailInfo.choice"
             :key="item.productid"
             :label="item.color"
             :value="item.productid">
           </el-option>
-        </el-select>
+        </el-select>-->
         <span class="req" v-if="showColor">请选择颜色</span>
         <el-button class="btn ok_btn" type="primary" @click="toBuy">立即选购</el-button>
         <el-button class="btn addBag_btn" @click="toBag">加入购物袋</el-button>
@@ -261,7 +267,9 @@ export default {
         sizeLists: [],
         weightList: [],
         choiceList: [],
-        sizeChoiceList: []
+        sizeChoiceList: [],
+        options: [],
+        selectedOptions2: []
     }
   },
   props: ['id'],
@@ -274,6 +282,16 @@ export default {
         let price = workspace.thousandBitSeparator(state.detail.detailInfo.tagprice)
         state.detail.detailInfo.tagprice && (this.$set(state.detail.detailInfo, 'tagprice', price))
         this.desc = state.detail.detailInfo.describe
+        let colorList = []
+        state.detail.detailInfo.choice.forEach(el => {
+          let obj = {
+            value: el.productid,
+            label: el.color,
+            children: []
+          }
+          colorList.push(obj)
+        })
+        state.detail.detailInfo.choice = colorList
         this.sizeChoiceList = state.detail.detailInfo.choice
         // this.colorList = this.desc.coloravailable.split(" ")
         // this.weightList = this.desc.weight.split(" ")
@@ -294,6 +312,9 @@ export default {
     // this.$store.dispatch('detail/queryColorList') // 获取颜色的下拉值 
   },
   methods: {
+    handleChange(value) {
+      console.log(value);
+    },
     // 清除
     del() {
       this.showMenu = false
@@ -372,23 +393,17 @@ export default {
     },
     // 立即选购
     toBuy() { 
-      this.$message({
-        message: '支付接口搭建中,敬请关注！',
-        type: 'warning'
-      })
-      //临时注释 start
-      // if(!this.vaildFunc()) {
-      //   return false
-      // }
-      // this.showColor = false
-      // if (this.detail.color === '' || this.detail.color === null) {
-      //   this.showColor = true
-      //   return false
-      // }   
-      // // this.innerVisible = true
-      // this.flag = 'buy'
-      // this.save()  
-      //临时注释 end 
+      if(!this.vaildFunc()) {
+        return false
+      }
+      this.showColor = false
+      if (this.detail.color === '' || this.detail.color === null) {
+        this.showColor = true
+        return false
+      }   
+      // this.innerVisible = true
+      this.flag = 'buy'
+      this.save() 
     },
     // 加入购物袋
     toBag() { 
@@ -430,7 +445,7 @@ export default {
       
         if(this.flag === 'add') { // 加入购物袋
           let param = {
-            prodid: this.detail.color,
+            prodid: this.detail.color.join(),
             userid: workspace.getCookie().name,
             amount: "1",
             status: "1"
@@ -452,10 +467,12 @@ export default {
             }       
           })
         } else {
-          this.$message({
-            message: '支付接口搭建中,敬请关注！',
-            type: 'warning'
-          })
+          if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
+            var baseUrl = 'http://lovogue.net:8093'
+          }  else if (process.env.NODE_ENV === 'production'|| window.location.port == '8091') {
+            var baseUrl = 'http://lovogue.net:8091'
+          }
+          window.open(`${baseUrl}/api/ali_pay/pay`)
           return false
           let param = {}
           this.$store.dispatch('detail/toBuy', param).then(res => {

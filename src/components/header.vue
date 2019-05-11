@@ -19,14 +19,16 @@
             <el-col :span="3">
                 <div class="grid-content bg-purple"  @click="toLoved">
                     <el-badge :value="lovedNumber" class="item header_loved" size="small" :hidden="lovedNumber < 1">
-                        <img src="../assets/image/love.png" class=""/>
+                        <img src="../assets/image/love.png" class="" v-if="!showLoved"/>
+                        <img src="../assets/image/lovedlist.png" class="" v-else/>
                     </el-badge>
                 </div>
             </el-col>
             <el-col :span="3">
                 <div class="grid-content bg-purple" @click="toBag">
                     <el-badge :value="shopBagNumber" class="item header_shop_bag" size="small" :hidden="shopBagNumber < 1">
-                        <img src="../assets/image/shopBag.png" class=""/>
+                        <img src="../assets/image/shopBag.png" class="" v-if="!showbag"/>
+                        <img src="../assets/image/shopBaged.png" class="" v-else/>
                     </el-badge>
                 </div>
             </el-col>
@@ -51,10 +53,13 @@ export default {
   },
   data() {
     return {
-        search: false
+        search: false,
+        // showLoved: false
     }
   },
   computed: mapState({
+      showLoved: state => state.showLoved,
+      showbag: state => state.showbag,
       lovedNumber: state => state.login.lovedNumber,
       shopBagNumber: state => state.login.shopBagNumber
     }),
@@ -77,9 +82,11 @@ export default {
         this.$store.commit('showMenu', false)
       },
       toLoved() {
+        this.$store.commit("showLoved", true)
         this.$router.push('/loved')
       },
       toBag() {
+        this.$store.commit("showbag", true)
         this.$router.push('/bag')
       }
   }

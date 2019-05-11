@@ -270,32 +270,36 @@ router.beforeEach((to, from, next) => {
         store.commit("bgr", false);
     }
     if (to.path === "/about") {
-        store.commit("active_color", true);
+        store.commit("active_color", true)
     } else {
-        store.commit("active_color", false);
+        store.commit("active_color", false)
     }
     if (to.path.indexOf("/contact") > -1) {
-        store.commit("active_color_contact", true);
-        store.commit("showContact", false);
+        store.commit("active_color_contact", true)
+        store.commit("showContact", false)
     } else {
-        store.commit("active_color_contact", false);
-        store.commit("showContact", true);
+        store.commit("active_color_contact", false)
+        store.commit("showContact", true)
     }
     if (to.meta.fontColor) {
-        store.commit("fontColor", true);
+        store.commit("fontColor", true)
     } else {
-        store.commit("fontColor", false);
+        store.commit("fontColor", false)
     }
     if (to.fullPath.indexOf("/search") > -1  || to.fullPath.indexOf("/loved") > -1 || to.fullPath.indexOf("/bag") > -1) {
-        store.commit("showFooter", false);
+        store.commit("showFooter", false)
     } else {
-        store.commit("showFooter", true);
+        store.commit("showFooter", true)
     }
     if(to.meta.writeBgr) {
-        store.commit("writeBgr", true);
+        store.commit("writeBgr", true)
     } else {
-        store.commit("writeBgr", false);
+        store.commit("writeBgr", false)
     }
+    to.fullPath.indexOf("/loved") === -1 && store.commit("showLoved", false)
+    to.fullPath.indexOf("/loved") > -1 && store.commit("showLoved", true)
+    to.fullPath.indexOf("/bag") === -1 && store.commit("showbag", false)
+    to.fullPath.indexOf("/bag") > -1 && store.commit("showbag", true)
     next(); // 必须使用 next ,执行效果依赖 next 方法的调用参数
 });
 export default router;

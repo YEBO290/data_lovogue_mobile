@@ -20,19 +20,6 @@
         </el-col>
       </el-row>
     </div>
-    <!--<div class="loved_list" v-for="(item, index) in lovesList" :key="index" v-if="!showToLogin && lovesList.length > 0">
-      <img :src="item.url" class="loved_img"/>
-      <div class="loved_txt">
-        <div>
-          <span class="loved_text">{{item.txt}}<span>{{item.code}}</span></span>
-          <i class="el-icon-close"></i>
-        </div>
-        <div>
-          <span class="loved_price">RMB {{item.price}}</span>
-          <i class="icon_bag"></i>
-        </div>
-      </div>
-    </div>-->
     <div class="love_none" v-if="!showToLogin && lovesList.length === 0">
       <p>您的挚爱清单暂无单品</p>
       <el-button class="btn login_btns" type="primary" @click="toHome">前往选购</el-button>

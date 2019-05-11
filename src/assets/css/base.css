@@ -9,6 +9,12 @@ html{font-family: "Microsoft YaHei",Arial;font-size:13px;}
 .span_txt{
     color:#666666;
 }
+.el-cascader .el-input.is-focus .el-input__inner {
+    border-color: #C5A480;
+}
+.el-cascader-menu__item.is-active {
+    color: #C5A480;
+}
 /* @media screen and (min-width: 320px) {
     html {font-size: 14px;}
 }
@@ -302,9 +308,7 @@ input::-webkit-input-placeholder {
     font-size: 12px;
     /* placeholder位置  */
   }
- .header :hover img{
-    transform:scale(1.1)
-  }
+
   .el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
     cursor: not-allowed;
     background: #C5A480;

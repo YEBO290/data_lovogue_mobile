@@ -3,12 +3,11 @@
       <div class="carousel_img">
         <el-carousel :interval="4000" arrow="always" height="3.75rem">
           <el-carousel-item v-for="item in queryImg" :key="item.id">
-            <!--<div @click="toSpecialEditionList(item)">-->
-            <div>
+            <div @click="toSpecialEditionList(item)">
               <img :src="item.value" style="width:100%;">
               <div class="img_opeation">
-                <!-- <h1 class="list_h1">{{item.name}}</h1> -->
-                <!-- <el-button class="img_list_btn" @click="toSpecialEditionList(item)">立即选购</el-button> -->
+                <h1 class="list_h1">{{item.name}}</h1>
+                <el-button class="img_list_btn" @click="toSpecialEditionList(item)">立即选购</el-button>
               </div>
             </div>
           </el-carousel-item>
@@ -27,22 +26,6 @@
       </div> -->
       <div class="product_list">
         <p class="product_list_titile">产品系列</p>
-        <!--<div v-for="(item, index) in productList" :key="index" class="productList">
-          <img :src="item.url"/>
-          <div class="productList_txt">
-            <p class="productList_txt_series">{{item.series}}</p>
-            <p class="productList_txt_style">{{item.style}}</p>
-          </div>
-        </div>-->
-        
-          <!-- <el-carousel  type="card" height="1.5rem" :interval="4000" class="productList">
-            <el-carousel-item v-for="item in productList" :key="item.id">
-              <div @click="toProduct(item)">
-                <img :src="item.value"/>
-                <h3>{{ item.name }}</h3>
-              </div>
-            </el-carousel-item>
-          </el-carousel> -->
           <div class="swiper-container">
             <div class="swiper-wrapper">
               <div v-for="item in productList" class="swiper-slide" :key="item.id"  @click="toProduct(item)">
@@ -57,15 +40,11 @@
         <el-row>
           <el-col v-for="item in categoryList" :key="item.id" class="category_list_img">
             <div class="grid-content bg-purple category_content" @click="toCategoryList(item)">
-              <img :src="item.value" style="width:100%"/>
+              <img :src="item.value" style="width:100%;min-height:3.39rem;"/>
               <p class="category_list_img_name text-center">{{item.name}}</p>
             </div>
             </el-col>
         </el-row>
-        <!--<div v-for="(item, index) in categoryList" :key="index" class="category_list_img">
-          <img :src="item.url" style="height:339px;"/>
-          <p class="category_list_img_name">{{item.name}}</p>
-        </div>-->
       </div>
     </div>
 </template>
