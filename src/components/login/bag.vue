@@ -87,9 +87,9 @@ export default {
         checkAll: false, // 全选
         checkedLists: [], // 选中列表
         isIndeterminate: true,
-        totalNmubel: 0,
-        totalPay: 0,
-        totalCost: 0
+        totalNmubel: 0, // 总数量
+        totalPay: 0, // 总运费
+        totalCost: 0 // 总计
       }
     },
     watch: {
@@ -222,10 +222,10 @@ export default {
           this.bagList.forEach(item => {
             me.$set(item, 'showAmount', false)
             // 暂不考虑运费
-            // me.totalPay = me.totalPay + parseFloat(item.pay)
-            me.totalNmubel = me.totalNmubel + parseInt(item.num)
-            // me.totalCost = me.totalCost + (parseInt(item.num) * parseFloat(item.tagprice)) + parseFloat(item.pay)
-            me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice.replace(',', ''))
+            // me.totalPay = me.totalPay + parseFloat(item.pay) // 总运费
+            me.totalNmubel = me.totalNmubel + parseInt(item.amount)  // 总数量
+            // me.totalCost = me.totalCost + (parseInt(item.num) * parseFloat(item.tagprice)) + parseFloat(item.pay) // 总计
+            me.totalCost = me.totalCost + parseInt(item.amount) * parseFloat(item.tagprice.replace(',', '')) // 总计
           })
           me.totalCost = workspace.thousandBitSeparator(me.totalCost)
         } else {
@@ -256,8 +256,8 @@ export default {
         newList.forEach(item => {
           me.$set(item, 'showAmount', false)
           // me.totalPay = me.totalPay + parseFloat(item.tagprice)
-          me.totalNmubel = me.totalNmubel + parseInt(1)
-          me.totalCost = me.totalCost + 1 * parseFloat(item.tagprice.replace(',', ''))
+          me.totalNmubel = me.totalNmubel + parseInt(parseInt(item.amount))
+          me.totalCost = me.totalCost + parseInt(item.amount) * parseFloat(item.tagprice.replace(',', ''))
           // 是否考虑运费
           // me.totalCost = me.totalCost + (parseInt(1) * parseFloat(item.tagprice)) + parseFloat(item.pay)
         })
