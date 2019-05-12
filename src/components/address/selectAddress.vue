@@ -37,7 +37,7 @@ export default {
     created() {
       let param = {
         userid: workspace.getCookie().name,
-        status: 1
+        status: ''
       }
       this.$store.dispatch('address/queryAddressList', param)
     },
