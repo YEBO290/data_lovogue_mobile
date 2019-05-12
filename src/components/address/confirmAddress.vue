@@ -3,68 +3,113 @@
         <div class="confirm_content">
             <div class="addAddress_title">
                 <span class="adress_txt">收件地址</span>
-                <i class="el-icon-arrow-right" @click="selectAddress"></i>
-                <!--<el-button @click="toAddress" class="addAddress">添加新地址</el-button>-->
+                <i class="el-icon-arrow-right" @click="selectAddress" v-if="false"></i>
+                <el-button class="addAddressBtn" @click="addNewAddress">新建收货地址</el-button>
             </div>
-            <div class="confirm_message">
+            <div class="addNewAddress">
+                <p>暂无收货地址</p>                
+                <div class="divider--horizontal divider"></div>
+            </div>
+            <div class="confirm_message" v-if="false">
                 <span class="confirm_name">{{confirmData.name}}</span>
                 <span class="confirm_phone">{{confirmData.phone}}</span>
                 <p class="confirm_address">{{confirmData.address}}</p>
             </div>
             <div style="margin-top: 0.45rem;">
-                <div class="confirm_info"  v-for="(item, index) in confirmData.baseInfo" :key="index">
+                <div class="confirm_info"  v-for="(item, index) in confirmData.data" :key="index">
                     <div class="confirm_img">
-                        <img :src="item.url" style="width:0.8rem;height:0.9rem;"/>
+                        <img :src="item.imgpath" style="width:0.8rem;height:0.9rem;"/>
                     </div>
                     <div class="confirm_base_info">
-                        <p class="confirm_title">{{item.title}}</p>
-                        <p class="confirm_desc">{{item.desc}}</p>
-                        <p><span class="price">RMB {{item.price}}</span><span class="number">x {{item.number}}</span></p>
+                        <p class="confirm_title">{{item.name}}</p>
+                        <p class="confirm_desc">{{item.description}}</p>
+                        <p><span class="price">RMB {{item.price}}</span><span class="number">x {{item.amount}}</span></p>
                     </div>
                 </div>   
             </div>
             <div class="confirm_way_price">
-                <p class="confirm_way">配送方式： <span>{{confirmData.way}}</span></p>
-                <p>共 {{confirmData.totalNumber}} 件商品 总计： <span class="price_total">RMB {{confirmData.totalPrice}}</span></p>
+                <p class="confirm_way">配送方式： <span>免邮</span></p>
+                <p>共 {{confirmData.amount}} 件商品  总计： <span class="price_total">RMB {{confirmData.price}}</span></p>
             </div>
             <el-button class="btn ok_btn" type="primary" @click="toBuy">立即支付</el-button>
-        </div>     
+        </div> 
+        <el-dialog
+            title="请选择支付方式"
+            :visible.sync="dialogVisible"
+            width="80%" class="payDialog"
+            :before-close="handleClose">
+            <div>
+                <p>>> 应付金额：<span class="price_total">RMB {{confirmData.price}}</span></p>
+                <div class="divider--horizontal divider"></div>
+                <div class="pay_img">
+                    <span @click="toPay('aliPay')" class="payType" style="margin-right:0.15rem"><img src="~@/assets/image/alipay.png" style="width:100%;"/></span>
+                    <span @click="toPay('weChat')" class="payType"><img src="~@/assets/image/wechatpay.png" style="width:100%;"></span>
+                </div>
+            </div>
+        </el-dialog>    
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-
+import workspace from '../../common.js'
   export default {
     data() {
       return {
-          id: this.$route.query.id
+          dialogVisible: false,
+          id: this.$route.query.id,
+          orderid: this.$route.query.orderid
       }
     },
     components: {},
     computed: mapState({
       // 箭头函数可使代码更简练
-      confirmData: state => state.address.confirmData
+        confirmData: function(state){
+          debugger
+          let list = state.address.confirmData.data
+          state.address.confirmData.data.length > 0 && (list.forEach(el => {
+              el.price = workspace.thousandBitSeparator(el.price)
+          }))
+          state.address.confirmData.price = workspace.thousandBitSeparator(state.address.confirmData.price)
+          return state.address.confirmData
+        }
     }),
     created() {
         debugger
-        this.$store.dispatch('address/detailConfirmInfo')
+        let param = {
+            userid: workspace.getCookie().name,
+            orderid: this.orderid
+        }
+        this.$store.dispatch('address/detailConfirmInfo', param)
     },
     methods: {
         toBuy() {
-            // this.$store.dispatch('address/toBuy')
-            if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
-            var baseUrl = 'http://lovogue.net:8093'
-            } else if (process.env.NODE_ENV === 'production'|| window.location.port == '8091') {
-            var baseUrl = 'http://lovogue.net:8091'
+            this.dialogVisible = true            
+        },
+        toPay(val) {
+            if (val === 'aliPay') {
+                // this.$store.dispatch('address/toBuy')
+                if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
+                var baseUrl = 'http://lovogue.net:8093'
+                } else if (process.env.NODE_ENV === 'production'|| window.location.port == '8091') {
+                var baseUrl = 'http://lovogue.net:8091'
+                }
+                window.open(`${baseUrl}/api/ali_pay/pay`)
+            } else {
+
             }
-            window.open(`${baseUrl}/api/ali_pay/pay`)
         },
         toAddress() {
             this.$router.push('/address')
         },
         selectAddress() {
             this.$router.push('/selectAddress')
+        },
+        handleClose(val) {
+            console.log(val)
+        },
+        addNewAddress() {
+            this.$router.push('/address')
         }
     }
   }
@@ -79,5 +124,65 @@ import { mapState } from 'vuex'
 }
 .confirm /deep/ .el-icon-arrow-right:hover{
   transform: scale(1.2);
+}
+.payDialog /deep/ .el-dialog{
+    text-align: left;
+}
+.payDialog /deep/ .el-dialog span{
+    font-size: 16px;
+    padding: 0 10px;
+    cursor: pointer;
+}
+.payDialog /deep/ .el-dialog span:hover,.payDialog /deep/ .el-dialog span:focus{
+    border-color: #C5A480;
+}
+ .payDialog /deep/ .el-dialog__body{
+    padding: 10px 30px 30px 30px;
+}
+.divider--horizontal {
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 10px 0 20px 0;
+}
+
+.divider {
+    background-color: #dcdfe6;
+    position: relative;
+}
+.payType{
+    display: inline-block;
+    border: 1px solid;
+    border: 1px solid #dcdfe6;
+    border-radius: 3px;
+    width: 40%;
+    text-align: center;
+    height: 0.45rem;
+    line-height: 0.45rem;
+}
+.pay_img{
+    text-align: center;
+}
+.payDialog /deep/ .el-dialog__close{
+    left: auto;
+}
+.payDialog /deep/ .el-dialog{
+    top: 50%;
+    margin-top: -0.96rem!important;
+}
+.addNewAddress{
+    text-align: center;
+}
+.addNewAddress p{
+    margin-top: 0.45rem;
+    margin-bottom: 0.2rem;
+    color: #999999;
+}
+.addAddressBtn{
+    position: relative;
+    left: 100%;
+    margin-left: -1.7rem;
+    padding: 5px 10px;
+    color: #999;
 }
 </style>

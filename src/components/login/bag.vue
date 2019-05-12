@@ -173,6 +173,7 @@ export default {
         })
       },
       toPay() {
+        let me = this
         let len = this.checkedLists.length
         if (len == 0 ) {
           this.$message({
@@ -191,21 +192,34 @@ export default {
             let obj = {
               productid: item.productid,
               price: item.tagprice.replace(',', ''),
+              status: '未支付',
+              amount: item.amount,
+              shipstatus: '未发货',
+              unit: '件',
               userid: workspace.getCookie().name,
+              advancebooking: 0,
+              name: item.name,
+              imgpath: item.imgpath
             }
             selected.push(obj)
-            param = obj
-            // param = {
-            //   data: selected
-            // }
+            // param = obj
+            param = {
+              data: selected
+            }
           }   
         }))
-        
-        
         this.$store.dispatch('login/toPay', param).then(res => {
-          this.$router.push({path: '/confirmAddress', query: {
-            id: idList.join()
-          }})
+          if (res.err == 0) {
+            me.$router.push({path: '/confirmAddress', query: {
+              id: res.msg.join(),
+              orderid: res.orderid
+            }})
+          } else {
+            me.$message({
+              message: '操作失败!',
+              type: 'error'
+            })
+          }   
         })
         // this.$router.push('/confirmAddress')
       },

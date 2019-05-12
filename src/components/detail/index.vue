@@ -19,7 +19,7 @@
         </div>  
       </div>
       <div class="detail_bts">
-      <el-cascader placeholder="选择颜色" class="color_select"
+      <el-cascader placeholder="选择颜色和尺寸" class="color_select"
         expand-trigger="hover"
         :options="detailInfo.choice"
         v-model="detail.color" change-on-select
@@ -393,14 +393,10 @@ export default {
     },
     // 立即选购
     toBuy() { 
+      debugger
       if(!this.vaildFunc()) {
         return false
       }
-      this.showColor = false
-      if (this.detail.color === '' || this.detail.color === null) {
-        this.showColor = true
-        return false
-      }   
       // this.innerVisible = true
       this.flag = 'buy'
       this.save() 
@@ -417,7 +413,7 @@ export default {
       //临时注释 end   
     },
     // 确定
-    save(){
+    save(val){
       // 模拟淘宝风格数据
       // this.colorTip = false
       // this.sizeTip = false
@@ -442,28 +438,85 @@ export default {
       //     userid: localStorage.getItem('userName'),
       //     status: "1"
       //   }
+
+      // 点立即支付跳购物车，点加入购物车留在当前界面
+        // let param = {
+        //     prodid: this.detail.color.join(),
+        //     userid: workspace.getCookie().name,
+        //     amount: "1",
+        //     status: "1"
+        //   }
+        //   this.$store.dispatch('detail/toBag', param).then(res => {
+        //     if(res.msg == 1) {              
+        //       let queryParam = {
+        //         userid: workspace.getCookie().name,
+        //         status: "1"
+        //       }
+        //       this.$store.dispatch('login/queryBagList', queryParam)
+        //       this.innerVisible = false
+        //       this.successTip()             
+        //     } else {
+        //       this.$message({
+        //         message: '操作失败！',
+        //         type: 'error'
+        //       })
+        //     }       
+        //   }) 
+      
+      // 点立即支付跳支付详情
+      let me = this
+      if (this.flag === 'add') { // 加入购物车
         let param = {
-            prodid: this.detail.color.join(),
+          prodid: this.detail.color.join(),
+          userid: workspace.getCookie().name,
+          amount: "1",
+          status: "1"
+        }
+        this.$store.dispatch('detail/toBag', param).then(res => {
+          if(res.msg == 1) {              
+            let queryParam = {
+              userid: workspace.getCookie().name,
+              status: "1"
+            }
+            this.$store.dispatch('login/queryBagList', queryParam)
+            this.innerVisible = false
+            this.successTip()             
+          } else {
+            this.$message({
+              message: '操作失败！',
+              type: 'error'
+            })
+          }       
+        }) 
+      } else { // 立即支付 默认数量传1
+        let param = {
+          data: [{
+            productid: this.detail.color.join(),
+            price: this.detailInfo.tagprice.replace(',', ''),
+            status: '未支付',
+            amount: 1,
+            shipstatus: '未发货',
+            unit: '件',
             userid: workspace.getCookie().name,
-            amount: "1",
-            status: "1"
-          }
-          this.$store.dispatch('detail/toBag', param).then(res => {
-            if(res.msg == 1) {              
-              let queryParam = {
-                userid: workspace.getCookie().name,
-                status: "1"
-              }
-              this.$store.dispatch('login/queryBagList', queryParam)
-              this.innerVisible = false
-              this.successTip()             
-            } else {
-              this.$message({
-                message: '操作失败！',
-                type: 'error'
-              })
-            }       
-          })            
+            advancebooking: 0,
+            name: this.detailInfo.productname
+          }]
+        }
+        this.$store.dispatch('login/toPay', param).then(res => {
+          debugger
+          if (res.err == 0) {
+            me.$router.push({path: '/confirmAddress', query: {
+              id: res.msg.join(),
+              orderid: res.orderid
+            }})
+          } else {
+            me.$message({
+              message: '操作失败!',
+              type: 'error'
+            })
+          }   
+        })
+      }         
     },
     // 颜色选择
     selectColorFunc(val, index) {     

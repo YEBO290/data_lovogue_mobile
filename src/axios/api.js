@@ -40,6 +40,8 @@ var service = {
     insertComments: '/CrmUser/insertComments', // 客服
     getAddress: 'CrmUser/getAddress', // 省级
     payMessage: 'api/ali_pay/pay2', //支付
+    insertorder: 'pms/insertorder', // 购物车立即支付-创建订单
+    getScreenorder: 'pms/getScreenorder' // 获取订单
 
 }
 export default service

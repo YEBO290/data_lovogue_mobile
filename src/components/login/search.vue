@@ -241,7 +241,7 @@ export default {
 }
 .tip_searchList .menu_title{
   font-size:15px;
-  color:#111;
+  color:#333;
   font-weight: 600;
   margin-bottom: 15px;
 }

@@ -48,27 +48,9 @@ const state = {
   ],
   // 确认订单详情
   confirmData: {
-    baseInfo: [{
-      url: require('../../assets/logo.png'),
-      title: 'Consectetur',
-      desc: 'Consectetur adipiscing elit.Consectetur adipiscing elit.Consectetur adipiscing elit.',
-      number: 1,
-      price: 'xxx',
-    },
-    {
-      
-      url: require('../../assets/logo.png'),
-      title: 'Consectetur',
-      desc: 'Consectetur adipiscing elit.',
-      number: 1,
-      price: 'xxx',
-    }], 
-    name: '张三',
-    phone: '13800138000',
-    address: '中国 xxxxxx省 xxxxxx市 xxxxxx区 xxxxxx路 xxxxx号',             
-    totalNumber: 2,
-    totalPrice: 120,
-    way: '免邮'
+    data: [],
+    price: 0,
+    amount: 0
 },
 // 收货地址列表
 addressList: []
@@ -149,15 +131,14 @@ const actions = {
   // 确认订单详情
   detailConfirmInfo (context, param) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get('api/v1/users/my_address/address_edit_before', param).then((res) => {
-          // 
-          context.commit('confirmDetailData', res.data)
-          resolve(res.data)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
+      post(api.getScreenorder, param).then((res) => {
+        // 
+        debugger
+        context.commit('confirmDetailData', res)
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
     })
   },
   // 立即支付
@@ -166,8 +147,8 @@ const actions = {
       setTimeout(() => {
         get('api/v1/users/my_address/address_edit_before', param).then((res) => {
           // 
-          context.commit('confirmDetailData', res.data)
-          resolve(res.data)
+          context.commit('confirmDetailData', res)
+          resolve(res)
         }).catch((err) => {
           console.log(err)
         })

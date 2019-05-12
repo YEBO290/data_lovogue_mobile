@@ -183,10 +183,8 @@ const actions = {
   // 购物袋立即支付
   toPay (context, param) {
     return new Promise((resolve, reject) => {
-      get(api.payMessage, param).then((res) => {
-        // context.dispatch('queryLovedList')
-        debugger
-        resolve(res.data)
+      post(api.insertorder, param).then((res) => {
+        resolve(res)
       }).catch((err) => {
         console.log(err)
       })

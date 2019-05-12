@@ -49,7 +49,18 @@ const state = {
     name: 'L',
     title: ''
   }],
-  detailInfo: ''
+  detailInfo: {
+    choice: [],
+    describe: {},
+    imgurl: [],
+    inventory: 0,
+    love: 0,
+    occasion: "",
+    productname: "0",
+    sizenum: 0,
+    tagprice: 0,
+    typeno: "",
+  }
 
 }
 const actions = {
