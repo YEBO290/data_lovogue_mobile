@@ -183,14 +183,13 @@ const actions = {
   // 购物袋立即支付
   toPay (context, param) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        get(api.querySituationList, '123').then((res) => {
-          // context.dispatch('queryLovedList')
-          resolve(res.data)
-        }).catch((err) => {
-          console.log(err)
-        })
-      }, 1000)
+      get(api.payMessage, param).then((res) => {
+        // context.dispatch('queryLovedList')
+        debugger
+        resolve(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
     })
   },
   // 搜索的列表

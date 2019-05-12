@@ -181,10 +181,33 @@ export default {
           })
           return false
         }
-        // this.$store.dispatch('login/toPay', this.checkedLists).then(res => {
-        //   this.$router.push('/confirmAddress')
-        // })
-        this.$router.push('/confirmAddress')
+        debugger
+        let selected = []
+        let param = {}
+        let idList = []
+        this.checkedLists.forEach(el => this.bagList.forEach(item =>{ 
+          if(el === item.id) {
+            idList.push(item.productid)
+            let obj = {
+              productid: item.productid,
+              price: item.tagprice.replace(',', ''),
+              userid: workspace.getCookie().name,
+            }
+            selected.push(obj)
+            param = obj
+            // param = {
+            //   data: selected
+            // }
+          }   
+        }))
+        
+        
+        this.$store.dispatch('login/toPay', param).then(res => {
+          this.$router.push({path: '/confirmAddress', query: {
+            id: idList.join()
+          }})
+        })
+        // this.$router.push('/confirmAddress')
       },
       handleCheckAllChange(val) {
         let me = this
@@ -216,6 +239,7 @@ export default {
       handleCheckedListsChange(value) {
         let me = this
         let checkedCount = value.length;
+        // this.checkedLists = value // 选中的数组
         this.checkAll = checkedCount === this.bagList.length;
         this.isIndeterminate = checkedCount > 0 && checkedCount < this.bagList.length;
         this.totalCost = 0

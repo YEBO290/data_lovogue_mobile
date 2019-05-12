@@ -39,6 +39,7 @@ var service = {
     setPassRe: 'CrmUser/setPassRe',
     insertComments: '/CrmUser/insertComments', // 客服
     getAddress: 'CrmUser/getAddress', // 省级
+    payMessage: 'api/ali_pay/pay2', //支付
 
 }
 export default service

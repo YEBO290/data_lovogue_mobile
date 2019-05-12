@@ -38,7 +38,7 @@ import { mapState } from 'vuex'
   export default {
     data() {
       return {
-          
+          id: this.$route.query.id
       }
     },
     components: {},
@@ -47,6 +47,7 @@ import { mapState } from 'vuex'
       confirmData: state => state.address.confirmData
     }),
     created() {
+        debugger
         this.$store.dispatch('address/detailConfirmInfo')
     },
     methods: {
