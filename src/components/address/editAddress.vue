@@ -35,25 +35,25 @@
                     <el-select v-model="editInfo.addressprovince" placeholder="选择省份" @change="addressprovinceFunc">
                       <el-option
                         v-for="item in provinceList"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.label">
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id">
                       </el-option>
                     </el-select>
                     <el-select v-model="editInfo.addresscity" placeholder="选择城市" no-data-text="请先选择配送省份" @change="addresscityFunc">
                       <el-option
                         v-for="item in cityList"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.label">
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id">
                       </el-option>
                     </el-select> 
                     <el-select v-model="editInfo.addressdistrict" placeholder="选择区" no-data-text="请先选择配送省份、城市" @change="addressdistrictFunc">
                       <el-option
                         v-for="item in areaList"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.label">
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id">
                       </el-option>
                     </el-select>
                     <el-input type="textarea" v-model="editInfo.address"></el-input>
@@ -131,17 +131,17 @@ export default {
     },
     computed: mapState({
       countryList: state => state.address.country,   
-      provinceList: state => state.address.provinceList,   
+      provinceList: function(state){ 
+        return state.address.provinceList},   
       cityList: state => state.address.cityList,   
       areaList:  state => state.address.areaList,
     }),
     created() {
-      debugger
+      this.$store.dispatch('address/queryProvince', {level: "0"})
       this.editInfo = this.$route.query.param && JSON.parse(decodeURIComponent(this.$route.query.param))
     },
     methods: {
       defaultFun() {
-        debugger
         return JSON.parse(decodeURIComponent(this.$route.query.param)).status == 2? true: false
       },
       back(){
@@ -151,7 +151,6 @@ export default {
         this.$router.push('/address')
       },
       edit(val, index) {
-        debugger
         this.editInfo = val
         this.showEdit = true
         this.$set(this.editList, index, false)
@@ -234,6 +233,10 @@ export default {
       },
       // 选择省份
       addressprovinceFunc(val) {
+        this.$store.dispatch('address/queryCity', {
+          level: "1",
+          parent: val
+        })
         this.editInfo.addresscity = ''
         this.editInfo.addressdistrict = ''
         this.editInfo.address =''
@@ -241,6 +244,10 @@ export default {
       },
       // 选择城市
       addresscityFunc(val) {
+        this.$store.dispatch('address/queryArea', {
+          level: "2",
+          parent: val
+        })
         this.editInfo.addressdistrict = ''
         this.editInfo.address =''
       },
@@ -249,7 +256,6 @@ export default {
         this.editInfo.address =''
       },
       toDefault(val) {
-        debugger
         if (val) {
           this.save('2')
         } else {

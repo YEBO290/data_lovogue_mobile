@@ -224,8 +224,6 @@ export default {
       },
       // 选择省份
       addressprovinceFunc(val) {
-        debugger
-        console.log(val)
         this.$store.dispatch('address/queryCity', {
           level: "1",
           parent: val.id
@@ -237,7 +235,6 @@ export default {
       },
       // 选择城市
       addresscityFunc(val) {
-        debugger
         this.$store.dispatch('address/queryArea', {
           level: "2",
           parent: val.id

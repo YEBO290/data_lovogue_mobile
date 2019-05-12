@@ -133,7 +133,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       post(api.getScreenorder, param).then((res) => {
         // 
-        debugger
         context.commit('confirmDetailData', res)
         resolve(res)
       }).catch((err) => {

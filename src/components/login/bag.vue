@@ -182,7 +182,6 @@ export default {
           })
           return false
         }
-        debugger
         let selected = []
         let param = {}
         let idList = []

@@ -393,7 +393,6 @@ export default {
     },
     // 立即选购
     toBuy() { 
-      debugger
       if(!this.vaildFunc()) {
         return false
       }
@@ -503,7 +502,6 @@ export default {
           }]
         }
         this.$store.dispatch('login/toPay', param).then(res => {
-          debugger
           if (res.err == 0) {
             me.$router.push({path: '/confirmAddress', query: {
               id: res.msg.join(),
