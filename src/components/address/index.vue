@@ -24,7 +24,7 @@
       -->
       <label class="label_txt">配送地址地区</label><span class="req">*</span>
       <el-form-item prop="addressprovince">
-        <el-select v-model="ruleForm.addressprovince" filterable placeholder="选择省份"  @change="addressprovinceFunc">
+        <el-select v-model="ruleForm.addressprovince" filterable placeholder="选择省份"  @change="addressprovinceFunc" value-key="id">
         <el-option
           v-for="item in provinceList"
           :key="item.id"
@@ -36,7 +36,7 @@
       
       <label class="label_txt">配送地址城市</label><span class="req">*</span>
       <el-form-item prop="addresscity">
-        <el-select v-model="ruleForm.addresscity" filterable placeholder="选择城市" no-data-text="请先选择配送省份" @change="addresscityFunc">
+        <el-select v-model="ruleForm.addresscity" filterable placeholder="选择城市" no-data-text="请先选择配送省份" @change="addresscityFunc" value-key="id">
         <el-option
           v-for="item in cityList"
           :key="item.id"
@@ -48,7 +48,7 @@
       
       <label class="label_txt">配送地址行政区</label><span class="req">*</span>
        <el-form-item prop="addressdistrict">
-        <el-select v-model="ruleForm.addressdistrict" filterable placeholder="选择区" no-data-text="请先选择配送省份、城市" @change="addressdistrictFunc">
+        <el-select v-model="ruleForm.addressdistrict" filterable placeholder="选择区" no-data-text="请先选择配送省份、城市" @change="addressdistrictFunc" value-key="id">
         <el-option
           v-for="item in areaList"
           :key="item.id"
