@@ -34,7 +34,7 @@ const state = {
     returnRefund: '1234',
     resetPassWord: '什么乱七八糟',
     orderSend: '我们的商品由优质的合作物流公司进行全球配送，会在周一至周五 09:00-17:00 之间（国定假期除外）直接送达您府上。 请注意，根据每个订单包裹的大小、重量和配送目的地不同，运费会有所区别。若您希望订单能在最短的时间内送达。',
-    advisoryCategory: []
+    advisoryCategory: [{label:'产品体验',value:'Product Usage'},{label:'服务体验',value:'Service Experience'},{label:'购买问题',value:'Purchasing'}, {label:'退款/退货',value:' Refund/Return'},{label:'售后问题',value:'After Sales'},{label:'其他',value:'Others'}]
   },
   active_color: false, // 选中的颜色
   active_color_contact: false, // 选中的颜色
@@ -101,6 +101,16 @@ const actions = {
   cancelLove (context, param) {
     return new Promise((resolve, reject) => {
       post(api.updateLove, param).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
+  },
+  // 微信
+  wechatPay (context, param) {
+    return new Promise((resolve, reject) => {
+      get(api.wechatPay, param).then((res) => {
         resolve(res)
       }).catch((err) => {
         console.log(err)

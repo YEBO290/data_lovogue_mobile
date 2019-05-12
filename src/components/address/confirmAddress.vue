@@ -93,16 +93,26 @@ import workspace from '../../common.js'
             this.dialogVisible = true            
         },
         toPay(val) {
-            if (val === 'aliPay') {
-                // this.$store.dispatch('address/toBuy')
-                if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
+            let me = this
+            if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
                 var baseUrl = 'http://lovogue.net:8093'
-                } else if (process.env.NODE_ENV === 'production'|| window.location.port == '8091') {
+            } else if (process.env.NODE_ENV === 'production'|| window.location.port == '8091') {
                 var baseUrl = 'http://lovogue.net:8091'
-                }
+            }
+            if (val === 'aliPay') {
+                // this.$store.dispatch('address/toBuy')  
                 window.open(`${baseUrl}/api/ali_pay/pay`)
-            } else {
-
+            } else if (val === 'weChat'){
+                me.$store.dispatch('wechatPay').then(res => {
+                    if (res.code === 200) {
+                        window.open(`${res.data}`)
+                    } else {
+                        me.$message({
+                            message: '操作失败！',
+                            type: 'error'
+                        })
+                    }
+                })
             }
         },
         toAddress() {
