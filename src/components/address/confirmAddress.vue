@@ -3,17 +3,17 @@
         <div class="confirm_content">
             <div class="addAddress_title">
                 <span class="adress_txt">收件地址</span>
-                <i class="el-icon-arrow-right" @click="selectAddress" v-if="false"></i>
-                <el-button class="addAddressBtn" @click="addNewAddress">新建收货地址</el-button>
+                <i class="el-icon-arrow-right" @click="selectAddress" v-if="addressList.length > 0"></i>
+                <el-button class="addAddressBtn" @click="addNewAddress" v-else>新建收货地址</el-button>
             </div>
-            <div class="addNewAddress">
+            <div class="addNewAddress" v-if="addressList.length == 0">
                 <p>暂无收货地址</p>                
                 <div class="divider--horizontal divider"></div>
             </div>
-            <div class="confirm_message" v-if="false">
-                <span class="confirm_name">{{confirmData.name}}</span>
-                <span class="confirm_phone">{{confirmData.phone}}</span>
-                <p class="confirm_address">{{confirmData.address}}</p>
+            <div class="confirm_message" v-else>
+                <span class="confirm_name">{{addressList[0].name}}</span>
+                <span class="confirm_phone">{{addressList[0].phone}}</span>
+                <p  class="confirm_address" style="word-break: break-all;">{{addressList[0].addressprovince}}{{addressList[0].addresscity}}{{addressList[0].addressdistrict}}{{addressList[0].address}}</p>
             </div>
             <div style="margin-top: 0.45rem;">
                 <div class="confirm_info"  v-for="(item, index) in confirmData.data" :key="index">

@@ -97,7 +97,7 @@ export default {
         }     
       }   
       return {
-        defaultValue: editInfo.status == 2? true: false,
+        defaultValue: this.defaultFun(),
         editInfo: {
             phone: '',
             name: '',
@@ -140,6 +140,10 @@ export default {
       this.editInfo = this.$route.query.param && JSON.parse(decodeURIComponent(this.$route.query.param))
     },
     methods: {
+      defaultFun() {
+        debugger
+        return JSON.parse(decodeURIComponent(this.$route.query.param)).status == 2? true: false
+      },
       back(){
         this.$router.push('/selectAddress')
       },

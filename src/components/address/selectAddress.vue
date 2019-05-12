@@ -9,7 +9,7 @@
           <span class="address_name">{{item.name}}</span>
           <span class="address_phone">{{item.phone}}</span>
           <div class="address_message">
-            <p>{{item.addressprovince}}{{item.addresscity}}{{item.addressdistrict}}{{item.address}}</p>
+            <p style="word-break: break-all;">{{item.addressprovince}}{{item.addresscity}}{{item.addressdistrict}}{{item.address}}</p>
             <span class="edit_list" @click="edit(item, index)">|  修改</span>
           </div>
         <div class="line"></div>
