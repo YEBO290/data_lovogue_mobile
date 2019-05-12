@@ -1,6 +1,6 @@
 <template>
   <div class="address address-content" >
-    <div class="edit_title"><i class="el-icon-arrow-left" @click="back"></i><span>编辑收货地址</span><el-button type="text" @click="save" class="save">保存</el-button></div>
+    <div class="edit_title"><i class="el-icon-arrow-left" @click="back"></i><span>编辑收货地址</span><el-button type="text" @click="save('1')" class="save">保存</el-button></div>
         <el-form :model="editInfo" status-icon :rules="rules" ref="editInfo" label-width="1rem" class="demo-ruleForm edit_content">
             <el-form-item label="" prop="name">
                 <el-input
@@ -62,7 +62,19 @@
               </div>
             </el-form-item>   
         </el-form>
-        <div class="del_btn"><el-button type="text" @click="del" class="del">删除收货地址</el-button></div>
+        <div>
+        <div class="opeaBtn">
+          <div class="toDefault">
+            <span>设为默认地址</span>
+            <el-switch class="switchBtn"
+              v-model="defaultValue"
+              active-color="#13ce66"
+              inactive-color="#999" @change="toDefault">
+            </el-switch>
+          </div>
+          <div class="del_btn"><el-button type="text" @click="del" class="del">删除收货地址</el-button></div>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -85,6 +97,7 @@ export default {
         }     
       }   
       return {
+        defaultValue: editInfo.status == 2? true: false,
         editInfo: {
             phone: '',
             name: '',
@@ -123,7 +136,8 @@ export default {
       areaList:  state => state.address.areaList,
     }),
     created() {
-        this.editInfo = this.$route.query.param && JSON.parse(decodeURIComponent(this.$route.query.param))
+      debugger
+      this.editInfo = this.$route.query.param && JSON.parse(decodeURIComponent(this.$route.query.param))
     },
     methods: {
       back(){
@@ -133,11 +147,12 @@ export default {
         this.$router.push('/address')
       },
       edit(val, index) {
+        debugger
         this.editInfo = val
         this.showEdit = true
-        this.$set(this. editList, index, false)
+        this.$set(this.editList, index, false)
       },
-      save() {
+      save(val) {
         let me = this
         this.$refs['editInfo'].validate((valid) => {
           if (valid) {
@@ -145,7 +160,7 @@ export default {
               id: me.editInfo.id,
               userid: workspace.getCookie().name,
               address: me.editInfo.address,
-              status: "1",
+              status: val,
               addressprovince: me.editInfo.addressprovince,
               addresscity: me.editInfo.addresscity,
               addressdistrict: me.editInfo.addressdistrict,
@@ -228,6 +243,14 @@ export default {
       // 选择城市区
       addressdistrictFunc(val) {
         this.editInfo.address =''
+      },
+      toDefault(val) {
+        debugger
+        if (val) {
+          this.save('2')
+        } else {
+          this.save('1')
+        }
       }
     }
   }
@@ -258,13 +281,17 @@ export default {
     height: 0.3rem;
     line-height: 0.3rem;
 }
-.del_btn{
-    height: 0.4rem;
-    margin-top: 0.15rem;
-    text-align: left;
-    color: red;
-    padding-left:0.1rem;
-    background:#fff;
+.del_btn{ 
+  color: red;
+    
+}
+.opeaBtn{
+  height: 0.8rem;
+  padding-left:0.1rem;
+  background:#fff;
+  margin-top: 0.15rem;
+  text-align: left;
+  line-height:0.4rem;
 }
 .del{
     color:red;
@@ -282,5 +309,9 @@ export default {
   border-bottom: 1px solid #DCDFE6;
   border-radius: inherit!important;
 }
-
+.switchBtn{
+  position: relative;
+  left:100%;
+  margin-left: -1.58rem!important;
+}
 </style>

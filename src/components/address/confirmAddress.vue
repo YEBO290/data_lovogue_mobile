@@ -65,22 +65,28 @@ import workspace from '../../common.js'
     computed: mapState({
       // 箭头函数可使代码更简练
         confirmData: function(state){
-          debugger
           let list = state.address.confirmData.data
           state.address.confirmData.data.length > 0 && (list.forEach(el => {
               el.price = workspace.thousandBitSeparator(el.price)
           }))
           state.address.confirmData.price = workspace.thousandBitSeparator(state.address.confirmData.price)
           return state.address.confirmData
-        }
+        },
+        addressList: state => state.address.addressList
     }),
     created() {
-        debugger
+        // 商品详情
         let param = {
             userid: workspace.getCookie().name,
             orderid: this.orderid
         }
         this.$store.dispatch('address/detailConfirmInfo', param)
+        // 默认收货地址
+        let params = {
+        userid: workspace.getCookie().name,
+        status: 2
+      }
+      this.$store.dispatch('address/queryAddressList', params)
     },
     methods: {
         toBuy() {

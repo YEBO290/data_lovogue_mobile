@@ -29,7 +29,7 @@
           v-for="item in provinceList"
           :key="item.id"
           :label="item.name"
-          :value="item.id">
+          :value="item">
         </el-option>
       </el-select>
       </el-form-item>
@@ -41,7 +41,7 @@
           v-for="item in cityList"
           :key="item.id"
           :label="item.name"
-          :value="item.id">
+          :value="item">
         </el-option>
       </el-select>
       </el-form-item>
@@ -53,7 +53,7 @@
           v-for="item in areaList"
           :key="item.id"
           :label="item.name"
-          :value="item.id">
+          :value="item">
         </el-option>
       </el-select>
       </el-form-item>
@@ -172,9 +172,9 @@ export default {
               userid: workspace.getCookie().name,
               address: me.ruleForm.address,
               status: "1",
-              addressprovince: me.ruleForm.addressprovince,
-              addresscity: me.ruleForm.addresscity,
-              addressdistrict: me.ruleForm.addressdistrict,
+              addressprovince: me.ruleForm.addressprovince.name,
+              addresscity: me.ruleForm.addresscity.name,
+              addressdistrict: me.ruleForm.addressdistrict.name,
               name: me.ruleForm.name,
               phone: me.ruleForm.phone
              }
@@ -225,9 +225,10 @@ export default {
       // 选择省份
       addressprovinceFunc(val) {
         debugger
+        console.log(val)
         this.$store.dispatch('address/queryCity', {
           level: "1",
-          parent: val
+          parent: val.id
         })
         this.ruleForm.addresscity = ''
         this.ruleForm.addressdistrict = ''
@@ -236,9 +237,10 @@ export default {
       },
       // 选择城市
       addresscityFunc(val) {
+        debugger
         this.$store.dispatch('address/queryArea', {
           level: "2",
-          parent: val
+          parent: val.id
         })
         this.ruleForm.addressdistrict = ''
         this.ruleForm.address =''
