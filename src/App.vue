@@ -42,13 +42,13 @@ export default {
         let useName = workspace.getCookie().name
         if(useName) {       
             let loveParam = {
-            userid: useName,
-            status: "1"
+                userid: useName,
+                status: "1"
             }
             me.$store.dispatch('login/queryLovedList', loveParam) // 喜爱的列表查询
             let queryParam = {
-            userid: useName,
-            status: "1"
+                userid: useName,
+                status: "1"
             }
             me.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
         }

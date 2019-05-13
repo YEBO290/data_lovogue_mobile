@@ -101,13 +101,15 @@ import workspace from '../../common.js'
                 var baseUrl = 'http://lovogue.net:8091'
             }
             if (val === 'aliPay') {
+                // 走支付宝
                 // this.$store.dispatch('address/toBuy')  
                 var alipayUrl = `${baseUrl}/api/ali_pay/pay2?orderid=`+ me.orderid +'&price='+ me.confirmData.price.replace(',', '')
-                window.open(alipayUrl)
+                window.location.href = alipayUrl
             } else if (val === 'weChat'){
+                // 走微信
                 me.$store.dispatch('wechatPay').then(res => {
                     if (res.code === 200) {
-                        window.open(`${res.data}`)
+                        window.location.href = res.data
                     } else {
                         me.$message({
                             message: '操作失败！',
