@@ -28,7 +28,7 @@
               <!--暂不考虑数量的加减-->
               <div class="number">
                 <label style="font-size:13px;">数量： </label>
-                <el-input-number v-model="item.amount" :min="1" label="数量"  :disabled="item.showAmount"></el-input-number>
+                <el-input-number v-model="item.amount" :min="1" label="数量"  :disabled="item.showAmount" @change="changeAmount"></el-input-number>
               </div>
               <div style="height: 0.2rem; margin-top: 0.53rem;">
                 <!--<div class="bag_size">
@@ -232,15 +232,7 @@ export default {
           this.checkedLists = val ? list : []
           this.isIndeterminate = false
           me.totalNmubel = this.bagList.length
-          this.bagList.forEach(item => {
-            me.$set(item, 'showAmount', false)
-            // 暂不考虑运费
-            // me.totalPay = me.totalPay + parseFloat(item.pay) // 总运费
-            me.totalNmubel = me.totalNmubel + parseInt(item.amount)  // 总数量
-            // me.totalCost = me.totalCost + (parseInt(item.num) * parseFloat(item.tagprice)) + parseFloat(item.pay) // 总计
-            me.totalCost = me.totalCost + parseInt(item.amount) * parseFloat(item.tagprice.replace(',', '')) // 总计
-          })
-          me.totalCost = workspace.thousandBitSeparator(me.totalCost)
+          this.totalPayFun(this.bagList)
         } else {
           me.totalNmubel = 0
           me.totalCost = 0
@@ -266,7 +258,31 @@ export default {
           newList = newList.concat(this.bagList.filter(item => item.id === el ))
         })
         console.log(newList)
-        newList.forEach(item => {
+        this.totalPayFun(newList)
+      },
+         // 详情
+      toDetail(val) {
+        this.$router.push(`/detail/${val.prodid}`)
+      },
+      changeAmount(val) {
+        debugger
+        let me = this
+        let list = []
+        this.checkedLists.forEach(el => {
+          me.bagList.forEach(item => {   
+            if(item.id === el) {
+              list.push(item)
+            }  
+          })
+        })
+        this.totalPayFun(list)
+      },
+      totalPayFun(val) {
+        let me = this
+        me.totalNmubel = 0 // 总数量
+        me.totalCost = 0 // 总计
+        me.totalPay = 0 // 总运费
+        val.forEach(item => {
           me.$set(item, 'showAmount', false)
           // me.totalPay = me.totalPay + parseFloat(item.tagprice)
           me.totalNmubel = me.totalNmubel + parseInt(parseInt(item.amount))
@@ -275,10 +291,6 @@ export default {
           // me.totalCost = me.totalCost + (parseInt(1) * parseFloat(item.tagprice)) + parseFloat(item.pay)
         })
         me.totalCost = workspace.thousandBitSeparator(me.totalCost)
-      },
-         // 详情
-      toDetail(val) {
-        this.$router.push(`/detail/${val.prodid}`)
       }
     }
   }

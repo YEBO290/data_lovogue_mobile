@@ -93,6 +93,7 @@ import workspace from '../../common.js'
             this.dialogVisible = true            
         },
         toPay(val) {
+            debugger
             let me = this
             if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
                 var baseUrl = 'http://lovogue.net:8093'
@@ -101,7 +102,8 @@ import workspace from '../../common.js'
             }
             if (val === 'aliPay') {
                 // this.$store.dispatch('address/toBuy')  
-                window.open(`${baseUrl}/api/ali_pay/pay`)
+                var alipayUrl = `${baseUrl}/api/ali_pay/pay2?orderid=`+ me.orderid +'&price='+ me.confirmData.price.replace(',', '')
+                window.open(alipayUrl)
             } else if (val === 'weChat'){
                 me.$store.dispatch('wechatPay').then(res => {
                     if (res.code === 200) {
