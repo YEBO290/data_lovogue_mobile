@@ -43,7 +43,8 @@ export default {
     },
     methods: {
       back(){
-        this.$router.push('/confirmAddress')
+        this.$router.go(-1)
+        // this.$router.push('/confirmAddress')
       },
       toAddAdress() {
         this.$router.push('/address')

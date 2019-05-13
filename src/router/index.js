@@ -20,6 +20,7 @@ import categoryList from "./../components/home/category"; // 类别列表
 import loved from "./../components/login/loved"; // 喜爱
 import bag from "./../components/login/bag"; // 购物袋
 import search from "./../components/login/search"; // 搜索界面
+import user from "./../components/user"; // 用户界面
 import workspace from '../common.js'
 Vue.use(Router);
 
@@ -229,6 +230,11 @@ const router = new Router({
             path: "/editAddress",
             name: "editAddress",
             component: editAddress
+        },
+        { // 用户
+            path: "/user",
+            name: "user",
+            component: user
         }
     ]
 });

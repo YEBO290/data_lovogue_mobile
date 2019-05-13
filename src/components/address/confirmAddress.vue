@@ -93,7 +93,6 @@ import workspace from '../../common.js'
             this.dialogVisible = true            
         },
         toPay(val) {
-            debugger
             let me = this
             if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
                 var baseUrl = 'http://lovogue.net:8093'

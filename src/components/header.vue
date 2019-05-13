@@ -16,20 +16,25 @@
                     <img src="../assets/image/logo_home.png" class="header_logo" @click="toHome"/>
                 </div>
                 </el-col>
-            <el-col :span="3">
+            <!--<el-col :span="3">
                 <div class="grid-content bg-purple"  @click="toLoved">
                     <el-badge :value="lovedNumber" class="item header_loved" size="small" :hidden="lovedNumber < 1">
                         <img src="../assets/image/love.png" class="" v-if="!showLoved"/>
                         <img src="../assets/image/lovedlist.png" class="" v-else/>
                     </el-badge>
                 </div>
-            </el-col>
+            </el-col>-->
             <el-col :span="3">
                 <div class="grid-content bg-purple" @click="toBag">
                     <el-badge :value="shopBagNumber" class="item header_shop_bag" size="small" :hidden="shopBagNumber < 1">
                         <img src="../assets/image/shopBag.png" class="" v-if="!showbag"/>
                         <img src="../assets/image/shopBaged.png" class="" v-else/>
                     </el-badge>
+                </div>
+            </el-col>
+            <el-col :span="3">
+                <div class="grid-content bg-purple"  @click="$router.push('/user')">
+                    <span class="glyphicon glyphicon-user" style="color:#EFDED1;margin-top: 1px;"></span>
                 </div>
             </el-col>
         </el-row> 
