@@ -110,6 +110,7 @@ import workspace from '../../common.js'
                 me.$store.dispatch('wechatPay').then(res => {
                     if (res.code === 200) {
                         window.location.href = res.data
+                        console.log(res.data)
                     } else {
                         me.$message({
                             message: '操作失败！',
