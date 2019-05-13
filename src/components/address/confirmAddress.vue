@@ -39,7 +39,7 @@
             width="80%" class="payDialog"
             :before-close="handleClose">
             <div>
-                <p>>> 应付金额：<span class="price_total">RMB {{confirmData.price}}</span></p>
+                <p><span class="glyphicon glyphicon-hand-right"></span>应付金额：<span class="price_total">RMB {{confirmData.price}}</span></p>
                 <div class="divider--horizontal divider"></div>
                 <div class="pay_img">
                     <span @click="toPay('aliPay')" class="payType" style="margin-right:0.15rem"><img src="~@/assets/image/alipay.png" style="width:100%;"/></span>
@@ -124,6 +124,7 @@ import workspace from '../../common.js'
             this.$router.push('/selectAddress')
         },
         handleClose(val) {
+            this.dialogVisible = false
             console.log(val)
         },
         addNewAddress() {
