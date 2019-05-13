@@ -27,7 +27,7 @@
                         <el-col :span="14">
                             <div>
                                 <div>
-                                    <span class="bag_text">{{item.name}}</span>
+                                    <span class="bag_text">{{item.name}} RMB {{item.tagprice}}</span>
                                     <i class="el-icon-close"></i>
                                     </div>
                                     <div>
@@ -35,10 +35,7 @@
                                 </div>
                             <div style="height: 0.2rem; margin-top: 0.15rem;">
                                 <div class="bag_size">
-                                    <span>数量: {{item.amount}}</span>
-                                </div>
-                                <div class="bag_country">
-                                <span class="bag_price">RMB {{item.tagprice}}</span>
+                                    <span>共 {{item.amount}}件商品，合计 RMB {{item.amount * item.tagprice}}</span>
                                 </div>
                             </div>
                             </div>
@@ -129,7 +126,7 @@ export default {
 .listMessage{
     background: #fff;
 }
-.listMessageOne, .listMessageTwo,.setting{
+.listMessageOne,.setting{
     background: #fff;
     padding:0px 18px 0px 18px;
     margin-bottom: 10px;
@@ -140,6 +137,10 @@ export default {
     border:none;
 }
 .listMessageTwo .list{
+    background: #fff;
+    padding:0px 18px 0px 18px;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
     border:none;
 }
 .user /deep/ .el-tabs__item{
@@ -148,6 +149,8 @@ export default {
 }
 .user /deep/ .el-tabs__nav{
     width:100%;
+    background: #fff;
+    padding:0px 18px 0px 18px;
 }
 .orderList{
     height: 300px;
@@ -160,4 +163,12 @@ export default {
 .user /deep/ .is-round{
     padding:3px 10px;
 }
+.user .listMessageTwo /deep/ .el-row{
+    background: #fff;
+    margin-left: 18px;
+    margin-right: 18px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
 </style>
