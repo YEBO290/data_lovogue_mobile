@@ -206,4 +206,5 @@ import workspace from '../../common.js'
     padding: 5px 10px;
     color: #999;
 }
+
 </style>

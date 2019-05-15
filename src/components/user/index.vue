@@ -13,42 +13,44 @@
             <span>收货地址</span><i class="el-icon-arrow-right"></i>
         </div>
     </div>
-    <div class="listMessageTwo">
+    <!--<div class="listMessageTwo">
         <div class="list">
             <span>我的订单</span><i class="el-icon-arrow-right"></i>
-        </div>
+        </div>-->
+        <el-collapse v-model="activeNames">
+        <el-collapse-item title="我的订单" name="3">
         <div style="width:100%;height:1px;background:#ddd;"></div>
         <div class="orderList">
             <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="待支付" name="first">
-                    <div>
-                        <el-row :gutter="20" class="order_noPay_list" v-for="(item, index) in bagList" :key="index">
-                        <el-col :span="8"><img :src="item.imgpath" class="loved_img" style="width:100%;" /></el-col>
-                        <el-col :span="14">
-                            <div>
-                                <div>
-                                    <span class="bag_text">{{item.name}} RMB {{item.tagprice}}</span>
-                                    <i class="el-icon-close"></i>
-                                    </div>
-                                    <div>
-                                    <span class="bag_color"> - <span  class="bag_code">编号  {{item.prodid}}</span></span>
-                                </div>
-                            <div style="height: 0.2rem; margin-top: 0.15rem;">
-                                <div class="bag_size">
-                                    <span>共 {{item.amount}}件商品，合计 RMB {{item.amount * item.tagprice}}</span>
-                                </div>
-                            </div>
-                            </div>
-                            <div><el-button round style="margin-right:15px;">取消订单</el-button><el-button round type="primary">付款</el-button></div>
-                        </el-col>         
-                        </el-row> 
+                <el-tab-pane :label="'待支付 ' + '(' + orderList.data.length + ')'" name="first" >
+                    <p class="noData" v-if="orderList.data.length == 0">暂无数据</p>
+                    <div v-else>
+                        <order :orderList="orderList.data" :shipstatus="shipstatus" @cancelOrder="cancelOrder">    
+                        </order>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="待发货" name="second" >待发货</el-tab-pane>
-                <el-tab-pane label="待收货" name="third">待收货</el-tab-pane>
+                <el-tab-pane :label="'待发货' + '(' + shippedOrderList.data.length + ')'" name="second" >
+                    <p class="noData" v-if="shippedOrderList.data.length == 0">暂无数据</p>
+                    <div v-else>
+                        <order :orderList="shippedOrderList.data"  :shipstatus="shipstatus"/>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane :label="'待收货' + '(' + toReceivedOrderList.data.length + ')'" name="third">
+                    <p class="noData" v-if="toReceivedOrderList.data.length == 0">暂无数据</p>
+                    <div v-else>
+                        <order :orderList="toReceivedOrderList.data"  :shipstatus="shipstatus"/>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane :label="'已收货' + '(' + receivedOrderList.data.length + ')'" name="four">
+                    <p class="noData" v-if="receivedOrderList.data.length == 0">暂无数据</p>
+                    <div v-else>
+                        <order :orderList="receivedOrderList.data"  :shipstatus="shipstatus"/>
+                    </div>
+                </el-tab-pane>
             </el-tabs>
         </div>
-    </div>
+        </el-collapse-item>
+        </el-collapse>
     <div class="setting">
         <div class="list">
             <span>设置</span><i class="el-icon-arrow-right"></i>
@@ -60,34 +62,117 @@
 <script>
 import { mapState } from 'vuex'
 import workspace from '../../common.js'
+import order from './order'
 export default {
     data() {
       return {
+          activeNames: ['3'],
           user: workspace.getCookie().name,
-          activeName: 'first'
+          activeName: 'first',
+          shipstatus: '1',
+          orderList: {
+              data: [],
+          },
+          shippedOrderList: {
+              data: [],
+          },
+          toReceivedOrderList: {
+              data: [],
+          },
+          receivedOrderList: {
+              data: [],
+          },
       }
     },
+    components: {order},
     computed: mapState({
-      tipList: state => state.home.menuList,
-      bagList: function(state){
-        state.login.bagList.forEach(item => {
-          this.$set(item, 'showAmount', true)
-          item.tagprice = workspace.thousandBitSeparator(item.tagprice)
-        })
-        return state.login.bagList
-      },
+      tipList: state => state.home.menuList
     }),
     created() {
         // 商品详情
-        let param = {
-            userid: workspace.getCookie().name,
-            // orderid: this.orderid
-        }
-        this.$store.dispatch('address/detailConfirmInfo', param)
+        let param = this.queryOrder('1')
+        this.shipstatus = '1'
+        this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
+            this.orderList = res
+        })
+        let param2 = this.queryOrder('2')
+        this.shipstatus = '2'
+        this.$store.dispatch('address/detailConfirmInfo', param2).then(res => {
+            this.shippedOrderList = res
+        })
+        let param3 = this.queryOrder('3')
+        this.shipstatus = '3'
+        this.$store.dispatch('address/detailConfirmInfo', param3).then(res => {
+            this.toReceivedOrderList = res
+        })
+        let param4 = this.queryOrder('4')
+        this.shipstatus = '4'
+        this.$store.dispatch('address/detailConfirmInfo', param4).then(res => {
+            this.receivedOrderList = res
+        })
     },
     methods: {
+        queryOrder(val, status, id) { 
+            // val 物流状态 status 订单状态
+            // shipstatus
+            // 1表示未付款
+            // 2表示待發貨
+            // 3表示已發貨
+            // 4表示已收貨
+            // 0表示預售 
+            let param = {
+                userid: workspace.getCookie().name,
+                shipstatus: val || '',
+                status: status || '1',
+                // orderid: id || ''
+            }
+            return param
+        },
         handleClick(tab, event) {
-            console.log(tab, event);
+            // shipstatus
+            // 1表示未付款
+            // 2表示待發貨
+            // 3表示已發貨
+            // 4表示已收貨
+            // 0表示預售 
+            if ( tab.name == 'first') {
+                let param = this.queryOrder('1')
+                this.shipstatus = '1'
+                this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
+                    this.orderList = res
+                })
+            } else if (tab.name == 'second') {
+                let param = this.queryOrder('2')
+                this.shipstatus = '2'
+                this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
+                    this.shippedOrderList = res
+                })
+            }  else if (tab.name == 'third') {
+                let param = this.queryOrder('3')
+                this.shipstatus = '3'
+                this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
+                    this.toReceivedOrderList = res
+                })
+            }  else if (tab.name == 'four') {
+                let param = this.queryOrder('4')
+                this.shipstatus = '4'
+                this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
+                    this.receivedOrderList = res
+                })
+            }
+        },
+        cancelOrder(val) {
+            let param = {
+                status: 0,
+                orderid: val.orderid
+            }
+            this.shipstatus = '1'
+            this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
+                let params = this.queryOrder('1')
+                this.$store.dispatch('address/detailConfirmInfo', params).then(res => {
+                    this.orderList = res
+                })
+            })           
         }
     }
 }
@@ -112,6 +197,7 @@ export default {
 }
 .love i,.setting i{
     margin-left: -40px;
+    
 }
 .user{
     
@@ -132,6 +218,7 @@ export default {
     margin-bottom: 10px;
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #ddd;
+    margin-top: 10px;
 }
 .addressList{
     border:none;
@@ -144,7 +231,7 @@ export default {
     border:none;
 }
 .user /deep/ .el-tabs__item{
-    width:33.3%;
+    width:25%;
     text-align:center;
 }
 .user /deep/ .el-tabs__nav{
@@ -153,22 +240,36 @@ export default {
     padding:0px 18px 0px 18px;
 }
 .orderList{
-    height: 300px;
+    max-height: 300px;
     overflow-y: scroll;
     font-size:12px;
 }
-.user /deep/ .is-round span{
-    font-size:12px;
-}
-.user /deep/ .is-round{
-    padding:3px 10px;
-}
-.user .listMessageTwo /deep/ .el-row{
+
+.orderList /deep/ .el-row{
     background: #fff;
     margin-left: 18px;
     margin-right: 18px;
     border-radius: 5px;
     border: 1px solid #ddd;
+    margin-bottom:10px;
+}
+.user /deep/ .el-tabs__content, .user /deep/ .el-collapse-item__header{
+    padding: 0 20px;
+}
+.user /deep/ .el-tabs__content{
+    padding: 0 20px;
+    background: #f6f6f6;
 }
 
+
+.noData{
+    text-align: center;
+    position: relative;
+    margin-top: 20%;
+    color: #999;
+    margin-bottom: 20%;
+}
+.user /deep/ .el-tabs__active-bar{
+    width:25%!important;
+}
 </style>
