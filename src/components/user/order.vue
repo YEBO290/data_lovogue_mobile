@@ -50,7 +50,16 @@ export default {
         selectedData: ''
       }
     },
-    props: ['orderList', 'shipstatus'],
+    props: {
+        orderList: {
+            type: Array,
+            default: function() {
+                return []
+            },
+        },
+        shipstatus: {
+            default: '1'
+        }},
     created() {
     },
     methods: {

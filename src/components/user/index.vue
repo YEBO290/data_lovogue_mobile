@@ -66,7 +66,7 @@ import order from './order'
 export default {
     data() {
       return {
-          activeNames: ['3'],
+          activeNames: [],
           user: workspace.getCookie().name,
           activeName: 'first',
           shipstatus: '1',
