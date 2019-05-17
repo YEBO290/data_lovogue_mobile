@@ -48,20 +48,20 @@
           <li v-for="(key, value) in desc" :key="value">• {{key}}.</li>
         </ul>
       </div>     
-      <!--<div class="recommend_list">
+      <div class="recommend_list">
         <p class="recommend">为您推荐相关搭配</p>
         <div>
           <el-row :gutter="10">
             <el-col :span="8"  v-for="(item, index) in recommendList" :key="index">
               <div class="grid-content bg-purple" style="margin-bottom: 0.25rem;">
-                <img :src="item.url" style="width:100%;height:1.47rem;display:block;background:#fff;">
+                <img :src="item.imgpath" style="width:100%;height:1.47rem;display:block;background:#fff;">
                 <div class="recommend_line"></div>
                 <p class="recommend_text">{{item.text}}</p>
               </div>
             </el-col>
           </el-row>
         </div>
-      </div>-->
+      </div>
       <div></div>
       <el-dialog
         width="100%"
@@ -308,6 +308,10 @@ export default {
     }),
   created() {
     this.searchDetail()
+    let param = {
+      typeno: this.id,
+    }
+    this.$store.dispatch('detailList/queryRecommendList', param)
     // this.$store.dispatch('detail/queryImg') // 获取轮播图列表 
     // this.$store.dispatch('detail/queryColorList') // 获取颜色的下拉值 
   },
@@ -348,7 +352,7 @@ export default {
         amount: "1"
       }
       this.$store.dispatch('toLoved', param).then(res => {
-        if(res.msg == 1) {
+        if(res.msg > 0) {
           this.searchDetail()
           this.searchList()
         } else {
@@ -371,7 +375,7 @@ export default {
         amount: "1"
       }
       this.$store.dispatch('cancelLove', param).then(res => {
-        if(res.msg == 1) {
+        if(res.msg > 0) {
           this.searchDetail()
           this.searchList()
         } else {
@@ -472,7 +476,7 @@ export default {
           status: "1"
         }
         this.$store.dispatch('detail/toBag', param).then(res => {
-          if(res.msg == 1) {              
+          if(res.msg > 0) {              
             let queryParam = {
               userid: workspace.getCookie().name,
               status: "1"

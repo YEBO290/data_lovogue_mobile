@@ -43,6 +43,8 @@ var service = {
     insertorder: 'pms/insertorder', // 购物车立即支付-创建订单
     getScreenorder: 'pms/getScreenorder', // 获取订单
     wechatPay: 'api/wechat/pay', // 微信支付
+    recommend: 'pms/recommend', // 推荐列表
+    updataorder: '/pms/updataorder', // 修改订单状态
 
 }
 export default service

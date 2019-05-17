@@ -140,6 +140,17 @@ const actions = {
       })
     })
   },
+  // 取消订单
+  cancelOrder (context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.updataorder, param).then((res) => {
+        // 
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
+  },
   // 立即支付
   toBuy (context, param) {
     return new Promise((resolve, reject) => {

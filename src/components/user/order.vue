@@ -58,6 +58,7 @@ export default {
             },
         },
         shipstatus: {
+            type: String,
             default: '1'
         }},
     created() {

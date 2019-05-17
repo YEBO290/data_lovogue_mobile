@@ -172,7 +172,7 @@ export default {
             }
             me.$store.dispatch('address/editAddress',param )
               .then(function (res) {
-                if (res.msg == 1) {
+                if (res.msg > 0) {
                   me.$message({
                     message: '修改成功',
                     type: 'success'
@@ -208,7 +208,7 @@ export default {
           }
           me.$store.dispatch('address/editAddress',param )
             .then(function (res) {
-              if (res.msg == 1) {
+              if (res.msg > 0) {
                 me.$message({
                   message: '删除成功',
                   type: 'success'

@@ -264,7 +264,7 @@ export default {
           }
           // 提交客服
           me.$store.dispatch('login/saveCusService', param).then(res => {
-            if (res.msg == 1) {
+            if (res.msg > 0) {
               me.$message({
                 message: '操作成功！',
                 type: 'success'
@@ -296,7 +296,7 @@ export default {
                 // stauts: '1',
               }
               me.$store.dispatch('login/changePass', param).then(res => {
-                if(res.msg == 1) {
+                if(res.msg > 0) {
                   me.successTip()
                   me.$refs[formName].resetFields()
                 } else {

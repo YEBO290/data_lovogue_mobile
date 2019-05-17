@@ -180,7 +180,7 @@ export default {
              }
             me.$store.dispatch('address/toSave',param )
               .then(function (res) {
-                if (res.msg == 1) {
+                if (res.msg > 0) {
                   me.$message({
                     message: '新增成功',
                     type: 'success'

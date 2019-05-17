@@ -36,6 +36,19 @@ const actions = {
       })
     })
   },
+  queryRecommendList (context, param) {
+    return new Promise((resolve, reject) => {
+      let params = param || {}
+      post(api.recommend, params).then((res) => {
+        // 
+        debugger
+        context.commit('recommendList', res.data)
+        resolve(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
+  },
   querySpecialImg (context, param) {
     return new Promise((resolve, reject) => {
       let params = param || {}
@@ -56,6 +69,9 @@ const mutations = {
   },
   specialImg (state, data) {
     state.specialImg = data
+  },
+  recommendList (state, data) {
+    state.recommendList = data
   },
   
 }

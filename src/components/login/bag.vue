@@ -154,7 +154,7 @@ export default {
           status: "0"
         }
         me.$store.dispatch('login/delBag', param).then(res => {
-          if(res.msg == 1) {
+          if(res.msg > 0) {
             me.$message({
               message: '删除成功',
               type: 'success'
@@ -342,7 +342,7 @@ export default {
   width: 100%;
   bottom: 0;
   z-index: 100;
-  margin-bottom: 18px;
+  margin-bottom: .18rem;
   
   padding-left:10px;
   padding-right:10px;
@@ -351,7 +351,7 @@ export default {
   border-top: 1px solid #EFDED1;
   width:100%;padding:0 18px;text-align:left;
   -moz-box-shadow:2px 2px 5px #333333; -webkit-box-shadow:2px 2px 5px #333333; box-shadow:2px 2px 5px #333333;
-  padding-bottom: 10px;
+  padding-bottom: .18rem;
   border-radius: 3px;
   background: #fff;
 }

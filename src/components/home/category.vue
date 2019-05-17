@@ -129,7 +129,7 @@ export default {
         amount: "1"
       }
       this.$store.dispatch('toLoved', param).then(res => {
-        if(res.msg == 1) {
+        if(res.msg > 0) {
           this.searchLove()
         } else {
           this.$message({
@@ -147,7 +147,7 @@ export default {
         amount: "1"
       }
       this.$store.dispatch('cancelLove', param).then(res => {
-        if(res.msg == 1) {
+        if(res.msg > 0) {
           this.searchLove()
         } else {
           this.$message({

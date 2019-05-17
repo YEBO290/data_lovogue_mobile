@@ -23,7 +23,7 @@
           <el-col :span="8" v-for="(item, index) in recommendList" :key="index" class="recommend_list_div">
             <div class="grid-content bg-purple">
               
-              <img :src="item.url" style="width:1.1rem;height:1.47rem;display:block;background:#fff;">
+              <img :src="item.imgpath" style="width:1.1rem;height:1.47rem;display:block;background:#fff;">
               <div class="recommend_line"></div>
               <p class="recommend_text">{{item.text}}</p>
             </div>
@@ -87,6 +87,10 @@ export default {
       prodname: this.id
     }
     this.$store.dispatch('detailList/querySpecialImg', param) // 获取特辑图片
+    let params = {
+      typeno: this.id,
+    }
+    this.$store.dispatch('detailList/queryRecommendList', params)
   },
   methods: {
     // 清除
@@ -108,7 +112,7 @@ export default {
         amount: "1"
       }
       this.$store.dispatch('toLoved', param).then(res => {
-        if(res.msg == 1) {
+        if(res.msg > 0) {
           this.$message({
             message: '操作成功',
             type: 'success'
@@ -139,7 +143,7 @@ export default {
         amount: "1"
       }
       this.$store.dispatch('cancelLove', param).then(res => {
-        if(res.msg == 1) {
+        if(res.msg > 0) {
           this.$message({
             message: '操作成功',
             type: 'success'

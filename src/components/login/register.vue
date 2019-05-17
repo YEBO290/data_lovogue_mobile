@@ -162,7 +162,7 @@ import md5 from "js-md5"
               phone: this.ruleFormRest.phoneRes
             }
             me.$store.dispatch('login/toRegister', param).then(res => {
-              if(res.msg == 1) {
+              if(res.msg > 0) {
                 me.$emit('setActive', 'login')
               } else {
                 me.$message({

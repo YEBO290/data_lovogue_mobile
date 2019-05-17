@@ -25,37 +25,37 @@
                 <el-tab-pane :label="'待支付 ' + '(' + orderList.data.length + ')'" name="first" >
                     <p class="noData" v-if="orderList.data.length == 0">暂无数据</p>
                     <div v-else>
-                        <order :orderList="orderList.data" :shipstatus="shipstatus" @cancelOrder="cancelOrder">    
+                        <order :orderList="orderList.data" :shipstatus="'1'" @cancelOrder="cancelOrder">    
                         </order>
                     </div>
                 </el-tab-pane>
                 <el-tab-pane :label="'待发货' + '(' + shippedOrderList.data.length + ')'" name="second" >
                     <p class="noData" v-if="shippedOrderList.data.length == 0">暂无数据</p>
                     <div v-else>
-                        <order :orderList="shippedOrderList.data"  :shipstatus="shipstatus"/>
+                        <order :orderList="shippedOrderList.data"  :shipstatus="'2'"/>
                     </div>
                 </el-tab-pane>
                 <el-tab-pane :label="'待收货' + '(' + toReceivedOrderList.data.length + ')'" name="third">
                     <p class="noData" v-if="toReceivedOrderList.data.length == 0">暂无数据</p>
                     <div v-else>
-                        <order :orderList="toReceivedOrderList.data"  :shipstatus="shipstatus"/>
+                        <order :orderList="toReceivedOrderList.data"  :shipstatus="'3'"/>
                     </div>
                 </el-tab-pane>
                 <el-tab-pane :label="'已收货' + '(' + receivedOrderList.data.length + ')'" name="four">
                     <p class="noData" v-if="receivedOrderList.data.length == 0">暂无数据</p>
                     <div v-else>
-                        <order :orderList="receivedOrderList.data"  :shipstatus="shipstatus"/>
+                        <order :orderList="receivedOrderList.data"  :shipstatus="'4'"/>
                     </div>
                 </el-tab-pane>
             </el-tabs>
         </div>
         </el-collapse-item>
         </el-collapse>
-    <div class="setting">
-        <div class="list">
-            <span>设置</span><i class="el-icon-arrow-right"></i>
-        </div>
-    </div>
+    <el-collapse>
+        <el-collapse-item title="设置" name="1">
+            <div @click="$router.push('/login')" class="toLogin">退出登录</div>
+        </el-collapse-item>
+    </el-collapse>
   </div>
 </template>
 
@@ -90,25 +90,38 @@ export default {
     }),
     created() {
         // 商品详情
+        let me = this
         let param = this.queryOrder('1')
         this.shipstatus = '1'
         this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
             this.orderList = res
+            this.orderList && (this.orderList.data.forEach(el => {
+                el.tagprice =  workspace.thousandBitSeparator(el.price)
+            }))
         })
         let param2 = this.queryOrder('2')
         this.shipstatus = '2'
         this.$store.dispatch('address/detailConfirmInfo', param2).then(res => {
             this.shippedOrderList = res
+            this.shippedOrderList && (this.shippedOrderList.data.forEach(el => {
+                el.tagprice =  workspace.thousandBitSeparator(el.price)
+            }))
         })
         let param3 = this.queryOrder('3')
         this.shipstatus = '3'
         this.$store.dispatch('address/detailConfirmInfo', param3).then(res => {
             this.toReceivedOrderList = res
+            this.toReceivedOrderList && (this.toReceivedOrderList.data.forEach(el => {
+                el.tagprice =  workspace.thousandBitSeparator(el.price)
+            }))
         })
         let param4 = this.queryOrder('4')
         this.shipstatus = '4'
         this.$store.dispatch('address/detailConfirmInfo', param4).then(res => {
             this.receivedOrderList = res
+            this.receivedOrderList && (this.receivedOrderList.data.forEach(el => {
+                el.tagprice =  workspace.thousandBitSeparator(el.price)
+            }))
         })
     },
     methods: {
@@ -167,11 +180,13 @@ export default {
                 orderid: val.orderid
             }
             this.shipstatus = '1'
-            this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
-                let params = this.queryOrder('1')
-                this.$store.dispatch('address/detailConfirmInfo', params).then(res => {
-                    this.orderList = res
-                })
+            this.$store.dispatch('address/cancelOrder', param).then(res => {
+                if(res.msg > 0) {
+                    let params = this.queryOrder('1')
+                    this.$store.dispatch('address/detailConfirmInfo', params).then(res => {
+                        this.orderList = res
+                    })
+                } 
             })           
         }
     }
@@ -271,5 +286,11 @@ export default {
 }
 .user /deep/ .el-tabs__active-bar{
     width:25%!important;
+}
+.toLogin{
+    font-size: 12px;
+    text-decoration: underline;
+    color: rgb(102, 102, 102);
+    padding-left:30px;
 }
 </style>

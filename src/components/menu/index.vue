@@ -10,7 +10,7 @@
           <div class="grid-content bg-purple-dark">
             <p style="font-size: 15px;font-weight: bold;" v-if="user">{{user}}</p>
             <p style="font-size: 15px;font-weight: bold;" v-else @click="toLogin">登录</p>
-            <p @click="toLogin" style="font-size: 12px;text-decoration: underline;color:#666;" v-if="showLogin">切换账号</p>
+            <!--<p @click="toLogin" style="font-size: 12px;text-decoration: underline;color:#666;" v-if="showLogin">切换账号</p>-->
           </div>
         </el-col>
       </el-row>
@@ -90,6 +90,6 @@ export default {
 
 @import "./css/index.less";
 .userImg{
-  margin-top: 0.1rem;
+  /* margin-top: 0.1rem; */
 }
 </style>
