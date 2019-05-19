@@ -42,7 +42,7 @@ var service = {
     payMessage: 'api/ali_pay/pay2', //支付
     insertorder: 'pms/insertorder', // 购物车立即支付-创建订单
     getScreenorder: 'pms/getScreenorder', // 获取订单
-    wechatPay: 'api/wechat/pay', // 微信支付
+    wechatPay: 'api/wechat/pay2', // 微信支付
     recommend: 'pms/recommend', // 推荐列表
     updataorder: '/pms/updataorder', // 修改订单状态
 
