@@ -269,10 +269,10 @@ export default {
     margin-bottom:10px;
 }
 .user /deep/ .el-tabs__content, .user /deep/ .el-collapse-item__header{
-    padding: 0 20px;
+    padding: 0 0.2rem;
 }
 .user /deep/ .el-tabs__content{
-    padding: 0 20px;
+    padding: 0.1rem 0.2rem;
     background: #f6f6f6;
 }
 

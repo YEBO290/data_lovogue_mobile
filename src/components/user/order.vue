@@ -6,7 +6,7 @@
             <div>
                 <div>
                     <span class="bag_text">{{item.name}} </span>
-                    <span class="txt_right">RMB {{item.tagprice}}</span>
+                    <span class="txt_right">RMB {{item.price}}</span>
                 </div>
                 <div>
                     <span class="bag_color"> <span  class="bag_code">编号  {{item.productid}}</span></span>
@@ -141,6 +141,11 @@ export default {
 .txt_right{
     position: absolute;
     right: 20px;
+}
+.bag_size /deep/ .txt_right{
+    position: absolute;
+    right: 20px;
+    font-weight: bold;
 }
 .order_noPay_list{
     margin-bottom:10px;
