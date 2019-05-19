@@ -40,8 +40,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       let params = param || {}
       post(api.recommend, params).then((res) => {
-        // 
-        debugger
         context.commit('recommendList', res.data)
         resolve(res.data)
       }).catch((err) => {

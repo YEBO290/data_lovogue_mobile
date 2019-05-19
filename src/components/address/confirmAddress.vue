@@ -94,7 +94,7 @@ import workspace from '../../common.js'
         },
         toPay(val) { //支付方式
             let me = this
-            if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
+            if (process.env.NODE_ENV === 'development' || window.location.port == '8093' || window.location.port == '8081') {
                 var baseUrl = 'http://lovogue.net:8093'
             } else if (process.env.NODE_ENV === 'production'|| window.location.port == '8091') {
                 var baseUrl = 'http://lovogue.net:8091'

@@ -265,7 +265,6 @@ export default {
         this.$router.push(`/detail/${val.prodid}`)
       },
       changeAmount(val) {
-        debugger
         let me = this
         let list = []
         this.checkedLists.forEach(el => {
