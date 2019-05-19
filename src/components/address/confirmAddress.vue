@@ -92,7 +92,7 @@ import workspace from '../../common.js'
         toBuy() {
             this.dialogVisible = true            
         },
-        toPay(val) {
+        toPay(val) { //支付方式
             let me = this
             if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
                 var baseUrl = 'http://lovogue.net:8093'
@@ -100,13 +100,17 @@ import workspace from '../../common.js'
                 var baseUrl = 'http://lovogue.net:8091'
             }
             if (val === 'aliPay') {
-                // 走支付宝
+                // 支付宝
                 // this.$store.dispatch('address/toBuy')  
                 var alipayUrl = `${baseUrl}/api/ali_pay/pay2?orderid=`+ me.orderid +'&price='+ me.confirmData.price.replace(',', '')
                 window.location.href = alipayUrl
             } else if (val === 'weChat'){
-                // 走微信
-                me.$store.dispatch('wechatPay').then(res => {
+                // 微信
+                let param = {
+                    orderid:me.orderid,
+                    price: (me.confirmData.price.replace(',', ''))*100   // 微信金额根据后端协商 *100
+                }
+                me.$store.dispatch('wechatPay',param).then(res => {
                     if (res.code === 200) {
                         window.location.href = res.data
                         console.log(res.data)
