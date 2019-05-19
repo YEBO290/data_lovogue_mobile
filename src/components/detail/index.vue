@@ -56,7 +56,7 @@
               <div class="grid-content bg-purple" style="margin-bottom: 0.25rem;">
                 <img :src="item.imgpath" style="width:100%;height:1.47rem;display:block;background:#fff;">
                 <div class="recommend_line"></div>
-                <p class="recommend_text">{{item.text}}</p>
+                <p class="recommend_text">{{item.name}}</p>
               </div>
             </el-col>
           </el-row>
