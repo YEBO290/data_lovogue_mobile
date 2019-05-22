@@ -41,7 +41,7 @@
                         <order :orderList="toReceivedOrderList.data"  :shipstatus="'3'"/>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane :label="'已收货' + '(' + receivedOrderList.data.length + ')'" name="four">
+                <el-tab-pane :label="'退款/售后' + '(' + receivedOrderList.data.length + ')'" name="four">
                     <p class="noData" v-if="receivedOrderList.data.length == 0">暂无数据</p>
                     <div v-else>
                         <order :orderList="receivedOrderList.data"  :shipstatus="'4'"/>

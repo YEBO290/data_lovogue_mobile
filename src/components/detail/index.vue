@@ -53,8 +53,8 @@
         <div>
           <el-row :gutter="10">
             <el-col :span="8"  v-for="(item, index) in recommendList" :key="index">
-              <div class="grid-content bg-purple" style="margin-bottom: 0.25rem;">
-                <img :src="item.imgpath" style="width:100%;height:1.47rem;display:block;background:#fff;">
+              <div class="grid-content bg-purple" style="margin-bottom: 0.25rem;" @click="toDetail(item)">
+                <img :src="item.imgpath" style="width:100%;min-height:1.07rem;display:block;background:#fff;">
                 <div class="recommend_line"></div>
                 <p class="recommend_text">{{item.name}}</p>
               </div>
@@ -616,6 +616,10 @@ export default {
       //   this.$router.push('/bag')
       // }).catch(() => {         
       // })
+    },
+    toDetail(val) {
+      debugger
+      this.$router.push(`/detail/${val.typeno}`)
     }
     
   }

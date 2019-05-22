@@ -91,7 +91,7 @@ export default {
 html{height:100%;}
 #app{min-height:100%;margin:0;padding:0;position:relative;}
 .content{
-    padding-bottom: 2.58rem;
+    padding-bottom: 2.07rem;
     min-height: 6.15rem;
 }
 </style>

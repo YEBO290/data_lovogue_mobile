@@ -1,9 +1,9 @@
 <template>
     <div class="footer" :class="{'bgr': bgr, 'fontColor': fontColor, 'writeBgr': writeBgr}">
         <div>
-            <div class="toTop"  v-if="showTop">
+            <!--<div class="toTop"  v-if="showTop">
                 <el-button class="toTop_btn" @click="toTop">返回顶部</el-button>
-            </div>
+            </div>-->
             <div class="foot_line" v-if="showTop"></div>
             <div class="footer_txt footer_txt_one" v-if="showContact"><span>客户服务</span>
                 <span class="el-icon-plus" @click="expandService" v-if="!expandSer"></span>

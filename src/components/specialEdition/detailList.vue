@@ -1,7 +1,7 @@
 <template>
     <div class="detail_list">    
       <el-carousel :interval="5000" arrow="always" height="3.75rem">
-        <el-carousel-item v-for="item in specialImg.carousel" :key="item">
+        <el-carousel-item v-for="(item, index) in specialImg.carousel" :key="index">
           <img :src="item.imgpath" style="width:100%">
         </el-carousel-item>
       </el-carousel>
@@ -9,28 +9,28 @@
       <span class="Loved" title="取消收藏" @click="cancelLove" v-else></span>-->
       <!--<p class="loveTip">{{loveTip}}</p>-->
       <div class="detail_list_content">
-        <h1 class="detail_list_h1">Lorem ipsum dolor</h1>
+        <!--<h1 class="detail_list_h1">Lorem ipsum dolor</h1>-->
         <div class="detail_list_p">
-          <p class="detail_list_p_sub" v-for="(item, index) in specialImg.describe" :key="index">{{item}}</p>       
+          <p class="detail_list_p_sub" v-for="(item, key, i) in specialImg.describe" :key="i" :class="key">{{item}}</p>       
         </div>
         <div class="detail_flag">
-          <span class="position_btn" v-for="(item, index) in specialImg.tag" :key="index">{{item.tag}}</span>
+          <span class="position_btn" v-for="(item, key, i) in specialImg.tag" :key="i">{{item.tag}}</span>
         </div>
       </div>
       <div class="recommend_list">
         <p class="recommend">搭配单品推荐</p>
         <el-row :gutter="5">
           <el-col :span="8" v-for="(item, index) in recommendList" :key="index" class="recommend_list_div">
-            <div class="grid-content bg-purple">
+            <div class="grid-content bg-purple" @click="toDetail(item)">
               
               <img :src="item.imgpath" style="width:1.1rem;height:1.47rem;display:block;background:#fff;">
               <div class="recommend_line"></div>
-              <p class="recommend_text">{{item.text}}</p>
+              <p class="recommend_text">{{item.name}}</p>
             </div>
             </el-col>
         </el-row>
       </div>
-      <div>
+      <div class="backImg">
         <el-row :style="{backgroundImage: 'url(' + specialImg.feature.backimg + ')', backgroundSize:'100%'}">
           <!--<el-col :span="8" v-for="(item, index) in specialImg" :key="item.id" class="subImg">-->
           <el-col :span="8" v-for="(item, index) in specialImg.feature.click" :key="item.id" class="subImg" :style="{top: (item.row-1)*195/100+'rem', left:(item.col - 1)*33+'%'}">
@@ -185,6 +185,9 @@ export default {
       } else {
         return 'selectLeftTop'
       }
+    },
+    toDetail(val) {
+      this.$router.push(`/detail/${val.typeno}`)
     }
   }
 }
@@ -192,7 +195,7 @@ export default {
 
 <style scoped>
 @import "./css/detailList.less";
-.detail_list /deep/ .el-row{
+.backImg /deep/ .el-row{
   background-repeat: no-repeat;
   width: 100%;
   height: 5.83rem;
@@ -328,5 +331,11 @@ export default {
   position: relative;
   margin-left: -0.105rem;
   margin-top: -0.105rem;
+}
+.describe1{
+  color:#C5A480;
+  font-size: 18px;
+  font-weight: Bold;
+  margin-bottom: 10px;
 }
 </style>
