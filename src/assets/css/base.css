@@ -203,7 +203,7 @@ label{
     margin-left:0px!important;
 }
 .btns{
-    margin-top:40px;
+    margin-top:20px;
 }
 .footer fontColor{
     position: relative;
@@ -301,9 +301,9 @@ label{
     border-radius: 50%;
     text-align: center;
 }
-input::-webkit-input-placeholder {
+input::-webkit-input-placeholder,textarea::-webkit-input-placeholder {
     /* placeholder颜色  */
-    color: #C5A480!important;
+    /* color: #C5A480!important; */
     /* placeholder字体大小  */
     font-size: 12px;
     /* placeholder位置  */

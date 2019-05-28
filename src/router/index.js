@@ -21,7 +21,10 @@ import loved from "./../components/login/loved"; // 喜爱
 import bag from "./../components/login/bag"; // 购物袋
 import search from "./../components/login/search"; // 搜索界面
 import user from "./../components/user"; // 用户界面
-import workspace from '../common.js'
+import workspace from '../common.js';
+import order from "./../components/order/orderdetail"; // 用户界面
+import reject from "./../components/user/reject"; // 退货退款界面
+import cancelOrder from  "./../components/user/cancelOrder"; //退货订单详情
 Vue.use(Router);
 
 const router = new Router({
@@ -235,6 +238,33 @@ const router = new Router({
             path: "/user",
             name: "user",
             component: user
+        },
+        {
+            // 订单详情
+            path: "/orderdetail",
+            name: "order",
+            component: order,
+            props: true,
+            // meta: {
+            //     fontColor: true
+            // }
+        },
+        {
+            // 退货退款
+            path: "/reject/:id?",
+            name: "reject",
+            component: reject,
+            props: true,
+            // meta: {
+            //     fontColor: true
+            // }
+        },
+        {
+            // 退货退款详情
+            path: "/reject/detail",
+            name: "cancelOrder",
+            component: cancelOrder,
+            props: true
         }
     ]
 });

@@ -17,8 +17,10 @@
                 </div>
             </div>
             </div>
-            <div style="margin-top: 0.10rem;width: 100%;text-align: center;" v-if="shipstatus==='1'">
-<el-button round style="margin-right:15px;" @click="cancelOrder(item)">取消订单</el-button><el-button round type="primary" @click="toBuy(item)">付款</el-button></div>
+            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="shipstatus==='1'">
+            <el-button round style="margin-right:15px;" @click="cancelOrder(item)">取消订单</el-button><el-button round type="primary" @click="toBuy(item)">付款</el-button></div>
+            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="shipstatus==='3'">
+            <el-button round style="margin-right:15px;" @click="rejectOrder(item)">退货/退款</el-button><el-button round type="primary" @click="confirm(item)">确认收货</el-button></div>
             <slot name="footer"></slot>
         </el-col>         
         </el-row> 
@@ -69,7 +71,8 @@ export default {
             return workspace.thousandBitSeparator(data)
         },
         cancelOrder(val) {
-            this.$emit('cancelOrder', val)
+            val.shipstatus = '1'
+            this.$emit('editOrder', val)
         },
         toBuy(val) {
             this.dialogVisible = true   
@@ -107,6 +110,25 @@ export default {
             this.dialogVisible = false
             console.log(val)
         },
+        rejectOrder(val) {
+            this.$router.push(`/reject/${val.orderid}`)
+        },
+        confirm(val) {
+            debugger
+            let me = this
+            val.shipstatus = '4'
+            me.$emit('editOrder', val)
+            // this.$confirm('请确认是否已收到货?', '提示', {
+            //     confirmButtonText: '确定',
+            //     cancelButtonText: '取消',
+            //     type: 'warning'
+            // }).then(() => {
+            //     debugger
+            //     val.shipstatus = '4'
+            //     me.$emit('cancelOrder', val)
+            // }).catch(() => {      
+            // })
+        }
     }
 }
 </script>

@@ -25,7 +25,7 @@
                 <el-tab-pane :label="'待支付 ' + '(' + orderList.data.length + ')'" name="first" >
                     <p class="noData" v-if="orderList.data.length == 0">暂无数据</p>
                     <div v-else>
-                        <order :orderList="orderList.data" :shipstatus="'1'" @cancelOrder="cancelOrder">    
+                        <order :orderList="orderList.data" :shipstatus="'1'" @editOrder="editOrder">    
                         </order>
                     </div>
                 </el-tab-pane>
@@ -36,9 +36,9 @@
                     </div>
                 </el-tab-pane>
                 <el-tab-pane :label="'待收货' + '(' + toReceivedOrderList.data.length + ')'" name="third">
-                    <p class="noData" v-if="toReceivedOrderList.data.length == 0">暂无数据</p>
+                    <p class="noData" v-if="toReceivedOrderList.data.length == 0" >暂无数据</p>
                     <div v-else>
-                        <order :orderList="toReceivedOrderList.data"  :shipstatus="'3'"/>
+                        <order :orderList="toReceivedOrderList.data"  :shipstatus="'3'" @editOrder="editOrder"></order>
                     </div>
                 </el-tab-pane>
                 <el-tab-pane :label="'退款/售后' + '(' + receivedOrderList.data.length + ')'" name="four">
@@ -174,17 +174,20 @@ export default {
                 })
             }
         },
-        cancelOrder(val) {
+        editOrder(val) {
+            debugger
+            let me = this
             let param = {
                 status: 0,
                 orderid: val.orderid
             }
-            this.shipstatus = '1'
+            this.shipstatus = val.shipstatus // 确认收货的接口未做
             this.$store.dispatch('address/cancelOrder', param).then(res => {
                 if(res.msg > 0) {
                     let params = this.queryOrder('1')
                     this.$store.dispatch('address/detailConfirmInfo', params).then(res => {
-                        this.orderList = res
+                        me.shipstatus == '1' && (me.orderList = res)
+                        me.shipstatus == '4' && (me.toReceivedOrderList = res)
                     })
                 } 
             })           
