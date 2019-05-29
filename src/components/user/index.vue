@@ -175,7 +175,6 @@ export default {
             }
         },
         editOrder(val) {
-            debugger
             let me = this
             let param = {
                 status: 0,

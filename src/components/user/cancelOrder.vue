@@ -1,7 +1,13 @@
 <template>
-    <div class="reject">  
-        <el-collapse class="address">
-            <el-collapse-item title="退款/退1111货原因" name="1">  
+    <div class="reject"> 
+      <div class="reject-status">
+        <div>退款状态</div>
+        <div>2019年5月20日 5:20</div>
+      </div>
+      <div class="reject-msg"><span>退款总金额</span><span class="reject-price">￥ {{detailInfo.price}}</span></div> 
+      <div class="reject-title">退款信息</div> 
+        <!-- <el-collapse class="address">
+            <el-collapse-item title="退款信息" name="1">  
             <div> 
                 <el-select v-model="value" placeholder="请选择退款/退货原因">
                     <el-option
@@ -13,7 +19,7 @@
                 </el-select>
                 </div>
             </el-collapse-item>
-        </el-collapse>
+        </el-collapse> -->
         <el-row :gutter="20" class="order_noPay_list">
             <el-col :span="6"><img :src="detailInfo.imgpath" class="loved_img" style="width:100%;" /></el-col>
             <el-col :span="18">
@@ -34,6 +40,14 @@
             </div>
             </el-col>
         </el-row>
+        <el-card class="box-card">
+          <div class="text item"><span>退款原因：</span><span>{{}}</span></div>
+          <div class="text item"><span>退款金额：</span><span>{{}}</span></div>
+          <div class="text item"><span>申请时间：</span><span>{{}}</span></div>
+          <div class="text item"><span>退款编号：</span><span>{{}}</span></div>
+
+        </el-card>
+        <el-button class="btn cancel_btn" @click="back">返回</el-button>
 
     </div>
 </template>
@@ -114,6 +128,13 @@ import workspace from '../../common.js'
     font-size:12px;
     text-align: left;
 }
+.reject /deep/ .reject-title {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    background: #fff;
+    font-size: 13px;
+}
 .reject /deep/ .is-round span{
     font-size:12px;
 }
@@ -193,5 +214,32 @@ import workspace from '../../common.js'
   color: #333;
   font-size: 12px;
   visibility: visible;
+}
+.el-card__body {
+  padding:0.01rem;
+}
+.el-card__body div {
+  margin: 0.02rem 0;
+  color:#999;
+}
+.reject-msg {
+  width: 100%;
+  padding: 0.15rem;
+  margin: 0.05rem 0;
+  background: #fff;
+  font-size: 13px;
+}
+.reject-msg .reject-price {
+  float: right;
+  color: red;
+}
+.reject-status {
+  width: 100%;
+  height: auto;
+  line-height: 0.25rem;
+  padding: 0.2rem 0.15rem 0.2rem;
+  background: #EFDED1;
+  color: #fff;
+  font-size: 13px;
 }
 </style>

@@ -261,7 +261,7 @@ const router = new Router({
         },
         {
             // 退货退款详情
-            path: "/reject/detail",
+            path: "/cancelOrder/:id?",
             name: "cancelOrder",
             component: cancelOrder,
             props: true

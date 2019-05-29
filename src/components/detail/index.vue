@@ -618,7 +618,6 @@ export default {
       // })
     },
     toDetail(val) {
-      debugger
       this.$router.push(`/detail/${val.typeno}`)
     }
     

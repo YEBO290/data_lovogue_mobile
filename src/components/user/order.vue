@@ -114,7 +114,6 @@ export default {
             this.$router.push(`/reject/${val.orderid}`)
         },
         confirm(val) {
-            debugger
             let me = this
             val.shipstatus = '4'
             me.$emit('editOrder', val)

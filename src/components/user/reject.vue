@@ -3,21 +3,21 @@
     <el-row :gutter="20" class="order_noPay_list">
         <el-col :span="6"><img :src="detailInfo.imgpath" class="loved_img" style="width:100%;" /></el-col>
         <el-col :span="18">
+          <div>
             <div>
-                <div>
-                    <span class="bag_text">{{detailInfo.name}} </span>
-                    <span class="txt_right" style="float:right;">￥ {{detailInfo.price}}</span>
+                <span class="bag_text">{{detailInfo.name}} </span>
+                <span class="txt_right" style="float:right;">￥ {{detailInfo.price}}</span>
+            </div>
+            <div>
+                <span class="bag_color"> <span  class="bag_code">编号  {{detailInfo.productid}}</span></span>
+                <span class="txt_right" style="float:right;color:#999999;"> <span  class="bag_code">x{{detailInfo.amount}}</span></span>
+            </div>
+            <div style="height: 0.2rem; margin-top: 0.05rem;">
+                <div class="bag_size" style="text-align:right;">
+                    <div class="txt_right"><span class="order-amount mr15">共 {{detailInfo.amount}}件商品</span>  <span class="order-count ">合计： ￥ {{detailInfo.price}}</span></div>
                 </div>
-                <div>
-                    <span class="bag_color"> <span  class="bag_code">编号  {{detailInfo.productid}}</span></span>
-                    <span class="txt_right" style="float:right;color:#999999;"> <span  class="bag_code">x{{detailInfo.amount}}</span></span>
-                </div>
-                <div style="height: 0.2rem; margin-top: 0.05rem;">
-                    <div class="bag_size" style="text-align:right;">
-                        <div class="txt_right"><span class="order-amount mr15">共 {{detailInfo.amount}}件商品</span>  <span class="order-count ">合计： ￥ {{detailInfo.price}}</span></div>
-                    </div>
-                </div>
-        </div>
+            </div>
+          </div>
         </el-col>
     </el-row>
     <el-collapse class="address">
@@ -33,7 +33,7 @@
             </el-select>
             </div>
           </el-collapse-item>
-        </el-collapse>
+    </el-collapse>
     <el-form :inline="true" :model="formInline" class="demo-form-inline from_info">
       <el-form-item label="联系人电话：">
         <el-input v-model="input" class="phone" placeholder="选填"></el-input>
@@ -45,8 +45,7 @@
         <el-input type="textarea" v-model="info.address" class="textarea_remark" placeholder="选填"></el-input>
       </el-form-item>
     </el-form>
-    <el-collapse>
-    <!-- <el-collapse class="address"> -->
+    <!-- <el-collapse class="address">
       <el-collapse-item title="联系地址" name="1">  
       <div> 
         <el-select v-model="info.addressprovince" placeholder="选择省份" @change="addressprovinceFunc">
@@ -76,7 +75,7 @@
         <el-input type="textarea" v-model="info.address" placeholder="街道地址"></el-input>
         </div>
       </el-collapse-item>
-    </el-collapse>
+    </el-collapse> -->
     <div class="btns">
       <el-button type="primary" style="margin-right:15px">提 交</el-button>
       <el-button>取 消</el-button>
