@@ -11,18 +11,25 @@
                 <div>
                     <span class="bag_color"> <span  class="bag_code">编号  {{item.productid}}</span></span>
                 </div>
-            <div style="height: 0.2rem; margin-top: 0.05rem;">
-                <div class="bag_size">
-                    <span class="txt_right">共 {{item.amount}}件商品  合计 RMB {{total(item)}}</span>
+                <div style="height: 0.2rem; margin-top: 0.05rem;">
+                    <div class="bag_size">
+                        <span class="txt_right">共 {{item.amount}}件商品  合计 RMB {{total(item)}}</span>
+                    </div>
                 </div>
-            </div>
-            </div>
-            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="shipstatus==='1'">
-            <el-button round style="margin-right:15px;" @click="cancelOrder(item)">取消订单</el-button><el-button round type="primary" @click="toBuy(item)">付款</el-button></div>
-            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="shipstatus==='3'">
-            <el-button round style="margin-right:15px;" @click="rejectOrder(item)">退货/退款</el-button><el-button round type="primary" @click="confirm(item)">确认收货</el-button></div>
+            </div>       
             <slot name="footer"></slot>
-        </el-col>         
+        </el-col>
+        <el-col :span="24">
+            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="shipstatus==='1'">
+                    <el-button round style="margin-right:15px;" @click="cancelOrder(item)">取消订单</el-button><el-button round type="primary" @click="toBuy(item)">付款</el-button>
+            </div>
+            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="shipstatus==='3'">
+                <el-button round style="margin-right:5px;" @click="rejectOrder(item)">退货/退款</el-button>
+                <el-button round style="margin-right:5px;" @click="returnOrder(item)">退货详情</el-button>
+                <el-button round type="primary" @click="confirm(item)">确认收货</el-button>
+            </div>
+        </el-col>  
+            <slot name="footer"></slot>       
         </el-row> 
         <el-dialog
             title="请选择支付方式"
@@ -112,6 +119,10 @@ export default {
         },
         rejectOrder(val) {
             this.$router.push(`/reject/${val.orderid}`)
+        },
+         //跳转退货详情
+        returnOrder(val){
+            this.$router.push(`/cancelOrder/${val.orderid}`)
         },
         confirm(val) {
             let me = this

@@ -20,10 +20,10 @@
           </div>
         </el-col>
     </el-row>
-    <el-collapse class="address">
+    <el-collapse class="address reason">
           <el-collapse-item title="退款/退货原因" name="1">  
-          <div> 
-            <el-select v-model="value" placeholder="请选择退款/退货原因">
+          <div class="drop"> 
+            <el-select v-model="returnMsg.returnReason" placeholder="请选择" :popper-class="'drop'">
                 <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -35,14 +35,17 @@
           </el-collapse-item>
     </el-collapse>
     <el-form :inline="true" :model="formInline" class="demo-form-inline from_info">
-      <el-form-item label="联系人电话：">
-        <el-input v-model="input" class="phone" placeholder="选填"></el-input>
+      <el-form-item label="联系人：">
+        <el-input  v-model="returnMsg.userName" class="phone" placeholder="选填"></el-input>
       </el-form-item>
-      <el-form-item label="退款金额：">
+      <el-form-item label="联系电话：">
+        <el-input v-model="returnMsg.userPhone" class="phone" placeholder="选填"></el-input>
+      </el-form-item>
+      <!-- <el-form-item label="退款金额：">
         <div><span class="price">{{detailInfo.price}}</span></div>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="退款说明：">
-        <el-input type="textarea" v-model="info.address" class="textarea_remark" placeholder="选填"></el-input>
+        <el-input type="textarea" v-model="returnMsg.returnType" class="textarea_remark" placeholder="选填"></el-input>
       </el-form-item>
     </el-form>
     <!-- <el-collapse class="address">
@@ -77,8 +80,8 @@
       </el-collapse-item>
     </el-collapse> -->
     <div class="btns">
-      <el-button type="primary" style="margin-right:15px">提 交</el-button>
-      <el-button>取 消</el-button>
+      <el-button type="primary" style="margin-right:15px" @click="insertReturn">提 交</el-button>
+      <el-button @click="goback">取 消</el-button>
     </div>
   </div>
 </template>
@@ -92,47 +95,49 @@ import workspace from '../../common.js'
         return state.address.provinceList},   
       cityList: state => state.address.cityList,   
       areaList:  state => state.address.areaList,
+      detailInfo: function(state){
+         return state.address.provinceList
+      }
     }),
+    props: ['id'],
     data() {
       return {
           detailInfo:{
-              advancebooking: 0,
-                amount: 1,
-                createtime: 1558245365000,
-                description: "我也不知道是什么",
-                id: "44b135230d264a04b74c05fb1cca2ee4",
-                imgpath: "http://lovoguesave-1258660965.cos.ap-guangzhou.myqcloud.com/cms/product/ring1.png?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDpPjrk0ZkFivqWxvF0WmmY4KdcDYegw85%26q-sign-time%3D1558803124%3B1558806124%26q-key-time%3D1558803124%3B1558806124%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D9ca7e0d83e6ad019061830036953bfee78d9fe68",
-                name: "18K红金钻石花戒",
-                orderid: "bbcc8eea64ad4340802deb34ec6bc9cb",
-                payid: "4200000321201905192834959892",
-                paytime: 1558245366000,
-                paytype: "Wechat",
-                price: 0.01,
-                productid: "VC0001XX18R",
-                shipstatus: "3",
-                status: "1",
-                unit: "件",
-                userid: "yebo2"
+                advancebooking: '',
+                amount: '',
+                createtime: '',
+                description: '',
+                id: '',
+                imgpath: '',
+                name: '',
+                price:'',
+                shipstatus: '',
+                status: '',
+                unit: '',
           },
           radio: '',
           input:'',
           options: [{
-            value: '选项1',
-            label: '黄金糕'
+            value: '商品错发、漏发',
+            label: '商品错发、漏发'
             }, {
-            value: '选项2',
-            label: '双皮奶'
+            value: '商品质量问题',
+            label: '商品质量问题'
             }, {
-            value: '选项3',
-            label: '蚵仔煎'
+            value: '退运费',
+            label: '退运费'
             }, {
-            value: '选项4',
-            label: '龙须面'
-            }, {
-            value: '选项5',
-            label: '北京烤鸭'
+            value: '其他',
+            label: '其他'
             }],
+            returnMsg:{
+              returnReason:'',  //退货原因//必填
+              returnType: '', //退货类型//必填
+              userName: '',  //用户名//非必填
+              userPhone: ''  //电话//非必填
+            },
             value: '',
+            Returntype:'',
             textarea: '',
             info: {
                 phone: '',
@@ -148,7 +153,39 @@ import workspace from '../../common.js'
             }
       }
     },
+    created(){
+      let self = this;
+       let param = {
+            userid: workspace.getCookie().name,
+            orderid: this.id
+        }
+      this.$store.dispatch('address/getOrderDetail', param).then(res => {
+        self.detailInfo = res.data[0];
+        console.log('数据:'+res);
+
+      })
+
+    },
     methods: {
+      //提交退货申请
+      insertReturn(){
+        let self = this;
+        let param = {
+          orderid:self.detailInfo.orderid,//必填，用于退款交互的
+          id:self.detailInfo.id,//必填，每个订单的商品id
+          returnreason:self.returnMsg.returnReason, //退货原因
+          returntype:self.returnMsg.returnType,   //必填
+          username: self.returnMsg.userName,//非必填
+          userphone: self.returnMsg.userPhone//非必填
+        };
+        this.$store.dispatch('address/insertReturn', param).then(res => {
+            debugger
+        })
+      },
+      // 返回上一页
+      goback(){
+        this.$router.push('/user')
+      },
         // 选择省份
       addressprovinceFunc(val) {
         this.$store.dispatch('address/queryCity', {
@@ -261,5 +298,11 @@ import workspace from '../../common.js'
   color: #333;
   font-size: 12px;
   visibility: visible;
+}
+.drop .el-select-dropdown__list li {
+  font-size: 13px!important;
+}
+.drop .el-collapse-item__content input {
+  font-size: 13px!important;
 }
 </style>

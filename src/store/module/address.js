@@ -177,7 +177,46 @@ const actions = {
         })
       }, 1000)
     })
-  }
+  },
+   // 提交退货信息
+   insertReturn(context, param) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        post(api.insertReturn, param).then((res) => {
+          debugger
+          // context.commit('backData', res)
+          resolve(res)
+        }).catch((err) => {
+          console.log(error)
+        })
+      }, 1000)
+    })
+  },
+  // 获取订单信息
+  getOrderDetail (context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.getScreenorder, param).then((res) => {
+        // 
+        context.commit('orderDetailData', res)
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
+  },
+  // 退货订单查询
+  getReturnOrderDetail (context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.getScreenReturn, param).then((res) => {
+        // 
+        context.commit('returnOrderData', res)
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
+  },
+
 }
 
 const mutations = {
@@ -196,9 +235,18 @@ const mutations = {
   confirmDetailData (state, data) {
     state.confirmData = data
   },
+  orderDetailData (state, data){
+     state.orderData = data
+  },
+  returnOrderData (state, data){
+    state.returnOrderData = data
+  },
   addressList (state, data) {
     state.addressList = data
   },
+  // backData (state, data) {
+  //   state.backDataList = data
+  // }
 }
 const getters = {
 }

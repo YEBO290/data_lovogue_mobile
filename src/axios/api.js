@@ -45,6 +45,9 @@ var service = {
     wechatPay: 'api/wechat/pay2', // 微信支付
     recommend: 'pms/recommend', // 推荐列表
     updataorder: '/pms/updataorder', // 修改订单状态
+    insertReturn: '/pms/insertReturn',  //提交退货信息
+    getScreenReturn: '/pms/getScreenReturn',  //退货查询
+    updataReturn: '/pms/updataReturn',  //退货修改
 
 }
 export default service

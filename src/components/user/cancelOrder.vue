@@ -2,9 +2,9 @@
     <div class="reject"> 
       <div class="reject-status">
         <div>退款状态</div>
-        <div>2019年5月20日 5:20</div>
+        <div>{{returnOrderInfo.defaultTime}}</div>
       </div>
-      <div class="reject-msg"><span>退款总金额</span><span class="reject-price">￥ {{detailInfo.price}}</span></div> 
+      <div class="reject-msg"><span>退款总金额</span><span class="reject-price">￥ {{returnOrderInfo.price}}</span></div> 
       <div class="reject-title">退款信息</div> 
         <!-- <el-collapse class="address">
             <el-collapse-item title="退款信息" name="1">  
@@ -21,33 +21,36 @@
             </el-collapse-item>
         </el-collapse> -->
         <el-row :gutter="20" class="order_noPay_list">
-            <el-col :span="6"><img :src="detailInfo.imgpath" class="loved_img" style="width:100%;" /></el-col>
+            <el-col :span="6"><img :src="returnOrderInfo.imgpath" class="loved_img" style="width:100%;" /></el-col>
             <el-col :span="18">
                 <div>
                     <div>
-                        <span class="bag_text">{{detailInfo.name}} </span>
-                        <span class="txt_right" style="float:right;">￥ {{detailInfo.price}}</span>
+                        <span class="bag_text">{{returnOrderInfo.name}} </span>
+                        <span class="txt_right" style="float:right;">￥ {{returnOrderInfo.price}}</span>
                     </div>
                     <div>
-                        <span class="bag_color"> <span  class="bag_code">编号  {{detailInfo.productid}}</span></span>
-                        <span class="txt_right" style="float:right;color:#999999;"> <span  class="bag_code">x{{detailInfo.amount}}</span></span>
+                        <span class="bag_color"> <span  class="bag_code">编号  {{returnOrderInfo.productid}}</span></span>
+                        <span class="txt_right" style="float:right;color:#999999;"> <span  class="bag_code">x{{returnOrderInfo.amount}}</span></span>
                     </div>
                     <div style="height: 0.2rem; margin-top: 0.05rem;">
                         <div class="bag_size" style="text-align:right;">
-                            <div class="txt_right"><span class="order-amount mr15">共 {{detailInfo.amount}}件商品</span>  <span class="order-count ">合计： ￥ {{detailInfo.price}}</span></div>
+                            <div class="txt_right"><span class="order-amount mr15">共 {{returnOrderInfo.amount}}件商品</span>  <span class="order-count ">合计： ￥ {{returnOrderInfo.price}}</span></div>
                         </div>
                     </div>
             </div>
             </el-col>
         </el-row>
         <el-card class="box-card">
-          <div class="text item"><span>退款原因：</span><span>{{}}</span></div>
-          <div class="text item"><span>退款金额：</span><span>{{}}</span></div>
-          <div class="text item"><span>申请时间：</span><span>{{}}</span></div>
-          <div class="text item"><span>退款编号：</span><span>{{}}</span></div>
+          <div class="text item"><span>退款原因：</span><span>{{returnOrderInfo.returnReason}}</span></div>
+          <div class="text item"><span>退款金额：</span><span>{{returnOrderInfo.price}}</span></div>
+          <div class="text item"><span>申请时间：</span><span>{{returnOrderInfo.createtime}}</span></div>
+          <div class="text item"><span>退款编号：</span><span>{{returnOrderInfo.amount}}</span></div>
 
         </el-card>
-        <el-button class="btn cancel_btn" @click="back">返回</el-button>
+        <!-- <el-button class="btn cancel_btn" @click="back">返回</el-button> -->
+        <div class="returnBtn">
+          <el-button class="btn ok_btn" type="primary"  @click="back">返回</el-button>  
+        </div>
 
     </div>
 </template>
@@ -62,62 +65,78 @@ import workspace from '../../common.js'
       cityList: state => state.address.cityList,   
       areaList:  state => state.address.areaList,
     }),
+    props: ['id'],
     data() {
       return {
-          detailInfo:{
-              advancebooking: 0,
-                amount: 1,
-                createtime: 1558245365000,
-                description: "我也不知道是什么",
-                id: "44b135230d264a04b74c05fb1cca2ee4",
-                imgpath: "http://lovoguesave-1258660965.cos.ap-guangzhou.myqcloud.com/cms/product/ring1.png?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDpPjrk0ZkFivqWxvF0WmmY4KdcDYegw85%26q-sign-time%3D1558803124%3B1558806124%26q-key-time%3D1558803124%3B1558806124%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D9ca7e0d83e6ad019061830036953bfee78d9fe68",
-                name: "18K红金钻石花戒",
-                orderid: "bbcc8eea64ad4340802deb34ec6bc9cb",
-                payid: "4200000321201905192834959892",
-                paytime: 1558245366000,
-                paytype: "Wechat",
-                price: 0.01,
-                productid: "VC0001XX18R",
-                shipstatus: "3",
-                status: "1",
-                unit: "件",
-                userid: "yebo2"
-          },
-          radio: '',
-          input:'',
-          options: [{
-            value: '选项1',
-            label: '黄金糕'
-            }, {
-            value: '选项2',
-            label: '双皮奶'
-            }, {
-            value: '选项3',
-            label: '蚵仔煎'
-            }, {
-            value: '选项4',
-            label: '龙须面'
-            }, {
-            value: '选项5',
-            label: '北京烤鸭'
-            }],
-            value: '',
-            textarea: '',
-            info: {
-                phone: '',
+          returnOrderInfo: {
+                advancebooking: '',
+                amount: '',
+                createtime: '',
+                description: '',
+                productid:'',
+                id: '',
+                imgpath: '',
                 name: '',
-                addressprovince: '', // 省份
-                addresscity: '', // 城市
-                addressdistrict: '',// 地区/行政区
-                address: '', // 街道地址  
-            },
-            formInline: {
-              user: '',
-              region: ''
-            }
+                price:'',
+                shipstatus: '',
+                status: '',
+                unit: '',
+                returnReason:'',  //退货原因//必填
+                returnType: '', //退货类型//必填
+                userName: '',  //用户名//非必填
+                userPhone: '', //电话//非必填
+                defaultTime:'' //退货订单时间
+          }
       }
     },
+    created(){
+      debugger
+       let self = this;
+       let param = {
+            userid: workspace.getCookie().name,
+            id: '44b135230d264a04b74c05fb1cca2ee4'
+        }
+        this.$store.dispatch('address/getReturnOrderDetail', param).then(res => {
+        self.detailInfo = res.data[0];
+        console.log('数据:'+res);
+                self.returnOrderInfo.defaultTime = self.timeFormat(res.data.prod.publishdate),
+                self.returnOrderInfo.advancebooking = res.data.detailInfo.advancebooking,
+                self.returnOrderInfo.amount = res.data.detailInfo.amount,
+                self.returnOrderInfo.createtime = self.timeFormat(res.data.detailInfo.createtime),
+                self.returnOrderInfo.description = res.data.detailInfo.description,
+                self.returnOrderInfo.id = res.data.return.id,
+                self.returnOrderInfo.imgpath = res.data.prod.imgpath,
+                self.returnOrderInfo.name = res.data.prod.productname,
+                self.returnOrderInfo.productid = res.data.detailInfo.productid
+                self.returnOrderInfo.price = res.data.detailInfo.price,
+                self.returnOrderInfo.shipstatus = res.data.return.shipstatus,
+                self.returnOrderInfo.status = res.data.return.status,
+                self.returnOrderInfo.unit = res.data.detailInfo.unit,
+                self.returnOrderInfo.returnReason = res.data.return.returnreason  //退货原因//必填
+                // self.detailInfo.returnType: '', //退货类型//必填
+                // self.detailInfo.userName: '',  //用户名//非必填
+                // self.detailInfo.userPhone: ''  //电话//非必填
+
+      })
+    },
     methods: {
+      back(){
+         this.$router.push('/user')
+      },
+      add(m){return m<10?'0'+m:m },
+     //时间戳转化成时间格式
+      timeFormat(timestamp){
+        var self = this;
+      //timestamp是整数，否则要parseInt转换,不会出现少个0的情况
+        var time = new Date(timestamp);
+        var year = time.getFullYear();
+        var month = time.getMonth()+1;
+        var date = time.getDate();
+        var hours = time.getHours();
+        var minutes = time.getMinutes();
+        var seconds = time.getSeconds();
+        return year+'年'+self.add(month)+'月'+self.add(date)+'日 '+self.add(hours)+':'+self.add(minutes)+':'+self.add(seconds);
+    }
 
     }
   }
@@ -241,5 +260,8 @@ import workspace from '../../common.js'
   background: #EFDED1;
   color: #fff;
   font-size: 13px;
+}
+.returnBtn {
+  margin: 50px 18px 0 18px;
 }
 </style>
