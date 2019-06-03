@@ -2,8 +2,10 @@
   <div class="user">
     <el-row class="userMessage" >
         <el-col :span="4"><span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span></el-col>
-        <el-col :span="6"><p style="font-size: 15px;font-weight: bold;    height: 40px;
-    line-height: 40px;">{{user}}</p></el-col>
+        <el-col :span="6"><p style="font-size: 15px;font-weight: bold;height: 40px;line-height: 40px;">您好，{{user}}</p></el-col>
+        <el-col :span="1" style="font-size: 15px;font-weight: bold;height: 40px;line-height: 40px;margin-left:5px;">|</el-col>
+        <el-col :span="6"><a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a></el-col>
+    
     </el-row>
     <div class="listMessageOne">
         <div class="list love" @click="$router.push('/loved')">

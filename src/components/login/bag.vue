@@ -50,7 +50,7 @@
           <p class="total_pay">运费<span>RMB  {{totalPay}}</span></p> 
           <p class="total">总计<span>RMB  {{totalCost}}</span></p>       
         </div>
-        <el-button class="btn login_btns" type="primary" @click="toPay" style="margin-top:0.63rem;">立即支付</el-button>
+        <el-button class="btn login_btns" type="primary" @click="toPay">立即支付</el-button>
       </div>
     </div>
     <div class="bag_none" v-if="!showToLogin && bagList.length === 0">      
