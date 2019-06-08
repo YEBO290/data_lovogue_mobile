@@ -18,15 +18,15 @@
         </div>
       </div>
       <div class="recommend_list">
-        <p class="recommend">搭配单品推荐</p>
+        <p class="recommend">特辑单品推荐</p>
         <el-row :gutter="5">
-          <el-col :span="8" v-for="(item, index) in recommendList" :key="index" class="recommend_list_div">
-            <div class="grid-content bg-purple" @click="toDetail(item)">
-              
-              <img :src="item.imgpath" style="width:1.1rem;height:1.47rem;display:block;background:#fff;">
-              <div class="recommend_line"></div>
-              <p class="recommend_text">{{item.name}}</p>
-            </div>
+            <el-col :span="8" v-for="(item, index) in recommendList" :key="index" class="recommend_list_div">
+              <div class="grid-content bg-purple" @click="toDetail(item)">
+                
+                <img :src="item.imgpath" style="width:1.1rem;height:1.47rem;display:block;background:#fff;">
+                <div class="recommend_line"></div>
+                <p class="recommend_text">{{item.name}}</p>
+              </div>
             </el-col>
         </el-row>
       </div>
@@ -66,7 +66,8 @@ export default {
       toLove: true,
       loveTip: '收藏',
       flags:[{text: '职场刚需'},{text: '约会必备'}],
-      showList: []
+      showList: [],
+      recommendList:[]
     }
   },
   computed: mapState({
@@ -90,7 +91,10 @@ export default {
     let params = {
       typeno: this.id,
     }
-    this.$store.dispatch('detailList/queryRecommendList', params)
+    this.$store.dispatch('detailList/queryRecommendList', params).then(res =>{
+      var self = this;
+      self.recommendList = res;
+    })
   },
   methods: {
     // 清除

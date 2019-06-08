@@ -25,6 +25,7 @@ import workspace from '../common.js';
 import order from "./../components/order/orderdetail"; // 用户界面
 import reject from "./../components/user/reject"; // 退货退款界面
 import cancelOrder from  "./../components/user/cancelOrder"; //退货订单详情
+import demoCom from "./../components/user/demo"
 Vue.use(Router);
 
 const router = new Router({
@@ -264,6 +265,12 @@ const router = new Router({
             path: "/cancelOrder/:id?",
             name: "cancelOrder",
             component: cancelOrder,
+            props: true
+        },
+        {
+            path:'/demo',
+            name:'demo',
+            component: demoCom,
             props: true
         }
     ]

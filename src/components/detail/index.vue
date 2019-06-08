@@ -281,7 +281,7 @@ export default {
       detailInfo: function(state) {
         let price = workspace.thousandBitSeparator(state.detail.detailInfo.tagprice)
         state.detail.detailInfo.tagprice && (this.$set(state.detail.detailInfo, 'tagprice', price))
-        this.desc = state.detail.detailInfo.describe
+        this.desc  = state.detail.detailInfo.describe
         let colorList = []
         state.detail.detailInfo.choice.forEach(el => {
           let obj = {

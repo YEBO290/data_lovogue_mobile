@@ -5,9 +5,9 @@
                 <el-button class="toTop_btn" @click="toTop">返回顶部</el-button>
             </div>-->
             <div class="foot_line" v-if="showTop"></div>
-            <div class="footer_txt footer_txt_one" v-if="showContact"><span>客户服务</span>
-                <span class="el-icon-plus" @click="expandService" v-if="!expandSer"></span>
-                <span class="el-icon-minus" @click="expandService" v-if="expandSer"></span>
+            <div class="footer_txt footer_txt_one" v-if="showContact" @click="expandService"><span>客户服务</span>
+                <span class="el-icon-plus"  v-if="!expandSer"></span>
+                <span class="el-icon-minus"  v-if="expandSer"></span>
                 <div class="expand" v-if="expandSer">
                     <p @click="toContact('customerService')">客服</p>
                     <p @click="toContact('orderSend')">订单与配送</p>
@@ -16,9 +16,9 @@
                 </div>
             </div>
             <!--<div style="background:#C5A480;height:1px;margin-bottom:18px;width:100%;"  v-if="showContact && expandSer"></div>-->
-            <div class="footer_txt" v-if="showContact"><span>关于LOVOGUE</span>
-            <span class="el-icon-plus" @click="expandMine" v-if="!expandMe"></span>
-            <span class="el-icon-minus" @click="expandMine" v-if="expandMe"></span>
+            <div class="footer_txt" v-if="showContact" @click="expandMine"><span>关于LOVOGUE</span>
+            <span class="el-icon-plus"  v-if="!expandMe"></span>
+            <span class="el-icon-minus" v-if="expandMe"></span>
                 <div class="expand" v-if="expandMe">
                     <p @click="toAbout" :class="{'active_color': active_color}">关于我们</p>
                     <p @click="toContact('contact')" :class="{'active_color': active_color_contact}">联系我们</p>

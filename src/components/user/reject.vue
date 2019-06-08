@@ -179,7 +179,12 @@ import workspace from '../../common.js'
           userphone: self.returnMsg.userPhone//非必填
         };
         this.$store.dispatch('address/insertReturn', param).then(res => {
-            debugger
+            if(res.err == 0 && res.msg == 1){
+              alert("申请提交成功！");
+              this.$routerpush('/user');//返回上一层
+            }else {
+              alert(res.message);
+            }
         })
       },
       // 返回上一页

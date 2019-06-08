@@ -216,6 +216,18 @@ const actions = {
       })
     })
   },
+  // 退货修改
+  updataReturnOrder (context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.updataReturn, param).then((res) => {
+        // context.commit('returnOrderData', res)
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
+  },
+
 
 }
 

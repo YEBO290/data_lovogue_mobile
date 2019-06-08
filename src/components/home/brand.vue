@@ -45,6 +45,9 @@ export default {
     let param = this.searchParam(30, 1)
     this.$store.dispatch('home/queryBrandList', param)
     this.$store.commit('showSubMenu', false)
+    this.$router.afterEach((to, from, next) => {
+        window.scrollTo(0, 0)
+    })
   },
   methods: {
     searchParam(size, page) {

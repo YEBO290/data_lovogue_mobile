@@ -20,13 +20,18 @@
             <slot name="footer"></slot>
         </el-col>
         <el-col :span="24">
-            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="shipstatus==='1'">
+            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='1'">
                     <el-button round style="margin-right:15px;" @click="cancelOrder(item)">取消订单</el-button><el-button round type="primary" @click="toBuy(item)">付款</el-button>
             </div>
-            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="shipstatus==='3'">
+            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='2'">
                 <el-button round style="margin-right:5px;" @click="rejectOrder(item)">退货/退款</el-button>
+            </div>
+            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='3'">
+                <el-button round style="margin-right:5px;" @click="rejectOrder(item)">退货/退款</el-button>
+                <!-- <el-button round type="primary" @click="confirm(item)">确认收货</el-button> -->
+            </div>
+            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='4'">
                 <el-button round style="margin-right:5px;" @click="returnOrder(item)">退货详情</el-button>
-                <el-button round type="primary" @click="confirm(item)">确认收货</el-button>
             </div>
         </el-col>  
             <slot name="footer"></slot>       
@@ -66,7 +71,7 @@ export default {
                 return []
             },
         },
-        shipstatus: {
+        status: {
             type: String,
             default: '1'
         }},
@@ -228,4 +233,5 @@ export default {
     background-color: #dcdfe6;
     position: relative;
 }
+
 </style>

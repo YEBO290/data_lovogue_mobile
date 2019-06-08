@@ -74,5 +74,12 @@ var workspace = {
     let data = val.toUpperCase()
     return md5(data)
   },
+  //退货状态过滤
+  returnStatus(val){
+    let status = ""
+    switch(val){
+      case 0: status = "傻逼";break;
+    }
+  }
 }
 export default workspace

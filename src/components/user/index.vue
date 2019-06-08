@@ -2,8 +2,8 @@
   <div class="user">
     <el-row class="userMessage" >
         <el-col :span="4"><span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span></el-col>
-        <el-col :span="6"><p style="font-size: 15px;font-weight: bold;height: 40px;line-height: 40px;">您好，{{user}}</p></el-col>
-        <el-col :span="1" style="font-size: 15px;font-weight: bold;height: 40px;line-height: 40px;margin-left:5px;">|</el-col>
+        <el-col :span="7"><p style="font-size:14px;height: 40px;line-height: 40px;">您好，{{user}}</p></el-col>
+        <el-col :span="1" style="font-size: 13px;height: 40px;line-height: 40px;margin-left:5px;">|</el-col>
         <el-col :span="6"><a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a></el-col>
     
     </el-row>
@@ -24,29 +24,36 @@
         <div style="width:100%;height:1px;background:#ddd;"></div>
         <div class="orderList">
             <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane :label="'待支付 ' + '(' + orderList.data.length + ')'" name="first" >
+                <el-tab-pane :label="'未付款 ' + '(' + orderList.data.length + ')'" name="first" >
                     <p class="noData" v-if="orderList.data.length == 0">暂无数据</p>
                     <div v-else>
-                        <order :orderList="orderList.data" :shipstatus="'1'" @editOrder="editOrder">    
+                        <order :orderList="orderList.data" :status="'1'" @editOrder="editOrder">    
                         </order>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane :label="'待发货' + '(' + shippedOrderList.data.length + ')'" name="second" >
+                <el-tab-pane :label="'处理中' + '(' + shippedOrderList.data.length + ')'" name="second" >
                     <p class="noData" v-if="shippedOrderList.data.length == 0">暂无数据</p>
                     <div v-else>
-                        <order :orderList="shippedOrderList.data"  :shipstatus="'2'"/>
+                        <order :orderList="shippedOrderList.data"  :status="'2'"/>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane :label="'待收货' + '(' + toReceivedOrderList.data.length + ')'" name="third">
+                <el-tab-pane :label="'已到货' + '(' + toReceivedOrderList.data.length + ')'" name="third">
                     <p class="noData" v-if="toReceivedOrderList.data.length == 0" >暂无数据</p>
                     <div v-else>
-                        <order :orderList="toReceivedOrderList.data"  :shipstatus="'3'" @editOrder="editOrder"></order>
+                        <order :orderList="toReceivedOrderList.data"  :status="'3'" @editOrder="editOrder"></order>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane :label="'退款/售后' + '(' + receivedOrderList.data.length + ')'" name="four">
+                
+                <el-tab-pane :label="'已取消' + '(' + caceldOrderList.data.length + ')'" name="zero">
+                    <p class="noData" v-if="caceldOrderList.data.length == 0">暂无数据</p>
+                    <div v-else>
+                        <order :orderList="caceldOrderList.data"  :status="'0'"/>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane :label="'退款/退货' + '(' + receivedOrderList.data.length + ')'" name="four">
                     <p class="noData" v-if="receivedOrderList.data.length == 0">暂无数据</p>
                     <div v-else>
-                        <order :orderList="receivedOrderList.data"  :shipstatus="'4'"/>
+                        <order :orderList="receivedOrderList.data"  :status="'4'"/>
                     </div>
                 </el-tab-pane>
             </el-tabs>
@@ -71,7 +78,7 @@ export default {
           activeNames: [],
           user: workspace.getCookie().name,
           activeName: 'first',
-          shipstatus: '1',
+          status: '1',
           orderList: {
               data: [],
           },
@@ -84,6 +91,9 @@ export default {
           receivedOrderList: {
               data: [],
           },
+          caceldOrderList:{
+              data: [],
+          }
       }
     },
     components: {order},
@@ -93,8 +103,15 @@ export default {
     created() {
         // 商品详情
         let me = this
+        let param0 = this.queryOrder('0')
+        this.$store.dispatch('address/detailConfirmInfo', param0).then(res => {
+            this.caceldOrderList = res
+            this.caceldOrderList && (this.caceldOrderList.data.forEach(el => {
+                el.tagprice =  workspace.thousandBitSeparator(el.price)
+            }))
+        })
         let param = this.queryOrder('1')
-        this.shipstatus = '1'
+        this.shistatus = '1'
         this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
             this.orderList = res
             this.orderList && (this.orderList.data.forEach(el => {
@@ -127,7 +144,7 @@ export default {
         })
     },
     methods: {
-        queryOrder(val, status, id) { 
+        queryOrder(val) { 
             // val 物流状态 status 订单状态
             // shipstatus
             // 1表示未付款
@@ -137,9 +154,7 @@ export default {
             // 0表示預售 
             let param = {
                 userid: workspace.getCookie().name,
-                shipstatus: val || '',
-                status: status || '1',
-                // orderid: id || ''
+                status: val || '',
             }
             return param
         },
@@ -152,27 +167,33 @@ export default {
             // 0表示預售 
             if ( tab.name == 'first') {
                 let param = this.queryOrder('1')
-                this.shipstatus = '1'
+                // this.shipstatus = '1'
                 this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
                     this.orderList = res
                 })
             } else if (tab.name == 'second') {
                 let param = this.queryOrder('2')
-                this.shipstatus = '2'
+                // this.shipstatus = '2'
                 this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
                     this.shippedOrderList = res
                 })
             }  else if (tab.name == 'third') {
                 let param = this.queryOrder('3')
-                this.shipstatus = '3'
+                // this.shipstatus = '3'
                 this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
                     this.toReceivedOrderList = res
                 })
             }  else if (tab.name == 'four') {
                 let param = this.queryOrder('4')
-                this.shipstatus = '4'
+                // this.shipstatus = '4'
                 this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
                     this.receivedOrderList = res
+                })
+            }else if (tab.name == 'zero') {
+                let param = this.queryOrder('0')
+                // this.shipstatus = '0'
+                this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
+                    this.caceldOrderList = res
                 })
             }
         },
@@ -250,13 +271,18 @@ export default {
     border:none;
 }
 .user /deep/ .el-tabs__item{
-    width:25%;
+    width:20%;
     text-align:center;
+    font-size: 13px;
+    padding: 0 5px;
 }
 .user /deep/ .el-tabs__nav{
     width:100%;
     background: #fff;
-    padding:0px 18px 0px 18px;
+    padding:0px 15px 0px 5px;
+}
+.user /deep/ .el-tabs__header {
+    margin: 0;
 }
 .orderList{
     max-height: 300px;
@@ -273,7 +299,7 @@ export default {
     margin-bottom:10px;
 }
 .user /deep/ .el-tabs__content, .user /deep/ .el-collapse-item__header{
-    padding: 0 0.2rem;
+    padding: 0 0.09rem 0 0.18rem;
 }
 .user /deep/ .el-tabs__content{
     padding: 0.1rem 0.2rem;
@@ -289,12 +315,21 @@ export default {
     margin-bottom: 20%;
 }
 .user /deep/ .el-tabs__active-bar{
-    width:25%!important;
+    width:20%!important;
 }
 .toLogin{
     font-size: 12px;
     text-decoration: underline;
     color: rgb(102, 102, 102);
     padding-left:30px;
+}
+.user /deep/ .el-tabs__item:hover,.orderList /deep/ .el-tabs__item.is-active {
+    color: #c5a480;
+    cursor: pointer;
+}
+.user /deep/ .el-tabs__active-bar {
+    background-color: #c5a480;
+    z-index: 1;
+    display: none;
 }
 </style>

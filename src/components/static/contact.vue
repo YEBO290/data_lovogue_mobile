@@ -242,6 +242,11 @@ export default {
     // this.$store.dispatch('queryContactDetail') // 联系我们
     console.log(this.id)
   },
+  created() {
+    this.$router.afterEach((to, from, next) => {
+        window.scrollTo(0, 0)
+    })
+  },
   methods: {
     calcuMD5(val) {
       let data = val.toUpperCase()

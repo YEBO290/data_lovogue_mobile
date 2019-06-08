@@ -11,6 +11,7 @@ import 'swiper/dist/css/swiper.css'
 import 'element-ui/lib/theme-chalk/base.css'
 // collapse 展开折叠
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
+import * as filters from './filters/index'
 import Element from 'element-ui'
 import $ from 'jquery'
 import {
@@ -160,13 +161,16 @@ Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message
 Vue.prototype.$axios = axios
 
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
 // axios 配置
 // axios.defaults.timeout = 5000
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // axios.defaults.baseURL = 'https://jupage.taobao.com'
 
 Vue.config.debug = true
-
 new Vue({
   router,
   store,

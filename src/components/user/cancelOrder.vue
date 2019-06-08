@@ -1,7 +1,11 @@
 <template>
     <div class="reject"> 
       <div class="reject-status">
-        <div>退款状态</div>
+        <div v-if="returnOrderInfo.shipstatus == 0 ">不受理</div>
+        <div v-if="returnOrderInfo.shipstatus == 1 ">受理中</div>
+        <div v-if="returnOrderInfo.shipstatus == 2 ">已受理</div>
+        <div v-if="returnOrderInfo.shipstatus == 3 ">已完成</div>
+        <div v-if="returnOrderInfo.shipstatus == 9 ">异常</div>
         <div>{{returnOrderInfo.defaultTime}}</div>
       </div>
       <div class="reject-msg"><span>退款总金额</span><span class="reject-price">￥ {{returnOrderInfo.price}}</span></div> 
@@ -45,18 +49,28 @@
           <div class="text item"><span>退款金额：</span><span>{{returnOrderInfo.price}}</span></div>
           <div class="text item"><span>申请时间：</span><span>{{returnOrderInfo.createtime}}</span></div>
           <div class="text item"><span>退款编号：</span><span>{{returnOrderInfo.amount}}</span></div>
-
         </el-card>
+        <div v-if="returnOrderInfo.returnStatus == 2 || returnOrderInfo.returnStatus == 3" class="return-no">
+            <div class="return-title">信息补充</div> 
+            <el-row>
+              <el-col :span="6"><div class="grid-content bg-purple">快递单号：</div></el-col>
+              <el-col :span="12"><el-input placeholder="请输入快递单号" v-model="returnOrderInfo.couriernumber" clearable></el-input></el-col>
+              <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+            </el-row>    
+        </div>
         <!-- <el-button class="btn cancel_btn" @click="back">返回</el-button> -->
         <div class="returnBtn">
+          <el-button v-if="returnOrderInfo.couriernumber? false : true" class="btn ok_btn" type="defualt"  @click="submit">提交</el-button>
           <el-button class="btn ok_btn" type="primary"  @click="back">返回</el-button>  
         </div>
 
     </div>
 </template>
 <script>
+import Vue from 'vue'
 import { mapState } from 'vuex'
 import workspace from '../../common.js'
+
   export default {
     computed: mapState({
       countryList: state => state.address.country,   
@@ -85,21 +99,22 @@ import workspace from '../../common.js'
                 returnType: '', //退货类型//必填
                 userName: '',  //用户名//非必填
                 userPhone: '', //电话//非必填
-                defaultTime:'' //退货订单时间
+                defaultTime:'', //退货订单时间
+                returnStatus:'' , //退货状态
+                couriernumber:''  //快递单号
           }
       }
     },
     created(){
-      debugger
        let self = this;
        let param = {
             userid: workspace.getCookie().name,
-            id: '44b135230d264a04b74c05fb1cca2ee4'
+            id: self.id
         }
         this.$store.dispatch('address/getReturnOrderDetail', param).then(res => {
         self.detailInfo = res.data[0];
         console.log('数据:'+res);
-                self.returnOrderInfo.defaultTime = self.timeFormat(res.data.prod.publishdate),
+                self.returnOrderInfo.defaultTime = self.timeFormat(res.data.return.statustime),
                 self.returnOrderInfo.advancebooking = res.data.detailInfo.advancebooking,
                 self.returnOrderInfo.amount = res.data.detailInfo.amount,
                 self.returnOrderInfo.createtime = self.timeFormat(res.data.detailInfo.createtime),
@@ -113,6 +128,7 @@ import workspace from '../../common.js'
                 self.returnOrderInfo.status = res.data.return.status,
                 self.returnOrderInfo.unit = res.data.detailInfo.unit,
                 self.returnOrderInfo.returnReason = res.data.return.returnreason  //退货原因//必填
+                 self.returnOrderInfo.returnStatus = res.data.return.status
                 // self.detailInfo.returnType: '', //退货类型//必填
                 // self.detailInfo.userName: '',  //用户名//非必填
                 // self.detailInfo.userPhone: ''  //电话//非必填
@@ -120,6 +136,29 @@ import workspace from '../../common.js'
       })
     },
     methods: {
+      //快递信息提交
+      submit(){
+        debugger
+        let self = this;
+        let param = {
+          id:self.id,
+          couriernumber: self.returnOrderInfo.couriernumber
+        }
+        this.$store.dispatch('address/updataReturnOrder',param).then(res => {
+           if (res.err == 0) {
+              self.$message({
+                showClose: true,
+                message: '提交成功',
+                type: 'success'
+              });       
+            } else {
+              self.$message({
+                message: '操作失败!',
+                type: 'error'
+              })
+            }
+        })
+      },
       back(){
          this.$router.push('/user')
       },
@@ -257,11 +296,32 @@ import workspace from '../../common.js'
   height: auto;
   line-height: 0.25rem;
   padding: 0.2rem 0.15rem 0.2rem;
-  background: #EFDED1;
+  background: #ed4747;
   color: #fff;
   font-size: 13px;
 }
 .returnBtn {
   margin: 50px 18px 0 18px;
+}
+.return-title {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    font-size: 13px;
+}
+.return-no .el-row {
+    background: #fff;
+    /* border-radius: 5px; */
+    /* border: 1px solid #ddd; */
+    padding: 18px 20px;
+    line-height: 30px;
+    margin: 0;
+    border-top:1px solid #ddd;
+}
+.reject /deep/ .return-no {
+  border: 1px solid #ddd;
+  margin-top: 5px;
+  border-radius: 5px;
 }
 </style>
