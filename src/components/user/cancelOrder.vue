@@ -139,6 +139,9 @@ import workspace from '../../common.js'
           }
 
       })
+      this.$router.afterEach((to, from, next) => {
+        window.scrollTo(0, 0)
+      })
     },
     methods: {
       //快递信息提交
@@ -187,7 +190,7 @@ import workspace from '../../common.js'
 </script>
 <style scoped>
 .reject{
-    height: 300px;
+    /* height: 300px; */
     font-size:12px;
     text-align: left;
 }

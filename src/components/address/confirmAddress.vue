@@ -22,7 +22,7 @@
                     </div>
                     <div class="confirm_base_info">
                         <p class="confirm_title">{{item.name}}</p>
-                        <p class="confirm_desc">{{item.description}}</p>
+                        <p class="confirm_desc">编号- {{item.productid}}</p>
                         <p><span class="price">RMB {{item.price}}</span><span class="number">x {{item.amount}}</span></p>
                     </div>
                 </div>   

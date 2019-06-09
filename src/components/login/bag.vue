@@ -311,7 +311,7 @@ export default {
     display: inline-block;
     width: 100%;
 }
-.bag_listS{
+.bag_lists{
   margin-bottom:52px;
 }
 .bag_list /deep/ .el-input-number{
