@@ -22,7 +22,7 @@
       <div style="background:#EFDED1;height:0.01rem;margin-bottom:0.25rem;width:100%;"></div>
       <p class="menu_title login" @click="toHome">首页</p>  
       <div v-for="(item, index) in menuList" :key="index">
-        <p class="menu_title" @click.stop="toMenu(item)">{{item.name}}</p>  
+        <p class="menu_title"  @click.stop="expandFunc(item, index)">{{item.name}}</p>  
         <div v-if="item.next">
           <span class="el-icon-plus" @click.stop="expandFunc(item, index)" v-if="!expand[index]"></span>
           <span class="el-icon-minus" @click.stop="expandFunc(item, index)" v-if="expand[index]"></span>
@@ -57,6 +57,7 @@ export default {
   },
   methods: {
     expandFunc(val, index) {
+      debugger
       if (this.expand[index]) {
         this.$set(this.expand, index, false)
       } else {
@@ -76,7 +77,7 @@ export default {
     },
     toMenu(val) {
       this.hideMenu()
-      this.$router.push(val.prodlink)
+      // this.$router.push(val.prodlink)
     },
     toSubMenu(val) {
       this.hideMenu()

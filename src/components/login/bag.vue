@@ -291,7 +291,6 @@ export default {
         me.totalNmubel = 0 // 总数量
         me.totalCost = 0 // 总计
         me.totalPay = 0 // 总运费
-        debugger
         val.forEach(item => {
           me.$set(item, 'showAmount', false)
           // me.totalPay = me.totalPay + parseFloat(item.tagprice)

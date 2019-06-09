@@ -9,7 +9,6 @@ var workspace = {
            return $1+","
          })
       })
-      debugger
       return res
     },
       //设置cookie
