@@ -11,7 +11,7 @@ import 'swiper/dist/css/swiper.css'
 import 'element-ui/lib/theme-chalk/base.css'
 // collapse 展开折叠
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
-import * as filters from './filters/index'
+// import filters from './filters/index'
 import Element from 'element-ui'
 import $ from 'jquery'
 import {
@@ -151,6 +151,7 @@ Vue.use(Main)
 Vue.use(Footer)
 
 Vue.use(Loading.directive)
+// Vue.use(filters)
 
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$msgbox = MessageBox
@@ -161,9 +162,9 @@ Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message
 Vue.prototype.$axios = axios
 
-Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
-})
+// Object.keys(filters).forEach(key => {
+//   Vue.filter(key, filters[key])
+// })
 
 // axios 配置
 // axios.defaults.timeout = 5000
@@ -175,6 +176,7 @@ new Vue({
   router,
   store,
   axios,
+  // filters,
   el: '#app',
   render: h => h(App)
 })

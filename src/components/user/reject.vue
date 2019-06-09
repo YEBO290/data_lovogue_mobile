@@ -180,8 +180,12 @@ import workspace from '../../common.js'
         };
         this.$store.dispatch('address/insertReturn', param).then(res => {
             if(res.err == 0 && res.msg == 1){
-              alert("申请提交成功！");
-              this.$routerpush('/user');//返回上一层
+              this.$message({
+                showClose: false,
+                message: '提交成功！',
+                type: 'success'
+              });
+              this.$router.push('/user');//返回上一层
             }else {
               alert(res.message);
             }

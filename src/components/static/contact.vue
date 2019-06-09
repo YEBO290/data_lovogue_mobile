@@ -115,6 +115,7 @@
       </div>
       <p class="contact_txt" :class="{'active_static': id === 'contact'}" @click="showDetail('contact')">联系我们</p>
       <address class="contact_detail" v-if="id === 'contact'">
+        <!--<div> <img src="~@/assets/image/lovogue.png" class="" /></div>-->
         <strong>刘建新</strong><br>
         电话： {{contactDetail.phone}}<br>
         地址： {{contactDetail.address}}<br>

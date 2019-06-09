@@ -8,6 +8,7 @@ var workspace = {
            return $1+","
          })
       })
+      debugger
       return res
     },
       //设置cookie
@@ -80,6 +81,20 @@ var workspace = {
     switch(val){
       case 0: status = "傻逼";break;
     }
-  }
+  },
+  add(m){return m<10?'0'+m:m },
+  //时间戳转化成时间格式
+  timeFormat(timestamp){
+    var self = this;
+   // timestamp是整数，否则要parseInt转换,不会出现少个0的情况
+    var time = new Date(timestamp);
+    var year = time.getFullYear();
+    var month = time.getMonth()+1;
+    var date = time.getDate();
+    var hours = time.getHours();
+    var minutes = time.getMinutes();
+    var seconds = time.getSeconds();
+    return year+'年'+self.add(month)+'月'+self.add(date)+'日 '+self.add(hours)+':'+self.add(minutes)+':'+self.add(seconds);
+   }
 }
 export default workspace

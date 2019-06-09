@@ -50,17 +50,16 @@
           <div class="text item"><span>申请时间：</span><span>{{returnOrderInfo.createtime}}</span></div>
           <div class="text item"><span>退款编号：</span><span>{{returnOrderInfo.amount}}</span></div>
         </el-card>
-        <div v-if="returnOrderInfo.returnStatus == 2 || returnOrderInfo.returnStatus == 3" class="return-no">
+        <div v-if="returnOrderInfo.returnStatus == 3" class="return-no">
             <div class="return-title">信息补充</div> 
             <el-row>
               <el-col :span="6"><div class="grid-content bg-purple">快递单号：</div></el-col>
-              <el-col :span="12"><el-input placeholder="请输入快递单号" v-model="returnOrderInfo.couriernumber" clearable></el-input></el-col>
-              <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+              <el-col :span="18"><el-input placeholder="请输入快递单号" v-model="returnOrderInfo.couriernumber" clearable></el-input></el-col>
             </el-row>    
         </div>
         <!-- <el-button class="btn cancel_btn" @click="back">返回</el-button> -->
         <div class="returnBtn">
-          <el-button v-if="returnOrderInfo.couriernumber? false : true" class="btn ok_btn" type="defualt"  @click="submit">提交</el-button>
+          <el-button v-if="(returnOrderInfo.couriernumber==null? true : false) && returnOrderInfo.returnStatus == 3 " class="btn ok_btn" type="defualt"  @click="submit">提交</el-button>
           <el-button class="btn ok_btn" type="primary"  @click="back">返回</el-button>  
         </div>
 
@@ -111,6 +110,7 @@ import workspace from '../../common.js'
             userid: workspace.getCookie().name,
             id: self.id
         }
+        debugger
         this.$store.dispatch('address/getReturnOrderDetail', param).then(res => {
         self.detailInfo = res.data[0];
         console.log('数据:'+res);
@@ -128,7 +128,8 @@ import workspace from '../../common.js'
                 self.returnOrderInfo.status = res.data.return.status,
                 self.returnOrderInfo.unit = res.data.detailInfo.unit,
                 self.returnOrderInfo.returnReason = res.data.return.returnreason  //退货原因//必填
-                 self.returnOrderInfo.returnStatus = res.data.return.status
+                self.returnOrderInfo.returnStatus = res.data.return.status,
+                self.returnOrderInfo.couriernumber = res.data.return.couriernumber
                 // self.detailInfo.returnType: '', //退货类型//必填
                 // self.detailInfo.userName: '',  //用户名//非必填
                 // self.detailInfo.userPhone: ''  //电话//非必填
@@ -138,7 +139,6 @@ import workspace from '../../common.js'
     methods: {
       //快递信息提交
       submit(){
-        debugger
         let self = this;
         let param = {
           id:self.id,
@@ -166,7 +166,7 @@ import workspace from '../../common.js'
      //时间戳转化成时间格式
       timeFormat(timestamp){
         var self = this;
-      //timestamp是整数，否则要parseInt转换,不会出现少个0的情况
+      // timestamp是整数，否则要parseInt转换,不会出现少个0的情况
         var time = new Date(timestamp);
         var year = time.getFullYear();
         var month = time.getMonth()+1;
@@ -175,7 +175,7 @@ import workspace from '../../common.js'
         var minutes = time.getMinutes();
         var seconds = time.getSeconds();
         return year+'年'+self.add(month)+'月'+self.add(date)+'日 '+self.add(hours)+':'+self.add(minutes)+':'+self.add(seconds);
-    }
+      }
 
     }
   }
@@ -315,7 +315,7 @@ import workspace from '../../common.js'
     /* border-radius: 5px; */
     /* border: 1px solid #ddd; */
     padding: 18px 20px;
-    line-height: 30px;
+    line-height: 40px;
     margin: 0;
     border-top:1px solid #ddd;
 }

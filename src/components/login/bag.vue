@@ -9,7 +9,7 @@
           <!--暂不考虑全选，多选-->
           <el-col :span="2">
             <el-checkbox-group v-model="checkedLists" @change="handleCheckedListsChange">          
-              <el-checkbox :label="item.id">
+              <el-checkbox :label="item.id" :key="item.id">
               </el-checkbox>
             </el-checkbox-group> 
           </el-col>
@@ -44,14 +44,23 @@
       </div>   
     </div>
     <div class="pay" v-if="!showToLogin && bagList.length > 0">   
-      <div style="" class="pat_content">    
+      <el-row class="pay_content">
+        <el-col :span="18">
+          <p class="total_number">数量<span class="showPay"> {{totalNmubel}} </span></p>
+          <p class="total"><sub>不含运费</sub>合计：<span>RMB  <span  class="showPay"> {{totalCost}} </span></span></p>
+        </el-col>
+        <el-col :span="6" style="    margin-top: 5px;">
+          <el-button round type="primary" size="small" @click="toPay">立即支付</el-button>
+        </el-col>
+      </el-row>
+      <!-- <div style="" class="pat_content">    
         <div class="total_div">
           <p class="total_number">数量<span>{{totalNmubel}}</span></p>
           <p class="total_pay">运费<span>RMB  {{totalPay}}</span></p> 
           <p class="total">总计<span>RMB  {{totalCost}}</span></p>       
         </div>
         <el-button class="btn login_btns" type="primary" @click="toPay">立即支付</el-button>
-      </div>
+      </div> -->
     </div>
     <div class="bag_none" v-if="!showToLogin && bagList.length === 0">      
       <p>您的购物袋暂无单品</p>
@@ -234,11 +243,12 @@ export default {
           me.totalNmubel = this.bagList.length
           this.totalPayFun(this.bagList)
         } else {
+          this.checkedLists = []
           me.totalNmubel = 0
           me.totalCost = 0
           this.bagList.forEach(el => {
             me.$set(el, 'showAmount', true)
-          })
+          })        
         } 
       },
       handleCheckedListsChange(value) {
@@ -281,6 +291,7 @@ export default {
         me.totalNmubel = 0 // 总数量
         me.totalCost = 0 // 总计
         me.totalPay = 0 // 总运费
+        debugger
         val.forEach(item => {
           me.$set(item, 'showAmount', false)
           // me.totalPay = me.totalPay + parseFloat(item.tagprice)
@@ -289,7 +300,7 @@ export default {
           // 是否考虑运费
           // me.totalCost = me.totalCost + (parseInt(1) * parseFloat(item.tagprice)) + parseFloat(item.pay)
         })
-        me.totalCost = workspace.thousandBitSeparator(me.totalCost)
+        me.totalCost = workspace.thousandBitSeparator(me.totalCost.toFixed(2))
       }
     }
   }
@@ -300,6 +311,9 @@ export default {
 .bag /deep/ .el-checkbox{
     display: inline-block;
     width: 100%;
+}
+.bag_listS{
+  margin-bottom:52px;
 }
 .bag_list /deep/ .el-input-number{
   width: 0.8rem;
@@ -341,17 +355,35 @@ export default {
   width: 100%;
   bottom: 0;
   z-index: 100;
-  margin-bottom: .18rem;
+  margin-bottom: .05rem;
   
-  padding-left:10px;
-  padding-right:10px;
+  /* padding-left:10px;
+  padding-right:10px; */
 }
-.pay .pat_content{
+/* .pay .pat_content{
   border-top: 1px solid #EFDED1;
   width:100%;padding:0 18px;text-align:left;
   -moz-box-shadow:2px 2px 5px #333333; -webkit-box-shadow:2px 2px 5px #333333; box-shadow:2px 2px 5px #333333;
   padding-bottom: .18rem;
   border-radius: 3px;
   background: #fff;
+} */
+.pay .pay_content {
+    background: #fff;
+    /* box-shadow: 2px 2px 5px #333333; */
+    padding: 5px;
+    /* border: 1px solid red; */
+    width: 100%;
+    border-top: 1px solid #E4E7ED;
+    border-bottom: 1px solid #E4E7ED;
+    text-align: right;
+}
+.total sub{
+  color:#999;
+  margin-right:5px;
+}
+.showPay{
+  font-weight: bold;
+  color: #c5a480;
 }
 </style>

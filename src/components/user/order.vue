@@ -11,6 +11,9 @@
                 <div>
                     <span class="bag_color"> <span  class="bag_code">编号  {{item.productid}}</span></span>
                 </div>
+                <div>
+                    <div><span>{{ item.createtime | workspace}}</span></div>
+                </div>
                 <div style="height: 0.2rem; margin-top: 0.05rem;">
                     <div class="bag_size">
                         <span class="txt_right">共 {{item.amount}}件商品  合计 RMB {{total(item)}}</span>
@@ -77,7 +80,15 @@ export default {
         }},
     created() {
     },
+    filters: {
+         workspace(val) {
+            return workspace.timeFormat(val)
+        },
+    },
     methods: {
+        // workspace(val) {
+        //     return workspace.timeFormat(val)
+        // },
         total(val) {
             let data = parseInt(val.amount) * parseFloat(val.price)
             return workspace.thousandBitSeparator(data)
@@ -127,7 +138,7 @@ export default {
         },
          //跳转退货详情
         returnOrder(val){
-            this.$router.push(`/cancelOrder/${val.orderid}`)
+            this.$router.push(`/cancelOrder/${val.id}`)
         },
         confirm(val) {
             let me = this

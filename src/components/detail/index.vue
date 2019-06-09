@@ -19,20 +19,20 @@
         </div>  
       </div>
       <div class="detail_bts">
-      <el-cascader placeholder="选择颜色和尺寸" class="color_select"
+      <!--<el-cascader placeholder="选择颜色和尺寸" class="color_select"
         expand-trigger="hover"
         :options="detailInfo.choice"
         v-model="detail.color" change-on-select
         @change="handleChange">
-      </el-cascader>
-      <!-- <el-select v-model="detail.color" placeholder="选择颜色" class="color_select" @change="handlerSelectColor">
+      </el-cascader>-->
+      <el-select v-model="detail.color" placeholder="选择颜色" class="color_select" @change="handlerSelectColor">
           <el-option
             v-for="item in detailInfo.choice"
             :key="item.productid"
             :label="item.color"
             :value="item.productid">
           </el-option>
-        </el-select>-->
+        </el-select>
         <span class="req" v-if="showColor">请选择颜色</span>
         <el-button class="btn ok_btn" type="primary" @click="toBuy">立即选购</el-button>
         <el-button class="btn addBag_btn" @click="toBag">加入购物袋</el-button>
@@ -77,7 +77,7 @@
           <div v-if="sizeLists.length > 0">
             <div class="select_size"><span class="select_size">选择尺码</span><span style="color: red;;margin-left:0.1rem;font-weight:normal" v-if="sizeTip">请选择尺码</span></div>
             <div v-for="(item, index) in sizeChoiceList" :key="index" @click="sizeChoiceFunc">
-              <p></p><span></span>
+              <p></p>
             </div>   
           </div>                     
         </div>
@@ -282,16 +282,16 @@ export default {
         let price = workspace.thousandBitSeparator(state.detail.detailInfo.tagprice)
         state.detail.detailInfo.tagprice && (this.$set(state.detail.detailInfo, 'tagprice', price))
         this.desc  = state.detail.detailInfo.describe
-        let colorList = []
-        state.detail.detailInfo.choice.forEach(el => {
-          let obj = {
-            value: el.productid,
-            label: el.color,
-            children: []
-          }
-          colorList.push(obj)
-        })
-        state.detail.detailInfo.choice = colorList
+        // let colorList = []
+        // state.detail.detailInfo.choice.forEach(el => {
+        //   let obj = {
+        //     value: el.productid,
+        //     label: el.color,
+        //     children: []
+        //   }
+        //   colorList.push(obj)
+        // })
+        // state.detail.detailInfo.choice = colorList
         this.sizeChoiceList = state.detail.detailInfo.choice
         // this.colorList = this.desc.coloravailable.split(" ")
         // this.weightList = this.desc.weight.split(" ")
@@ -470,7 +470,8 @@ export default {
       let me = this
       if (this.flag === 'add') { // 加入购物车
         let param = {
-          prodid: this.detail.color.join(),
+          // prodid: this.detail.color.join(),
+          prodid: this.detail.color,
           userid: workspace.getCookie().name,
           amount: "1",
           status: "1"
@@ -494,7 +495,8 @@ export default {
       } else { // 立即支付 默认数量传1
         let param = {
           data: [{
-            productid: this.detail.color.join(),
+            // productid: this.detail.color.join(),
+            productid: this.detail.color,
             price: this.detailInfo.tagprice.replace(',', ''),
             status: '未支付',
             amount: 1,
