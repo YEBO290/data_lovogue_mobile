@@ -183,7 +183,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         post(api.insertReturn, param).then((res) => {
-          debugger
           // context.commit('backData', res)
           resolve(res)
         }).catch((err) => {

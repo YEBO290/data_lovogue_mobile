@@ -34,7 +34,6 @@ export default {
   methods:{
     checkedOne (fruitId, index) {
       let me = this
-      debugger
         if(this.checkedData[index]){
           this.$set(this.checkedData, index, false)
         }else {

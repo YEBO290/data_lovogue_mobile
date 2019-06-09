@@ -131,7 +131,6 @@ import workspace from '../../common.js'
           self.returnOrderInfo.returnReason = res.data.return.returnreason  //退货原因//必填
           self.returnOrderInfo.returnStatus = res.data.return.status
           self.returnOrderInfo.couriernumber = res.data.return.couriernumber
-          debugger
           if(self.returnOrderInfo.returnStatus ==2 && (self.returnOrderInfo.couriernumber==null || self.returnOrderInfo.couriernumber=="")){
             self.submitStatus = true
           }else{
