@@ -1,10 +1,17 @@
 <template>
   <div class="user">
     <el-row class="userMessage" >
-        <el-col :span="4"><span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span></el-col>
+        <div class="userInfo">
+            <span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span>
+            <p style="font-size:14px;height: 40px;line-height: 40px;margin-right:20px;"><span style="height: 40px;line-height:40px;display: inline-block;
+    position: relative;top: -15px;">您好，</span><span style="overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;white-space: nowrap;max-width: 150px;height: 40px;line-height:40px;display: inline-block;">{{user}}</span></p>
+            <p style=" width: 2px;height: 20px;background: #000;margin-top: 10px;margin-right: 10px;"></p>
+            <a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a>
+        </div>
+        <!--<el-col :span="4"><span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span></el-col>
         <el-col :span="7"><p style="font-size:14px;height: 40px;line-height: 40px;">您好，{{user}}</p></el-col>
         <el-col :span="1" style="font-size: 13px;height: 40px;line-height: 40px;margin-left:5px;">|</el-col>
-        <el-col :span="6"><a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a></el-col>
+        <el-col :span="6"><a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a></el-col>-->
     
     </el-row>
     <div class="listMessageOne">
@@ -220,9 +227,10 @@ export default {
 
 <style scoped>
 .userImg{
-    width: 70%;
+    width: 10%;
     display: inline-block;
     border-radius: 50%;
+    margin-right:10px;
 }
 .list{
     text-align: left;
@@ -331,5 +339,9 @@ export default {
     background-color: #c5a480;
     z-index: 1;
     display: none;
+}
+.userInfo{
+    display: flex;
+    width: 100%;
 }
 </style>

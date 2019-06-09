@@ -299,6 +299,7 @@ export default {
         // this.selectColor = this.desc.coloravailable || []
         // this.selectSize = this.desc.sizenum || []
         // this.selectWeight = this.desc.weight || []
+        this.detail.color = state.detail.detailInfo.choice.length == 1? state.detail.detailInfo.choice[0] : ''
         return state.detail.detailInfo
       },
       descDetail: state => {
