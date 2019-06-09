@@ -18,14 +18,14 @@
         </div>
       </div>
       <div class="recommend_list">
-        <p class="recommend">特辑单品推荐</p>
+        <p class="recommend">特辑搭配单品</p>
         <el-row :gutter="5">
             <el-col :span="8" v-for="(item, index) in recommendList" :key="index" class="recommend_list_div">
               <div class="grid-content bg-purple" @click="toDetail(item)">
                 
                 <img :src="item.imgpath" style="width:1.1rem;height:1.47rem;display:block;background:#fff;">
                 <div class="recommend_line"></div>
-                <p class="recommend_text">{{item.name}}</p>
+                <p class="recommend_text">{{item.typeno}}</p>
               </div>
             </el-col>
         </el-row>
@@ -89,11 +89,11 @@ export default {
     }
     this.$store.dispatch('detailList/querySpecialImg', param) // 获取特辑图片
     let params = {
-      typeno: this.id,
+      prodname: this.id,
     }
     this.$store.dispatch('detailList/queryRecommendList', params).then(res =>{
       var self = this;
-      self.recommendList = res;
+      self.recommendList = res.carousel;
     })
   },
   methods: {

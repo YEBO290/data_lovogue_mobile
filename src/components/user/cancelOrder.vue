@@ -1,11 +1,11 @@
 <template>
     <div class="reject"> 
       <div class="reject-status">
-        <div v-if="returnOrderInfo.shipstatus == 0 ">不受理</div>
-        <div v-if="returnOrderInfo.shipstatus == 1 ">受理中</div>
-        <div v-if="returnOrderInfo.shipstatus == 2 ">已受理</div>
-        <div v-if="returnOrderInfo.shipstatus == 3 ">已完成</div>
-        <div v-if="returnOrderInfo.shipstatus == 9 ">异常</div>
+        <div v-if="returnOrderInfo.returnStatus == 0 ">不受理</div>
+        <div v-if="returnOrderInfo.returnStatus == 1 ">受理中</div>
+        <div v-if="returnOrderInfo.returnStatus == 2 ">已受理</div>
+        <div v-if="returnOrderInfo.returnStatus == 3 ">已完成</div>
+        <div v-if="returnOrderInfo.returnStatus == 9 ">异常</div>
         <div>{{returnOrderInfo.defaultTime}}</div>
       </div>
       <div class="reject-msg"><span>退款总金额</span><span class="reject-price">￥ {{returnOrderInfo.price}}</span></div> 

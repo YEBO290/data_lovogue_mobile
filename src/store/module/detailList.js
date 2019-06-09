@@ -39,7 +39,7 @@ const actions = {
   queryRecommendList (context, param) {
     return new Promise((resolve, reject) => {
       let params = param || {}
-      post(api.recommend, params).then((res) => {
+      post(api.getScreenFeature, params).then((res) => {
         context.commit('recommendList', res.data)
         resolve(res.data)
       }).catch((err) => {
