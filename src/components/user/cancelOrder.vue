@@ -50,16 +50,17 @@
           <div class="text item"><span>申请时间：</span><span>{{returnOrderInfo.createtime}}</span></div>
           <div class="text item"><span>退款编号：</span><span>{{returnOrderInfo.amount}}</span></div>
         </el-card>
-        <div v-if="returnOrderInfo.returnStatus == 3" class="return-no">
+        <div v-if="returnOrderInfo.returnStatus == 2" class="return-no">
             <div class="return-title">信息补充</div> 
             <el-row>
               <el-col :span="6"><div class="grid-content bg-purple">快递单号：</div></el-col>
-              <el-col :span="18"><el-input placeholder="请输入快递单号" v-model="returnOrderInfo.couriernumber" clearable></el-input></el-col>
+              <el-col :span="18"><el-input v-if="isView == false" placeholder="请输入快递单号" v-model="returnOrderInfo.couriernumber" clearable :disabled="isView"></el-input></el-col>
+              <el-col :span="18"><span v-if="isView == true">{{returnOrderInfo.couriernumber}}</span></el-col>
             </el-row>    
         </div>
         <!-- <el-button class="btn cancel_btn" @click="back">返回</el-button> -->
         <div class="returnBtn">
-          <el-button v-if="(returnOrderInfo.couriernumber==null? true : false) && returnOrderInfo.returnStatus == 3 " class="btn ok_btn" type="defualt"  @click="submit">提交</el-button>
+          <el-button v-if="submitStatus" class="btn ok_btn" type="defualt"  @click="submit">提交</el-button>
           <el-button class="btn ok_btn" type="primary"  @click="back">返回</el-button>  
         </div>
 
@@ -101,7 +102,9 @@ import workspace from '../../common.js'
                 defaultTime:'', //退货订单时间
                 returnStatus:'' , //退货状态
                 couriernumber:''  //快递单号
-          }
+          },
+          submitStatus:false,
+          isView:false
       }
     },
     created(){
@@ -110,29 +113,31 @@ import workspace from '../../common.js'
             userid: workspace.getCookie().name,
             id: self.id
         }
-        debugger
         this.$store.dispatch('address/getReturnOrderDetail', param).then(res => {
-        self.detailInfo = res.data[0];
-        console.log('数据:'+res);
-                self.returnOrderInfo.defaultTime = self.timeFormat(res.data.return.statustime),
-                self.returnOrderInfo.advancebooking = res.data.detailInfo.advancebooking,
-                self.returnOrderInfo.amount = res.data.detailInfo.amount,
-                self.returnOrderInfo.createtime = self.timeFormat(res.data.detailInfo.createtime),
-                self.returnOrderInfo.description = res.data.detailInfo.description,
-                self.returnOrderInfo.id = res.data.return.id,
-                self.returnOrderInfo.imgpath = res.data.prod.imgpath,
-                self.returnOrderInfo.name = res.data.prod.productname,
-                self.returnOrderInfo.productid = res.data.detailInfo.productid
-                self.returnOrderInfo.price = res.data.detailInfo.price,
-                self.returnOrderInfo.shipstatus = res.data.return.shipstatus,
-                self.returnOrderInfo.status = res.data.return.status,
-                self.returnOrderInfo.unit = res.data.detailInfo.unit,
-                self.returnOrderInfo.returnReason = res.data.return.returnreason  //退货原因//必填
-                self.returnOrderInfo.returnStatus = res.data.return.status,
-                self.returnOrderInfo.couriernumber = res.data.return.couriernumber
-                // self.detailInfo.returnType: '', //退货类型//必填
-                // self.detailInfo.userName: '',  //用户名//非必填
-                // self.detailInfo.userPhone: ''  //电话//非必填
+          self.detailInfo = res.data[0];
+          self.returnOrderInfo.defaultTime = self.timeFormat(res.data.return.statustime)
+          self.returnOrderInfo.advancebooking = res.data.detailInfo.advancebooking,
+          self.returnOrderInfo.amount = res.data.detailInfo.amount
+          self.returnOrderInfo.createtime = self.timeFormat(res.data.detailInfo.createtime)
+          self.returnOrderInfo.description = res.data.detailInfo.description
+          self.returnOrderInfo.id = res.data.return.id
+          self.returnOrderInfo.imgpath = res.data.prod.imgpath
+          self.returnOrderInfo.name = res.data.prod.productname
+          self.returnOrderInfo.productid = res.data.detailInfo.productid
+          self.returnOrderInfo.price = res.data.detailInfo.price
+          self.returnOrderInfo.shipstatus = res.data.return.shipstatus
+          self.returnOrderInfo.status = res.data.return.status
+          self.returnOrderInfo.unit = res.data.detailInfo.unit
+          self.returnOrderInfo.returnReason = res.data.return.returnreason  //退货原因//必填
+          self.returnOrderInfo.returnStatus = res.data.return.status
+          self.returnOrderInfo.couriernumber = res.data.return.couriernumber
+          debugger
+          if(self.returnOrderInfo.returnStatus ==2 && (self.returnOrderInfo.couriernumber==null || self.returnOrderInfo.couriernumber=="")){
+            self.submitStatus = true
+          }else{
+            self.submitStatus = false
+            self.isView = true
+          }
 
       })
     },
@@ -147,10 +152,11 @@ import workspace from '../../common.js'
         this.$store.dispatch('address/updataReturnOrder',param).then(res => {
            if (res.err == 0) {
               self.$message({
-                showClose: true,
+                showClose: false,
                 message: '提交成功',
                 type: 'success'
-              });       
+              });
+              this.$router.push('/user')       
             } else {
               self.$message({
                 message: '操作失败!',
