@@ -45,9 +45,9 @@ export default {
 </script>
 <style scoped>
 .top_e{
-  position:fixed;right:10px;bottom:60px;
+  position:fixed;right:10px;bottom:15%;
   background:rgba(204,200,255,0.6);
-  border-radius:15px;
+  border-radius:50%;
   cursor:pointer;
   display:none;
   width:60px;

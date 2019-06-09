@@ -50,8 +50,25 @@
           <div class="text item"><span>申请时间：</span><span>{{returnOrderInfo.createtime}}</span></div>
           <div class="text item"><span>退款编号：</span><span>{{returnOrderInfo.amount}}</span></div>
         </el-card>
+        <el-collapse accordion class="return-addr">
+          <el-collapse-item title="退货地址">
+            <div class="returnAddr-content">
+              <div class="returnAddr-content-bg"><img src="../../assets/image/logoWx.png" alt=""><div style="text-align:center;">关注公众号</div></div>
+              <div class="returnAddr-content-text">
+                <ul>
+                  <li>微信公众号ID：gh_ac5d2c91045b</li>
+                  <li>公司电话：0755-82174455</li>
+                  <li>商务电话：13631057040</li>
+                  <li>地址：中国广东省深圳市罗湖区南湖路3005号国贸商住大厦16F</li>
+                </ul>
+              </div>
+            </div>
+
+          </el-collapse-item>
+        </el-collapse>
         <div v-if="returnOrderInfo.returnStatus == 2" class="return-no">
-            <div class="return-title">信息补充</div> 
+            <div class="return-title" v-if="isView == false">快递信息补充</div> 
+            <div class="return-title" v-if="isView == true">快递信息</div>
             <el-row>
               <el-col :span="6"><div class="grid-content bg-purple">快递单号：</div></el-col>
               <el-col :span="18"><el-input v-if="isView == false" placeholder="请输入快递单号" v-model="returnOrderInfo.couriernumber" clearable :disabled="isView"></el-input></el-col>
@@ -331,5 +348,23 @@ import workspace from '../../common.js'
   border: 1px solid #ddd;
   margin-top: 5px;
   border-radius: 5px;
+}
+.return-addr /deep/ .el-collapse-item .el-collapse-item__header {
+  padding-left: .1rem;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+.returnAddr-content-bg {
+  width: 100px;
+  float: left;
+  margin-right: 15px;
+}
+.returnAddr-content-bg img {
+  width: 100px;
+  height: 100px;
+}
+.returnAddr-content {
+  padding: .15rem;
+  font-size: 12px;
 }
 </style>
