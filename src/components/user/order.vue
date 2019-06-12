@@ -27,6 +27,7 @@
                     <el-button round style="margin-right:15px;" @click="cancelOrder(item)">取消订单</el-button><el-button round type="primary" @click="toBuy(item)">付款</el-button>
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='2'">
+                <el-button round style="margin-right:5px;border-color:#ff5000;" @click="viewStatus(item)">物流状态</el-button>
                 <el-button round style="margin-right:5px;" @click="rejectOrder(item)">退货/退款</el-button>
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='3'">
@@ -53,6 +54,21 @@
                 </div>
             </div>
         </el-dialog>
+        <el-dialog v-if="dialogPro == 2" title="物流状态" :visible.sync="dialogTableVisible" class="logistics-status">
+            <el-steps :active="0" align-center  direction="vertical">
+                <el-step title="待发货" finish description="请您耐心等待，我们将尽快给您安排发货！"></el-step>
+                <el-step title="已发货" wait></el-step>
+                <el-step title="已收货" wait  ></el-step>
+            </el-steps>
+        </el-dialog>
+        <el-dialog v-if="dialogPro == 3" title="物流状态" :visible.sync="dialogTableVisible" class="logistics-status">
+            <el-steps :active="1" align-center  direction="vertical">
+                <el-step title="待发货" finish description=""></el-step>
+                <el-step title="已发货" v-if="couriernumber" process v-bind:description="'快递单号：'+couriernumber"></el-step>
+                <el-step title="已发货" v-if="!couriernumber" process description="快递单号：待录入..."></el-step>
+                <el-step title="已收货" wait  ></el-step>
+            </el-steps>
+        </el-dialog>
   </div>
 </template>
 
@@ -64,7 +80,11 @@ export default {
       return {
         orderid: '',
         dialogVisible: false,
-        selectedData: ''
+        selectedData: '',
+        dialogTableVisible:false,
+        couriernumber:'',
+        dialogPro:'',
+
       }
     },
     props: {
@@ -154,6 +174,14 @@ export default {
             //     me.$emit('cancelOrder', val)
             // }).catch(() => {      
             // })
+        },
+        viewStatus(item){
+            debugger
+            let self = this;
+            self.dialogTableVisible = true;
+            self.couriernumber = item.couriernumber;
+            self.dialogPro = item.shipstatus;
+            
         }
     }
 }
@@ -243,6 +271,32 @@ export default {
 .divider {
     background-color: #dcdfe6;
     position: relative;
+}
+.logistics-status /deep/ .el-dialog {
+    width:90%!important;
+}
+.logistics-status /deep/ .el-dialog__headerbtn {
+    position: absolute;
+    top: .15rem!important;
+    right: 0.3rem!important;
+    padding: 0;
+    background: 0 0;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    font-size: 16px;
+}
+.logistics-status /deep/ .el-dialog__body {
+    height: 2.5rem;
+}
+.logistics-status /deep/ .el-dialog__body .el-step__title {
+   font-size:14px;
+}
+.logistics-status /deep/ .el-dialog__title {
+   font-size:15px;
+}
+.logistics-status /deep/ .el-dialog__body {
+  margin-left: .4rem
 }
 
 </style>
