@@ -27,7 +27,7 @@
                     <el-button round style="margin-right:15px;" @click="cancelOrder(item)">取消订单</el-button><el-button round type="primary" @click="toBuy(item)">付款</el-button>
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='2'">
-                <el-button round style="margin-right:5px;border-color:#ff5000;" @click="viewStatus(item)">物流状态</el-button>
+                <el-button round style="margin-right:5px;" type="primary" @click="viewStatus(item)">物流状态</el-button>
                 <el-button round style="margin-right:5px;" @click="rejectOrder(item)">退货/退款</el-button>
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='3'">
@@ -176,7 +176,6 @@ export default {
             // })
         },
         viewStatus(item){
-            debugger
             let self = this;
             self.dialogTableVisible = true;
             self.couriernumber = item.couriernumber;
@@ -298,5 +297,12 @@ export default {
 .logistics-status /deep/ .el-dialog__body {
   margin-left: .4rem
 }
-
+.order /deep/ .el-step__title.is-finish,.order /deep/ .el-step__head.is-finish,.order /deep/ .el-step__description.is-finish {
+    color: #EFDED1;
+    border-color: #EFDED1;
+}
+.order /deep/ .el-step__title.is-process,.order /deep/ .el-step__description.is-process,.order /deep/ .el-step__head.is-process{
+    color:#c5a480;
+    border-color: #c5a480;
+}
 </style>

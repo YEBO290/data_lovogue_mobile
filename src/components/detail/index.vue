@@ -310,7 +310,7 @@ export default {
   created() {
     this.searchDetail()
     let param = {
-      prodname: this.id,
+      typeno: this.id,
     }
     this.$store.dispatch('detailList/queryRecommendList', param)
     // this.$store.dispatch('detail/queryImg') // 获取轮播图列表 

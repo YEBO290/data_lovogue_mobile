@@ -80,8 +80,8 @@
       </el-collapse-item>
     </el-collapse> -->
     <div class="btns">
-      <el-button type="primary" style="margin-right:15px" @click="insertReturn">提 交</el-button>
-      <el-button @click="goback">取 消</el-button>
+      <el-button round size="medium" type="primary" style="margin-right:15px" @click="insertReturn">提 交</el-button>
+      <el-button round size="medium" @click="goback">取 消</el-button>
     </div>
   </div>
 </template>

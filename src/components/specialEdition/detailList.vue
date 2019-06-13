@@ -20,7 +20,7 @@
       <div class="recommend_list">
         <p class="recommend">特辑搭配单品</p>
         <el-row :gutter="5">
-            <el-col :span="8" v-for="(item, index) in recommendList" :key="index" class="recommend_list_div">
+            <el-col :span="8" v-for="(item, index) in specialImg.carousel" :key="index" class="recommend_list_div">
               <div class="grid-content bg-purple" @click="toDetail(item)">
                 
                 <img :src="item.imgpath" style="width:1.1rem;height:1.47rem;display:block;background:#fff;">
@@ -30,9 +30,9 @@
             </el-col>
         </el-row>
       </div>
-      <div class="backImg">
+      <!-- <div class="backImg">
         <el-row :style="{backgroundImage: 'url(' + specialImg.feature.backimg + ')', backgroundSize:'100%'}">
-          <!--<el-col :span="8" v-for="(item, index) in specialImg" :key="item.id" class="subImg">-->
+         <el-col :span="8" v-for="(item, index) in specialImg" :key="item.id" class="subImg">
           <el-col :span="8" v-for="(item, index) in specialImg.feature.click" :key="item.id" class="subImg" :style="{top: (item.row-1)*195/100+'rem', left:(item.col - 1)*33+'%'}">
             <div class="grid-content bg-purple showImg" @click.stop="showImg(item, index)">
               <transition name="el-zoom-in-center">    
@@ -48,7 +48,7 @@
             </div>
             </el-col>
         </el-row>
-      </div>
+      </div> -->
     </div>
 </template>
 
@@ -72,7 +72,7 @@ export default {
   },
   computed: mapState({
       queryImg: state => state.detailList.queryImg,
-      recommendList: state => state.detailList.recommendList,
+      // recommendList: state => state.detailList.recommendList,
       specialImg: state => state.detailList.specialImg,
       specialBackImg: state => {
         if (state.detailList.specialImg.length > 0) {
