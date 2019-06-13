@@ -1,12 +1,16 @@
 <template>
   <div class="user">
     <el-row class="userMessage" >
-        <div class="userInfo">
+        <div class="userInfo" v-if="user">
             <span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span>
-            <p style="font-size:14px;height: 40px;line-height: 40px;margin-right:20px;"><span style="height: 40px;line-height:40px;display: inline-block;
+                <p style="font-size:14px;height: 40px;line-height: 40px;margin-right:20px;"><span style="height: 40px;line-height:40px;display: inline-block;
     position: relative;top: -15px;">您好，</span><span style="overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;white-space: nowrap;max-width: 150px;height: 40px;line-height:40px;display: inline-block;">{{user}}</span></p>
-            <p style=" width: 2px;height: 20px;background: #000;margin-top: 10px;margin-right: 10px;"></p>
-            <a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a>
+                <p style=" width: 2px;height: 20px;background: #000;margin-top: 10px;margin-right: 10px;"></p>
+                <a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a>
+        </div>
+        <div class="userInfo" v-else>
+            <span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span>
+            <p class="login" @click="$router.push('/login')">登录</p>
         </div>
         <!--<el-col :span="4"><span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span></el-col>
         <el-col :span="7"><p style="font-size:14px;height: 40px;line-height: 40px;">您好，{{user}}</p></el-col>
@@ -14,7 +18,7 @@
         <el-col :span="6"><a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a></el-col>-->
     
     </el-row>
-    <div class="listMessageOne">
+    <div class="listMessageOne" v-if="user">
         <div class="list love" @click="$router.push('/loved')">
             <span>收藏</span><i class="el-icon-arrow-right"></i>
         </div>
@@ -26,7 +30,7 @@
         <div class="list">
             <span>我的订单</span><i class="el-icon-arrow-right"></i>
         </div>-->
-        <el-collapse v-model="activeNames">
+        <el-collapse v-model="activeNames"  v-if="user">
         <el-collapse-item title="我的订单" name="3">
         <div style="width:100%;height:1px;background:#ddd;"></div>
         <div class="orderList">
@@ -68,7 +72,7 @@
         </el-collapse-item>
         </el-collapse>
     <el-collapse>
-        <el-collapse-item title="设置" name="1">
+        <el-collapse-item title="设置" name="1"  v-if="user">
             <div @click="$router.push('/login')" class="toLogin">退出登录</div>
         </el-collapse-item>
     </el-collapse>
@@ -109,46 +113,48 @@ export default {
     }),
     created() {
         // 商品详情
-        let me = this
-        let param0 = this.queryOrder('0')
-        this.$store.dispatch('address/detailConfirmInfo', param0).then(res => {
-            this.caceldOrderList = res
-            this.caceldOrderList && (this.caceldOrderList.data.forEach(el => {
-                el.tagprice =  workspace.thousandBitSeparator(el.price)
-            }))
-        })
-        let param = this.queryOrder('1')
-        this.shistatus = '1'
-        this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
-            this.orderList = res
-            this.orderList && (this.orderList.data.forEach(el => {
-                el.tagprice =  workspace.thousandBitSeparator(el.price)
-            }))
-        })
-        let param2 = this.queryOrder('2')
-        this.shipstatus = '2'
-        this.$store.dispatch('address/detailConfirmInfo', param2).then(res => {
-            this.shippedOrderList = res
-            this.shippedOrderList && (this.shippedOrderList.data.forEach(el => {
-                el.tagprice =  workspace.thousandBitSeparator(el.price)
-            }))
-        })
-        let param3 = this.queryOrder('3')
-        this.shipstatus = '3'
-        this.$store.dispatch('address/detailConfirmInfo', param3).then(res => {
-            this.toReceivedOrderList = res
-            this.toReceivedOrderList && (this.toReceivedOrderList.data.forEach(el => {
-                el.tagprice =  workspace.thousandBitSeparator(el.price)
-            }))
-        })
-        let param4 = this.queryOrder('4')
-        this.shipstatus = '4'
-        this.$store.dispatch('address/detailConfirmInfo', param4).then(res => {
-            this.receivedOrderList = res
-            this.receivedOrderList && (this.receivedOrderList.data.forEach(el => {
-                el.tagprice =  workspace.thousandBitSeparator(el.price)
-            }))
-        })
+        if(this.user) {
+            let me = this
+            let param0 = this.queryOrder('0')
+            this.$store.dispatch('address/detailConfirmInfo', param0).then(res => {
+                this.caceldOrderList = res
+                this.caceldOrderList && (this.caceldOrderList.data.forEach(el => {
+                    el.tagprice =  workspace.thousandBitSeparator(el.price)
+                }))
+            })
+            let param = this.queryOrder('1')
+            this.shistatus = '1'
+            this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
+                this.orderList = res
+                this.orderList && (this.orderList.data.forEach(el => {
+                    el.tagprice =  workspace.thousandBitSeparator(el.price)
+                }))
+            })
+            let param2 = this.queryOrder('2')
+            this.shipstatus = '2'
+            this.$store.dispatch('address/detailConfirmInfo', param2).then(res => {
+                this.shippedOrderList = res
+                this.shippedOrderList && (this.shippedOrderList.data.forEach(el => {
+                    el.tagprice =  workspace.thousandBitSeparator(el.price)
+                }))
+            })
+            let param3 = this.queryOrder('3')
+            this.shipstatus = '3'
+            this.$store.dispatch('address/detailConfirmInfo', param3).then(res => {
+                this.toReceivedOrderList = res
+                this.toReceivedOrderList && (this.toReceivedOrderList.data.forEach(el => {
+                    el.tagprice =  workspace.thousandBitSeparator(el.price)
+                }))
+            })
+            let param4 = this.queryOrder('4')
+            this.shipstatus = '4'
+            this.$store.dispatch('address/detailConfirmInfo', param4).then(res => {
+                this.receivedOrderList = res
+                this.receivedOrderList && (this.receivedOrderList.data.forEach(el => {
+                    el.tagprice =  workspace.thousandBitSeparator(el.price)
+                }))
+            })
+        }
     },
     methods: {
         queryOrder(val) { 
@@ -325,6 +331,11 @@ export default {
 .user /deep/ .el-tabs__active-bar{
     width:20%!important;
 }
+.login{
+    font-size: 16px;
+    font-weight: bold;
+    color: #c5a480;
+}
 .toLogin{
     font-size: 12px;
     text-decoration: underline;
@@ -343,5 +354,7 @@ export default {
 .userInfo{
     display: flex;
     width: 100%;
+    height: 0.335rem;
+    line-height: 0.335rem;
 }
 </style>

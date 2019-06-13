@@ -86,6 +86,9 @@ export default {
     ...mapState({
   }),
   mounted() {
+    workspace.clearCookie()
+    this.$store.commit('login/lovesList', []) // 喜爱的列表查询
+    this.$store.commit('login/bagList', []) // 购物的列表查询
   },
   methods: {
     calcuMD5(val) {

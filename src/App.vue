@@ -92,7 +92,7 @@ html{height:100%;}
 #app{min-height:100%;margin:0;padding:0;position:relative;}
 .content{
     /* padding-bottom: 3.5rem; */
-    min-height: 6.15rem;
+    min-height: 4rem;
 }
 </style>
 <style scoped>
