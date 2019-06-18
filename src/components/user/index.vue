@@ -1,82 +1,82 @@
 <template>
-  <div class="user">
-    <el-row class="userMessage" >
-        <div class="userInfo" v-if="user">
-            <span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span>
-                <p style="font-size:14px;height: 40px;line-height: 40px;margin-right:20px;"><span style="height: 40px;line-height:40px;display: inline-block;
-    position: relative;top: -15px;">您好，</span><span style="overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;white-space: nowrap;max-width: 150px;height: 40px;line-height:40px;display: inline-block;">{{user}}</span></p>
-                <p style=" width: 2px;height: 20px;background: #000;margin-top: 10px;margin-right: 10px;"></p>
-                <a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a>
+    <div class="user">
+        <el-row class="userMessage" >
+            <div class="userInfo" v-if="user">
+                <span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span>
+                    <p style="font-size:14px;height: 40px;line-height: 40px;margin-right:20px;"><span style="height: 40px;line-height:40px;display: inline-block;
+        position: relative;top: -15px;">您好，</span><span style="overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;white-space: nowrap;max-width: 150px;height: 40px;line-height:40px;display: inline-block;">{{user}}</span></p>
+                    <p style=" width: 2px;height: 20px;background: #000;margin-top: 10px;margin-right: 10px;"></p>
+                    <a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a>
+            </div>
+            <div class="userInfo" v-else>
+                <span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span>
+                <p class="login" @click="$router.push('/login')">登录</p>
+            </div>
+            <!--<el-col :span="4"><span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span></el-col>
+            <el-col :span="7"><p style="font-size:14px;height: 40px;line-height: 40px;">您好，{{user}}</p></el-col>
+            <el-col :span="1" style="font-size: 13px;height: 40px;line-height: 40px;margin-left:5px;">|</el-col>
+            <el-col :span="6"><a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a></el-col>-->
+        
+        </el-row>
+        <div class="listMessageOne" v-if="user">
+            <div class="list love" @click="$router.push('/loved')">
+                <span>收藏</span><i class="el-icon-arrow-right"></i>
+            </div>
+            <div class="list addressList" @click="$router.push('/selectAddress')">
+                <span>收货地址</span><i class="el-icon-arrow-right"></i>
+            </div>
         </div>
-        <div class="userInfo" v-else>
-            <span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span>
-            <p class="login" @click="$router.push('/login')">登录</p>
-        </div>
-        <!--<el-col :span="4"><span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span></el-col>
-        <el-col :span="7"><p style="font-size:14px;height: 40px;line-height: 40px;">您好，{{user}}</p></el-col>
-        <el-col :span="1" style="font-size: 13px;height: 40px;line-height: 40px;margin-left:5px;">|</el-col>
-        <el-col :span="6"><a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a></el-col>-->
-    
-    </el-row>
-    <div class="listMessageOne" v-if="user">
-        <div class="list love" @click="$router.push('/loved')">
-            <span>收藏</span><i class="el-icon-arrow-right"></i>
-        </div>
-        <div class="list addressList" @click="$router.push('/selectAddress')">
-            <span>收货地址</span><i class="el-icon-arrow-right"></i>
-        </div>
-    </div>
     <!--<div class="listMessageTwo">
         <div class="list">
             <span>我的订单</span><i class="el-icon-arrow-right"></i>
         </div>-->
         <el-collapse v-model="activeNames"  v-if="user">
-        <el-collapse-item title="我的订单" name="3">
-        <div style="width:100%;height:1px;background:#ddd;"></div>
-        <div class="orderList">
-            <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane :label="'未付款 ' + '(' + orderList.data.length + ')'" name="first" >
-                    <p class="noData" v-if="orderList.data.length == 0">暂无数据</p>
-                    <div v-else>
-                        <order :orderList="orderList.data" :status="'1'" @editOrder="editOrder">    
-                        </order>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane :label="'处理中' + '(' + shippedOrderList.data.length + ')'" name="second" >
-                    <p class="noData" v-if="shippedOrderList.data.length == 0">暂无数据</p>
-                    <div v-else>
-                        <order :orderList="shippedOrderList.data"  :status="'2'"/>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane :label="'已到货' + '(' + toReceivedOrderList.data.length + ')'" name="third">
-                    <p class="noData" v-if="toReceivedOrderList.data.length == 0" >暂无数据</p>
-                    <div v-else>
-                        <order :orderList="toReceivedOrderList.data"  :status="'3'" @editOrder="editOrder"></order>
-                    </div>
-                </el-tab-pane>
-                
-                <el-tab-pane :label="'已取消' + '(' + caceldOrderList.data.length + ')'" name="zero">
-                    <p class="noData" v-if="caceldOrderList.data.length == 0">暂无数据</p>
-                    <div v-else>
-                        <order :orderList="caceldOrderList.data"  :status="'0'"/>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane :label="'退款/退货' + '(' + receivedOrderList.data.length + ')'" name="four">
-                    <p class="noData" v-if="receivedOrderList.data.length == 0">暂无数据</p>
-                    <div v-else>
-                        <order :orderList="receivedOrderList.data"  :status="'4'"/>
-                    </div>
-                </el-tab-pane>
-            </el-tabs>
-        </div>
-        </el-collapse-item>
+            <el-collapse-item title="我的订单" name="3">
+            <div style="width:100%;height:1px;background:#ddd;"></div>
+            <div class="orderList">
+                <el-tabs v-model="activeName" @tab-click="handleClick">
+                    <el-tab-pane :label="'未付款 ' + '(' + orderList.data.length + ')'" name="first" >
+                        <p class="noData" v-if="orderList.data.length == 0">暂无数据</p>
+                        <div v-else>
+                            <order :orderList="orderList.data" :status="'1'" @editOrder="editOrder">    
+                            </order>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane :label="'处理中' + '(' + shippedOrderList.data.length + ')'" name="second" >
+                        <p class="noData" v-if="shippedOrderList.data.length == 0">暂无数据</p>
+                        <div v-else>
+                            <order :orderList="shippedOrderList.data"  :status="'2'"/>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane :label="'已到货' + '(' + toReceivedOrderList.data.length + ')'" name="third">
+                        <p class="noData" v-if="toReceivedOrderList.data.length == 0" >暂无数据</p>
+                        <div v-else>
+                            <order :orderList="toReceivedOrderList.data"  :status="'3'" @editOrder="editOrder"></order>
+                        </div>
+                    </el-tab-pane>
+                    
+                    <el-tab-pane :label="'已取消' + '(' + caceldOrderList.data.length + ')'" name="zero">
+                        <p class="noData" v-if="caceldOrderList.data.length == 0">暂无数据</p>
+                        <div v-else>
+                            <order :orderList="caceldOrderList.data"  :status="'0'"/>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane :label="'退款/退货' + '(' + receivedOrderList.data.length + ')'" name="four">
+                        <p class="noData" v-if="receivedOrderList.data.length == 0">暂无数据</p>
+                        <div v-else>
+                            <order :orderList="receivedOrderList.data"  :status="'4'"/>
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
+            </el-collapse-item>
         </el-collapse>
-    <el-collapse>
-        <el-collapse-item title="设置" name="1"  v-if="user">
-            <div @click="$router.push('/login')" class="toLogin">退出登录</div>
-        </el-collapse-item>
-    </el-collapse>
-  </div>
+        <!-- <el-collapse>
+            <el-collapse-item title="设置" name="1"  v-if="user">
+                <div @click="$router.push('/login')" class="toLogin">退出登录</div>
+            </el-collapse-item>
+        </el-collapse> -->
+    </div>
 </template>
 
 <script>

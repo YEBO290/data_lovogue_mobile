@@ -9,10 +9,16 @@
           <span class="address_name">{{item.name}}</span>
           <span class="address_phone">{{item.phone}}</span>
           <div class="address_message">
-            <p style="word-break: break-all;">{{item.addressprovince}}{{item.addresscity}}{{item.addressdistrict}}{{item.address}}</p>
-            <span class="edit_list" @click="edit(item, index)">|  修改</span>
+            <div style="width:70%;">
+                <p style="word-break: break-all;">{{item.addressprovince}}{{item.addresscity}}{{item.addressdistrict}}{{item.address}}</p>
+            </div>
+            <div style="width:30%;">
+                <span class="edit_list" @click="edit(item, index)" style="margin-right:0.36rem;border-right:0.02rem solid;padding-right:0.08rem;">修改</span><span></span><span class="edit_list" @click="del(item, index)">删除</span>
+            </div>
+            <div style="clear:both;"></div>
+            <div class="line"></div>
           </div>
-        <div class="line"></div>
+        
       </div>
         <el-button class="btn ok_btn" type="primary" @click="back" style="margin-top:0.45rem;">返回</el-button>
     </el-form>
@@ -57,7 +63,44 @@ export default {
           param: param
         }})
         this.$set(this. editList, index, false)
-      }
+      },
+       del(val,index) {
+        let me = this
+        this.$confirm('是否确定删除该地址?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let param = {
+            id: me.id,
+            userid: workspace.getCookie().name,
+            status: 0
+          }
+          me.$store.dispatch('address/editAddress',param )
+            .then(function (res) {
+              if (res.msg > 0) {
+                me.$message({
+                  message: '删除成功',
+                  type: 'success'
+                })
+                me.$router.push('/selectAddress')
+              } else {
+                me.$message({
+                  message: '操作失败！',
+                  type: 'error'
+                })
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })        
+        })
+      },
     }
   }
 </script>

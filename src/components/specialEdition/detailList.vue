@@ -19,7 +19,7 @@
       </div>
       <div class="recommend_list">
         <p class="recommend">特辑搭配单品</p>
-        <el-row :gutter="5">
+        <!-- <el-row :gutter="5">
             <el-col :span="8" v-for="(item, index) in specialImg.carousel" :key="index" class="recommend_list_div">
               <div class="grid-content bg-purple" @click="toDetail(item)">
                 
@@ -28,7 +28,13 @@
                 <p class="recommend_text">{{item.typeno}}</p>
               </div>
             </el-col>
-        </el-row>
+        </el-row> -->
+        <el-carousel :interval="4000" type="card" height="1.63rem">
+          <el-carousel-item  v-for="(item, index) in specialImg.carousel" :key="index">
+             <img :src="item.imgpath" style="width:100%">
+          </el-carousel-item>
+        </el-carousel>
+
       </div>
       <!-- <div class="backImg">
         <el-row :style="{backgroundImage: 'url(' + specialImg.feature.backimg + ')', backgroundSize:'100%'}">

@@ -28,7 +28,7 @@
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='2'">
                 <el-button round style="margin-right:5px;" type="primary" @click="viewStatus(item)">物流状态</el-button>
-                <el-button round style="margin-right:5px;" @click="rejectOrder(item)">退货/退款</el-button>
+                <!-- <el-button round style="margin-right:5px;" @click="rejectOrder(item)">退货/退款</el-button> -->
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='3'">
                 <el-button round style="margin-right:5px;" @click="rejectOrder(item)">退货/退款</el-button>

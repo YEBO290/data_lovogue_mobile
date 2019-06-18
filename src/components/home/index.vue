@@ -1,13 +1,13 @@
 <template>
     <div class="home" id="home">   
       <div class="carousel_img">
-        <el-carousel :interval="4000" arrow="always" height="3.75rem">
+        <el-carousel :interval="4000" arrow="always" height="4.25rem">
           <el-carousel-item v-for="item in queryImg" :key="item.id">
             <div @click="toSpecialEditionList(item)">
               <img :src="item.value" style="width:100%;">
               <div class="img_opeation">
                 <h1 class="list_h1">{{item.name}}</h1>
-                <el-button class="img_list_btn" @click="toSpecialEditionList(item)">立即选购</el-button>
+                <!-- <el-button class="img_list_btn" @click="toSpecialEditionList2(item.prodlink)">{{item.name}}</el-button> -->
               </div>
             </div>
           </el-carousel-item>
@@ -25,7 +25,7 @@
         </el-row>
       </div> -->
       <div class="product_list">
-        <p class="product_list_titile">产品系列</p>
+        <!-- <p class="product_list_titile">产品系列</p> -->
           <div class="swiper-container">
             <div class="swiper-wrapper">
               <div v-for="item in productList" class="swiper-slide" :key="item.id"  @click="toProduct(item)">
@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="category_list">
-        <p class="category_list_titile">类别</p>
+        <!-- <p class="category_list_titile">类别</p> -->
         <el-row>
           <el-col v-for="item in categoryList" :key="item.id" class="category_list_img">
             <div class="grid-content bg-purple category_content" @click="toCategoryList(item)">
@@ -115,6 +115,10 @@ export default {
       // 跳转至特辑列表页
       this.$router.push(`/specialEdition/${val.id}`)
     },
+    toSpecialEditionList2(val) {
+      // 跳转至特辑列表页
+      this.$router.push(`/detailList/${val}`)
+    },
     toCategoryList(val) {
       // 跳转至类别列表页
       let name = val.prodlink
@@ -179,7 +183,7 @@ export default {
   }
   #home /deep/ .swiper-slide h5{
     position: absolute;
-    margin-top: -44px;
+    margin-top: -0.2rem;
     color: #EFDED1;
     width: 100%;
     text-align: center;
