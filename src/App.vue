@@ -93,6 +93,7 @@ html{height:100%;}
 .content{
     /* padding-bottom: 3.5rem; */
     min-height: 4rem;
+    margin-top: .5rem;
 }
 </style>
 <style scoped>

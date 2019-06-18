@@ -105,7 +105,9 @@ export default {
         line-height:0.18rem;
         background: #C5A480;
         padding:0.16rem 0.18rem;
-        position: relative;
+        position: fixed;
+        top: 0px;
+        z-index: 9999999;
     }
     /* .header_menu{
         position: absolute;
