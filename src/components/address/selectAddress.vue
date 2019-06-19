@@ -10,10 +10,10 @@
           <span class="address_phone">{{item.phone}}</span>
           <div class="address_message">
             <div style="width:70%;">
-                <p style="word-break: break-all;">{{item.addressprovince}}{{item.addresscity}}{{item.addressdistrict}}{{item.address}}</p>
+                <p style="word-break: break-all;"><span v-if="item.status== 2" class="sureAdd">默认</span>{{item.addressprovince}}{{item.addresscity}}{{item.addressdistrict}}{{item.address}}</p>
             </div>
             <div style="width:30%;">
-                <span class="edit_list" @click="edit(item, index)" style="margin-right:0.36rem;border-right:0.02rem solid;padding-right:0.08rem;">修改</span><span></span><span class="edit_list" @click="del(item, index)">删除</span>
+                <span class="edit_list" @click="edit(item, index)" style="margin-right:0.36rem;border-right:0.02rem solid;padding-right:0.08rem;">修改</span><span class="edit_list" @click="del(item, index)">删除</span>
             </div>
             <div style="clear:both;"></div>
             <div class="line"></div>
@@ -43,11 +43,19 @@ export default {
     created() {
       let param = {
         userid: workspace.getCookie().name,
-        status: ''
+        status: ""
       }
       this.$store.dispatch('address/queryAddressList', param)
     },
     methods: {
+      //获取地址列表
+      getAddressList() {
+        let param = {
+          userid: workspace.getCookie().name,
+          status: ""
+        }
+        this.$store.dispatch('address/queryAddressList', param)
+      },
       back(){
         this.$router.go(-1)
         // this.$router.push('/confirmAddress')
@@ -64,7 +72,7 @@ export default {
         }})
         this.$set(this. editList, index, false)
       },
-       del(val,index) {
+      del(val,index) {
         let me = this
         this.$confirm('是否确定删除该地址?', '提示', {
           confirmButtonText: '确定',
@@ -72,7 +80,7 @@ export default {
           type: 'warning'
         }).then(() => {
           let param = {
-            id: me.id,
+            id: val.id,
             userid: workspace.getCookie().name,
             status: 0
           }
@@ -83,7 +91,7 @@ export default {
                   message: '删除成功',
                   type: 'success'
                 })
-                me.$router.push('/selectAddress')
+                me.getAddressList()
               } else {
                 me.$message({
                   message: '操作失败！',
@@ -118,5 +126,13 @@ export default {
   border-top: none;
   border-left: none;
   border-right: none;
+}
+.sureAdd {
+  background: #d6d68f;
+  border: 1px solid #ccc;
+  padding: 1px 2px;
+  font-size: 12px;
+  border-radius: 0.05rem;
+  color:#e90e0e;
 }
 </style>

@@ -227,6 +227,7 @@ export default {
       colorTip: false,
       weightTip: false,
       noticeVisible: false,
+      inventory:'', //库存 0  无库存
       desc: {
           brand: '',
           category: '',
@@ -282,6 +283,7 @@ export default {
         let price = workspace.thousandBitSeparator(state.detail.detailInfo.tagprice)
         state.detail.detailInfo.tagprice && (this.$set(state.detail.detailInfo, 'tagprice', price))
         this.desc  = state.detail.detailInfo.describe
+        this.inventory = state.detail.detailInfo.inventory
         // let colorList = []
         // state.detail.detailInfo.choice.forEach(el => {
         //   let obj = {
@@ -400,6 +402,15 @@ export default {
     toBuy() { 
       if(!this.vaildFunc()) {
         return false
+      }
+      if(this.inventory == 0){
+        // alert('非常抱歉，该商品暂无库存！');
+        this.$message({
+          message: '非常抱歉，该商品暂无库存；我们将尽快补货上架，敬请期待哦。',
+          type: 'error',
+          duration:4000,
+        })
+        return;
       }
       // this.innerVisible = true
       this.flag = 'buy'

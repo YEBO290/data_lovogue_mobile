@@ -72,6 +72,7 @@
         <p>请注意，根据不同的银行，退款可能需要最长达 14 个工作日完成。退款将不包含您在订购时支付的运费。</p>
         <p class="sub_title sub_title_top">瑕疵品</p>
         <p>我们全力以完好无损的状态送达每一款商品，并希望您能满意在这里的每次购物。如果您收到了有瑕疵，或与网站描述完全不相符的商品，请尽快通知客服。我们将安排退货，并对瑕疵品进行全额退款。</p>                                                   
+        <div style="float:right;color:red;font-size:12px;"  @click="backOrder()">-> 返回我的订单</div>     
       </div>
       <!-- <p class="contact_txt" :class="{'active_static': id === 'termsConditions'}" @click="showDetail('termsConditions')">条款与条件</p> -->
       <div class="contact_detail" v-if="id === 'termsConditions'">{{contactDetail.termsConditions}}</div>
@@ -111,7 +112,7 @@
         <p>(a)如果决定更改隐私政策，我们会在本政策中、本公司网站中以及我们认为适当的位置发布这些更改，以便您了解我们如何收集、使用您的个人信息，哪些人可以访问这些信息，以及在什么情况下我们会透露这些信息。</p> 
         <p>(b)本公司保留随时修改本政策的权利，因此请经常查看。如对本政策作出重大更改，本公司会通过网站通知的形式告知。</p> 
         <p class="sub_txt"></p> 
-        <p>自己的个人信息，如联络方式或者邮政地址。请您妥善保护自己的个人信息，仅在必要的情形下向他人提供。如您发现自己的个人信息泄密，尤其是本应用用户名及密码发生泄露，请您立即联络本应用客服，以便本应用采取相应措施。</p>                           
+        <p>自己的个人信息，如联络方式或者邮政地址。请您妥善保护自己的个人信息，仅在必要的情形下向他人提供。如您发现自己的个人信息泄密，尤其是本应用用户名及密码发生泄露，请您立即联络本应用客服，以便本应用采取相应措施。</p>                      
       </div>
       <p class="contact_txt" :class="{'active_static': id === 'contact'}" @click="showDetail('contact')">联系我们</p>
       <address class="contact_detail" v-if="id === 'contact'">
@@ -256,6 +257,9 @@ export default {
     toResetPassWord() {
       this.$router.push('/resetPassMessage')
     },
+    backOrder() {
+      this.$router.push('/user')
+    },
     // 提交
     submitForm(formName) {
       let me = this
@@ -268,20 +272,28 @@ export default {
             username: me.ruleForm.name,
             value: me.ruleForm.message
           }
-          // 提交客服
-          me.$store.dispatch('login/saveCusService', param).then(res => {
-            if (res.msg > 0) {
-              me.$message({
-                message: '操作成功！',
-                type: 'success'
-              })
-            } else {
-              me.$message({
-                message: '操作失败！',
-                type: 'error'
-              })
-            }
-          })
+                // 提交客服
+                me.$store.dispatch('login/saveCusService', param).then(res => {
+                  if (res.msg > 0) {
+                    // me.$message({
+                    //   message: '操作成功！',
+                    //   type: 'success'
+                    // })
+                        this.$confirm('提交成功, 是否回到首页?', '提示', {
+                          confirmButtonText: '确定',
+                          cancelButtonText: '取消',
+                          type: 'warning'
+                        }).then(() => {
+                          this.$router.push('/home');  // 提交成功，回到首页     
+                        }).catch(() => {         
+                        });
+                  } else {
+                    me.$message({
+                      message: '操作失败！',
+                      type: 'error'
+                    })
+                  }
+                })
         } else {
           console.log('error submit!!')
           return false
