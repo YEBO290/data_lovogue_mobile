@@ -37,14 +37,22 @@
       </div>
       <div class="category_list">
         <!-- <p class="category_list_titile">类别</p> -->
-        <el-row>
+        <!-- <el-row>
           <el-col v-for="item in categoryList" :key="item.id" class="category_list_img">
             <div class="grid-content bg-purple category_content" @click="toCategoryList(item)">
               <img :src="item.value" style="width:100%;min-height:3.39rem;"/>
               <p class="category_list_img_name text-center">{{item.name}}</p>
             </div>
             </el-col>
-        </el-row>
+        </el-row> -->
+        <el-row :gutter="10">
+            <el-col :span="12"  v-for="(item, index) in categoryList" :key="item.id">
+              <div class="grid-content bg-purple" style="margin-bottom: 0.2rem;"  @click="toCategoryList(item)">
+                <img :src="item.value" style="width:100%;min-height:1.07rem;display:block;background:#fff;">
+                <p class="recommend_text" style="margin-top:0.1rem;">{{item.name}}</p>
+              </div>
+            </el-col>
+          </el-row>
       </div>
     </div>
 </template>
