@@ -2,7 +2,10 @@
     <div id="app">
         <header-tab/>
         <div class="content">
-            <router-view></router-view>   
+            <keep-alive>
+                <router-view :key="key"></router-view>
+            </keep-alive>
+            <!-- <router-view></router-view>    -->
         </div>
         <menuList class="menuList" id="menu" v-if="showMenu"/>
         <div class="content-footer" :class="{'bgr': bgr}" v-if="showFooter"> 
@@ -35,7 +38,10 @@ export default {
     computed: mapState({
         bgr: state => state.bgr,
         showMenu: state => state.showMenu,
-        showFooter: state => state.showFooter
+        showFooter: state => state.showFooter,
+        key(){
+	        return this.$route.path + Math.random();
+	    }
     }),
     created() {
         let me = this
