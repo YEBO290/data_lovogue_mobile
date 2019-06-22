@@ -31,7 +31,7 @@
         </el-row> -->
         <el-carousel :interval="4000" type="card" height="1.63rem">
           <el-carousel-item  v-for="(item, index) in specialImg.carousel" :key="index">
-             <img :src="item.imgpath" style="width:100%">
+             <img :src="item.imgpath" style="width:100%"  @click="toDetail(item)">
           </el-carousel-item>
         </el-carousel>
 
