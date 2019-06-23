@@ -122,7 +122,7 @@ export default {
         })
         return state.login.bagList
       },
-      recommendList: state => state.login.recommendList
+      // recommendList: state => state.login.recommendList
       // 传字符串参数 'count' 等同于 `state => state.count`
       // countAlias: 'count',
 
@@ -143,7 +143,13 @@ export default {
         status: "1"
       }
       this.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
-      // this.$store.dispatch('login/queryRecommendList') // 推荐的列表查询 
+      let params = {
+        typeno: "",
+      }
+      this.$store.dispatch('detailList/queryRecommendList', params).then(res =>{
+        var self = this;
+        self.recommendList = res.carousel;
+      }) // 推荐的列表查询 
       
     },
     methods: {

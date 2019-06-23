@@ -32,6 +32,7 @@
         <el-carousel :interval="4000" type="card" height="1.63rem">
           <el-carousel-item  v-for="(item, index) in specialImg.carousel" :key="index">
              <img :src="item.imgpath" style="width:100%"  @click="toDetail(item)">
+             <p>{{item.name}}</p>
           </el-carousel-item>
         </el-carousel>
 
@@ -79,7 +80,8 @@ export default {
   computed: mapState({
       queryImg: state => state.detailList.queryImg,
       // recommendList: state => state.detailList.recommendList,
-      specialImg: state => state.detailList.specialImg,
+      specialImg: function(state) {
+       return state.detailList.specialImg},
       specialBackImg: state => {
         if (state.detailList.specialImg.length > 0) {
           return state.detailList.specialImg[0].backpng

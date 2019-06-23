@@ -7,7 +7,10 @@
         <span class="menu_del">清除</span>
       </div>
       <menuList class="menu_list" v-if="showSubMenu"/>
-      <img src="~@/assets/image/timg.png" style="width:100%" v-if="categoryTotal == 0"/>
+      <!-- <img src="~@/assets/image/timg.png" style="width:100%" v-if="categoryTotal == 0"/> -->
+      <div v-if="categoryTotal == 0" style="padding-bottom:0.5rem;">
+        <img src="~@/assets/image/noData.png" style="width:100%" >
+      </div>
       <div v-else>
         <el-row :gutter="10" style="padding-top:17px;">
           <el-col :span="12" v-for="(item, index) in categoryList" :key="index">

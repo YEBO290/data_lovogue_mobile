@@ -9,26 +9,7 @@ const state = {
     total: 0
   },
   bagList: [],
-  recommendList: [{
-    url: require('../../assets/logo.png'),
-    code: 12345,
-    name: '女神耳环',
-    price: 230,
-    color: '银色'
-  },
-  {
-    url: require('../../assets/logo.png'),
-    code: 12345,
-    name: '女神耳环',
-    price: 230,
-    color: '银色'
-  },{
-    url: require('../../assets/logo.png'),
-    code: 12345,
-    name: '女神耳环',
-    price: 230,
-    color: '银色'
-  }],
+  recommendList: [],
   lovedNumber: 0, // 成功收藏的数量
   shopBagNumber: 0, // 购物袋数量
 

@@ -63,7 +63,7 @@ export default {
       toAddAdress() {
         this.$router.push('/address')
       },
-      edit(val, index) {        
+      edit(val, index) {    
         this.editInfo = val
         this.showEdit = true
         let param = encodeURIComponent(JSON.stringify(val))
@@ -74,7 +74,7 @@ export default {
       },
       del(val,index) {
         let me = this
-        this.$confirm('是否确定删除该地址?', '提示', {
+        this.$confirm('是否删除该地址?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

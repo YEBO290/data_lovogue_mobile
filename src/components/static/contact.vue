@@ -115,15 +115,30 @@
         <p>自己的个人信息，如联络方式或者邮政地址。请您妥善保护自己的个人信息，仅在必要的情形下向他人提供。如您发现自己的个人信息泄密，尤其是本应用用户名及密码发生泄露，请您立即联络本应用客服，以便本应用采取相应措施。</p>                      
       </div>
       <p class="contact_txt" :class="{'active_static': id === 'contact'}" @click="showDetail('contact')">联系我们</p>
-      <address class="contact_detail" v-if="id === 'contact'">
+      <!-- <address class="contact_detail" v-if="id === 'contact'"> -->
         <!--<div> <img src="~@/assets/image/lovogue.png" class="" /></div>-->
-        <strong>刘建新</strong><br>
+        <!-- <strong>刘建新</strong><br>
         电话： {{contactDetail.phone}}<br>
         地址： {{contactDetail.address}}<br>
         <strong class="wechat">微信客服</strong><br>
         服务时间： {{contactDetail.time}}
         <p></p>
-      </address>  
+      </address>   -->
+      <el-collapse accordion class="return-addr"  v-if="id === 'contact'">
+          <!-- <el-collapse-item title="退货地址"> -->
+            <div class="returnAddr-content">
+              <div class="returnAddr-content-bg"><img src="../../assets/image/logoWx.png" alt=""><div style="text-align:center;">关注公众号</div></div>
+              <div class="returnAddr-content-text" style="margin-top: 0.15rem;">
+                <ul>
+                  <li>公司电话：0755-82174455</li>
+                  <li>商务电话：13631057040</li>
+                  <li>地址：中国广东省深圳市罗湖区南湖路3005号国贸商住大厦16F</li>
+                </ul>
+              </div>
+            </div>
+
+          <!-- </el-collapse-item> -->
+        </el-collapse>
     </div>
 </template>
 <script>
@@ -415,5 +430,23 @@ export default {
 }
 .sub_title_top,.sub_txt{
   margin-top:0.25rem;
+}
+.return-addr /deep/ .el-collapse-item .el-collapse-item__header {
+  padding-left: .1rem;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+.returnAddr-content-bg {
+  width: 100px;
+  float: left;
+  margin-right: 15px;
+}
+.returnAddr-content-bg img {
+  width: 100px;
+  height: 100px;
+}
+.returnAddr-content {
+  padding: .15rem;
+  font-size: 12px;
 }
 </style>

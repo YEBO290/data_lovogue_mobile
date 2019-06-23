@@ -2,41 +2,9 @@ import {get, post} from '../../axios/index'
 import api from '../../axios/api.js'
 const state = {
   // 轮播图
-  queryImg: 6, // 后期改成 []
-  recommendList: [{
-    url: require('../../assets/logo.png'),
-    text: 'Consectetur'
-  },
-  {
-    url: require('../../assets/logo.png'),
-    text: 'Consectetur'
-  },
-  {
-    url: require('../../assets/logo.png'),
-    text: 'Consectetur'
-  },
-  {
-    url: require('../../assets/logo.png'),
-    text: 'Consectetur'
-  }],
-  colorList: [
-    {
-      value: '1',
-      label: '红色'
-    }, {
-      value: '2',
-      label: '蓝色'
-    }, {
-      value: '3',
-      label: '白色'
-    }, {
-      value: '4',
-      label: '彩色'
-    }, {
-      value: '5',
-      label: '紫色'
-    }
-  ],
+  queryImg: [], // 后期改成 []
+  recommendList: [],
+  colorList: [],
   sizeLists:[{
     name: 'S',
     title: '预售7个工作日'

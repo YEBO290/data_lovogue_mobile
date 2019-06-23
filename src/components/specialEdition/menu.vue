@@ -7,7 +7,7 @@
       </div>
       <span class="el-icon-plus" @click.stop="expandSituationFunc" v-if="!expandSituation"></span>
       <span class="el-icon-minus" @click.stop="expandSituationFunc" v-if="expandSituation"></span>
-      <p class="menu_title">按穿着场合</p>       
+      <p class="menu_title"  @click.stop="expandSituationFunc">按穿着场合</p>       
       <ul v-if="expandSituation">
         <li v-for="(item, index) in situationList" :key="item.id" class="menu_txt" :class="{'checked_list': situationCheckList[index]}" @click.stop="checkList(index, item)">{{item.name}}
           <i class="el-icon-check" v-if="situationCheckList[index] || false"></i>
@@ -15,7 +15,7 @@
       </ul>
       <span class="el-icon-plus" @click.stop="expandcolorCheckFunc" v-if="!expandcolorCheck"></span>
       <span class="el-icon-minus" @click.stop="expandcolorCheckFunc" v-if="expandcolorCheck"></span>
-      <p class="menu_title">颜色</p>       
+      <p class="menu_title" @click.stop="expandcolorCheckFunc">颜色</p>       
       <ul v-if="expandcolorCheck">
         <li v-for="(item, index) in colorList" :key="item.id" class="menu_txt"
         

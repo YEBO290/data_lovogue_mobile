@@ -25,7 +25,7 @@
         v-model="detail.color" change-on-select
         @change="handleChange">
       </el-cascader>-->
-      <el-select v-model="detail.color" placeholder="选择颜色" class="color_select" @change="handlerSelectColor">
+      <el-select v-model="detail.color" placeholder="请选择" class="color_select" @change="handlerSelectColor">
           <el-option
             v-for="item in detailInfo.choice"
             :key="item.productid"
@@ -33,7 +33,7 @@
             :value="item.productid">
           </el-option>
         </el-select>
-        <span class="req" v-if="showColor">请选择颜色</span>
+        <span class="req" v-if="showColor">请选择</span>
         <el-button class="btn ok_btn" type="primary" @click="toBuy">立即选购</el-button>
         <el-button class="btn addBag_btn" @click="toBag">加入购物袋</el-button>
       </div>
@@ -312,7 +312,7 @@ export default {
   created() {
     this.searchDetail()
     let param = {
-      typeno: this.id,
+      typeno: "",
     }
     this.$store.dispatch('detailList/queryRecommendList', param)
     // this.$store.dispatch('detail/queryImg') // 获取轮播图列表 
@@ -483,7 +483,7 @@ export default {
       if (this.flag === 'add') { // 加入购物车
         let param = {
           // prodid: this.detail.color.join(),
-          prodid: this.detail.color,
+          prodid: this.detail.color.productid,
           userid: workspace.getCookie().name,
           amount: "1",
           status: "1"
@@ -616,7 +616,7 @@ export default {
     successTip() {
       if(this.flag === 'add') { // 加入购物袋
         this.$message({
-          message: '操作成功',
+          message: '成功加入购物袋！',
           type: 'success'
         })
       } else {

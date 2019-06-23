@@ -169,7 +169,6 @@ export default {
             //     cancelButtonText: '取消',
             //     type: 'warning'
             // }).then(() => {
-            //     debugger
             //     val.shipstatus = '4'
             //     me.$emit('cancelOrder', val)
             // }).catch(() => {      

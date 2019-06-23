@@ -57,7 +57,6 @@ export default {
   },
   methods: {
     expandFunc(val, index) {
-      debugger
       if (this.expand[index]) {
         this.$set(this.expand, index, false)
       } else {

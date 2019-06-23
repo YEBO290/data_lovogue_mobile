@@ -93,7 +93,7 @@ export default {
         color:#C5A480;
         font-size: 10px!important;
         /* margin-bottom: 10px; */
-        padding-top: 0.8rem;
+        padding-top: 0.7rem;
         width: 2.8rem;
         margin: 0 auto;
         padding-bottom: 0.1rem;
