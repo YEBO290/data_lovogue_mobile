@@ -164,9 +164,9 @@ export default {
               userid: workspace.getCookie().name,
               address: me.editInfo.address,
               status: val,
-              addressprovince: me.editInfo.addressprovince,
-              addresscity: me.editInfo.addresscity,
-              addressdistrict: me.editInfo.addressdistrict,
+              addressprovince: me.provinceFilter(me.editInfo.addressprovince),
+              addresscity: me.cityFilter(me.editInfo.addresscity),
+              addressdistrict:  me.areaFilter(me.editInfo.addressdistrict),
               name: me.editInfo.name,
               phone: me.editInfo.phone
             }
@@ -261,6 +261,37 @@ export default {
         } else {
           this.save('1')
         }
+      },
+      //省份过滤
+      provinceFilter(val) {
+        var province = "";
+        this.provinceList.forEach(el => {
+          if(el.id == val){
+            province = el.name;
+          }      
+        });
+        return province;
+
+      },
+      //城市过滤
+      cityFilter(val) {
+        var city = "";
+        this.cityList.forEach(el => {
+          if(el.id == val){
+            city = el.name;
+          }      
+        });
+        return city;
+      },
+      //行政区域过滤
+      areaFilter(val) {
+        var area = "";
+        this.areaList.forEach(el => {
+          if(el.id == val){
+            area = el.name;
+          }      
+        });
+        return area;
       }
     }
   }
