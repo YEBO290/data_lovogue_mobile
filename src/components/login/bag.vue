@@ -66,16 +66,6 @@
       <p>您的购物袋暂无单品</p>
       <el-button class="login_btn pay_btn" type="primary" @click="toHome">前往选购</el-button>    
     </div>
-    <div class="recommend" v-if="!showToLogin && bagList.length === 0">
-        <p class="titlt">为您推荐的搭配</p>
-        <el-row>
-          <el-col :span="8"  v-for="(item, index) in recommendList" :key="index">
-            <img :src="item.url">
-            <div class="recommend_line"></div>
-            <p class="recommend_name">{{item.name}}</p>
-          </el-col>
-        </el-row>
-      </div>
     <div class="login_none" v-if="showToLogin">
       <p>创建您的购物清单</p>
       <span>再也不会找不到购物袋内的风格单品-立即</span>
@@ -84,6 +74,16 @@
       <!--<el-button class="btn ok_btn" type="primary" @click="toLogin">登录</el-button>
       <el-button class="btn cancel_btn" type="primary" @click="toRegister">注册</el-button>-->
     </div>  
+    <div class="recommend" v-if="showToLogin && bagList.length === 0">
+        <p class="titlt">为您推荐的搭配</p>
+        <el-row>
+          <el-col :span="8"  v-for="(item, index) in recommendList" :key="index">
+            <img :src="item.imgpath" @click="toRemendDetail(item.typeno)">
+            <div class="recommend_line"></div>
+            <p class="recommend_name">{{item.name}}</p>
+          </el-col>
+        </el-row>
+      </div>
   </div>
 </template>
 
@@ -93,6 +93,7 @@ import workspace from '../../common.js'
 export default {
     data() {
       return {
+        recommendList: [],
         checkAll: false, // 全选
         checkedLists: [], // 选中列表
         isIndeterminate: true,
@@ -138,19 +139,30 @@ export default {
       } else {
         this.showToLogin = true
       }
-      let queryParam = {
-        userid: workspace.getCookie().name,
-        status: "1"
-      }
-      this.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
-      let params = {
-        typeno: "",
-      }
-      this.$store.dispatch('detailList/queryRecommendList', params).then(res =>{
-        var self = this;
-        self.recommendList = res.carousel;
-      }) // 推荐的列表查询 
-      
+      if(workspace.getCookie().name) {
+        // 购物袋的列表查询
+        let queryParam = {
+          userid: workspace.getCookie().name,
+          status: "1"
+        }
+        this.$store.dispatch('login/queryBagList', queryParam)
+      } else {
+        let params = {
+          typeno: "",
+        }
+        this.$store.dispatch('detailList/queryRecommendList', params).then(res =>{
+          if(Object.prototype.toString.call(res) == "[object Object]") {
+            let list = []
+            for(let i in res) {
+              list.push(res[i])
+            }
+            this.recommendList = list
+          } else {
+            this.recommendList = res
+          }
+          
+        }) // 推荐的列表查询 
+      }    
     },
     methods: {
       toHome() {
@@ -279,6 +291,9 @@ export default {
          // 详情
       toDetail(val) {
         this.$router.push(`/detail/${val.prodid}`)
+      },
+      toRemendDetail(val) {
+        this.$router.push(`/detail/${val}`)
       },
       changeAmount(val) {
         let me = this

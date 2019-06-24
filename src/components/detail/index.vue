@@ -12,7 +12,7 @@
       <!--<p class="loveTip">{{loveTip}}</p>-->
       <div class="detail_content">
         <p class="detail_name">{{detailInfo.productname}}</p>
-        <p class="detail_price"><span>RMB </span><span>{{detailInfo.tagprice}}</span></p>
+        <p class="detail_price"><span>RMB </span><span>{{tagprice}}</span></p>
         <div class="detail_flag">
           <span class="position_btn">{{detailInfo.occasion}}</span>
           <!--<span class="position_btn" v-for="(item, index) in detail.occasion" :key="index">{{item.text}}</span>-->
@@ -205,6 +205,7 @@ export default {
       }        
     }
     return {
+      tagprice: 0,
       showColor: false,
       showMenu:false,
       showBtn: false,
@@ -281,9 +282,10 @@ export default {
       // sizeLists: state => state.detail.sizeLists,
       detailInfo: function(state) {
         let price = workspace.thousandBitSeparator(state.detail.detailInfo.tagprice)
-        state.detail.detailInfo.tagprice && (this.$set(state.detail.detailInfo, 'tagprice', price))
+        // state.detail.detailInfo.tagprice && (this.$set(state.detail.detailInfo, 'tagprice', price))
         this.desc  = state.detail.detailInfo.describe
         this.inventory = state.detail.detailInfo.inventory
+        this.tagprice = price
         // let colorList = []
         // state.detail.detailInfo.choice.forEach(el => {
         //   let obj = {
@@ -310,6 +312,9 @@ export default {
       }
     }),
   created() {
+    this.$router.afterEach((to, from, next) => {
+        window.scrollTo(0, 0)
+    })
     this.searchDetail()
     let param = {
       typeno: "",
@@ -319,6 +324,7 @@ export default {
     // this.$store.dispatch('detail/queryColorList') // 获取颜色的下拉值 
   },
   methods: {
+    
     handleChange(value) {
       console.log(value);
     },
@@ -509,7 +515,7 @@ export default {
           data: [{
             // productid: this.detail.color.join(),
             productid: this.detail.color,
-            price: this.detailInfo.tagprice.replace(',', ''),
+            price: this.tagprice.replace(',', ''),
             status: '未支付',
             amount: 1,
             shipstatus: '未发货',
@@ -599,9 +605,18 @@ export default {
     toMesssge() {
 
     },
-    // 颜色选择
+    // 颜色选择/**
+     /* 下拉框颜色选值，价格取下拉框价格
+     */
     handlerSelectColor(val) {
       val && (this.showColor = false)
+      let list = this.detailInfo.choice.filter((item) => {
+        return item.productid == val
+      })
+      this.detail.color = list[0].productid
+      val && (this.tagprice = workspace.thousandBitSeparator(list[0].tagprice))
+      val && (this.inventory = list[0].inventory)
+      
     },
     // 尺码选择
     sizeChoiceFunc() {

@@ -71,14 +71,14 @@ const router = new Router({
                 flag: "list",
                 showToTop: true
             },
-            beforeEnter: (to, from, next) => {
-                let status = workspace.getCookie().name
-                if(status !== '' && status !== null && status !== undefined) {
-                    next()
-                } else {
-                    next('/login')
-                }
-            }
+            // beforeEnter: (to, from, next) => {
+            //     let status = workspace.getCookie().name
+            //     if(status !== '' && status !== null && status !== undefined) {
+            //         next()
+            //     } else {
+            //         next('/login')
+            //     }
+            // }
         },
         {
             // 特辑列表详情
@@ -154,14 +154,14 @@ const router = new Router({
             meta: {
                 flag: "list"
             },
-            beforeEnter: (to, from, next) => {
-                let status = workspace.getCookie().name
-                if(status !== '' && status !== null && status !== undefined) {
-                    next()
-                } else {
-                    next('/login')
-                }
-            }
+            // beforeEnter: (to, from, next) => {
+            //     let status = workspace.getCookie().name
+            //     if(status !== '' && status !== null && status !== undefined) {
+            //         next()
+            //     } else {
+            //         next('/login')
+            //     }
+            // }
         },
         {
             // 产品种类
@@ -171,14 +171,14 @@ const router = new Router({
             meta: {
                 flag: "list"
             },
-            beforeEnter: (to, from, next) => {
-                let status = workspace.getCookie().name
-                if(status !== '' && status !== null && status !== undefined) {
-                    next()
-                } else {
-                    next('/login')
-                }
-            }
+            // beforeEnter: (to, from, next) => {
+            //     let status = workspace.getCookie().name
+            //     if(status !== '' && status !== null && status !== undefined) {
+            //         next()
+            //     } else {
+            //         next('/login')
+            //     }
+            // }
         },
         {
             // 类别列表
@@ -188,14 +188,14 @@ const router = new Router({
             meta: {
                 flag: "list"
             },
-            beforeEnter: (to, from, next) => {
-                let status = workspace.getCookie().name
-                if(status !== '' && status !== null && status !== undefined) {
-                    next()
-                } else {
-                    next('/login')
-                }
-            }
+            // beforeEnter: (to, from, next) => {
+            //     let status = workspace.getCookie().name
+            //     if(status !== '' && status !== null && status !== undefined) {
+            //         next()
+            //     } else {
+            //         next('/login')
+            //     }
+            // }
         },
         {
             // 喜爱物品

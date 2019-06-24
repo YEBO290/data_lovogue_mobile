@@ -91,6 +91,9 @@ export default {
       }
     }),
   created() {
+    this.$router.afterEach((to, from, next) => {
+        window.scrollTo(0, 0)
+    })
     // this.$store.dispatch('detailList/queryImg') // 获取轮播图列表
     let param = {
       prodname: this.id
