@@ -127,7 +127,7 @@
       <el-collapse accordion class="return-addr"  v-if="id === 'contact'">
           <!-- <el-collapse-item title="退货地址"> -->
             <div class="returnAddr-content">
-              <div class="returnAddr-content-bg"><img src="../../assets/image/logoWx.png" alt=""><div style="text-align:center;">关注公众号</div></div>
+              <div class="returnAddr-content-bg"><img src="../../assets/image/wxcodeImg.png" alt=""><div style="text-align:center;margin-left: 4px;">关注我，有惊喜！</div></div>
               <div class="returnAddr-content-text" style="margin-top: 0.15rem;">
                 <ul>
                   <li>公司电话：0755-82174455</li>

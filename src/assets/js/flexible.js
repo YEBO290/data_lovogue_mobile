@@ -1,5 +1,5 @@
 ;(function(win, lib) {
-    var base = window.FLEXIBLE_BASE || 7.5;
+    var base = window.FLEXIBLE_BASE || 3.75;
     var doc = win.document;
     var docEl = doc.documentElement;
     var metaEl = doc.querySelector('meta[name="viewport"]');
@@ -78,6 +78,7 @@
     }
     function refreshRem(){
         var width = docEl.getBoundingClientRect().width;
+        var Agents = navigator.userAgent / 3.75;
         if (IsPC() && width < 2047) {
             width = 540;
         }

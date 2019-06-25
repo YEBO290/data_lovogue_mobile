@@ -53,7 +53,7 @@
         <el-collapse accordion class="return-addr">
           <el-collapse-item title="退货地址">
             <div class="returnAddr-content">
-              <div class="returnAddr-content-bg"><img src="../../assets/image/logoWx.png" alt=""><div style="text-align:center;">关注公众号</div></div>
+              <div class="returnAddr-content-bg"><img src="../../assets/image/wxcodeImg.png" alt=""><div style="text-align:center;">关注公众号</div></div>
               <div class="returnAddr-content-text">
                 <ul>
                   <li>微信公众号ID：gh_ac5d2c91045b</li>

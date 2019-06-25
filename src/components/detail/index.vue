@@ -2,7 +2,7 @@
     <div class="detail" :descDetail="descDetail">  
       <el-carousel :interval="5000" arrow="always" height="3.75rem">
         <el-carousel-item v-for="(item, index) in detailInfo.imgurl" :key="index">
-          <img :src="item" style="width:100%">
+          <img :src="item" style="width:100%;heigth:3.75rem;">
         </el-carousel-item>
       </el-carousel>
       <transition name="el-zoom-in-center">
@@ -312,9 +312,9 @@ export default {
       }
     }),
   created() {
-    this.$router.afterEach((to, from, next) => {
-        window.scrollTo(0, 0)
-    })
+    // this.$router.afterEach((to, from, next) => {
+    //     window.scrollTo(0, 0)
+    // })
     this.searchDetail()
     let param = {
       typeno: "",

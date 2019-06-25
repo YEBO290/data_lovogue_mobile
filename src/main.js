@@ -6,7 +6,8 @@ import router from './router/index.js'
 import store from './store/index.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/css/base.css'
-import 'swiper/dist/css/swiper.css'
+import './lib/swiper/dist/css/swiper.css'
+import './lib/swiper/dist/js/swiper.min.js'
 // fade/zoom 等
 import 'element-ui/lib/theme-chalk/base.css'
 // collapse 展开折叠
@@ -14,6 +15,7 @@ import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 // import filters from './filters/index'
 import Element from 'element-ui'
 import $ from 'jquery'
+import './assets/js/flexible.js'
 import {
     // Pagination,
     Dialog,

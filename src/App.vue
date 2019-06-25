@@ -58,6 +58,9 @@ export default {
             }
             me.$store.dispatch('login/queryBagList', queryParam)// 购物袋的列表查询
         }
+        this.$router.afterEach((to, from, next) => {
+            window.scrollTo(0, 0)
+        })
     },
     methods: {
         
@@ -99,7 +102,7 @@ html{height:100%;}
 .content{
     /* padding-bottom: 3.5rem; */
     min-height: 4rem;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
 }
 </style>
 <style scoped>
