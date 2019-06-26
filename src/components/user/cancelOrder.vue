@@ -70,6 +70,18 @@
             <div class="return-title" v-if="isView == false">快递信息补充</div> 
             <div class="return-title" v-if="isView == true">快递信息</div>
             <el-row>
+              <el-col :span="6"><div class="grid-content bg-purple">物流公司：</div></el-col>
+              <el-col :span="18">
+                <el-select v-model="returnOrderInfo.logisticsCompany" placeholder="请选择" class="color_select" @change="handlerSelectColor">
+                  <el-option
+                    v-for="item in logisticsCompanyList"
+                    :key="item.id"
+                    :label="item.title"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+                <span class="req" v-if="showColor">请选择</span>
+              </el-col>
               <el-col :span="6"><div class="grid-content bg-purple">快递单号：</div></el-col>
               <el-col :span="18"><el-input v-if="isView == false" placeholder="请输入快递单号" v-model="returnOrderInfo.couriernumber" clearable :disabled="isView"></el-input></el-col>
               <el-col :span="18"><span v-if="isView == true">{{returnOrderInfo.couriernumber}}</span></el-col>
@@ -118,14 +130,21 @@ import workspace from '../../common.js'
                 userPhone: '', //电话//非必填
                 defaultTime:'', //退货订单时间
                 returnStatus:'' , //退货状态
-                couriernumber:''  //快递单号
+                couriernumber:'',  //快递单号
+                logisticsCompany:'' //物流公司
           },
           submitStatus:false,
-          isView:false
+          isView:false,
+          logisticsCompanyList:[]
       }
     },
     created(){
        let self = this;
+       self.logisticsCompanyList = [
+         {"id":1,"title":"顺丰速递"},{"id":2,"title":"中国邮政"},{"id":3,"title":"圆通快递"},{"id":4,"title":"申通快递"},{"id":5,"title":"中通快递"},
+         {"id":6,"title":"韵达快递"},{"id":7,"title":"天天快递"},{"id":8,"title":"百世汇通"},{"id":9,"title":"宅急送"},{"id":10,"title":"其他"}
+       ]
+
        let param = {
             userid: workspace.getCookie().name,
             id: self.id

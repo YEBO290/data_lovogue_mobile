@@ -13,7 +13,7 @@
   <div v-else>
     <div class="tip_searchList" v-if="showTip">
       <div v-for="(item, index) in tipList" :key="index">
-        <p class="menu_title" @click.stop="toMenu(item, index)">{{item.name}}</p>  
+        <!-- <p class="menu_title" @click.stop="toMenu(item, index)">{{item.name}}</p>   -->
         <div v-if="item.next">
           <ul v-if="expand[index]">
             <li v-for="(el, index) in item.next" :key="index" class="menu_txt" @click.stop="toSubMenu(el)">{{el.name}}

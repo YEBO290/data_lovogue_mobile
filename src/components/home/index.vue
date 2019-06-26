@@ -29,11 +29,13 @@
           <div class="swiper-container">
             <div class="swiper-wrapper">
               <div v-for="item in productList" class="swiper-slide" :key="item.id"  @click="toProduct(item)">
-                <img :src="item.value" style="width:200px;height:200px;"/>
+                <img :src="item.value" />
                 <h5>{{ item.name }}</h5>
               </div>
              </div>
         </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
       </div>
       <div class="category_list">
         <!-- <p class="category_list_titile">类别</p> -->
@@ -46,7 +48,7 @@
             </el-col>
         </el-row> -->
         <el-row :gutter="10">
-            <el-col :span="8"  v-for="(item, index) in categoryList" :key="item.id">
+            <el-col :span="8"  v-for="item in categoryList" :key="item.id">
               <div class="grid-content bg-purple" style="margin-bottom: 0.2rem;"  @click="toCategoryList(item)">
                 <img :src="item.value" style="width:100%;min-height:1.07rem;display:block;background:#fff;">
                 <p class="recommend_text" style="margin-top:0.1rem;">{{item.name}}</p>
@@ -89,18 +91,21 @@ export default {
   },
   mounted() {
     var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 3,
-      spaceBetween: 40,
-      slidesPerGroup: 3,
+      // slidesPerView: 2,
+      spaceBetween: 20,
+      slidesPerGroup: 2,
+      slidesPerView: "auto",
+      centeredSlides:true,
       loop: true,
       loopFillGroupWithBlank: true,
       paginationType : 'custom',//自定义-分页器样式类型（前提）
       observer:true,//修改swiper自己或子元素时，自动初始化swiper
       observeParents:true,//修改swiper的父元素时，自动初始化swiper
-      pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-      },
+      // pagination: {
+      // el: '.swiper-pagination',
+      // clickable: true,
+      // },
+      pagination:'.swiper-pagination'
     })
   },
   methods: {
@@ -138,24 +143,32 @@ export default {
     },
     _intSwiper() {
       var mySwiper = new Swiper ('.swiper-container', {
-        direction: 'vertical', // 垂直切换选项
-        loop: true, // 循环模式选项
+        autoplay : 5000,//可选选项，自动滑动
+        loop : true,//可选选项，开启循环
+        // direction: 'vertical', // 垂直切换选项
         
         // 如果需要分页器
         pagination: {
           el: '.swiper-pagination',
         },
+        slidesPerView : 2,
+        slidesPerGroup : 2,
+        centeredSlides : false,
+        offsetSlidesBefore : 0,
+        offsetPxBefore: 0,
         
         // 如果需要前进后退按钮
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
+        hide : false,
+        dragSize: 300,
         
         // 如果需要滚动条
-        scrollbar: {
-          el: '.swiper-scrollbar',
-        },
+        // scrollbar: {
+        //   el: '.swiper-scrollbar',
+        // },
       })
       
     }
@@ -176,19 +189,16 @@ export default {
   #home /deep/ .el-carousel__item{
     min-height:3.75rem;
   }
-  #home /deep/ .swiper-slide{
-    width: 1.5rem!important;
-    height: 1.5rem!important;
+   #home /deep/ .swiper-slide{
+    width: 1.65rem!important;
     margin-right:10px!important;
-    position: relative;
-    text-align:center;
 
-  }
-  #home /deep/ .swiper-slide img{
-    width: 1.5rem!important;
-    height: 1.5rem!important;
+  } 
+     /*#home /deep/ .swiper-slide img{
+    width: 1.65rem!important;
+    height: 1.65rem!important;
 
-  }
+  } */
   #home /deep/ .swiper-slide h5{
     position: absolute;
     margin-top: -0.2rem;
@@ -203,4 +213,10 @@ export default {
     position: absolute;
     bottom: 0.50rem;
   }
+  /* .product_list /deep/ .swiper-container .swiper-slide-prev{
+    display:none; 
+  }
+  .product_list /deep/ .swiper-container .swiper-button-next{
+     display: none;
+  } */
 </style>

@@ -9,7 +9,7 @@
       <menuList class="menu_list" v-if="showSubMenu"/>
       <!-- <img src="~@/assets/image/timg.png" style="width:100%" v-if="productTotal == 0"/> -->
       <div v-if="productTotal == 0" style="padding-bottom:0.5rem;">
-        <img src="~@/assets/image/noData.png" style="width:100%" >
+        <!-- <img src="~@/assets/image/noData.png" style="width:100%" > -->
       </div>
       <div v-else>
         <el-row :gutter="10" style="padding-top:17px;">

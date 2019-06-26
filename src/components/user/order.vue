@@ -118,11 +118,13 @@ export default {
             this.$emit('editOrder', val)
         },
         toBuy(val) {
+            debugger
             this.dialogVisible = true   
             this.orderid = val.orderid     
             this.selectedData = val    
         },
         toPay(val) {
+            debugger
             let me = this
             if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
                 var baseUrl = 'http://lovogue.net:8093'
@@ -130,13 +132,17 @@ export default {
                 var baseUrl = 'http://lovogue.net:8091'
             }
             if (val === 'aliPay') {
-                // 走支付宝
+                // 支付宝支付
                 // this.$store.dispatch('address/toBuy')  
                 var alipayUrl = `${baseUrl}/api/ali_pay/pay2?orderid=`+ me.orderid +'&price='+ me.selectedData.price
                 window.location.href = alipayUrl
             } else if (val === 'weChat'){
-                // 走微信
-                me.$store.dispatch('wechatPay').then(res => {
+                // 微信支付
+                let param = {
+                    orderid:me.orderid,
+                    price: (me.selectedData.tagprice.replace(',', ''))*100   // 微信金额根据后端协商 *100
+                }
+                me.$store.dispatch('wechatPay',param).then(res => {
                     if (res.code === 200) {
                         window.location.href = res.data
                         console.log(res.data)

@@ -206,7 +206,7 @@
   display: none;
 }
 .swiper-pagination {
-  position: absolute;
+  /* position: absolute; */
   text-align: center;
   -webkit-transition: 300ms opacity;
   -o-transition: 300ms opacity;
