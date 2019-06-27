@@ -117,6 +117,16 @@ const actions = {
       })
     })
   },
+  // 查库存
+  getOrderInventory (context, param) {
+    return new Promise((resolve, reject) => {
+      post(api.getOrderInventory, param).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
+  },
 }
 
 const mutations = {

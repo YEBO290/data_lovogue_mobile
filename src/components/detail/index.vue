@@ -205,6 +205,7 @@ export default {
       }        
     }
     return {
+      productid: '',
       tagprice: 0,
       showColor: false,
       showMenu:false,
@@ -488,8 +489,7 @@ export default {
       let me = this
       if (this.flag === 'add') { // 加入购物车
         let param = {
-          // prodid: this.detail.color.join(),
-          prodid: this.detail.color.productid,
+          prodid: this.detail.color.productid || this.productid,
           userid: workspace.getCookie().name,
           amount: "1",
           status: "1"
@@ -502,7 +502,9 @@ export default {
             }
             this.$store.dispatch('login/queryBagList', queryParam)
             this.innerVisible = false
-            this.successTip()             
+            this.successTip() 
+            window.scrollTo(0, 0)
+            this.searchDetail()            
           } else {
             this.$message({
               message: '操作失败！',
@@ -609,6 +611,8 @@ export default {
      /* 下拉框颜色选值，价格取下拉框价格
      */
     handlerSelectColor(val) {
+      console.log(val)
+      this.productid = val
       val && (this.showColor = false)
       let list = this.detailInfo.choice.filter((item) => {
         return item.productid == val

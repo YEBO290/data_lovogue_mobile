@@ -49,7 +49,7 @@
           <p class="total_number">数量<span class="showPay"> {{totalNmubel}} </span></p>
           <p class="total"><sub>不含运费</sub>合计：<span>RMB  <span  class="showPay"> {{totalCost}} </span></span></p>
         </el-col>
-        <el-col :span="6" style="    margin-top: 5px;">
+        <el-col :span="6" style="margin-top: 5px;">
           <el-button round type="primary" size="small" @click="toPay">立即支付</el-button>
         </el-col>
       </el-row>
@@ -99,7 +99,8 @@ export default {
         isIndeterminate: true,
         totalNmubel: 0, // 总数量
         totalPay: 0, // 总运费
-        totalCost: 0 // 总计
+        totalCost: 0, // 总计
+        delOrderId:[]  //待删除订单的 购物车序号Id
       }
     },
     watch: {
@@ -186,11 +187,7 @@ export default {
               message: '删除成功',
               type: 'success'
             })
-            let queryParam = {
-              userid: workspace.getCookie().name,
-              status: "1"
-            }
-            me.$store.dispatch('login/queryBagList', queryParam)
+            me.queryBagList() 
           } else {
             me.$message({
               message: '删除失败，请重试',
@@ -214,6 +211,7 @@ export default {
         let idList = []
         this.checkedLists.forEach(el => this.bagList.forEach(item =>{ 
           if(el === item.id) {
+            me.delOrderId.push(item.id)
             idList.push(item.productid)
             let obj = {
               productid: item.productid,
@@ -236,6 +234,7 @@ export default {
         }))
         this.$store.dispatch('login/toPay', param).then(res => {
           if (res.err == 0) {
+            me.delBagOrder(me.delOrderId);  //创建订单成功后 执行删除该条购物车订单
             me.$router.push({path: '/confirmAddress', query: {
               id: res.msg.join(),
               orderid: res.orderid
@@ -248,6 +247,38 @@ export default {
           }   
         })
         // this.$router.push('/confirmAddress')
+      },
+      //订单创建成功后删除当前订单在购物车数据
+      delBagOrder(list) {
+        let me = this
+        list.forEach(el => {
+          (function(el) {
+            return function() {
+              let param = {
+                id: el,
+                status: "0"
+              }
+              me.$store.dispatch('login/delBag', param).then(res => {
+                if(res.msg > 0) {
+                
+                } else {
+                  me.$message({
+                    message: '删除失败，请重试',
+                    type: 'error'
+                  })
+                }        
+              })
+            }
+          })(el)()
+        })
+        this.queryBagList()      
+      },
+      queryBagList() {
+        let queryParam = {
+          userid: workspace.getCookie().name,
+          status: "1"
+        }
+        this.$store.dispatch('login/queryBagList', queryParam)
       },
       handleCheckAllChange(val) {
         let me = this

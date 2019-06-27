@@ -124,13 +124,26 @@ export default {
             this.selectedData = val    
         },
         toPay(val) {
-            debugger
             let me = this
             if (process.env.NODE_ENV === 'development' || window.location.port == '8093') {
-                var baseUrl = 'http://lovogue.net:8093'
+                var baseUrl = 'http://lovogue.net:8091'
             } else if (process.env.NODE_ENV === 'production'|| window.location.port == '8091') {
                 var baseUrl = 'http://lovogue.net:8091'
             }
+            //支付前库存判断
+            let param = {
+                orderid:me.orderid
+            }
+            me.$store.dispatch('getOrderInventory',param).then(res => {
+                if (res.err === 200) {
+                    // 有库存 无需处理
+                } else if(res.err == 500) {
+                    me.$message({
+                        message: res.msg,
+                        type: 'error'
+                    })
+                }
+            })
             if (val === 'aliPay') {
                 // 支付宝支付
                 // this.$store.dispatch('address/toBuy')  

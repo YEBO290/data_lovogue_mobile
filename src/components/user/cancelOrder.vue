@@ -70,21 +70,28 @@
             <div class="return-title" v-if="isView == false">快递信息补充</div> 
             <div class="return-title" v-if="isView == true">快递信息</div>
             <el-row>
-              <el-col :span="6"><div class="grid-content bg-purple">物流公司：</div></el-col>
-              <el-col :span="18">
-                <el-select v-model="returnOrderInfo.logisticsCompany" placeholder="请选择" class="color_select" @change="handlerSelectColor">
-                  <el-option
-                    v-for="item in logisticsCompanyList"
-                    :key="item.id"
-                    :label="item.title"
-                    :value="item.id">
-                  </el-option>
-                </el-select>
-                <span class="req" v-if="showColor">请选择</span>
-              </el-col>
-              <el-col :span="6"><div class="grid-content bg-purple">快递单号：</div></el-col>
-              <el-col :span="18"><el-input v-if="isView == false" placeholder="请输入快递单号" v-model="returnOrderInfo.couriernumber" clearable :disabled="isView"></el-input></el-col>
-              <el-col :span="18"><span v-if="isView == true">{{returnOrderInfo.couriernumber}}</span></el-col>
+              <div style="margin-bottom: 0.5rem;">
+                <el-col :span="6"><div class="grid-content bg-purple">物流公司：</div></el-col>
+                <el-col :span="18">
+                  <el-select v-model="returnOrderInfo.couriername" placeholder="请选择" class="color_select"  v-if="isView == false" :disabled="isView">
+                    <el-option
+                      v-for="item in logisticsCompanyList"
+                      :key="item.id"
+                      :label="item.title"
+                      :value="item.id">
+                    </el-option>
+                  </el-select>
+                  <span class="req" v-if="showTips">请选择</span>
+                </el-col>
+                <el-col :span="18"><span v-if="isView == true">{{returnOrderInfo.couriername}}</span></el-col>
+              </div>
+              <div>
+                <el-col :span="6"><div class="grid-content bg-purple">快递单号：</div></el-col>
+                <el-col :span="18"><el-input v-if="isView == false" placeholder="请输入快递单号" v-model="returnOrderInfo.couriernumber" clearable :disabled="isView"></el-input></el-col>
+                <el-col :span="18"><span v-if="isView == true">{{returnOrderInfo.couriernumber}}</span></el-col>
+              </div>
+              
+              
             </el-row>    
         </div>
         <!-- <el-button class="btn cancel_btn" @click="back">返回</el-button> -->
@@ -131,11 +138,12 @@ import workspace from '../../common.js'
                 defaultTime:'', //退货订单时间
                 returnStatus:'' , //退货状态
                 couriernumber:'',  //快递单号
-                logisticsCompany:'' //物流公司
+                couriername:'' //物流公司
           },
           submitStatus:false,
           isView:false,
-          logisticsCompanyList:[]
+          logisticsCompanyList:[],
+          showTips:false
       }
     },
     created(){
@@ -167,6 +175,7 @@ import workspace from '../../common.js'
           self.returnOrderInfo.returnReason = res.data.return.returnreason  //退货原因//必填
           self.returnOrderInfo.returnStatus = res.data.return.status
           self.returnOrderInfo.couriernumber = res.data.return.couriernumber
+          self.returnOrderInfo.couriername = res.data.return.couriername
           if(self.returnOrderInfo.returnStatus ==2 && (self.returnOrderInfo.couriernumber==null || self.returnOrderInfo.couriernumber=="")){
             self.submitStatus = true
           }else{
@@ -185,7 +194,9 @@ import workspace from '../../common.js'
         let self = this;
         let param = {
           id:self.id,
-          couriernumber: self.returnOrderInfo.couriernumber
+          couriernumber: self.returnOrderInfo.couriernumber,
+          couriername:self.returnOrderInfo.couriername
+
         }
         this.$store.dispatch('address/updataReturnOrder',param).then(res => {
            if (res.err == 0) {

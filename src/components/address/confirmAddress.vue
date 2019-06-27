@@ -93,9 +93,24 @@ import workspace from '../../common.js'
             this.dialogVisible = true            
         },
         toPay(val) { //支付方式
+            //支付前库存判断
             let me = this
+            let param = {
+                orderid:me.orderid
+            }
+            me.$store.dispatch('getOrderInventory',param).then(res => {
+                if (res.err === 200) {
+                    // 有库存 无需处理
+                } else if(res.err == 500) {
+                    me.$message({
+                        message: res.msg,
+                        type: 'error'
+                    })
+                }
+            })
+            //支付环境判断          
             if (process.env.NODE_ENV === 'development' || window.location.port == '8093' || window.location.port == '8081') {
-                var baseUrl = 'http://lovogue.net:8093'
+                var baseUrl = 'http://lovogue.net:8091'
             } else if (process.env.NODE_ENV === 'production'|| window.location.port == '8091') {
                 var baseUrl = 'http://lovogue.net:8091'
             }
