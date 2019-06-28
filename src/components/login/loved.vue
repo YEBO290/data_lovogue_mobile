@@ -38,6 +38,7 @@ import workspace from '../../common.js'
 export default {
     data() {
       return {
+        lovesList:[]  //收藏列表数据
       }
     },
     watch: {
@@ -69,6 +70,7 @@ export default {
       // }
     }),
     created() {
+      debugger
       let status = workspace.getCookie().name
       if(status !== '' && status !== null && status !== undefined) {
         this.showToLogin = false
@@ -79,7 +81,9 @@ export default {
         userid: workspace.getCookie().name,
         status: "1"
       }
-      this.$store.dispatch('login/queryLovedList', param) // 喜爱的列表查询
+      this.$store.dispatch('login/queryLovedList', param).then((res) =>{
+        this.lovesList = res.data
+      })// 喜爱的列表查询
     },
     methods: {
       toHome() {
