@@ -70,22 +70,25 @@ export default {
       // }
     }),
     created() {
-      debugger
       let status = workspace.getCookie().name
       if(status !== '' && status !== null && status !== undefined) {
         this.showToLogin = false
       } else {
         this.showToLogin = true
       }
-      let param = {
-        userid: workspace.getCookie().name,
-        status: "1"
-      }
-      this.$store.dispatch('login/queryLovedList', param).then((res) =>{
-        this.lovesList = res.data
-      })// 喜爱的列表查询
+      this.getLovedList()     
     },
     methods: {
+      // 喜爱的列表查询
+      getLovedList() {
+        let param = {
+          userid: workspace.getCookie().name,
+          status: "1"
+        }
+        this.$store.dispatch('login/queryLovedList', param).then((res) =>{
+          this.lovesList = res.data
+        })
+      },
       toHome() {
         this.$router.push('/home')
       },
@@ -101,11 +104,7 @@ export default {
           status: "0"
         }
         this.$store.dispatch('login/delLove', delParam).then(() => {
-          let param = {
-            userid: workspace.getCookie().name,
-            status: "1"
-          }
-          this.$store.dispatch('login/queryLovedList', param)
+          this.getLovedList()
         })
 
       },

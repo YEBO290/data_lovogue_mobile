@@ -22,7 +22,7 @@
                   <i class="el-icon-close" @click.stop="delBag(item)"></i>
                 </div>
                 <div>
-                  <span class="bag_color"> - <span  class="bag_code">编号  {{item.prodid}}</span></span>
+                  <span class="bag_color"><span  class="bag_code">编号  - {{item.prodid}}</span></span>
                 </div>
               </div>
               <!--暂不考虑数量的加减-->

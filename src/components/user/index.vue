@@ -4,7 +4,7 @@
             <div class="userInfo" v-if="user">
                 <span class="userImg"><img src="~@/assets/image/user1.png" style="width:100%;"/></span>
                     <p style="font-size:14px;height: 40px;line-height: 40px;margin-right:20px;"><span style="height: 40px;line-height:40px;display: inline-block;
-        position: relative;top: -15px;">您好，</span><span style="overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;white-space: nowrap;max-width: 150px;height: 40px;line-height:40px;display: inline-block;">{{user}}</span></p>
+        position: relative;">您好，</span><span style="overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;white-space: nowrap;max-width: 150px;height: 40px;line-height:40px;display: inline-block;">{{user}}</span></p>
                     <p style=" width: 1px;height: 20px;background:#c6c0c0;margin-top: 10px;margin-right: 10px;"></p>
                     <a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a>
             </div>

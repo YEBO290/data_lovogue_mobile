@@ -118,7 +118,6 @@ export default {
             this.$emit('editOrder', val)
         },
         toBuy(val) {
-            debugger
             this.dialogVisible = true   
             this.orderid = val.orderid     
             this.selectedData = val    
