@@ -190,13 +190,13 @@ export default {
     min-height:3.75rem;
   }
    #home /deep/ .swiper-slide{
-    width: 1.65rem!important;
+    width: 2rem!important;
     margin-right:10px!important;
 
   } 
-     /*#home /deep/ .swiper-slide img{
-    width: 1.65rem!important;
-    height: 1.65rem!important;
+     /* #home /deep/ .swiper-slide img{
+    width: 2rem!important;
+    height: 2rem!important;
 
   } */
   #home /deep/ .swiper-slide h5{

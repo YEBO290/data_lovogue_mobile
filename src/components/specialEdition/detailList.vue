@@ -1,7 +1,7 @@
 <template>
     <div class="detail_list">    
       <el-carousel :interval="5000" arrow="always" height="3.75rem">
-        <el-carousel-item v-for="(item, index) in specialImg.carousel" :key="index">
+        <el-carousel-item v-for="(item, index) in specialImg.rotating" :key="index">
           <img :src="item.imgpath" style="width:100%">
         </el-carousel-item>
       </el-carousel>
@@ -14,7 +14,7 @@
           <p class="detail_list_p_sub" v-for="(item, key, i) in specialImg.describe" :key="i" :class="key">{{item}}</p>       
         </div>
         <div class="detail_flag">
-          <span class="position_btn" v-for="(item, key, i) in specialImg.tag" :key="i">{{item.tag}}</span>
+          <span class="position_btn" v-for="(item, key, i) in specialImg.tag" :key="i">{{item}}</span>
         </div>
       </div>
       <div class="recommend_list">
@@ -80,8 +80,7 @@ export default {
   computed: mapState({
       queryImg: state => state.detailList.queryImg,
       // recommendList: state => state.detailList.recommendList,
-      specialImg: function(state) {
-       return state.detailList.specialImg},
+      specialImg: state => state.detailList.specialImg,
       specialBackImg: state => {
         if (state.detailList.specialImg.length > 0) {
           return state.detailList.specialImg[0].backpng
