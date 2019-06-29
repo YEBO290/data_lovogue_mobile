@@ -27,7 +27,7 @@
       <div class="product_list">
         <!-- <p class="product_list_titile">产品系列</p> -->
           <div class="swiper-container">
-            <div class="swiper-wrapper">
+            <div class="swiper-wrapper" style="transform:translate3d(0px, 0px, 0px);">
               <div v-for="item in productList" class="swiper-slide" :key="item.id"  @click="toProduct(item)">
                 <img :src="item.value" />
                 <h5>{{ item.name }}</h5>
@@ -93,7 +93,7 @@ export default {
     var swiper = new Swiper('.swiper-container', {
       // slidesPerView: 2,
       spaceBetween: 20,
-      slidesPerGroup: 2,
+      slidesPerGroup: 1,
       slidesPerView: "auto",
       centeredSlides:true,
       loop: true,
@@ -101,11 +101,15 @@ export default {
       paginationType : 'custom',//自定义-分页器样式类型（前提）
       observer:true,//修改swiper自己或子元素时，自动初始化swiper
       observeParents:true,//修改swiper的父元素时，自动初始化swiper
-      // pagination: {
-      // el: '.swiper-pagination',
-      // clickable: true,
-      // },
-      pagination:'.swiper-pagination'
+      pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      // pagination:'.swiper-pagination'
     })
   },
   methods: {
@@ -166,9 +170,9 @@ export default {
         dragSize: 300,
         
         // 如果需要滚动条
-        // scrollbar: {
-        //   el: '.swiper-scrollbar',
-        // },
+        scrollbar: {
+          el: '.swiper-scrollbar',
+        },
       })
       
     }
@@ -190,8 +194,8 @@ export default {
     min-height:3.75rem;
   }
    #home /deep/ .swiper-slide{
-    width: 2rem!important;
-    margin-right:10px!important;
+    /* width: 2rem!important;
+    margin-right:10px!important; */
 
   } 
      /* #home /deep/ .swiper-slide img{
@@ -201,10 +205,13 @@ export default {
   } */
   #home /deep/ .swiper-slide h5{
     position: absolute;
-    margin-top: -0.2rem;
+    margin-top: -0.5rem;
     color: #EFDED1;
     width: 100%;
     text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "Helvetica";
   }
   .carousel_img{
     position: relative;

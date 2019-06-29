@@ -1,5 +1,5 @@
 <template>
-    <div class="category_home">
+    <div class="category_home" style="min-height:4rem;">
       <!-- <div class="menu_filter" @click.stop="expand" v-if="!showSubMenu">
         <span class="menu_del"><i class="icon_f_btn"></i>筛选</span>
       </div>  
@@ -8,8 +8,9 @@
       </div>
       <menuList class="menu_list" v-if="showSubMenu"/> -->
       <!-- <img src="~@/assets/image/timg.png" style="width:100%" v-if="categoryTotal == 0"/> -->
-      <div v-if="categoryTotal == 0" style="padding-bottom:0.5rem;">
+      <div v-if="categoryTotal == 0" style="padding-top:0.5rem;">
         <!-- <img src="~@/assets/image/noData.png" style="width:100%" > -->
+        <span style="font-size:15px;color:#6a6968;">暂无产品</span>
       </div>
       <div v-else>
         <el-row :gutter="10" style="padding-top:17px;">

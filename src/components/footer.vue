@@ -5,12 +5,12 @@
                 <el-button class="toTop_btn" @click="toTop">返回顶部</el-button>
             </div>-->
             <div class="foot_line" v-if="showTop"></div>
-            <div class="footer_txt footer_txt_one" v-if="showContact" @click="expandService"><span>客户服务</span>
+            <div class="footer_txt footer_txt_one" v-if="showContact" @click="expandService"><span>客户服务内容</span>
                 <span class="el-icon-plus"  v-if="!expandSer"></span>
                 <span class="el-icon-minus"  v-if="expandSer"></span>
                 <div class="expand" v-if="expandSer">
-                    <p @click="toContact('customerService')">客服</p>
-                    <p @click="toContact('orderSend')">订单与配送</p>
+                    <p @click="toContact('customerService')">联系客服</p>
+                    <p @click="toContact('orderSend')">订单配送</p>
                     <!-- <p @click="toContact('termsConditions')">条款与条件</p>
                     <p @click="toContact('privacyPolicy')">隐私政策</p> -->
                 </div>

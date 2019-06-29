@@ -70,7 +70,7 @@
                   <span>、</span>
                   <a class="term_txt" @click="toContact('privacyPolicy')">隐私政策</a>
                   <span>,</span><br><span> 以及</span>
-                  <a @click="toMesssge" class="term_txt">个人敏感信息政策。</a>
+                  <a @click="toContact('personalSensitive')" class="term_txt">个人敏感信息政策。</a>
               </div>             
           </el-checkbox>
         </el-form-item> 
@@ -104,17 +104,19 @@ export default {
           }
         }
         
-      };
+      }
+      let cachData = sessionStorage.getItem('cachFromData')
+      let cachParam = cachData !== "undefined" && cachData != null && cachData !='null' && cachData != '' && JSON.parse(cachData)
       return {
         ruleForm: {
-          name: '', //收件人姓名
-          phone: '',  // 手机号
-          country: '', // 国家
-          addressprovince: '', // 省份
-          addresscity: '', // 城市
-          addressdistrict: '',// 地区/行政区
-          address: '', // 街道地址   
-          term: false 
+          name: cachParam && JSON.parse(cachData).name || '', //收件人姓名
+          phone: cachParam && JSON.parse(cachData).phone || '',  // 手机号
+          country:  cachParam && JSON.parse(cachData).country || '', // 国家
+          addressprovince:  cachParam && JSON.parse(cachData).addressprovince || '', // 省份
+          addresscity:  cachParam && JSON.parse(cachData).addresscity || '', // 城市
+          addressdistrict:  cachParam && JSON.parse(cachData).addressdistrict || '',// 地区/行政区
+          address: cachParam && JSON.parse(cachData).address || '', // 街道地址   
+          term:  cachParam && JSON.parse(cachData).term || false 
         },
         rules: {
           name: [
@@ -186,6 +188,7 @@ export default {
                     type: 'success'
                   })
                   me.$router.push('/selectAddress')
+                  sessionStorage.removeItem('cachFromData')
                 } else {
                   me.$message({
                     message: '操作失败！',
@@ -221,6 +224,7 @@ export default {
       },
       back(){
         this.$router.push('/selectAddress')
+        sessionStorage.removeItem('cachFromData')
       },
       // 选择省份
       addressprovinceFunc(val) {
@@ -246,6 +250,14 @@ export default {
       addressdistrictFunc(val) {
         this.ruleForm.address =''
       }
+    },
+    beforeRouteLeave (to, from, next) {
+      // debugger
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+      let obj = this.ruleForm
+      sessionStorage.setItem('cachFromData', JSON.stringify(obj))
+      next()
     }
   }
 </script>

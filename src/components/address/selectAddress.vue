@@ -134,5 +134,6 @@ export default {
   font-size: 12px;
   border-radius: 0.05rem;
   color:#e90e0e;
+  margin-right:0.1rem;
 }
 </style>

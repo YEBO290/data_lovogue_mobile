@@ -10,6 +10,7 @@
       <!-- <img src="~@/assets/image/timg.png" style="width:100%" v-if="productTotal == 0"/> -->
       <div v-if="productTotal == 0" style="padding-bottom:0.5rem;">
         <!-- <img src="~@/assets/image/noData.png" style="width:100%" > -->
+        <span style="font-size:15px;color:#6a6968;">暂无产品</span>
       </div>
       <div v-else>
         <el-row :gutter="10" style="padding-top:17px;">

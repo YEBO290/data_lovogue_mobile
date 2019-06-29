@@ -30,10 +30,10 @@ const state = {
     address: '中国广东省深圳市罗湖区南湖路3005号国贸商住大厦16F 518001',
     time: '9:00~18:00',
     privacyPolicy: '本应用尊重并保护所有使用服务用户的个人隐私权。为了给您提供更准确、更有个性化的服务，本应用会按照本隐私权政策的规定使用和披露您的个人信息。但本应用将以高度的勤勉、审慎义务对待这些信息。除本隐私权政策另有规定外，在未征得您事先许可的情况下，本应用不会将这些信息对外披露或向第三方提供。本应用会不时更新本隐私权政策。 您在同意本应用服务使用协议之时，即视为您已经同意本隐私权政策全部内容。本隐私权政策属于本应用服务使用协议不可分割的一部分。1. 适用范围(a) 在您注册本应用帐号时，您根据本应用要求提供的个人注册信息(b) 在您使用本应用网络服务',
-    termsConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar sic tempor. Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus pronin sapien nunc accuan eget.',
+    termsConditions: '该部分文案待提供完善...',
     returnRefund: '1234',
     resetPassWord: '什么乱七八糟',
-    orderSend: '我们的商品由优质的合作物流公司进行全球配送，会在周一至周五 09:00-17:00 之间（国定假期除外）直接送达您府上。 请注意，根据每个订单包裹的大小、重量和配送目的地不同，运费会有所区别。若您希望订单能在最短的时间内送达。',
+    orderSend: '我们的商品由优质物流公司进行全球配送；会在周一至周五 10：00-17：00之间（国定假日除外）直接送达您府上。请注意，根据每个订单包裹的大小、重量和配送地的不同，运费及时间会有所区别；若你希望了解订单商品的物流状态，可根据我们订单物流信息，及时查询订单商品最新动态，谢谢您的惠购，祝您生活美好！',
     advisoryCategory: [{label:'产品体验',value:'Product Usage'},{label:'服务体验',value:'Service Experience'},{label:'购买问题',value:'Purchasing'}, {label:'退款/退货',value:' Refund/Return'},{label:'售后问题',value:'After Sales'},{label:'其他',value:'Others'}]
   },
   active_color: false, // 选中的颜色
