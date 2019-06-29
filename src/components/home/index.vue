@@ -130,7 +130,8 @@ export default {
     },
     toSpecialEditionList(val) {
       // 跳转至特辑列表页
-      this.$router.push(`/specialEdition/${val.id}`)
+      // this.$router.push(`/specialEdition/${val.id}`)
+      this.$router.push(`${val.prodlink}`)
     },
     toSpecialEditionList2(val) {
       // 跳转至特辑列表页
