@@ -20,7 +20,7 @@
         </el-row>
         <div class="listMessageOne" v-if="user">
             <div class="list love" @click="$router.push('/loved')">
-                <span>收藏</span><i class="el-icon-arrow-right"></i>
+                <span>商品收藏</span><i class="el-icon-arrow-right"></i>
             </div>
             <div class="list addressList" @click="$router.push('/selectAddress')">
                 <span>收货地址</span><i class="el-icon-arrow-right"></i>

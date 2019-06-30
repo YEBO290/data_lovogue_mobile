@@ -36,11 +36,11 @@ export default {
     showSubMenu: state => state.showSubMenu
   }),
   created() {
-    // let id = this.$router.history.current.params.id
-    // let param =  {
-    //     occasion: id
-    //   }
-      this.$store.dispatch('specialEdition/querySpecialList')  // 轮播图
+    let id = this.$router.history.current.params.id
+    let param =  {
+        occasion: id ||""
+      }
+      this.$store.dispatch('specialEdition/querySpecialList',param)  // 轮播图
   },
   methods: {
     expand() {

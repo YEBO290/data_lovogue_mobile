@@ -70,19 +70,19 @@ const actions = {
         })
     },
     // 产品系列
-    // queryProductList(context, param) {
-    //     return new Promise((resolve, reject) => {
-    //         post(api.getScreen, param)
-    //         .then(res => {
-    //             context.commit("productTotal", res.total)
-    //             context.commit("productTypeList", res.data)
-    //             resolve(res.data);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         })
-    //     })
-    // },
+    queryProductList(context, param) {
+        return new Promise((resolve, reject) => {
+            post(api.getScreen, param)
+            .then(res => {
+                context.commit("productTotal", res.total)
+                context.commit("productTypeList", res.data)
+                resolve(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        })
+    },
     // 列表
     queryLists(context, param) {
         return new Promise((resolve, reject) => {
