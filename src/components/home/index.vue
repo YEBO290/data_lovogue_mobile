@@ -1,7 +1,7 @@
 <template>
     <div class="home" id="home">   
       <div class="carousel_img">
-        <el-carousel :interval="4000" arrow="always" height="4.25rem">
+        <el-carousel :interval="4000" arrow="always" height="5.63rem">
           <el-carousel-item v-for="item in queryImg" :key="item.id">
             <div @click="toSpecialEditionList(item)">
               <img :src="item.value" style="width:100%;">

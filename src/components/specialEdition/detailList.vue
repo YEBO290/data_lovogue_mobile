@@ -1,6 +1,6 @@
 <template>
     <div class="detail_list">    
-      <el-carousel :interval="5000" arrow="always" height="3.75rem">
+      <el-carousel :interval="5000" arrow="always" height="5.63rem">
         <el-carousel-item v-for="(item, index) in specialImg.rotating" :key="index">
           <img :src="item.imgpath" style="width:100%">
         </el-carousel-item>

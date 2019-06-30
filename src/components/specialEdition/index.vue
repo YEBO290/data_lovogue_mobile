@@ -58,11 +58,11 @@ export default {
 @import "./css/index.less";
 img{
   width:100%;
-  height: 5rem;
+  /* height: 5rem; */
   background: #fff;
 }
 .img_list{
-  height:5rem;
+  /* height:5rem; */
   
 }
 </style>

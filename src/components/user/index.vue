@@ -6,10 +6,10 @@
                     <p style="font-size:14px;height: 40px;line-height: 40px;margin-right:20px;"><span style="height: 40px;line-height:40px;display: inline-block;
         position: relative;">您好，</span><span style="overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;white-space: nowrap;max-width: 150px;height: 40px;line-height:40px;display: inline-block;">{{user}}</span></p>
                     <p style=" width: 1px;height: 20px;background:#c6c0c0;margin-top: 10px;margin-right: 10px;"></p>
-                    <a @click="$router.push('/login')" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a>
+                    <a @click="logOut()" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a>
             </div>
             <div class="userInfo" v-else>
-                <span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span>
+                <span class="userImg"><img src="~@/assets/image/user1.png" style="width:100%;"/></span>
                 <p class="login" @click="$router.push('/login')">登录</p>
             </div>
             <!--<el-col :span="4"><span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span></el-col>
@@ -226,6 +226,23 @@ export default {
                     })
                 } 
             })           
+        },
+        //登出并清除cookie
+        logOut(){
+            debugger
+            this.$router.push('/login')
+            this.clearCookie()
+        },
+        clearCookie() {   
+            debugger         
+            var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+            if (keys) {
+                for (var i = keys.length; i--;) {
+                    document.cookie = keys[i] + '=0;path=/;expires=' + new Date(0).toUTCString();//清除当前域名下的,例如：m.kevis.com
+                    document.cookie = keys[i] + '=0;path=/;domain=' + document.domain + ';expires=' + new Date(0).toUTCString();//清除当前域名下的，例如 .m.kevis.com
+                    document.cookie = keys[i] + '=0;path=/;domain=kevis.com;expires=' + new Date(0).toUTCString();//清除一级域名下的或指定的，例如 .kevis.com
+                }
+            }
         }
     }
 }

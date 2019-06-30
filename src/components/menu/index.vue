@@ -18,7 +18,7 @@
         <span class="glyphicon glyphicon-user" style="margin-right:0.12rem;">{{user}}</span>
         <span>切换账号</span>
       </p>  --> 
-      <i class="el-icon-close" @click="hideMenu" style="top:0.1rem;"></i>
+      <!-- <i class="el-icon-close" @click="hideMenu" style="top:0.1rem;"></i> -->
       <div style="background:#EFDED1;height:0.01rem;margin-bottom:0.25rem;width:100%;"></div>
       <p class="menu_title login" @click="toHome">首页</p>  
       <div v-for="(item, index) in menuList" :key="index">
