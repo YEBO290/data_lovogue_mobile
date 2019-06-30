@@ -34,7 +34,7 @@
         </el-form>
         <el-button class="btn ok_btn" type="primary" @click="submitForm('ruleForm')" style="margin-top:0.05rem">提交</el-button>
       </div>
-      <p class="contact_txt" :class="{'active_static': id === 'orderSend'}" @click="showDetail('orderSend')">订单与配送</p>
+      <p class="contact_txt" :class="{'active_static': id === 'orderSend'}" @click="showDetail('orderSend')">订单配送</p>
       <div class="contact_detail" v-if="id === 'orderSend'">
         <div>{{contactDetail.orderSend}}</div>
         <!--<el-button class="ok_btn btn" type="primary" @click="toResetPassWord">立即登录</el-button>-->
@@ -58,7 +58,7 @@
         </el-form>
         <el-button class="ok_btn btn" type="primary" @click="submitPassWord('rulePassWordForm')" style="margin-top:0.15rem;margin-bottom:0rem;">确认更改</el-button>
       </div>
-      <p class="contact_txt" :class="{'active_static': id === 'returnRefund'}" @click="showDetail('returnRefund')">退货与退款</p>
+      <p class="contact_txt" :class="{'active_static': id === 'returnRefund'}" @click="showDetail('returnRefund')">退货退款</p>
       <div class="contact_detail returnRefund" v-if="id === 'returnRefund'">
         <p class="sub_title">退货必须符合以下退货政策：</p>
         <p>商品必须未经穿戴、未洗涤过，未受损及使用过，并且附有所有的标签。</p>
@@ -74,8 +74,8 @@
         <p>我们全力以完好无损的状态送达每一款商品，并希望您能满意在这里的每次购物。如果您收到了有瑕疵，或与网站描述完全不相符的商品，请尽快通知客服。我们将安排退货，并对瑕疵品进行全额退款。</p>                                                   
         <div style="float:right;color:red;font-size:12px;"  @click="backOrder()">-> 返回我的订单</div>     
       </div>
-      <p class="contact_txt" :class="{'active_static': id === 'termsConditions'}" @click="showDetail('termsConditions')">条款与条件</p>
-      <div class="contact_detail" v-if="id === 'termsConditions'">{{contactDetail.termsConditions}}</div>
+      <!-- <p class="contact_txt" :class="{'active_static': id === 'termsConditions'}" @click="showDetail('termsConditions')">条款条件</p>
+      <div class="contact_detail" v-if="id === 'termsConditions'">{{contactDetail.termsConditions}}</div> -->
       <p class="contact_txt" :class="{'active_static': id === 'privacyPolicy'}" @click="showDetail('privacyPolicy')">隐私政策</p>
       <div class="contact_detail privacyPolicy" v-if="id === 'privacyPolicy'">
         <p>&nbsp;&nbsp;&nbsp;&nbsp;本应用尊重并保护所有使用服务用户的个人隐私权。为了给您提供更准确、更有个性化的服务，本应用会按照本隐私权政策的规定使用和披露您的个人信息。但本应用将以高度的勤勉、审慎义务对待这些信息。除本隐私权政策另有规定外，在未征得您事先许可的情况下，本应用不会将这些信息对外披露或向第三方提供。本应用会不时更新本隐私权政策。 您在同意本应用服务使用协议之时，即视为您已经同意本隐私权政策全部内容。本隐私权政策属于本应用服务使用协议不可分割的一部分。</p>
@@ -114,7 +114,7 @@
         <p class="sub_txt"></p> 
         <p>自己的个人信息，如联络方式或者邮政地址。请您妥善保护自己的个人信息，仅在必要的情形下向他人提供。如您发现自己的个人信息泄密，尤其是本应用用户名及密码发生泄露，请您立即联络本应用客服，以便本应用采取相应措施。</p>                      
       </div>
-      <p class="contact_txt" :class="{'active_static': id === 'personalSensitive'}" @click="showDetail('personalSensitive')">个人敏感信息政策</p>
+      <p class="contact_txt" :class="{'active_static': id === 'personalSensitive'}" @click="showDetail('personalSensitive')">信息政策</p>
       <div class="contact_detail privacyPolicy" v-if="id === 'personalSensitive'">
          <h3 style="font-size:13px;font-weight:bold;margin-bottom:0.1rem;">个人敏感信息收集、使用和分享政策</h3>
          <p>&nbsp;&nbsp;&nbsp;&nbsp;在中国，个人敏感信息指一旦泄露、非法提供或滥用可能危害人身和财产安全，或导致个人名誉、身心健康受到损害的个人信息，如身份证号，手机号、生物识别信息、银行账号、以及可追溯至特定自然人的交易记录和购物记录、行踪轨迹和浏览记录等。</p>

@@ -65,8 +65,8 @@
         <el-form-item prop="term" class="term_item">
           <el-checkbox v-model="ruleForm.term">    
               <div class="span_txt">
-                  您接受并同意遵守我们的
-                  <a class="term_txt" @click="toContact('termsConditions')">条款与条件</a>
+                  您接受并同意遵守我们的条款与条件
+                  <!-- <a class="term_txt" @click="toContact('termsConditions')">条款与条件</a> -->
                   <span>、</span>
                   <a class="term_txt" @click="toContact('privacyPolicy')">隐私政策</a>
                   <span>,</span><br><span> 以及</span>
