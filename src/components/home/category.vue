@@ -92,7 +92,7 @@ export default {
           language: 'cn',
           category: id || ''
         },
-        userid: workspace.getCookie().name,
+        // userid: workspace.getCookie().name,
         listQuery: {
           pageSize: size,
           pageNum: page
@@ -120,7 +120,7 @@ export default {
     },
     searchLove() {
       let queryParam = {
-        userid: workspace.getCookie().name,
+        // userid: workspace.getCookie().name,
         status: "1"
       }
       this.$store.dispatch('login/queryLovedList', queryParam)

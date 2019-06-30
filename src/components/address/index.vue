@@ -161,6 +161,7 @@ export default {
       //   return state.count + this.localCount
       // }
     }),
+    props: ['id'],
     created() {
       // this.$store.dispatch('address/queryCountry')
       this.$store.dispatch('address/queryProvince', {level: "0"})
@@ -187,7 +188,7 @@ export default {
                     message: '新增成功',
                     type: 'success'
                   })
-                  me.$router.push('/selectAddress')
+                  me.id? me.$router.push(`/detail/${me.id}`): me.$router.push(`/selectAddress`)
                   sessionStorage.removeItem('cachFromData')
                 } else {
                   me.$message({
@@ -223,7 +224,8 @@ export default {
           
       },
       back(){
-        this.$router.push('/selectAddress')
+        this.id? this.$router.push(`/selectAddress/${this.id}`): this.$router.push(`/selectAddress`)
+        // this.$router.push('/selectAddress')
         sessionStorage.removeItem('cachFromData')
       },
       // 选择省份

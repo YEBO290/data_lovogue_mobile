@@ -49,7 +49,7 @@
         </el-row> -->
         <el-row :gutter="10">
             <el-col :span="8"  v-for="item in categoryList" :key="item.id">
-              <div class="grid-content bg-purple" style="margin-bottom: 0.2rem;"  @click="toCategoryList(item)">
+              <div class="grid-content bg-purple" style="margin-bottom: 0.1rem;"  @click="toCategoryList(item)">
                 <img :src="item.value" style="width:100%;min-height:1.07rem;display:block;background:#fff;">
                 <p class="recommend_text" style="margin-top:0.1rem;">{{item.name}}</p>
               </div>

@@ -1,6 +1,10 @@
 <template>
     <div id="app">
         <header-tab/>
+        <div class="loading" v-if="showLoading">
+            <img src="~@/assets/image/timg.gif" style="width:30%;margin: auto;position: absolute;
+                left: 0;right: 0;top: 0;bottom: 0;"/>
+        </div>
         <div class="content">
             <keep-alive>
                 <router-view :key="key"></router-view>
@@ -24,6 +28,7 @@ import toTop from './components/common/toTop'
 import workspace from './common.js'
 let data = () => {
     return {
+        
     }
 }
 export default {
@@ -41,14 +46,17 @@ export default {
         showFooter: state => state.showFooter,
         key(){
 	        return this.$route.path + Math.random();
-	    }
+        },
+        showLoading: function(state){
+            return state.showLoading
+        },
     }),
     created() {
         let me = this
         let useName = workspace.getCookie().name
         if(useName) {       
             let loveParam = {
-                userid: useName,
+                // userid: useName,
                 status: "1"
             }
             me.$store.dispatch('login/queryLovedList', loveParam) // 喜爱的列表查询
@@ -107,4 +115,19 @@ html{height:100%;}
 </style>
 <style scoped>
 @import "./assets/css/base.css";
+.loading{
+    width: 100%;
+    background: #fff;
+    height: 620px;
+    position: fixed;
+    z-index: 1000;
+}
+.loading p{
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    bottom: 0;
+}
 </style>

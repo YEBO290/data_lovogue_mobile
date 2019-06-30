@@ -6,6 +6,7 @@ import axios from 'axios'
 import router from '../router/index.js'
 import store from '../store/index.js'
 import workspace from '../common.js'
+import load from '../components/common/loading'
 import {
   Message,
   Loading
@@ -29,6 +30,17 @@ if (process.env.NODE_ENV === 'development') {
 // 请求拦截器
 axios.interceptors.request.use(
   config => {
+    store.commit('showLoading', true)
+  // 用户没有登录，跳转登录界面
+  let key = config.data
+  for(let i in key) {
+    if(i === 'userid' && (key[i] === '' || key[i] === null || key[i] === undefined )) { 
+      router.replace({      
+        path: '/login'
+       })
+       console.log(router.currentRoute.fullPath)
+    }
+  }
   // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
   // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
   // const token = store.state.token
@@ -45,12 +57,13 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(
   response => {
-    Loading.service({
-      lock: true,
-      text: 'Loading',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    }).close()
+    store.commit('showLoading', false)  
+    // Loading.service({
+    //   lock: true,
+    //   text: 'Loading',
+    //   spinner: 'el-icon-loading',
+    //   background: 'rgba(0, 0, 0, 0.7)'
+    // }).close()
   // if (response.status === 200) {  
   // return Promise.resolve(response) 
   //  } else {   
@@ -68,12 +81,13 @@ axios.interceptors.response.use(
     // workspace.clearCookie()
     // store.commit('login/lovesList', []) // 喜爱的列表查询
     // store.commit('login/bagList', []) // 购物的列表查询
-    Loading.service({
-      lock: true,
-      text: 'Loading',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    }).close()
+    // Loading.service({
+    //   lock: true,
+    //   text: 'Loading',
+    //   spinner: 'el-icon-loading',
+    //   background: 'rgba(0, 0, 0, 0.7)'
+    // }).close()
+    store.commit('showLoading', false)
    if (error.response.status) {   
     switch (error.response.status) {    
      // 401: 未登录    
@@ -81,8 +95,7 @@ axios.interceptors.response.use(
      // 在登录成功后返回当前页面，这一步需要在登录页操作。    
      case 401:     
       router.replace({      
-       path: '/login',      
-       query: { redirect: router.currentRoute.fullPath } 
+       path: '/login'
       });
       break;
      // 403 token过期    
@@ -101,10 +114,7 @@ axios.interceptors.response.use(
       // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
       setTimeout(() => {      
        router.replace({       
-        path: '/login',       
-        query: { 
-         redirect: router.currentRoute.fullPath 
-        }      
+        path: '/login'   
        });     
       }, 1000);     
       break; 

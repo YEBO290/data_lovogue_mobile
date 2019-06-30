@@ -121,9 +121,14 @@ export default {
               } else {
                 workspace.setCookie(res[0].userid, me.ruleForm.pass, 30)
               } 
-              me.$router.push('/home')
+              let fromPath = me.$router.history.current.query && me.$router.history.current.query.fromPath
+              if(fromPath && fromPath != '' && fromPath != null && fromPath != '/') {
+                me.$router.push(fromPath)
+              } else {
+                me.$router.push('/home')
+              }
               let loveParam = {
-                userid: workspace.getCookie().name,
+                // userid: workspace.getCookie().name,
                 status: "1"
               }
               me.$store.dispatch('login/queryLovedList', loveParam) // 喜爱的列表查询

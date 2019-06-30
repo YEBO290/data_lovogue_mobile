@@ -340,13 +340,13 @@ export default {
     searchDetail() {
       let param = {
         typeno: this.id,
-        userid: workspace.getCookie().name
+        // userid: workspace.getCookie().name
       }
       this.$store.dispatch('detail/queryDetail', param)
     },
     searchList() {
       let queryParam = {
-        userid: workspace.getCookie().name,
+        // userid: workspace.getCookie().name,
         status: "1"
       }
       this.$store.dispatch('login/queryLovedList', queryParam)    
@@ -512,34 +512,47 @@ export default {
             })
           }       
         }) 
-      } else { // 立即支付 默认数量传1
+      } else { 
+        // 获取是否具有默认地址
         let param = {
-          data: [{
-            // productid: this.detail.color.join(),
-            productid: this.detail.color,
-            price: this.tagprice.replace(',', ''),
-            status: '未支付',
-            amount: 1,
-            shipstatus: '未发货',
-            unit: '件',
-            userid: workspace.getCookie().name,
-            advancebooking: 0,
-            name: this.detailInfo.productname
-          }]
+          userid: workspace.getCookie().name,
+          status: ""
         }
-        this.$store.dispatch('login/toPay', param).then(res => {
-          if (res.err == 0) {
-            me.$router.push({path: '/confirmAddress', query: {
-              id: res.msg.join(),
-              orderid: res.orderid
-            }})
+        this.$store.dispatch('address/queryAddressList', param).then(res=> {
+          let defaultAddress = res.some(item => item.status == 2)
+          if(!defaultAddress) {
+            me.$router.push(`/selectAddress/${this.detailInfo.typeno}`)
           } else {
-            me.$message({
-              message: '操作失败!',
-              type: 'error'
+              // 立即支付 默认数量传1
+            let param = {
+              data: [{
+                // productid: this.detail.color.join(),
+                productid: this.detail.color.productid,
+                price: this.tagprice.replace(',', ''),
+                status: '未支付',
+                amount: 1,
+                shipstatus: '未发货',
+                unit: '件',
+                userid: workspace.getCookie().name,
+                advancebooking: 0,
+                name: this.detailInfo.productname
+              }]
+            }
+            this.$store.dispatch('login/toPay', param).then(res => {
+              if (res.err == 0) {
+                me.$router.push({path: '/confirmAddress', query: {
+                  id: res.msg.join(),
+                  orderid: res.orderid
+                }})
+              } else {
+                me.$message({
+                  message: '操作失败!',
+                  type: 'error'
+                })
+              }   
             })
-          }   
-        })
+          }
+        })  
       }         
     },
     // 颜色选择

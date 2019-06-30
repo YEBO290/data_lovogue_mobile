@@ -14,15 +14,19 @@
       </div>
       <div v-else>
         <el-row :gutter="10" style="padding-top:17px;">
-          <el-col :span="12" v-for="(item, index) in productList" :key="index">
-            <div  class="category_list">
-              <img :src="item.imgpath" class="category_img"  @click="toDetail(item)"/>
+          <el-col :span="24" v-for="(item, index) in productList" :key="index">
+            <div  class="category_list"   @click="toDetail(item)">
+              <img :src="item.imgpath" class=""/>
               <transition name="el-zoom-in-center">
                 <img src="../../assets/image/loved.png" style="width: 0.2rem;" title="取消收藏" class="loved" v-if="item.love != 0" @click.stop="delLove(item)">
                 <img src="../../assets/image/toLove.png" style="width: 0.2rem;" title="收藏" class="toLove" v-else @click.stop="addLove(item)">
               </transition>
-              <p class="category_list_name">{{item.productname}}</p>
-              <span class="category_list_price">RMB {{item.tagprice}}</span>
+              <div  class="img_opeation">
+                <h1 class="list_h1">{{item.productname}}</h1>
+                <el-button class="img_list_btn">立即选购</el-button>
+              </div>
+              <!--<p class="category_list_name">{{item.productname}}</p>-->
+              <!--<span class="category_list_price">RMB {{item.tagprice}}</span>-->
             </div>
             </el-col>
         </el-row>
@@ -80,7 +84,7 @@ export default {
           language: 'cn',
           series: id || '',
         },
-        userid: workspace.getCookie().name,
+        // userid: workspace.getCookie().name,
         listQuery: {
           pageSize: size,
           pageNum: page
@@ -139,7 +143,7 @@ export default {
     },
     searchLoveList() {
       let queryParam = {
-        userid: workspace.getCookie().name,
+        // userid: workspace.getCookie().name,
         status: "1"
       }
       this.$store.dispatch('login/queryLovedList', queryParam)
@@ -155,6 +159,7 @@ export default {
 </script>
 <style scoped>
 @import "./css/category.less";
+@import "./css/index.less";
 .about_txt{
   background:#EFDED1;
   padding-left:0.18rem;
@@ -167,5 +172,12 @@ export default {
 .about_static p {
   font-size: 15px;
   color:#666666;
+}
+.img_opeation{
+  position: absolute;
+  z-index: 100;
+  bottom: 0.65rem;
+  margin: 0 auto;
+  width: 100%;
 }
 </style>

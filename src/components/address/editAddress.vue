@@ -66,7 +66,7 @@
         <div class="opeaBtn">
           <div class="toDefault">
             <span>设为默认地址</span>
-            <el-switch class="switchBtn"
+            <el-switch class="switchBtn" :disabled="editInfo.len == 1"
               v-model="defaultValue"
               active-color="#13ce66"
               inactive-color="#999" @change="toDefault">
@@ -97,6 +97,9 @@ export default {
         }     
       }   
       return {
+        provinceParam: false,
+        cityParam: false,
+        areaParam: false,
         defaultValue: this.defaultFun(),
         editInfo: {
             phone: '',
@@ -163,10 +166,10 @@ export default {
               id: me.editInfo.id,
               userid: workspace.getCookie().name,
               address: me.editInfo.address,
-              status: val,
-              addressprovince: me.provinceFilter(me.editInfo.addressprovince),
-              addresscity: me.cityFilter(me.editInfo.addresscity),
-              addressdistrict:  me.areaFilter(me.editInfo.addressdistrict),
+              status: me.defaultValue? '2': '1',
+              addressprovince: me.showEdit? me.provinceFilter(me.editInfo.addressprovince): me.editInfo.addressprovince,
+              addresscity: me.showEdit? me.cityFilter(me.editInfo.addresscity): me.editInfo.addresscity,
+              addressdistrict:  me.showEdit? me.areaFilter(me.editInfo.addressdistrict): me.editInfo.addressdistrict,
               name: me.editInfo.name,
               phone: me.editInfo.phone
             }
@@ -233,6 +236,7 @@ export default {
       },
       // 选择省份
       addressprovinceFunc(val) {
+        this.provinceParam = true
         this.$store.dispatch('address/queryCity', {
           level: "1",
           parent: val
@@ -244,6 +248,7 @@ export default {
       },
       // 选择城市
       addresscityFunc(val) {
+        this.cityParam = true
         this.$store.dispatch('address/queryArea', {
           level: "2",
           parent: val
@@ -253,45 +258,57 @@ export default {
       },
       // 选择城市区
       addressdistrictFunc(val) {
+        this.areaParam = true
         this.editInfo.address =''
       },
       toDefault(val) {
-        if (val) {
-          this.save('2')
-        } else {
-          this.save('1')
-        }
+        // if (val) {
+        //   this.save('2')
+        // } else {
+        //   this.save('1')
+        // }
       },
       //省份过滤
       provinceFilter(val) {
-        var province = "";
-        this.provinceList.forEach(el => {
-          if(el.id == val){
-            province = el.name;
-          }      
-        });
-        return province;
-
+        if(!this.provinceParam) {
+          return val
+        } else {
+          var province = "";
+          this.provinceList.forEach(el => {
+            if(el.id == val){
+              province = el.name;
+            }      
+          });
+          return province;
+        }
       },
       //城市过滤
       cityFilter(val) {
-        var city = "";
-        this.cityList.forEach(el => {
-          if(el.id == val){
-            city = el.name;
-          }      
-        });
-        return city;
+        if(!this.cityParam) {
+           return val
+        } else {
+          var city = "";
+          this.cityList.forEach(el => {
+            if(el.id == val){
+              city = el.name;
+            }      
+          });
+          return city;
+        }      
       },
       //行政区域过滤
       areaFilter(val) {
-        var area = "";
-        this.areaList.forEach(el => {
-          if(el.id == val){
-            area = el.name;
-          }      
-        });
-        return area;
+        if(!this.areaParam) {
+           return val
+        } else {
+          var area = "";
+          this.areaList.forEach(el => {
+            if(el.id == val){
+              area = el.name;
+            }      
+          });
+          return area;
+        }
       }
     }
   }

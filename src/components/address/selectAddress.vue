@@ -36,6 +36,7 @@ export default {
         editList: []
       }
     },
+    props: ['id'],
     computed: mapState({
       // 箭头函数可使代码更简练
       addressList: state => state.address.addressList
@@ -57,16 +58,24 @@ export default {
         this.$store.dispatch('address/queryAddressList', param)
       },
       back(){
-        this.$router.go(-1)
+        let me = this
+        // let fromPath = me.$router.history.current.query && me.$router.history.current.query.fromPath
+        // if(fromPath && fromPath != '' && fromPath != null && fromPath != '/') {
+        //   me.$router.push(fromPath)
+        // } else {
+        //   me.$router.push('/home')
+        // }
+        me.id? me.$router.push(`/detail/${me.id}`): me.$router.go(-1)
         // this.$router.push('/confirmAddress')
       },
       toAddAdress() {
-        this.$router.push('/address')
+       this.id? this.$router.push(`/address/${this.id}`):  this.$router.push(`/address`)
       },
       edit(val, index) {    
         this.editInfo = val
+        this.editInfo.len = this.addressList.length
         this.showEdit = true
-        let param = encodeURIComponent(JSON.stringify(val))
+        let param = encodeURIComponent(JSON.stringify(this.editInfo))
         this.$router.push({path: '/editAddress', query: {
           param: param
         }})

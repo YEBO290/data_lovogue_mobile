@@ -103,9 +103,10 @@ const router = new Router({
         },
         {
             // 地址注册
-            path: "/address",
+            path: "/address/:id?",
             name: "address",
             component: address,
+            props: true,
             meta: {
                 fontColor: true
             }
@@ -217,9 +218,10 @@ const router = new Router({
         },
         {
             // 收货地址列表
-            path: "/selectAddress",
+            path: "/selectAddress/:id?",
             name: "selectAddress",
             component: selectAddress,
+            props: true,
             meta: {
                 fontColor: true
             }

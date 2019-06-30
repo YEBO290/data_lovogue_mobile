@@ -16,6 +16,7 @@ import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 import Element from 'element-ui'
 import $ from 'jquery'
 import './assets/js/flexible.js'
+import load from '../src/components/common/loading'
 import {
     // Pagination,
     Dialog,
@@ -163,6 +164,7 @@ Vue.prototype.$prompt = MessageBox.prompt
 Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message
 Vue.prototype.$axios = axios
+Vue.prototype.$load = load
 
 // Object.keys(filters).forEach(key => {
 //   Vue.filter(key, filters[key])

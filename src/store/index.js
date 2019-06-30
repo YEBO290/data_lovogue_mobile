@@ -43,7 +43,8 @@ const state = {
   writeBgr: false,
   showSubMenu: false,
   showLoved: false,
-  showbag: false
+  showbag: false,
+  showLoading: false
   
 }
 const actions = {
@@ -174,7 +175,10 @@ const mutations = {
   },
   showbag(state, data) { 
     state.showbag = data
-  }
+  },
+  showLoading(state, data) { 
+    state.showLoading = data
+  },
 }
 const getters = {}
 export default new vuex.Store({

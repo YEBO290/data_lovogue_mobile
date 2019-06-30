@@ -132,7 +132,7 @@ export default {
             type: 'success'
           })
           let queryParam = {
-            userid: workspace.getCookie().name,
+            // userid: workspace.getCookie().name,
             status: "1"
           }
           this.$store.dispatch('login/queryLovedList', queryParam)
@@ -163,7 +163,7 @@ export default {
             type: 'success'
           })
           let queryParam = {
-            userid: workspace.getCookie().name,
+            // userid: workspace.getCookie().name,
             status: "1"
           }
           this.$store.dispatch('login/queryLovedList', queryParam)

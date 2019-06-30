@@ -82,7 +82,7 @@ export default {
       // 喜爱的列表查询
       getLovedList() {
         let param = {
-          userid: workspace.getCookie().name,
+          // userid: workspace.getCookie().name,
           status: "1"
         }
         this.$store.dispatch('login/queryLovedList', param).then((res) =>{

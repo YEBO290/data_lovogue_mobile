@@ -10,7 +10,7 @@
             </div>
             <div class="userInfo" v-else>
                 <span class="userImg"><img src="~@/assets/image/user1.png" style="width:100%;"/></span>
-                <p class="login" @click="$router.push('/login')">登录</p>
+                <p class="login"><span  @click="$router.push('/login')">登录</span>  |  <span  @click="$router.push('/login/register')" class="register">注册新账号</span></p>
             </div>
             <!--<el-col :span="4"><span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span></el-col>
             <el-col :span="7"><p style="font-size:14px;height: 40px;line-height: 40px;">您好，{{user}}</p></el-col>
@@ -229,12 +229,10 @@ export default {
         },
         //登出并清除cookie
         logOut(){
-            debugger
             this.$router.push('/login')
             this.clearCookie()
         },
-        clearCookie() {   
-            debugger         
+        clearCookie() {          
             var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
             if (keys) {
                 for (var i = keys.length; i--;) {
@@ -349,8 +347,7 @@ export default {
     width:20%!important;
 }
 .login{
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 14px;
     color: #c5a480;
 }
 .toLogin{
@@ -373,5 +370,8 @@ export default {
     width: 100%;
     height: 0.335rem;
     line-height: 0.335rem;
+}
+.register{
+    color:#ccc;
 }
 </style>
