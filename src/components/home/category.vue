@@ -15,14 +15,14 @@
       <div v-else>
         <el-row :gutter="10" style="padding-top:17px;">
           <el-col :span="12" v-for="(item, index) in categoryList" :key="index">
-            <div  class="category_list" @click="toDetail(item)">
+            <div  class="category_list" @click="toDetail(item)" :id="index">
               <img :src="item.imgpath" class="category_img"/>
               <transition name="el-zoom-in-center">
                 <img src="../../assets/image/loved.png" style="width: 0.2rem;" class="loved" title="取消收藏" v-if="item.love != 0"  @click.stop="delLove(item)">
                 <img src="../../assets/image/toLove.png" style="width: 0.2rem;" class="toLove" title="收藏"  @click.stop="addLove(item)" v-else>  
               </transition>
               <p class="category_list_name">{{item.productname}}</p>
-              <span class="category_list_price">RMB {{item.tagprice}}</span>
+              <span class="category_list_price">RMB {{changePrice(item.tagprice)}}</span>
             </div>
             </el-col>
         </el-row>
@@ -60,9 +60,6 @@ export default {
   },
   computed: mapState({
     categoryList: function(state) {
-      state.home.categoryTypeList.forEach(item => {
-        item.tagprice = workspace.thousandBitSeparator(item.tagprice)
-      })
       return state.home.categoryTypeList
     },
     categoryTotal:  state => state.home.categoryTotal,
@@ -85,6 +82,9 @@ export default {
     })
   },
   methods: {
+    changePrice(val) {
+      return workspace.thousandBitSeparator(val)
+    },
     searchParam(size, page) {
       let id = this.$router.history.current.params.id
       let param =  {

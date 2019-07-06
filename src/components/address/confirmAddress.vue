@@ -29,7 +29,7 @@
             </div>
             <div class="confirm_way_price">
                 <p class="confirm_way">配送方式： <span>免邮</span></p>
-                <p>共 {{confirmData.amount}} 件商品  总计： <span class="price_total">RMB {{confirmData.price}}</span></p>
+                <p>共 {{confirmData.amount}} 件商品  总计： <span class="price_total">RMB {{changePrice(confirmData.price)}}</span></p>
             </div>
             <el-button class="btn ok_btn" type="primary" @click="toBuy">立即支付</el-button>
         </div> 
@@ -39,7 +39,7 @@
             width="80%" class="payDialog"
             :before-close="handleClose">
             <div>
-                <p><span class="glyphicon glyphicon-hand-right"></span>应付金额：<span class="price_total">RMB {{confirmData.price}}</span></p>
+                <p><span class="glyphicon glyphicon-hand-right"></span>应付金额：<span class="price_total">RMB {{changePrice(confirmData.price)}}</span></p>
                 <div class="divider--horizontal divider"></div>
                 <div class="pay_img">
                     <span @click="toPay('aliPay')" class="payType" style="margin-right:0.15rem"><img src="~@/assets/image/alipay.png" style="width:100%;"/></span>
@@ -65,11 +65,6 @@ import workspace from '../../common.js'
     computed: mapState({
       // 箭头函数可使代码更简练
         confirmData: function(state){
-          let list = state.address.confirmData.data
-          state.address.confirmData.data.length > 0 && (list.forEach(el => {
-              el.price = workspace.thousandBitSeparator(el.price)
-          }))
-          state.address.confirmData.price = workspace.thousandBitSeparator(state.address.confirmData.price)
           return state.address.confirmData
         },
         addressList: state => state.address.addressList
@@ -89,6 +84,9 @@ import workspace from '../../common.js'
       this.$store.dispatch('address/queryAddressList', params)
     },
     methods: {
+        changePrice(val) {
+            return  workspace.thousandBitSeparator(val)
+        },
         toBuy() {
             this.dialogVisible = true            
         },

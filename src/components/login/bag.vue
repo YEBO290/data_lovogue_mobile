@@ -5,7 +5,7 @@
       <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" class="allCheck">全选</el-checkbox>
       <div style="margin: 0.15rem 0;"></div>  
       <div class="topayList">  
-        <el-row :gutter="20" class="bag_list" v-for="(item, index) in bagList" :key="index" @click="toDetail(item)">
+        <el-row :gutter="20" class="bag_list" v-for="(item, index) in bagList" :id="index" :key="index" @click="toDetail(item)">
           <!--暂不考虑全选，多选-->
           <el-col :span="2">
             <el-checkbox-group v-model="checkedLists" @change="handleCheckedListsChange">          
@@ -28,14 +28,14 @@
               <!--暂不考虑数量的加减-->
               <div class="number">
                 <label style="font-size:13px;">数量： </label>
-                <el-input-number v-model="item.amount" :min="1" label="数量"  :disabled="item.showAmount" @change="changeAmount"></el-input-number>
+                <el-input-number v-model="item.amount" :min="1" label="数量"  :disabled="item.showAmount" @change="changeAmount(item)"></el-input-number>
               </div>
               <div style="height: 0.2rem; margin-top: 0.53rem;">
                 <!--<div class="bag_size">
                   <span>数量: {{item.amount}}</span>
                 </div>-->
                 <div class="bag_country">
-                  <span class="bag_price">RMB {{item.tagprice}}</span>
+                  <span class="bag_price">RMB {{changePrice(item.tagprice)}}</span>
                 </div>
               </div>
             </div>
@@ -119,8 +119,7 @@ export default {
       // 箭头函数可使代码更简练
       bagList: function(state){
         state.login.bagList.forEach(item => {
-          this.$set(item, 'showAmount', true)
-          item.tagprice = workspace.thousandBitSeparator(item.tagprice)
+          this.$set(item, 'showAmount', false)       
         })
         return state.login.bagList
       },
@@ -142,11 +141,7 @@ export default {
       }
       if(workspace.getCookie().name) {
         // 购物袋的列表查询
-        let queryParam = {
-          userid: workspace.getCookie().name,
-          status: "1"
-        }
-        this.$store.dispatch('login/queryBagList', queryParam)
+        this.queryBag()
       } else {
         let params = {
           typeno: "",
@@ -166,6 +161,17 @@ export default {
       }    
     },
     methods: {
+      queryBag() {
+        // 购物袋的列表查询
+        let queryParam = {
+          userid: workspace.getCookie().name,
+          status: "1"
+        }
+        this.$store.dispatch('login/queryBagList', queryParam)
+      },
+      changePrice(val) {
+         return workspace.thousandBitSeparator(val)
+      },
       toHome() {
         this.$router.push('/home')
       },
@@ -295,9 +301,9 @@ export default {
           this.checkedLists = []
           me.totalNmubel = 0
           me.totalCost = 0
-          this.bagList.forEach(el => {
-            me.$set(el, 'showAmount', true)
-          })        
+          // this.bagList.forEach(el => {
+          //   me.$set(el, 'showAmount', true)
+          // })        
         } 
       },
       handleCheckedListsChange(value) {
@@ -310,9 +316,9 @@ export default {
         this.totalPay = 0
         this.totalNmubel = 0
         let newList = [] // 选中的数组
-        this.bagList.forEach(item => {   
-          me.$set(item, 'showAmount', true)    
-        })
+        // this.bagList.forEach(item => {   
+        //   me.$set(item, 'showAmount', true)    
+        // })
         value.forEach(el => {
           newList = newList.concat(this.bagList.filter(item => item.id === el ))
         })
@@ -327,7 +333,25 @@ export default {
         this.$router.push(`/detail/${val}`)
       },
       changeAmount(val) {
+        debugger
         let me = this
+        /**调添加购物车接口 */
+        let param = {
+          prodid: val.productid,
+          userid: workspace.getCookie().name,
+          amount: val.amount,
+          status: "1"
+        }
+        this.$store.dispatch('login/delBag', param).then(res => {
+          if(res.msg > 0) {              
+            me.queryBag()           
+          } else {
+            me.$message({
+              message: '操作失败！',
+              type: 'error'
+            })
+          }       
+        }) 
         let list = []
         this.checkedLists.forEach(el => {
           me.bagList.forEach(item => {   
@@ -344,7 +368,7 @@ export default {
         me.totalCost = 0 // 总计
         me.totalPay = 0 // 总运费
         val.forEach(item => {
-          me.$set(item, 'showAmount', false)
+          // me.$set(item, 'showAmount', false)
           // me.totalPay = me.totalPay + parseFloat(item.tagprice)
           me.totalNmubel = me.totalNmubel + parseInt(parseInt(item.amount))
           me.totalCost = me.totalCost + parseInt(item.amount) * parseFloat(item.tagprice.replace(',', ''))

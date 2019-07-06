@@ -13,7 +13,7 @@
               <span class="loved_color">{{item.color}} - <span  class="loved_code">编号  {{item.prodid}}</span></span>
             </div>
             <div class="loved_country">
-              <span class="loved_price">RMB {{item.tagprice}}</span>
+              <span class="loved_price">RMB {{changePrice(item.tagprice)}}</span>
               <i class="icon_bag" @click.stop="addBag"></i>
             </div>
           </div>
@@ -56,9 +56,6 @@ export default {
     computed: mapState({
       // 箭头函数可使代码更简练
       lovesList: function(state){
-        state.login.lovesList.forEach(item => {
-          item.tagprice = workspace.thousandBitSeparator(item.tagprice)
-        })
         return state.login.lovesList
       }
       // 传字符串参数 'count' 等同于 `state => state.count`
@@ -79,6 +76,9 @@ export default {
       this.getLovedList()     
     },
     methods: {
+      changePrice(val) {
+        return workspace.thousandBitSeparator(val)
+      },
       // 喜爱的列表查询
       getLovedList() {
         let param = {

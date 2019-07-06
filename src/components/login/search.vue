@@ -34,7 +34,7 @@
                 <span class="search_color">{{item.color}} - <span  class="search_code">编号  {{item.typeno}}</span></span>
               </div>
               <div class="search_country">
-                <span class="search_price">RMB {{item.tagprice}}</span>
+                <span class="search_price">RMB {{changePrice(item.tagprice)}}</span>
               </div>
             </div>
           </el-col>
@@ -68,9 +68,6 @@ export default {
     computed: mapState({
       // 箭头函数可使代码更简练
       searchList: function(state){
-        state.login.searchList.data.forEach(el => {
-          el.tagprice = workspace.thousandBitSeparator(el.tagprice)
-        })
         return state.login.searchList
       },
       tipList: state => state.home.menuList
@@ -89,6 +86,9 @@ export default {
       })
     },
     methods: {
+      changePrice(val) {
+        return workspace.thousandBitSeparator(val)
+      },
       search() {
         let me = this
         me.showTip = false

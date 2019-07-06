@@ -65,9 +65,6 @@ export default {
   },
   computed: mapState({
       productList: function(state){
-        state.home.productTypeList.forEach(item => {
-          item.tagprice = workspace.thousandBitSeparator(item.tagprice)
-        })
         return state.home.productTypeList
       },
       showSubMenu: state => state.showSubMenu,

@@ -3,13 +3,17 @@ import md5 from "js-md5"
 var workspace = {
     // 千位分割
     thousandBitSeparator(num) {
-      var val = num && parseFloat(num).toFixed(2)
-      var res=val.toString().replace(/\d+/, function(n){ // 先提取整数部分
-        return n.replace(/(\d)(?=(\d{3})+$)/g,function($1){
-           return $1+","
-         })
-      })
-      return res
+      if(typeof(num) === "string" && num.indexOf(',') > -1) {
+        return num
+      } else {
+        var val = num && parseFloat(num).toFixed(2)
+        var res=val.toString().replace(/\d+/, function(n){ // 先提取整数部分
+          return n.replace(/(\d)(?=(\d{3})+$)/g,function($1){
+            return $1+","
+          })
+        })
+        return res
+      }     
     },
       //设置cookie
   setCookie(portId, psw, exdays) {
