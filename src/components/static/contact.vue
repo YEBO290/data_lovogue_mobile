@@ -58,6 +58,11 @@
         </el-form>
         <el-button class="ok_btn btn" type="primary" @click="submitPassWord('rulePassWordForm')" style="margin-top:0.15rem;margin-bottom:0rem;">确认更改</el-button>
       </div>
+      <p class="contact_txt" :class="{'active_static': id === 'invoice'}" @click="showDetail('invoice')">发票业务</p>
+      <div class="contact_detail" v-if="id === 'invoice'">
+        <div>{{contactDetail.invoice}}</div>
+        <!--<el-button class="ok_btn btn" type="primary" @click="toResetPassWord">立即登录</el-button>-->
+      </div>
       <p class="contact_txt" :class="{'active_static': id === 'returnRefund'}" @click="showDetail('returnRefund')">退货退款</p>
       <div class="contact_detail returnRefund" v-if="id === 'returnRefund'">
         <p class="sub_title">退货必须符合以下退货政策：</p>
@@ -136,8 +141,9 @@
               <div class="returnAddr-content-text" style="margin-top: 0.15rem;">
                 <ul>
                   <li>公司电话：0755-82174455</li>
-                  <li>商务电话：13631057040</li>
-                  <li>地址：中国广东省深圳市罗湖区南湖路3005号国贸商住大厦16F</li>
+                  <li>客服电话：待提供</li>
+                  <li>公司名称：深圳市尚盟</li>
+                  <li>公司地址：中国广东省深圳市罗湖区南湖路3005号国贸商住大厦16F</li>
                 </ul>
               </div>
             </div>

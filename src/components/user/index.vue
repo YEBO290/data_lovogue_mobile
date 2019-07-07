@@ -258,6 +258,8 @@ export default {
     height: 50px;
     line-height: 50px;
     border-bottom: 1px solid #ddd;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .list i{
     position: relative;
@@ -265,7 +267,7 @@ export default {
     margin-left: -68px;
 }
 .love i,.setting i{
-    margin-left: -40px;
+    margin-left: -68px;
     
 }
 .user{
@@ -274,7 +276,7 @@ export default {
 }
 .userMessage{
     background: #fff;
-    padding:20px 20px 30px 20px;
+    padding:0.2rem 0.2rem 0.3rem 0.2rem;
     margin-bottom: 10px;
     border-bottom: 1px solid #ddd;
 }
@@ -283,14 +285,16 @@ export default {
 }
 .listMessageOne,.setting{
     background: #fff;
-    padding:0px 18px 0px 18px;
-    margin-bottom: 10px;
+    /* padding:0px 18px 0px 18px; */
+    margin-bottom: 0.05rem;
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #ddd;
-    margin-top: 10px;
+    margin-top: 0.1rem;
 }
 .addressList{
     border:none;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .listMessageTwo .list{
     background: #fff;
@@ -328,7 +332,7 @@ export default {
     margin-bottom:10px;
 }
 .user /deep/ .el-tabs__content, .user /deep/ .el-collapse-item__header{
-    padding: 0 0.09rem 0 0.18rem;
+    padding: 0 0.02rem 0 0.1rem;
 }
 .user /deep/ .el-tabs__content{
     padding: 0.1rem 0.2rem;

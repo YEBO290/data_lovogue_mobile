@@ -45,6 +45,7 @@
                     <span @click="toPay('aliPay')" class="payType" style="margin-right:0.15rem"><img src="~@/assets/image/alipay.png" style="width:100%;"/></span>
                     <span @click="toPay('weChat')" class="payType"><img src="~@/assets/image/wechatpay.png" style="width:100%;"></span>
                 </div>
+                <div style="color:red;text-align:center;margin: 10px 0 10px 0;">请您务必在15分钟之内完成付款</div>
             </div>
         </el-dialog>    
     </div>
@@ -175,7 +176,7 @@ import workspace from '../../common.js'
     border-color: #C5A480;
 }
  .payDialog /deep/ .el-dialog__body{
-    padding: 10px 30px 30px 30px;
+    padding: 0.1rem 0.2rem 0.2rem 0.2rem;
 }
 .divider--horizontal {
     display: block;
