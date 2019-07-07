@@ -34,7 +34,7 @@ const state = {
     returnRefund: '1234',
     resetPassWord: '什么乱七八糟',
     orderSend: '我们的商品由优质物流公司进行全球配送；会在周一至周五 10：00-17：00之间（国定假日除外）直接送达您府上。请注意，根据每个订单包裹的大小、重量和配送地的不同，运费及时间会有所区别；若你希望了解订单商品的物流状态，可根据我们订单物流信息，及时查询订单商品最新动态，谢谢您的惠购，祝您生活美好！',
-    advisoryCategory: [{label:'产品体验',value:'Product Usage'},{label:'服务体验',value:'Service Experience'},{label:'购买问题',value:'Purchasing'}, {label:'退款/退货',value:' Refund/Return'},{label:'售后问题',value:'After Sales'},{label:'其他',value:'Others'}],
+    advisoryCategory: [{label:'产品体验',value:'Product Usage'},{label:'服务体验',value:'Service Experience'},{label:'购买问题',value:'Purchasing'}, {label:'退款/退货',value:' Refund/Return'},{label:'售后问题',value:'After Sales'},{label:'发票业务',value:'invoice Sales'},{label:'其他问题',value:'Others'}],
     invoice: '发票业务的相关内容文案'
   },
   active_color: false, // 选中的颜色

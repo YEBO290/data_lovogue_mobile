@@ -23,8 +23,11 @@
             <slot name="footer"></slot>
         </el-col>
         <el-col :span="24">
+            <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='0'">
+                <el-button round type="primary" @click="delOrder(item)">删除</el-button>
+            </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='1'">
-                    <el-button round style="margin-right:15px;" @click="cancelOrder(item)">取消订单</el-button><el-button round type="primary" @click="toBuy(item)">付款</el-button>
+                <el-button round style="margin-right:15px;" @click="cancelOrder(item)">取消订单</el-button><el-button round type="primary" @click="toBuy(item)">付款</el-button>
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='2'">
                 <el-button round style="margin-right:5px;" type="primary" @click="viewStatus(item)">物流状态</el-button>
@@ -116,6 +119,34 @@ export default {
         cancelOrder(val) {
             val.shipstatus = '1'
             this.$emit('editOrder', val)
+        },
+        delOrder(val) {
+            let me = this
+            debugger
+            this.$confirm('确认是否删除订单?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                let param = {
+                    status: 9,
+                    orderid: val.orderid
+                }
+                this.$store.dispatch('address/cancelOrder', param).then(res => {
+                    if(res.msg > 0) {
+                        let params = {
+                            userid: workspace.getCookie().name,
+                            status:0
+                        }
+                        this.$store.dispatch('address/detailConfirmInfo', params).then(res => {
+                            me.shipstatus == '1' && (me.orderList = res)
+                            me.shipstatus == '4' && (me.toReceivedOrderList = res)
+                        })
+                    } 
+                })
+
+            }).catch(() => {      
+            })
         },
         toBuy(val) {
             this.dialogVisible = true   

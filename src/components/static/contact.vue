@@ -7,7 +7,7 @@
             <el-form-item prop="name">
                 <el-input type="text" v-model="ruleForm.name" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>
-            <label class="label_txt">电邮地址</label><span class="req">*</span>
+            <label class="label_txt">邮箱地址</label><span class="req">*</span>
             <el-form-item prop="email">
                 <el-input type="text" v-model="ruleForm.email" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>
