@@ -112,51 +112,57 @@ export default {
       tipList: state => state.home.menuList
     }),
     created() {
-        // 商品详情
-        if(this.user) {
-            let me = this
-            let param0 = this.queryOrder('0')
-            this.$store.dispatch('address/detailConfirmInfo', param0).then(res => {
-                this.caceldOrderList = res
-                this.caceldOrderList && (this.caceldOrderList.data.forEach(el => {
-                    el.tagprice =  workspace.thousandBitSeparator(el.price)
-                }))
-            })
-            let param = this.queryOrder('1')
-            this.shistatus = '1'
-            this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
-                this.orderList = res
-                this.orderList && (this.orderList.data.forEach(el => {
-                    el.tagprice =  workspace.thousandBitSeparator(el.price)
-                }))
-            })
-            let param2 = this.queryOrder('2')
-            this.shipstatus = '2'
-            this.$store.dispatch('address/detailConfirmInfo', param2).then(res => {
-                this.shippedOrderList = res
-                this.shippedOrderList && (this.shippedOrderList.data.forEach(el => {
-                    el.tagprice =  workspace.thousandBitSeparator(el.price)
-                }))
-            })
-            let param3 = this.queryOrder('3')
-            this.shipstatus = '3'
-            this.$store.dispatch('address/detailConfirmInfo', param3).then(res => {
-                this.toReceivedOrderList = res
-                this.toReceivedOrderList && (this.toReceivedOrderList.data.forEach(el => {
-                    el.tagprice =  workspace.thousandBitSeparator(el.price)
-                }))
-            })
-            let param4 = this.queryOrder('4')
-            this.shipstatus = '4'
-            this.$store.dispatch('address/detailConfirmInfo', param4).then(res => {
-                this.receivedOrderList = res
-                this.receivedOrderList && (this.receivedOrderList.data.forEach(el => {
-                    el.tagprice =  workspace.thousandBitSeparator(el.price)
-                }))
-            })
-        }
+        this.initOrder()
+       
     },
     methods: {
+        //加载所有订单状态列表
+        initOrder() {  
+             // 商品详情
+            if(this.user) {
+                let me = this
+                let param0 = this.queryOrder('0')
+                this.$store.dispatch('address/detailConfirmInfo', param0).then(res => {
+                    this.caceldOrderList = res
+                    this.caceldOrderList && (this.caceldOrderList.data.forEach(el => {
+                        el.tagprice =  workspace.thousandBitSeparator(el.price)
+                    }))
+                })
+                let param = this.queryOrder('1')
+                this.shistatus = '1'
+                this.$store.dispatch('address/detailConfirmInfo', param).then(res => {
+                    this.orderList = res
+                    this.orderList && (this.orderList.data.forEach(el => {
+                        el.tagprice =  workspace.thousandBitSeparator(el.price)
+                    }))
+                })
+                let param2 = this.queryOrder('2')
+                this.shipstatus = '2'
+                this.$store.dispatch('address/detailConfirmInfo', param2).then(res => {
+                    this.shippedOrderList = res
+                    this.shippedOrderList && (this.shippedOrderList.data.forEach(el => {
+                        el.tagprice =  workspace.thousandBitSeparator(el.price)
+                    }))
+                })
+                let param3 = this.queryOrder('3')
+                this.shipstatus = '3'
+                this.$store.dispatch('address/detailConfirmInfo', param3).then(res => {
+                    this.toReceivedOrderList = res
+                    this.toReceivedOrderList && (this.toReceivedOrderList.data.forEach(el => {
+                        el.tagprice =  workspace.thousandBitSeparator(el.price)
+                    }))
+                })
+                let param4 = this.queryOrder('4')
+                this.shipstatus = '4'
+                this.$store.dispatch('address/detailConfirmInfo', param4).then(res => {
+                    this.receivedOrderList = res
+                    this.receivedOrderList && (this.receivedOrderList.data.forEach(el => {
+                        el.tagprice =  workspace.thousandBitSeparator(el.price)
+                    }))
+                })
+            }
+
+        },
         queryOrder(val) { 
             // val 物流状态 status 订单状态
             // shipstatus
@@ -226,6 +232,27 @@ export default {
                     })
                 } 
             })           
+        },
+        //删除订单
+        delOrder(val) {
+            debugger
+            let me = this
+            let param = {
+                status: 9,
+                orderid: val.orderid
+            }
+            // this.shipstatus = val.shipstatus // 确认收货的接口未做
+            this.$store.dispatch('address/cancelOrder', param).then(res => {
+                if(res.msg > 0) {
+                    // let params = this.queryOrder('1')
+                    // this.$store.dispatch('address/detailConfirmInfo', params).then(res => {
+                    //     me.shipstatus == '1' && (me.orderList = res)
+                    //     me.shipstatus == '4' && (me.toReceivedOrderList = res)
+                    // })
+                    me.initOrder()
+                } 
+            })
+
         },
         //登出并清除cookie
         logOut(){

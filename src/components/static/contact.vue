@@ -36,12 +36,12 @@
       </div>
       <p class="contact_txt" :class="{'active_static': id === 'orderSend'}" @click="showDetail('orderSend')">订单配送</p>
       <div class="contact_detail" v-if="id === 'orderSend'">
-        <div>{{contactDetail.orderSend}}</div>
+        <div style="font-size:13px;">&nbsp;&nbsp;&nbsp;&nbsp;{{contactDetail.orderSend}}</div>
         <!--<el-button class="ok_btn btn" type="primary" @click="toResetPassWord">立即登录</el-button>-->
       </div>
       <p class="contact_txt" :class="{'active_static': id === 'resetPassWord'}" @click="showDetail('resetPassWord')" v-if="isUser">重设密码</p>
       <div class="contact_detail" v-if="id === 'resetPassWord' && isUser">
-        <p style="margin-bottom:0.3rem;">阁下若需重设密码；您只需在下面栏目里输入您的原始密码，经过我们系统验证后即可重设密码，谢谢您的配合，祝您生活美好！</p>
+        <p style="margin-bottom:0.3rem;">&nbsp;&nbsp;&nbsp;&nbsp;阁下若需重设密码；您只需在下面栏目里输入您的原始密码，经过我们系统验证后即可重设密码，谢谢您的配合，祝您生活美好！</p>
         <el-form :model="rulePassWordForm" status-icon :rules="rulesPassWord" ref="rulePassWordForm" label-width="1rem" class="loginForm">
             <label class="label_txt">原始密码</label><span class="req">*</span>
             <el-form-item prop="oldPass">
@@ -58,11 +58,6 @@
         </el-form>
         <el-button class="ok_btn btn" type="primary" @click="submitPassWord('rulePassWordForm')" style="margin-top:0.15rem;margin-bottom:0rem;">确认更改</el-button>
       </div>
-      <p class="contact_txt" :class="{'active_static': id === 'invoice'}" @click="showDetail('invoice')">发票业务</p>
-      <div class="contact_detail" v-if="id === 'invoice'">
-        <div>{{contactDetail.invoice}}</div>
-        <!--<el-button class="ok_btn btn" type="primary" @click="toResetPassWord">立即登录</el-button>-->
-      </div>
       <p class="contact_txt" :class="{'active_static': id === 'returnRefund'}" @click="showDetail('returnRefund')">退货退款</p>
       <div class="contact_detail returnRefund" v-if="id === 'returnRefund'">
         <p class="sub_title">退货必须符合以下退货政策：</p>
@@ -78,6 +73,11 @@
         <p class="sub_title sub_title_top">瑕疵品</p>
         <p>我们全力以完好无损的状态送达每一款商品，并希望您能满意在这里的每次购物。如果您收到了有瑕疵，或与网站描述完全不相符的商品，请尽快通知客服。我们将安排退货，并对瑕疵品进行全额退款。</p>                                                   
         <div style="float:right;color:red;font-size:12px;"  @click="backOrder()">-> 返回我的订单</div>     
+      </div>
+      <p class="contact_txt" :class="{'active_static': id === 'invoice'}" @click="showDetail('invoice')">发票业务</p>
+      <div class="contact_detail" v-if="id === 'invoice'">
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;{{contactDetail.invoice}}</div>
+        <!--<el-button class="ok_btn btn" type="primary" @click="toResetPassWord">立即登录</el-button>-->
       </div>
       <!-- <p class="contact_txt" :class="{'active_static': id === 'termsConditions'}" @click="showDetail('termsConditions')">条款条件</p>
       <div class="contact_detail" v-if="id === 'termsConditions'">{{contactDetail.termsConditions}}</div> -->
@@ -138,11 +138,12 @@
           <!-- <el-collapse-item title="退货地址"> -->
             <div class="returnAddr-content">
               <div class="returnAddr-content-bg"><img src="../../assets/image/wxcodeImg.png" alt=""><div style="text-align:center;">加入我们</div></div>
-              <div class="returnAddr-content-text" style="margin-top: 0.15rem;">
+              <div class="returnAddr-content-text">
                 <ul>
-                  <li>公司电话：0755-82174455</li>
-                  <li>客服电话：待提供</li>
-                  <li>公司名称：深圳市尚盟</li>
+                  <li>公司电话：+86 755 8217 4455</li>
+                  <li>客服电话：+86 136 0226 1390</li>
+                  <li>客服邮箱：lovogue@126.com</li>
+                  <li>公司名称：深圳市尚盟文化</li>
                   <li>公司地址：中国广东省深圳市罗湖区南湖路3005号国贸商住大厦16F</li>
                 </ul>
               </div>
