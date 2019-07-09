@@ -10,7 +10,8 @@
               <i class="el-icon-close" @click.stop="delLove(item)"></i>
             </div>
             <div>
-              <span class="loved_color">{{item.color}} - <span  class="loved_code">编号  {{item.prodid}}</span></span>
+              <span  class="loved_code">编号 - {{item.prodid}}</span>
+              <!-- <span class="loved_color">{{item.color}} - <span  class="loved_code">编号 - {{item.prodid}}</span></span> -->
             </div>
             <div class="loved_country">
               <span class="loved_price">RMB {{changePrice(item.tagprice)}}</span>
@@ -82,7 +83,7 @@ export default {
       // 喜爱的列表查询
       getLovedList() {
         let param = {
-          // userid: workspace.getCookie().name,
+          userid: workspace.getCookie().name?workspace.getCookie().name:'',
           status: "1"
         }
         this.$store.dispatch('login/queryLovedList', param).then((res) =>{

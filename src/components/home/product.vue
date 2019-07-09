@@ -170,10 +170,17 @@ export default {
   font-size: 15px;
   color:#666666;
 }
+.list_h1{
+  font-size:17px;
+  color:#EFDED1;
+  font-weight: Bold;
+  margin-bottom: 0.1rem;
+  font-family: "Helvetica";
+}
 .img_opeation{
   position: absolute;
   z-index: 100;
-  bottom: 0.65rem;
+  bottom: 0.25rem;
   margin: 0 auto;
   width: 100%;
 }

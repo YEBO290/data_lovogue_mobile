@@ -65,4 +65,18 @@ img{
   /* height:5rem; */
   
 }
+.img_opeation{
+  position: absolute;
+  z-index: 100;
+  bottom: 0.15rem;
+  margin: 0 auto;
+  width: 100%;
+}
+.list_h1{
+  font-size:18px;
+  color:#EFDED1;
+  font-weight: Bold;
+  margin-bottom: 0.1rem;
+  font-family: "Helvetica";
+}
 </style>

@@ -221,7 +221,7 @@ export default {
             idList.push(item.productid)
             let obj = {
               productid: item.productid,
-              price: item.tagprice.replace(',', ''),
+              price: item.tagprice,
               status: '未支付',
               amount: item.amount,
               shipstatus: '未发货',
@@ -333,10 +333,10 @@ export default {
         this.$router.push(`/detail/${val}`)
       },
       changeAmount(val) {
-        debugger
         let me = this
         /**调添加购物车接口 */
         let param = {
+          id:val.id,
           prodid: val.productid,
           userid: workspace.getCookie().name,
           amount: val.amount,
@@ -371,7 +371,7 @@ export default {
           // me.$set(item, 'showAmount', false)
           // me.totalPay = me.totalPay + parseFloat(item.tagprice)
           me.totalNmubel = me.totalNmubel + parseInt(parseInt(item.amount))
-          me.totalCost = me.totalCost + parseInt(item.amount) * parseFloat(item.tagprice.replace(',', ''))
+          me.totalCost = me.totalCost + parseInt(item.amount) * parseFloat(item.tagprice)
           // 是否考虑运费
           // me.totalCost = me.totalCost + (parseInt(1) * parseFloat(item.tagprice)) + parseFloat(item.pay)
         })

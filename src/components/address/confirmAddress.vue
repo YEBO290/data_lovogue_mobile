@@ -116,13 +116,13 @@ import workspace from '../../common.js'
             if (val === 'aliPay') {
                 // 支付宝
                 // this.$store.dispatch('address/toBuy')  
-                var alipayUrl = `${baseUrl}/api/ali_pay/pay2?orderid=`+ me.orderid +'&price='+ me.confirmData.price.replace(',', '')
+                var alipayUrl = `${baseUrl}/api/ali_pay/pay2?orderid=`+ me.orderid +'&price='+ me.confirmData.price
                 window.location.href = alipayUrl
             } else if (val === 'weChat'){
                 // 微信
                 let param = {
-                    orderid:me.orderid,
-                    price: (me.confirmData.price.replace(',', ''))*100   // 微信金额根据后端协商 *100
+                    orderid: me.orderid,
+                    price: me.confirmData.price*100  // 微信金额根据后端协商 *100
                 }
                 me.$store.dispatch('wechatPay',param).then(res => {
                     if (res.code === 200) {

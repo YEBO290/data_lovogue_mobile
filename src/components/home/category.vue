@@ -18,8 +18,8 @@
             <div  class="category_list" @click="toDetail(item)" :id="index">
               <img :src="item.imgpath" class="category_img"/>
               <transition name="el-zoom-in-center">
-                <img src="../../assets/image/loved.png" style="width: 0.2rem;" class="loved" title="取消收藏" v-if="item.love != 0"  @click.stop="delLove(item)">
-                <img src="../../assets/image/toLove.png" style="width: 0.2rem;" class="toLove" title="收藏"  @click.stop="addLove(item)" v-else>  
+                <img src="../../assets/image/loved.png" style="width: 0.2rem;" class="loved" title="取消收藏" v-if="(item.love != 0) && isShow"  @click.stop="delLove(item)">
+                <img src="../../assets/image/toLove.png" style="width: 0.2rem;" class="toLove" title="收藏"  @click.stop="addLove(item)" v-if="(item.love == 0) && isShow">  
               </transition>
               <p class="category_list_name">{{item.productname}}</p>
               <span class="category_list_price">RMB {{changePrice(item.tagprice)}}</span>
@@ -45,7 +45,8 @@ export default {
   },
   data() {
     return {
-      showMore: true
+      showMore: true,
+      isShow:false
     }
   },
   watch: {
@@ -80,6 +81,11 @@ export default {
     this.$router.afterEach((to, from, next) => {
         window.scrollTo(0, 0)
     })
+    if(workspace.getCookie().name){
+      this.isShow = true;
+    }else {
+       this.isShow = false;
+    }
   },
   methods: {
     changePrice(val) {
@@ -92,7 +98,7 @@ export default {
           language: 'cn',
           category: id || ''
         },
-        // userid: workspace.getCookie().name,
+        userid: workspace.getCookie().name,
         listQuery: {
           pageSize: size,
           pageNum: page
@@ -120,7 +126,7 @@ export default {
     },
     searchLove() {
       let queryParam = {
-        // userid: workspace.getCookie().name,
+        userid: workspace.getCookie().name,
         status: "1"
       }
       this.$store.dispatch('login/queryLovedList', queryParam)
