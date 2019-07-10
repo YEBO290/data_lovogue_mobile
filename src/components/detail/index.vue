@@ -340,13 +340,13 @@ export default {
     searchDetail() {
       let param = {
         typeno: this.id,
-        // userid: workspace.getCookie().name
+        userid: workspace.getCookie().name
       }
       this.$store.dispatch('detail/queryDetail', param)
     },
     searchList() {
       let queryParam = {
-        // userid: workspace.getCookie().name,
+        userid: workspace.getCookie().name,
         status: "1"
       }
       this.$store.dispatch('login/queryLovedList', queryParam)    

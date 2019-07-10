@@ -96,9 +96,9 @@ export default {
       let param =  {
         data: {
           language: 'cn',
-          category: id || ''
-        },
-        userid: workspace.getCookie().name,
+          category: id || '',
+           userid: workspace.getCookie().name,
+        },       
         listQuery: {
           pageSize: size,
           pageNum: page

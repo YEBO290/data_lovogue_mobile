@@ -408,6 +408,7 @@ export default {
     padding-left: 0.05rem;
     padding-right: 0.05rem;
     height: 0.25rem;
+    line-height: 0.23rem;
 }
 .bag_list /deep/ .el-input-number__decrease:hover,.bag_list /deep/ .el-input-number__increase:hover {
     color: #C5A480;
