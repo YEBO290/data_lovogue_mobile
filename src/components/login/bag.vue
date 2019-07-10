@@ -8,7 +8,7 @@
         <el-row :gutter="20" class="bag_list" v-for="(item, index) in bagList" :id="index" :key="index" @click="toDetail(item)">
           <!--暂不考虑全选，多选-->
           <el-col :span="2">
-            <el-checkbox-group v-model="checkedLists" @change="handleCheckedListsChange">          
+            <el-checkbox-group v-model="checkedLists" @change="handleCheckedListsChange" :disabled="item.inventory == 0">          
               <el-checkbox :label="item.id" :key="item.id">
               </el-checkbox>
             </el-checkbox-group> 
@@ -35,7 +35,7 @@
                   <span>数量: {{item.amount}}</span>
                 </div>-->
                 <div class="bag_country">
-                  <span class="bag_price">RMB {{changePrice(item.tagprice)}}</span>
+                  <span class="bag_price" style="float:left;" v-if="item.inventory == 0">暂无库存</span><span class="bag_price">RMB {{changePrice(item.tagprice)}}</span>
                 </div>
               </div>
             </div>
