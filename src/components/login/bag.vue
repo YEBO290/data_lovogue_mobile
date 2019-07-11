@@ -240,7 +240,7 @@ export default {
         }))
         this.$store.dispatch('login/toPay', param).then(res => {
           if (res.err == 0) {
-            me.delBagOrder(me.delOrderId);  //创建订单成功后 执行删除该条购物车订单
+           // me.delBagOrder(me.delOrderId);  //创建订单成功后 执行删除该条购物车订单
             me.$router.push({path: '/confirmAddress', query: {
               id: res.msg.join(),
               orderid: res.orderid

@@ -6,8 +6,8 @@
         </el-carousel-item>
       </el-carousel>
       <transition name="el-zoom-in-center">
-        <span class="toLove" title="收藏" @click="toLoveFunc" v-if="detailInfo.love == 0"></span>
-        <span class="Loved" title="取消收藏" @click="cancelLove" v-else></span>
+        <span class="toLove" title="收藏" @click="toLoveFunc" v-if="(detailInfo.love == 0) && isShow"></span>
+        <span class="Loved" title="取消收藏" @click="cancelLove"  v-if="(detailInfo.love != 0) && isShow"></span>
       </transition>
       <!--<p class="loveTip">{{loveTip}}</p>-->
       <div class="detail_content">
@@ -214,6 +214,7 @@ export default {
         size: '',
         tagprice: 0
       },
+      isShow:false,
       toLove: true,
       loveTip: '收藏',
       innerVisible: false,
@@ -317,12 +318,18 @@ export default {
     //     window.scrollTo(0, 0)
     // })
     this.searchDetail()
+    debugger
     let param = {
-      typeno: "",
+      typeno: this.id
     }
     this.$store.dispatch('detailList/queryRecommendList', param)
     // this.$store.dispatch('detail/queryImg') // 获取轮播图列表 
     // this.$store.dispatch('detail/queryColorList') // 获取颜色的下拉值 
+    if(workspace.getCookie().name){
+      this.isShow = true;
+    }else {
+      this.isShow = false;
+    }
   },
   methods: {
     
@@ -342,6 +349,7 @@ export default {
         typeno: this.id,
         userid: workspace.getCookie().name
       }
+      // workspace.getCookie().name && (param.userid = workspace.getCookie().name)
       this.$store.dispatch('detail/queryDetail', param)
     },
     searchList() {

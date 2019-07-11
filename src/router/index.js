@@ -98,7 +98,8 @@ const router = new Router({
             component: detail,
             props: true,
             meta: {
-                fontColor: true
+                fontColor: true,
+                userId: false
             }
         },
         {
@@ -153,7 +154,8 @@ const router = new Router({
             name: "brandList",
             component: brandList,
             meta: {
-                flag: "list"
+                flag: "list",
+                userId: false
             },
             // beforeEnter: (to, from, next) => {
             //     let status = workspace.getCookie().name
@@ -170,7 +172,8 @@ const router = new Router({
             name: "productList",
             component: productList,
             meta: {
-                flag: "list"
+                flag: "list",
+                userId: false
             },
             // beforeEnter: (to, from, next) => {
             //     let status = workspace.getCookie().name
@@ -187,7 +190,8 @@ const router = new Router({
             name: "categoryList",
             component: categoryList,
             meta: {
-                flag: "list"
+                flag: "list",
+                userId: false
             },
             // beforeEnter: (to, from, next) => {
             //     let status = workspace.getCookie().name
@@ -204,7 +208,8 @@ const router = new Router({
             name: "loved",
             component: loved,
             meta: {
-                fontColor: true
+                fontColor: true,
+                userId: true
             }
         },
         {
@@ -213,7 +218,8 @@ const router = new Router({
             name: "bag",
             component: bag,
             meta: {
-                fontColor: true
+                fontColor: true,
+                userId: true
             }
         },
         {
