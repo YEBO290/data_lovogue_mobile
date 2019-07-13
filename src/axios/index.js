@@ -36,6 +36,7 @@ axios.interceptors.request.use(
   // 用户没有登录，跳转登录界面
   let key = config.data
   debugger
+  let param = true
   console.log(userRequired)
   for(let item in userRequired){
     if(userRequired[item] == config.url) {
@@ -45,9 +46,13 @@ axios.interceptors.request.use(
           router.replace({      
             path: '/login'
           })
+          param = false
         }
       }
     }
+  }
+  if(!param) {
+    return
   }
   
   // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
@@ -66,6 +71,7 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(
   response => {
+    debugger
     store.commit('showLoading', false)  
     // Loading.service({
     //   lock: true,

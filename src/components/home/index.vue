@@ -210,7 +210,7 @@ export default {
     color: #EFDED1;
     width: 100%;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     font-family: "Helvetica";
   }

@@ -171,7 +171,7 @@ export default {
   color:#666666;
 }
 .list_h1{
-  font-size:17px;
+  font-size:14px;
   color:#EFDED1;
   font-weight: Bold;
   margin-bottom: 0.1rem;

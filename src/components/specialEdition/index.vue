@@ -73,7 +73,7 @@ img{
   width: 100%;
 }
 .list_h1{
-  font-size:18px;
+  font-size:14px;
   color:#EFDED1;
   font-weight: Bold;
   margin-bottom: 0.1rem;
