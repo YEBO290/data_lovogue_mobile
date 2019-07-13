@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     toHome(){
-      this.$router.push('/login')
+      this.$router.push('/home')
     },
     toDetail(){ 
        this.$router.push("/user/1")
@@ -35,12 +35,12 @@ export default {
 <style scoped>
 .paySuccess{
   background: #FFF;
-  padding: 50px 50px 100px 50px;
+  padding: 0.5rem 0.5rem 2.25rem 0.5rem;
 }
 .success{
-  width: 150px;
+  width: 1.5rem;
 }
 .btns .el-button{
-  padding:8px 20px;
+  padding:0.08rem 0.16rem;
 }
 </style>
