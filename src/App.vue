@@ -1,17 +1,19 @@
 <template>
     <div id="app">
-        <header-tab/>         
+        <header-tab/>   
+    <div @mouseout="headerOut()">      
         <div class="content">
             <keep-alive>
                 <router-view :key="key"></router-view>
             </keep-alive>
             <!-- <router-view></router-view>    -->
         </div>
-        <menuList class="menuList" id="menu" v-if="showMenu"/>
+        <!--<menuList class="menuList" id="menu" v-if="showMenu"/>-->
         <div class="content-footer" :class="{'bgr': bgr}" v-if="showFooter"> 
             <footer-tab/>
         </div>
         <to-top/>
+        </div>
     </div>
 </template>
 
@@ -63,11 +65,9 @@ export default {
         })
     },
     methods: {
-        overHeader(){
-            document.getElementById('menu').style.display = 'block'
-        },
-        leaveHwader(){
-            document.getElementById('menu').style.display = 'none'
+        headerOut(){
+            debugger
+            document.getElementById('menu') && (document.getElementById('menu').style.display = 'none')
         }
     }
 }

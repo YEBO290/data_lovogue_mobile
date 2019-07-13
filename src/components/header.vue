@@ -2,8 +2,9 @@
     <div class="header">
         <el-row :gutter="20">
             <el-col :span="3">
-                <div class="grid-content bg-purple" >
-                    <img src="../assets/image/menu.png" class="header_menu" @click.stop="showMenu"/>
+                <div class="grid-content bg-purple" @mousemove="headerOver()">
+                    <!--<img src="../assets/image/menu.png" class="header_menu" @click.stop="showMenu"/>-->
+                    <img src="../assets/image/menu.png" class="header_menu" />
                 </div>
             </el-col>
             <el-col :span="3">
@@ -38,6 +39,7 @@
                 </div>
             </el-col>
         </el-row> 
+        <menuList class="menuList" id="menu"/>
     </div>
 </template>
 
@@ -45,6 +47,7 @@
 import store from '../store'
 import { mapState } from 'vuex'
 import workspace from '../common.js'
+import menuList from './menu'
 document.onclick=function(){
     store.commit('showMenu', false)
     store.commit('showSubMenu', false)
@@ -54,6 +57,7 @@ document.onclick=function(){
 }
 export default {
   components: {
+      menuList
   },
   data() {
     return {
@@ -70,7 +74,7 @@ export default {
   created() {
   },
   methods: {
-      overHeader(){
+      headerOver(){
             document.getElementById('menu').style.display = 'block'
         },
         leaveHwader(){
