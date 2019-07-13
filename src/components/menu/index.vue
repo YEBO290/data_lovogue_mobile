@@ -106,7 +106,7 @@ export default {
   width:100%;
   height:10rem;
   background: #000;
-  opacity: 0.5;
+  opacity: 0.25;
 }
 .menu_home{
   height:10rem;

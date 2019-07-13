@@ -2,7 +2,7 @@
     <div class="header">
         <el-row :gutter="20" style=" margin-bottom: 14px;">
             <el-col :span="3">
-                <div class="grid-content bg-purple" @mousemove="headerOver()">
+                <div class="grid-content bg-purple" @click="headerOver()">
                     <!--<img src="../assets/image/menu.png" class="header_menu" @click.stop="showMenu"/>-->
                     <img src="../assets/image/menu.png" class="header_menu" />
                 </div>
