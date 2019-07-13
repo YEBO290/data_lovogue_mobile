@@ -219,7 +219,7 @@ label{
 .el-select{
     width:100%;
 }
-.el-button:active {
+.el-button:active,.el-button:focus, .el-button:hover {
     color: #EFDED1;
     border-color: #C5A480;
     outline: 0;

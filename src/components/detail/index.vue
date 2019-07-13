@@ -318,7 +318,6 @@ export default {
     //     window.scrollTo(0, 0)
     // })
     this.searchDetail()
-    debugger
     let param = {
       typeno: this.id
     }

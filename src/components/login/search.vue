@@ -74,12 +74,12 @@ export default {
     }),
     created() {
       this.$store.dispatch('home/queryMenuList')
-      let status = workspace.getCookie().name
-      if(status !== '' && status !== null && status !== undefined) {
-        this.showToLogin = false
-      } else {
-        this.showToLogin = true
-      }
+      // let status = workspace.getCookie().name
+      // if(status !== '' && status !== null && status !== undefined) {
+      //   this.showToLogin = false
+      // } else {
+      //   this.showToLogin = true
+      // }
       this.$store.commit('login/searchList', {
         data: [],
         total: 0
@@ -247,5 +247,6 @@ export default {
 }
 ul>li {
   margin-bottom: 10px;
+  margin-left:0.18rem;
 }
 </style>

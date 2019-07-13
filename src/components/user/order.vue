@@ -6,7 +6,7 @@
             <div>
                 <div>
                     <span class="bag_text">{{item.name}} </span>
-                    <span class="txt_right">RMB {{item.price}}</span>
+                    <span class="txt_right">RMB {{changePrice(item.price)}}</span>
                 </div>
                 <div>
                     <span class="bag_color"> <span  class="bag_code">编号  {{item.productid}}</span></span>
@@ -27,7 +27,8 @@
                 <el-button round type="primary" @click="delOrder(item)">删除</el-button>
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='1'">
-                <el-button round style="margin-right:15px;" @click="cancelOrder(item)">取消订单</el-button><el-button round type="primary" @click="toBuy(item)">付款</el-button>
+                <el-button round style="margin-right:15px;" @click="cancelOrder(item)">取消订单</el-button>
+                <el-button round type="primary" @click="toBuy(item)">付款</el-button>
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='2'">
                 <el-button round style="margin-right:5px;" type="primary" @click="viewStatus(item)">物流状态</el-button>
@@ -109,6 +110,9 @@ export default {
         },
     },
     methods: {
+        changePrice(val) {
+            return workspace.thousandBitSeparator(val)
+        },
         // workspace(val) {
         //     return workspace.timeFormat(val)
         // },
@@ -122,7 +126,6 @@ export default {
         },
         delOrder(val) {
             let me = this
-            debugger
             this.$confirm('确认是否删除订单?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -133,16 +136,18 @@ export default {
                     orderid: val.orderid
                 }
                 this.$store.dispatch('address/cancelOrder', param).then(res => {
-                    if(res.msg > 0) {
-                        let params = {
-                            userid: workspace.getCookie().name,
-                            status:0
-                        }
-                        this.$store.dispatch('address/detailConfirmInfo', params).then(res => {
-                            me.shipstatus == '1' && (me.orderList = res)
-                            me.shipstatus == '4' && (me.toReceivedOrderList = res)
-                        })
-                    } 
+                    me.$emit('handlerOPear')
+                    // if(res.msg > 0) {
+                    //     let params = {
+                    //         userid: workspace.getCookie().name,
+                    //         status:0
+                    //     }
+                    //     this.$store.dispatch('address/detailConfirmInfo', params).then(res => {
+                    //         me.shipstatus == '1' && (me.orderList = res)
+                    //         me.shipstatus == '4' && (me.toReceivedOrderList = res)
+                    //     })
+                        
+                    // } 
                 })
 
             }).catch(() => {      

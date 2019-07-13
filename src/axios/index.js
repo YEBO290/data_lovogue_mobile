@@ -35,7 +35,6 @@ axios.interceptors.request.use(
     store.commit('showLoading', true)
   // 用户没有登录，跳转登录界面
   let key = config.data
-  debugger
   let param = true
   console.log(userRequired)
   for(let item in userRequired){
@@ -71,7 +70,6 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(
   response => {
-    debugger
     store.commit('showLoading', false)  
     // Loading.service({
     //   lock: true,

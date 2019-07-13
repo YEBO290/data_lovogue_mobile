@@ -2,7 +2,7 @@
     <div class="header">
         <el-row :gutter="20">
             <el-col :span="3">
-                <div class="grid-content bg-purple">
+                <div class="grid-content bg-purple" >
                     <img src="../assets/image/menu.png" class="header_menu" @click.stop="showMenu"/>
                 </div>
             </el-col>
@@ -54,7 +54,6 @@ document.onclick=function(){
 }
 export default {
   components: {
-
   },
   data() {
     return {
@@ -71,6 +70,12 @@ export default {
   created() {
   },
   methods: {
+      overHeader(){
+            document.getElementById('menu').style.display = 'block'
+        },
+        leaveHwader(){
+            document.getElementById('menu').style.display = 'none'
+        },
       toHome() { //点击logo 跳至首页
         this.$router.push('/home')
         // let status = workspace.getCookie().name
@@ -162,4 +167,14 @@ export default {
         position: relative;
         top: -3px;
     }
+    .menuList{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 60%;
+    background: #EFDED1;
+    display: none;
+    
+}
 </style>

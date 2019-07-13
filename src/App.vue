@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <header-tab/>
+        <header-tab/>         
         <div class="content">
             <keep-alive>
                 <router-view :key="key"></router-view>
@@ -63,7 +63,12 @@ export default {
         })
     },
     methods: {
-        
+        overHeader(){
+            document.getElementById('menu').style.display = 'block'
+        },
+        leaveHwader(){
+            document.getElementById('menu').style.display = 'none'
+        }
     }
 }
 
@@ -84,6 +89,7 @@ export default {
     z-index: 1000;
     width: 60%;
     background: #EFDED1;
+    /* display: none; */
     
 }
 .content-footer{

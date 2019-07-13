@@ -45,7 +45,7 @@
                     <el-tab-pane :label="'处理中' + '(' + shippedOrderList.data.length + ')'" name="second" >
                         <p class="noData" v-if="shippedOrderList.data.length == 0">暂无数据</p>
                         <div v-else>
-                            <order :orderList="shippedOrderList.data"  :status="'2'"/>
+                            <order :orderList="shippedOrderList.data"  :status="'2'" @handlerOPear="handlerOPear" />
                         </div>
                     </el-tab-pane>
                     <el-tab-pane :label="'已到货' + '(' + toReceivedOrderList.data.length + ')'" name="third">
@@ -58,13 +58,13 @@
                     <el-tab-pane :label="'已取消' + '(' + caceldOrderList.data.length + ')'" name="zero">
                         <p class="noData" v-if="caceldOrderList.data.length == 0">暂无数据</p>
                         <div v-else>
-                            <order :orderList="caceldOrderList.data"  :status="'0'"/>
+                            <order :orderList="caceldOrderList.data"  :status="'0'"  @handlerOPear="handlerOPear"/>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane :label="'退款/退货' + '(' + receivedOrderList.data.length + ')'" name="four">
                         <p class="noData" v-if="receivedOrderList.data.length == 0">暂无数据</p>
                         <div v-else>
-                            <order :orderList="receivedOrderList.data"  :status="'4'"/>
+                            <order :orderList="receivedOrderList.data"  :status="'4'"  @handlerOPear="handlerOPear"/>
                         </div>
                     </el-tab-pane>
                 </el-tabs>
@@ -116,6 +116,9 @@ export default {
        
     },
     methods: {
+        handlerOPear(){
+            this.initOrder()
+        },
         //加载所有订单状态列表
         initOrder() {  
              // 商品详情
@@ -229,13 +232,13 @@ export default {
                     this.$store.dispatch('address/detailConfirmInfo', params).then(res => {
                         me.shipstatus == '1' && (me.orderList = res)
                         me.shipstatus == '4' && (me.toReceivedOrderList = res)
+                        me.initOrder()
                     })
                 } 
             })           
         },
         //删除订单
         delOrder(val) {
-            debugger
             let me = this
             let param = {
                 status: 9,
