@@ -291,7 +291,7 @@ export default {
         if (val) {
           let list = []
           this.bagList.forEach(el => {
-            list.push(el.id)
+            (el.inventory !== 0) && (list.push(el.id))
           })
           this.checkedLists = val ? list : []
           this.isIndeterminate = false
