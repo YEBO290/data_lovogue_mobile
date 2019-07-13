@@ -31,7 +31,7 @@
             <span>我的订单</span><i class="el-icon-arrow-right"></i>
         </div>-->
         <el-collapse v-model="activeNames"  v-if="user">
-            <el-collapse-item title="我的订单" name="3">
+            <el-collapse-item title="我的订单" name="1">
             <div style="width:100%;height:1px;background:#ddd;"></div>
             <div class="orderList">
                 <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -80,13 +80,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import workspace from '../../common.js'
 import order from './order'
+import {mapState} from 'vuex'
 export default {
+    props: ['id'],
     data() {
       return {
-          activeNames: [],
+        //   activeNames: this.id || [],
           user: workspace.getCookie().name,
           activeName: 'first',
           status: '1',
@@ -110,7 +111,12 @@ export default {
     components: {order},
     computed: mapState({
       tipList: state => state.home.menuList
-    }),
+    ,
+    activeNames() {
+        let list = []
+        this.id && list.push(this.id) 
+        return list
+    }}),
     created() {
         this.initOrder()
        

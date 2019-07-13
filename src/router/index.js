@@ -245,9 +245,10 @@ const router = new Router({
             component: editAddress
         },
         { // 用户
-            path: "/user",
+            path: "/user/:id?",
             name: "user",
-            component: user
+            component: user,
+            props:true
         },
         {
             // 订单详情
@@ -283,7 +284,7 @@ const router = new Router({
             props: true
         },
         {
-            path:'/paySuccess',
+            path:'/paySuccess/:id?',
             name:'paySuccess',
             component: paySuccess,
             props: true
