@@ -1,7 +1,6 @@
 <template>
     <div id="app">
-        <header-tab/>   
-    <div @mouseout="headerOut()">      
+        <header-tab/>      
         <div class="content">
             <keep-alive>
                 <router-view :key="key"></router-view>
@@ -14,7 +13,6 @@
         </div>
         <to-top/>
         </div>
-    </div>
 </template>
 
 <script>
@@ -65,10 +63,7 @@ export default {
         })
     },
     methods: {
-        headerOut(){
-            debugger
-            document.getElementById('menu') && (document.getElementById('menu').style.display = 'none')
-        }
+       
     }
 }
 

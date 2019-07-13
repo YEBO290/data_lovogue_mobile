@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <el-row :gutter="20">
+        <el-row :gutter="20" style=" margin-bottom: 14px;">
             <el-col :span="3">
                 <div class="grid-content bg-purple" @mousemove="headerOver()">
                     <!--<img src="../assets/image/menu.png" class="header_menu" @click.stop="showMenu"/>-->
@@ -35,7 +35,7 @@
             </el-col>
             <el-col :span="3">
                 <div class="grid-content bg-purple"  @click="$router.push('/user')">
-                    <span class="glyphicon glyphicon-user" style="color:#EFDED1;margin-top: 1px;"></span>
+                    <span class="glyphicon glyphicon-user" style="color:#EFDED1;margin-top: 1px;margin-right:0.18rem;"></span>
                 </div>
             </el-col>
         </el-row> 
@@ -77,9 +77,6 @@ export default {
       headerOver(){
             document.getElementById('menu').style.display = 'block'
         },
-        leaveHwader(){
-            document.getElementById('menu').style.display = 'none'
-        },
       toHome() { //点击logo 跳至首页
         this.$router.push('/home')
         // let status = workspace.getCookie().name
@@ -114,15 +111,15 @@ export default {
         height:0.5rem;
         line-height:0.18rem;
         background: #C5A480;
-        padding:0.16rem 0.18rem;
+        padding:0.16rem 0;
         position: fixed;
         top: 0px;
         z-index: 9999999;
     }
-    /* .header_menu{
-        position: absolute;
-        left: 0.18rem;
-    } */
+    .header_menu{
+        /* position: absolute; */
+        margin-left: 0.18rem;
+    }
     /* .header_search{
         position: absolute;
         left: 0.61rem;
