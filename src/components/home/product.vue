@@ -75,7 +75,7 @@ export default {
     if(workspace.getCookie().name){
       this.isShow = true;
     }else {
-       this.isShow = false;
+      this.isShow = false;
     }   
   },
   methods: {
@@ -84,9 +84,10 @@ export default {
       let param = {      
         data: {
           language: 'cn',
-          series: id || '',
+          series: id || ''
         },
-        // userid: workspace.getCookie().name,
+        userid: workspace.getCookie().name,
+        
         listQuery: {
           pageSize: size,
           pageNum: page

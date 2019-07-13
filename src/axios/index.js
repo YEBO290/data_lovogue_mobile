@@ -36,7 +36,6 @@ axios.interceptors.request.use(
   // 用户没有登录，跳转登录界面
   let key = config.data
   let param = true
-  console.log(userRequired)
   for(let item in userRequired){
     if(userRequired[item] == config.url) {
       // 校验必填userId 没传跳login
