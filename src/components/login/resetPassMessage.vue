@@ -25,7 +25,7 @@
             <el-form-item prop="email" v-if="!showMessage">
                 <el-input type="text" v-model="ruleForm.email" :clearable="true" autocomplete="off" ></el-input>
                 <el-button class="verificationCode" @click="sendMsg" :disabled="codeDis">{{code}}</el-button>
-                <a class="link" @click="showMessage = false" style="color:#C5A480">使用短信验证码?</a>
+                <!-- <a class="link" @click="showMessage = false" style="color:#C5A480">使用短信验证码?</a> -->
             </el-form-item>
 
             <label class="label_txt">填写验证码</label><span class="req">*</span>

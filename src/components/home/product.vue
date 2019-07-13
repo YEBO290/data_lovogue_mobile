@@ -18,8 +18,8 @@
             <div  class="category_list"   @click="toDetail(item)">
               <img :src="item.imgpath" class=""/>
               <transition name="el-zoom-in-center">
-                <img src="../../assets/image/loved.png" style="width: 0.2rem;" title="取消收藏" class="loved" v-if="item.love != 0" @click.stop="delLove(item)">
-                <img src="../../assets/image/toLove.png" style="width: 0.2rem;" title="收藏" class="toLove" v-else @click.stop="addLove(item)">
+                <img src="../../assets/image/loved.png" style="width: 0.2rem;" title="取消收藏" class="loved" v-if="(item.love != 0) && isShow" @click.stop="delLove(item)">
+                <img src="../../assets/image/toLove.png" style="width: 0.2rem;" title="收藏" class="toLove" v-if="(item.love == 0) && isShow"  @click.stop="addLove(item)">
               </transition>
               <div  class="img_opeation">
                 <h1 class="list_h1">{{item.productname}}</h1>
@@ -50,7 +50,8 @@ export default {
   },
   data() {
     return {
-      showMore: true
+      showMore: true,
+      isShow:false
     }
   },
   watch: {
@@ -71,7 +72,11 @@ export default {
       productTotal: state => state.home.productTotal
     }),
   created() {
-    
+    if(workspace.getCookie().name){
+      this.isShow = true;
+    }else {
+       this.isShow = false;
+    }   
   },
   methods: {
     searchParam(size, page) {
