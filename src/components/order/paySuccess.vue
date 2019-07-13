@@ -5,7 +5,7 @@
     </el-row>
      <el-row>
       <el-col :span="24"><div class="">
-        <span class="text">您的订单{{orderId}}已经支付成功，感谢您的参与。</span>
+        <span class="text">您的订单{{orderId}}已经支付成功，祝您购物愉快！</span>
       </div></el-col>
     </el-row>
     <el-row class="btns">
