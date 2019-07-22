@@ -64,7 +64,6 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(
   response => {
-    debugger
     store.commit('showLoading', false)
     return response
   },
@@ -106,7 +105,6 @@ axios.interceptors.response.use(
           default:  
             Message.error(error.response.data.msg)  
           }  
-          debugger
           return Promise.reject(error.response)
           // return error.response.data
       }  
