@@ -1,51 +1,10 @@
 import {get, post} from '../../axios/index'
 import api from '../../axios/api.js'
 const state = {
-  country: [
-    {
-      value: '1',
-      label: '中国'
-    }, {
-      value: '2',
-      label: '美国'
-    }
-  ],
-  provinceList: [
-    {
-      value: '1',
-      label: '广东'
-    }, {
-      value: '2',
-      label: '江西'
-    }, {
-      value: '3',
-      label: '湖南'
-    }
-  ],
-  cityList: [
-    {
-      value: '1',
-      label: '广州'
-    }, {
-      value: '2',
-      label: '深圳'
-    }, {
-      value: '3',
-      label: '东莞'
-    }
-  ],
-  areaList: [
-    {
-      value: '1',
-      label: '福田区'
-    }, {
-      value: '2',
-      label: '龙华区'
-    }, {
-      value: '3',
-      label: '罗湖区'
-    }
-  ],
+  country: [],
+  provinceList: [],
+  cityList: [],
+  areaList: [],
   // 确认订单详情
   confirmData: {
     data: [],

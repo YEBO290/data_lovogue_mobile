@@ -13,7 +13,9 @@
                 <p style="word-break: break-all;"><span v-if="item.status== 2" class="sureAdd">默认</span>{{item.addressprovince}}{{item.addresscity}}{{item.addressdistrict}}{{item.address}}</p>
             </div>
             <div style="width:30%;">
-                <span class="edit_list" @click="edit(item, index)" style="margin-right:0.36rem;border-right:0.02rem solid;padding-right:0.08rem;">修改</span><span class="edit_list" @click="del(item, index)">删除</span>
+                <span class="edit_list" @click="edit(item, index)" 
+                style="margin-right:0.36rem;border-right:0.02rem solid;padding-right:0.08rem;">修改</span>
+                <span class="edit_list del_list" @click="del(item, index)">删除</span>
             </div>
             <div style="clear:both;"></div>
             <div class="line"></div>
@@ -111,11 +113,6 @@ export default {
             .catch(function (error) {
               console.log(error)
             })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })        
         })
       },
     }
@@ -144,5 +141,8 @@ export default {
   border-radius: 0.05rem;
   color:#e90e0e;
   margin-right:0.1rem;
+}
+.del_list{
+  color:#ff0000;
 }
 </style>

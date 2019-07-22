@@ -30,7 +30,7 @@
                 <label style="font-size:13px;">数量： </label>
                 <el-input-number v-model="item.amount" :min="1" label="数量"  :disabled="item.showAmount" @change="changeAmount(item)"></el-input-number>
               </div>
-              <div style="height: 0.2rem; margin-top: 0.53rem;">
+              <div style="height: 0.2rem; margin-top: 0.40rem;">
                 <!--<div class="bag_size">
                   <span>数量: {{item.amount}}</span>
                 </div>-->
@@ -251,6 +251,10 @@ export default {
               type: 'error'
             })
           }   
+        }).catch((err) => {
+          if(err.err === 1){
+            this.$router.push('/selectAddress')
+          }
         })
         // this.$router.push('/confirmAddress')
       },
@@ -418,7 +422,7 @@ export default {
 }
 .number{
   position: absolute;
-  top: 0.7rem;
+  /* top: 0.7rem; */
 }
 .allCheck .el-checkbox__label{
   display: inline-block;
@@ -461,5 +465,10 @@ export default {
 .showPay{
   font-weight: bold;
   color: #c5a480;
+}
+.bag_text{
+    display: inline-block;
+    padding-right: 20px;
+    height: 40px;
 }
 </style>

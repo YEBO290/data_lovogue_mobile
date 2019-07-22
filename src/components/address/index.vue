@@ -224,7 +224,8 @@ export default {
           
       },
       back(){
-        this.id? this.$router.push(`/selectAddress/${this.id}`): this.$router.push(`/selectAddress`)
+        this.$router.go(-1)
+        // this.id? this.$router.push(`/selectAddress/${this.id}`): this.$router.push(`/selectAddress`)
         // this.$router.push('/selectAddress')
         sessionStorage.removeItem('cachFromData')
       },

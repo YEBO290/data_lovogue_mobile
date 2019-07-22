@@ -166,8 +166,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       post(api.insertorder, param).then((res) => {
         resolve(res)
-      }).catch((err) => {
-        console.log(err)
+      }).catch(err => {
+        reject(err)
       })
     })
   },

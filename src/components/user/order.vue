@@ -32,14 +32,14 @@
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='2'">
                 <el-button round style="margin-right:5px;" type="primary" @click="viewStatus(item)">物流状态</el-button>
-                <!-- <el-button round style="margin-right:5px;" @click="rejectOrder(item)">退货/退款</el-button> -->
+                <el-button round style="margin-right:5px;" @click="rejectOrder(item)">取消/退款</el-button>
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='3'">
                 <el-button round style="margin-right:5px;" @click="rejectOrder(item)">退货/退款</el-button>
                 <!-- <el-button round type="primary" @click="confirm(item)">确认收货</el-button> -->
             </div>
             <div style="margin-top: 0.10rem;width: 100%;text-align: right;" v-if="status==='4'">
-                <el-button round style="margin-right:5px;" @click="returnOrder(item)">退货详情</el-button>
+                <el-button round style="margin-right:5px;" @click="returnOrder(item)">详情</el-button>
             </div>
         </el-col>  
             <slot name="footer"></slot>       
@@ -58,19 +58,23 @@
                 </div>
             </div>
         </el-dialog>
-        <el-dialog v-if="dialogPro == 2" title="物流状态" :visible.sync="dialogTableVisible" class="logistics-status">
+        <!-- <el-dialog v-if="dialogPro == 2" title="物流状态" :visible.sync="dialogTableVisible" class="logistics-status">
             <el-steps :active="0" align-center  direction="vertical">
-                <el-step title="待发货" finish description="请您耐心等待，我们将尽快给您安排发货！"></el-step>
+                <el-step title="待发货" finish description="商品将于1-3个工作日安排送出，感谢您的惠顾！"></el-step>
                 <el-step title="已发货" wait></el-step>
                 <el-step title="已收货" wait  ></el-step>
             </el-steps>
         </el-dialog>
         <el-dialog v-if="dialogPro == 3" title="物流状态" :visible.sync="dialogTableVisible" class="logistics-status">
             <el-steps :active="1" align-center  direction="vertical">
-                <el-step title="待发货" finish description=""></el-step>
-                <el-step title="已发货" v-if="couriernumber" process v-bind:description="'快递单号：'+couriernumber"></el-step>
-                <el-step title="已发货" v-if="!couriernumber" process description="快递单号：待录入..."></el-step>
-                <el-step title="已收货" wait  ></el-step>
+                <el-step title="待发货" :process-status="selectedStatus.couriernumber? 'finish': 'process'" description="商品将于1-3个工作日安排送出，感谢您的惠顾"></el-step>
+                <el-step title="已发货" :process-status="selectedStatus.couriernumber && selectedStatus.shipstatus==='3'? 'process': 'finish'" :description="couriernumber?`您的商品运送途中，请注意查收。物流公司与订单号信息:${couriernumber}`: ''"></el-step>
+                <el-step title="已到货" wait   description='您的商品已送达, 多谢支持，生活愉快!'></el-step>
+            </el-steps>
+        </el-dialog> -->
+        <el-dialog title="物流状态" :visible.sync="dialogTableVisible" class="logistics-status">
+            <el-steps :active="selectedActive" align-center  direction="vertical">
+                <el-step v-for='item in selectedStatus' :key="item.key" :title="item.title" :description="item.description"/>
             </el-steps>
         </el-dialog>
   </div>
@@ -88,7 +92,8 @@ export default {
         dialogTableVisible:false,
         couriernumber:'',
         dialogPro:'',
-
+        selectedStatus: {}, // 当前物流状态
+        selectedActive: 0
       }
     },
     props: {
@@ -234,6 +239,48 @@ export default {
             self.couriernumber = item.couriernumber;
             self.dialogPro = item.shipstatus;
             
+            let list = [{
+                key: 1,
+                title: '待发货',
+                processStatus: 'process',
+                description: '商品将于1-3个工作日安排送出，感谢您的惠顾'
+            },
+            {
+                key: 2,
+                title: '已发货',
+                processStatus: 'wait',
+                description: ''
+            },
+            {
+                key: 3,
+                title: '已到货',
+                processStatus: 'wait',
+                description: ''
+            }]  
+            if(item.shipstatus === '2'){ // 待发货
+               this.selectedActive = 0
+            } else if(item.shipstatus === '3'){ // 已发货
+                this.selectedActive = 1
+                list.forEach(el => {
+                    if(el.key === 1){
+                        el.processStatus = 'finish'
+                        el.description = ''
+                    } else if (el.key === 2) {
+                        el.processStatus = 'process'
+                        el.description = item.couriernumber? `您的商品已寄出，请注意查收。  物流公司：${item.couriername} 单号：${item.couriernumber}`: `您的商品已寄出，请注意查收。`
+                    } 
+                })
+            } else if(item.couriernumber && item.shipstatus === '4'){ // 已到货
+                this.selectedActive = 2
+                if (el.key === 1 || el.key === 2) {
+                    el.processStatus = 'finish'
+                    el.description = ''
+                } else {
+                    el.processStatus = 'process'
+                    el.description = '您的商品已送达；多谢支持，祝生活愉快！'
+                }
+            }
+            this.selectedStatus = list
         }
     }
 }

@@ -30,7 +30,7 @@
         <div class="list">
             <span>我的订单</span><i class="el-icon-arrow-right"></i>
         </div>-->
-        <el-collapse v-model="activeNames"  v-if="user">
+        <el-collapse  v-if="user">
             <el-collapse-item title="我的订单" name="1">
             <div style="width:100%;height:1px;background:#ddd;"></div>
             <div class="orderList">
@@ -354,8 +354,8 @@ export default {
     margin: 0;
 }
 .orderList{
-    max-height: 300px;
-    overflow-y: scroll;
+    max-height: 3rem;
+    /* overflow-y: scroll; */
     font-size:12px;
 }
 
@@ -373,6 +373,12 @@ export default {
 .user /deep/ .el-tabs__content{
     padding: 0.1rem 0.2rem;
     background: #f6f6f6;
+    max-height: 3rem;
+    overflow-y: scroll;
+}
+.user /deep/ .el-collapse-item__content {
+    margin-bottom: 35px;
+    padding-bottom: 0!important;
 }
 
 

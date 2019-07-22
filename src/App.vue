@@ -11,6 +11,9 @@
         <div class="content-footer" :class="{'bgr': bgr}" v-if="showFooter"> 
             <footer-tab/>
         </div>
+        <div class='loading' v-if='showLoading'>
+            <img src='~@/assets/image/loading.gif'>
+        </div>
         <to-top/>
         </div>
 </template>
@@ -41,7 +44,8 @@ export default {
         showFooter: state => state.showFooter,
         key(){
 	        return this.$route.path + Math.random();
-	    }
+        },
+        showLoading: state => state.showLoading
     }),
     created() {
         let me = this
@@ -104,6 +108,23 @@ html{height:100%;}
     /* padding-bottom: 3.5rem; */
     min-height: 4rem;
     margin-top: 0.5rem;
+}
+.loading{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 700px;
+    background: #fbfbfb;
+}
+.loading img{
+    width:50%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto!important;
+    z-index:1000;
 }
 </style>
 <style scoped>
