@@ -48,7 +48,7 @@
           <div class="text item"><span>退款原因：</span><span>{{returnOrderInfo.returnReason}}</span></div>
           <div class="text item"><span>退款金额：</span><span>{{returnOrderInfo.price}}</span></div>
           <div class="text item"><span>申请时间：</span><span>{{returnOrderInfo.createtime}}</span></div>
-          <div class="text item"><span>退款编号：</span><span>{{returnOrderInfo.amount}}</span></div>
+          <!-- <div class="text item"><span>退款编号：</span><span>{{returnOrderInfo.amount}}</span></div> -->
         </el-card>
         <el-collapse accordion class="return-addr">
           <el-collapse-item title="退货地址">
@@ -162,7 +162,7 @@ import workspace from '../../common.js'
           self.returnOrderInfo.defaultTime = self.timeFormat(res.data.return.statustime)
           self.returnOrderInfo.advancebooking = res.data.detailInfo.advancebooking,
           self.returnOrderInfo.amount = res.data.detailInfo.amount
-          self.returnOrderInfo.createtime = self.timeFormat(res.data.detailInfo.createtime)
+          self.returnOrderInfo.createtime = self.timeFormat(res.data.return.createtime)
           self.returnOrderInfo.description = res.data.detailInfo.description
           self.returnOrderInfo.id = res.data.return.id
           self.returnOrderInfo.imgpath = res.data.prod.imgpath

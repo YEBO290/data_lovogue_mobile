@@ -126,7 +126,12 @@ import workspace from '../../common.js'
             }, {
             value: '退运费',
             label: '退运费'
-            }, {
+            }, 
+            {
+            value: '仅退款',
+            label: '仅退款'
+            },
+            {
             value: '其他',
             label: '其他'
             }],
