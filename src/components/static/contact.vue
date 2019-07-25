@@ -322,7 +322,6 @@ export default {
                   }
                 })
         } else {
-          console.log('error submit!!')
           return false
         }
       }) 
@@ -352,7 +351,6 @@ export default {
                 }
               })
             } else {
-              console.log('error submit!!');
               return false;
             }
           })
@@ -373,7 +371,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        me.$router.push('/login')
+        me.$router.push('/login/resetPassword')
       }).catch(() => {         
       })
     }

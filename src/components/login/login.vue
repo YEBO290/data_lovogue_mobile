@@ -22,13 +22,6 @@
       <el-col :span="8"> <div class="grid-content bg-purple" @click="devIng"><img src="../../assets/image/wechat.png" style="float:left"/><img src="../../assets/image/fb.png" style="float:right"/></div></el-col>
       <el-col :span="8"><div class="grid-content bg-purple" style="height:0.01rem"></div></el-col>
     </el-row>
-    <!--<div class="other_login">
-        <div class="login-line"></div> <div>使用第三方登录</div> <div class="login-line"></div>
-    </div>
-    <div class="other_login_img">    
-      <img src="../../assets/image/wechat.png"/>      
-      <img src="../../assets/image/fb.png"/>
-    </div>-->
   </div>
 </template>
 
@@ -78,6 +71,7 @@ export default {
       }
     }
   },
+  props:['id'],
   computed: {
     from: function(){
       return this.fromPath
@@ -121,8 +115,9 @@ export default {
               } else {
                 workspace.setCookie(res[0].userid, me.ruleForm.pass, 30)
               } 
+              console.log(me.id)
               let fromPath = me.$router.history.current.query && me.$router.history.current.query.fromPath
-              if(fromPath && fromPath != '' && fromPath != null && fromPath != '/') {
+              if(fromPath && fromPath != '' && fromPath != null && fromPath != '/' && me.id!='resetPassword') {
                 me.$router.push(fromPath)
               } else {
                 me.$router.push('/home')
@@ -149,7 +144,6 @@ export default {
               me.$store.commit('login/bagList', []) // 购物的列表查询
           })
         } else{
-          console.log('error submit!!')
           return false
         }
       })

@@ -293,72 +293,19 @@ const router = new Router({
 });
 // 全局路由守卫
 router.beforeEach((to, from, next) => {
-    //     const nextRoute = ['User', 'Cart', 'GoodsDetail'] // 需要登录的页面
-    //     let isLogin = localTake('userMsg')  // 判断是否登录，本地存储有用户数据则视为已经登录
-    //     // 未登录状态；当路由到 nextRoute 指定页时，跳转至 UserLogIn
-    //     if (nextRoute.indexOf(to.name) >= 0) { // 检测是否登录的页面
-    //       if (!isLogin) { // 如果未登录（本地存储无用户数据），并且要跳到登录页面
-    //         if (from.name === 'UserLogIn') {
-    //           next('/')
-    //           return
-    //         }
-    //   　　　　// 登录后，跳到到当前页面
-    //         router.push({
-    //           name: 'UserLogIn',
-    //           params: {redirect: to.fullPath}
-    //         })
-    //       }
-    //     }
-    //     // 已登录状态；当路由到 UserLogIn 时，跳转至 Home
-    //     if (to.name === 'UserLogIn') {
-    //       if (isLogin) {
-    //         next('/')
-    //         return
-    //       }
-    //     }
-    if (to.meta.showToTop) {
-        store.commit("showToTop", true);
-        store.commit("fontColor", false);
-    } else {
-        store.commit("showToTop", false);
-        store.commit("fontColor", true);
-    }
-    if (to.meta.flag) {
-        store.commit("bgr", true);
-    } else {
-        store.commit("bgr", false);
-    }
-    if (to.path === "/about") {
-        store.commit("active_color", true)
-    } else {
-        store.commit("active_color", false)
-    }
-    if (to.path.indexOf("/contact") > -1) {
-        store.commit("active_color_contact", true)
-        store.commit("showContact", false)
-    } else {
-        store.commit("active_color_contact", false)
-        store.commit("showContact", true)
-    }
-    if (to.meta.fontColor) {
-        store.commit("fontColor", true)
-    } else {
-        store.commit("fontColor", false)
-    }
-    if (to.fullPath.indexOf("/search") > -1  || to.fullPath.indexOf("/loved") > -1 || to.fullPath.indexOf("/bag") > -1) {
-        store.commit("showFooter", false)
-    } else {
-        store.commit("showFooter", true)
-    }
-    if(to.meta.writeBgr) {
-        store.commit("writeBgr", true)
-    } else {
-        store.commit("writeBgr", false)
-    }
-    to.fullPath.indexOf("/loved") === -1 && store.commit("showLoved", false)
-    to.fullPath.indexOf("/loved") > -1 && store.commit("showLoved", true)
-    to.fullPath.indexOf("/bag") === -1 && store.commit("showbag", false)
-    to.fullPath.indexOf("/bag") > -1 && store.commit("showbag", true)
+    const showFooter = ['/search', '/loved', '/bag']
+    let needFooter = showFooter.some(item => to.fullPath.indexOf(item) > -1)
+    store.commit("showFooter", !needFooter)
+    store.commit("active_color_contact", to.path.indexOf("/contact") > -1 || false)
+    store.commit("showContact", !to.path.indexOf("/contact") > -1)
+    store.commit("showToTop", to.meta.showToTop? true: false)
+    store.commit("fontColor", to.meta.showToTop? false: true);
+    store.commit("bgr", to.meta.flag? true: false)
+    store.commit("active_color", to.path === "/about" || false)
+    store.commit("fontColor", to.meta.fontColor? true: false)
+    store.commit("writeBgr", to.meta.writeBgr? true: false)
+    store.commit("showLoved", to.fullPath.indexOf("/loved") > -1? true: false)
+    store.commit("showLoved", to.fullPath.indexOf("/bag") > -1?true: false)
     next(); // 必须使用 next ,执行效果依赖 next 方法的调用参数
 });
 export default router;
