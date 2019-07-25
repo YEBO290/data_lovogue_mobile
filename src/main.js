@@ -19,6 +19,7 @@ import './assets/js/flexible.js'
 import load from '../src/components/common/loading'
 import {
     // Pagination,
+    divider,
     Dialog,
     Autocomplete,
     Dropdown,
@@ -152,6 +153,7 @@ Vue.use(Header)
 Vue.use(Aside)
 Vue.use(Main)
 Vue.use(Footer)
+Vue.use(divider)
 
 Vue.use(Loading.directive)
 // Vue.use(filters)

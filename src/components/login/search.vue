@@ -6,11 +6,11 @@
     v-model.trim="productname" @change="search">
     <i slot="prefix" class="el-input__icon el-icon-search"></i>
   </el-input>
-  <div class="login_none" v-if="showToLogin">
+  <!-- <div class="login_none" v-if="showToLogin">
     <el-button class="btn ok_btn" type="primary" @click="toLogin">登录</el-button>
     <el-button class="btn cancel_btn" type="primary" @click="toRegister">注册</el-button>
-  </div>
-  <div v-else>
+  </div> -->
+  <div>
     <div class="tip_searchList" v-if="showTip">
       <div v-for="(item, index) in tipList" :key="index">
         <p class="menu_title" @click.stop="toMenu(item, index)">{{item.name}}</p>  
@@ -62,7 +62,16 @@ export default {
         productname: '',
         showMore: true,
         expand: [],
-        showTip: true
+        showTip: true,
+        searchData: {
+              language: "cn",
+              productname: this.productname,
+              category: '',
+              subcategory: '' ,
+              brand: '',
+              series: '',
+              style: ''
+            }
       }
     },
     computed: mapState({
@@ -93,19 +102,11 @@ export default {
         let me = this
         me.showTip = false
         let param = {
-          data: {
-              language: "cn",
-              productname: this.productname,
-              category: '',
-              subcategory: '' ,
-              brand: '',
-              series: '',
-              style: ''
-            },
-            listQuery: {
-              pageSize: 30,
-              pageNum: 1
-            }
+          data: this.searchData,
+          listQuery: {
+            pageSize: 30,
+            pageNum: 1
+          }
         }
         setTimeout(() => {
           me.$store.dispatch('login/querySearchList', param)
@@ -122,28 +123,16 @@ export default {
         this.showMore = false
         let me = this
         let param = {
-          data: {
-              language: "cn",
-              productname: this.productname,
-              category: '',
-              subcategory: '' ,
-              brand: '',
-              series: '',
-              style: ''
-            },
-            listQuery: {
-              pageSize: me.searchList.data.total,
-              pageNum: 1
-            }
+          data: this.searchData,
+          listQuery: {
+            pageSize: me.searchList.data.total,
+            pageNum: 1
+          }
         }
         me.$store.dispatch('login/querySearchList', param)
       },
       expandFunc(val, index) {
-        if (this.expand[index]) {
-          this.$set(this.expand, index, false)
-        } else {
-          this.$set(this.expand, index, true)
-        }
+          this.$set(this.expand, index, !this.expand[index])
       },
       toMenu(val, index) {
         if (val.next && !this.expand[index]) {

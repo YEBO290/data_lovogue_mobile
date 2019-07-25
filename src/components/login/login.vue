@@ -95,7 +95,6 @@ export default {
       // localStorage.setItem('userName', 'admin')
       // Encrypt 加密 
       var cipherText = CryptoJS.AES.encrypt(me.ruleForm.pass, "password").toString()
-      console.log(cipherText)
       // Decrypt 解密
       var bytes = CryptoJS.AES.decrypt(cipherText, "password")
       var originalText = bytes.toString(CryptoJS.enc.Utf8)

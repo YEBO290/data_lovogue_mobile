@@ -3,14 +3,25 @@
         <el-row class="userMessage" >
             <div class="userInfo" v-if="user">
                 <span class="userImg"><img src="~@/assets/image/user1.png" style="width:100%;"/></span>
-                    <p style="font-size:14px;height: 40px;line-height: 40px;margin-right:20px;"><span style="height: 40px;line-height:40px;display: inline-block;
-        position: relative;">您好，</span><span style="overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;white-space: nowrap;max-width: 150px;height: 40px;line-height:40px;display: inline-block;">{{user}}</span></p>
-                    <p style=" width: 1px;height: 20px;background:#c6c0c0;margin-top: 10px;margin-right: 10px;"></p>
-                    <a @click="logOut()" style="font-size: 13px;height: 40px;line-height: 40px;color:red;">退出登录</a>
+                    <!-- <p style="font-size:14px;height: 40px;line-height: 40px;margin-right:20px;">
+                        <span class='say-hello'>您好，</span>
+                        <span class='user-name'>{{user}}</span></p> -->
+                    <!-- <p style=" width: 1px;height: 20px;background:#c6c0c0;margin-top: 10px;margin-right: 10px;"></p> -->
+                    <span class='say-hello'>您好，</span>
+                    <span class='user-name'>{{user}}</span>
+                    <el-divider direction="vertical"></el-divider>
+                    <a @click="logOut()" style="font-size: 13px;color:red;">退出登录</a>
             </div>
             <div class="userInfo" v-else>
                 <span class="userImg"><img src="~@/assets/image/user1.png" style="width:100%;"/></span>
-                <p class="login"><span  @click="$router.push('/login')">登录</span>  |  <span  @click="$router.push('/login/register')" class="register">注册新账号</span></p>
+                <span class="login" @click="$router.push('/login')">登录</span>
+                <el-divider direction="vertical"></el-divider>
+                <span  @click="$router.push('/login/register')" class="register">注册新账号</span>
+                <!-- <p class="login">
+                    <span  @click="$router.push('/login')">登录</span>
+                    <el-divider direction="vertical"></el-divider>
+                    <span  @click="$router.push('/login/register')" class="register">注册新账号</span>
+                </p> -->
             </div>
             <!--<el-col :span="4"><span class="userImg"><img src="~@/assets/image/user.png" style="width:100%;"/></span></el-col>
             <el-col :span="7"><p style="font-size:14px;height: 40px;line-height: 40px;">您好，{{user}}</p></el-col>
@@ -414,10 +425,21 @@ export default {
 .userInfo{
     display: flex;
     width: 100%;
-    height: 0.335rem;
-    line-height: 0.335rem;
+    padding-top:0.1rem;
 }
 .register{
     color:#ccc;
+}
+.user-name{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
+    display: inline-block;
+}
+.say-hello{
+    display: inline-block;
+    position: relative;
 }
 </style>

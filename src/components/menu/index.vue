@@ -45,13 +45,16 @@ export default {
   data() {
     return {
       expand: [],
-      user: workspace.getCookie().name,
+      // user: workspace.getCookie().name,
       showLogin: workspace.getCookie().name ? true: false,
     }
   },
   computed: mapState({
     // 箭头函数可使代码更简练
-    menuList: state => state.home.menuList
+    menuList: state => state.home.menuList,
+    user(){
+      return workspace.getCookie().name
+    }
   }),
     // 监听,当路由发生变化的时候执行
   watch: {

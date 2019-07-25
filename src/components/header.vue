@@ -39,7 +39,7 @@
                 </div>
             </el-col>
         </el-row> 
-        <menuList class="menuList" id="menu"/>
+        <menuList class="menuList" id="menu" v-if="user"/>
     </div>
 </template>
 
@@ -69,7 +69,10 @@ export default {
       showLoved: state => state.showLoved,
       showbag: state => state.showbag,
       lovedNumber: state => state.login.lovedNumber,
-      shopBagNumber: state => state.login.shopBagNumber
+      shopBagNumber: state => state.login.shopBagNumber,
+      user(){
+        return workspace.getCookie().name
+        }
     }),
   created() {
   },
