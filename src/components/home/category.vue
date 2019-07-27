@@ -1,12 +1,13 @@
 <template>
     <div class="category_home" style="min-height:4rem;">
-      <!-- <div class="menu_filter" @click.stop="expand" v-if="!showSubMenu">
+      <div class="menu_filter" @click.stop="expand" v-if="!showSubMenu">
         <span class="menu_del"><i class="icon_f_btn"></i>筛选</span>
       </div>  
       <div class="menu_filter" @click.stop="expand" v-else>
         <span class="menu_del">清除</span>
       </div>
-      <menuList class="menu_list" v-if="showSubMenu"/> -->
+      <menuList class="menu_list" v-if="showSubMenu"></menuList>
+      <!-- <screen-select class="menu_list"></screen-select> -->
       <!-- <img src="~@/assets/image/timg.png" style="width:100%" v-if="categoryTotal == 0"/> -->
       <div v-if="categoryTotal == 0" style="padding-top:0.5rem;">
         <!-- <img src="~@/assets/image/noData.png" style="width:100%" > -->
@@ -38,10 +39,12 @@
 <script>
 import { mapState } from 'vuex'
 import menuList from '../specialEdition/menu'
+import screenSelect from '../home/screenSelect'
 import workspace from '../../common.js'
 export default {
   components: {
-    menuList
+    menuList,
+    'screen-select':screenSelect
   },
   data() {
     return {

@@ -48,7 +48,8 @@ var service = {
     insertReturn: '/pms/insertReturn',  //提交退货信息
     getScreenReturn: '/pms/getScreenReturn',  //退货查询
     updataReturn: '/pms/updataReturn',  //退货修改
-    getOrderInventory: '/pms/orderInventory'  //获取商品相应库存
+    getOrderInventory: '/pms/orderInventory',  //获取商品相应库存
+    getScreenSelect:  'pms/getScreenSelect'  //商品筛选
 
 }
 export default service
