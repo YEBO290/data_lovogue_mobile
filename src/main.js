@@ -85,7 +85,8 @@ import {
     Loading,
     MessageBox,
     Message,
-    Notification
+    Notification,
+    Drawer
   } from 'element-ui'
 
 // Vue.use(Element, { size: 'small', color: #C5A480 })
@@ -156,6 +157,7 @@ Vue.use(Footer)
 Vue.use(divider)
 
 Vue.use(Loading.directive)
+Vue.use(Drawer)
 // Vue.use(filters)
 
 Vue.prototype.$loading = Loading.service

@@ -78,7 +78,8 @@ export default {
   },
   methods: {
       headerOver(){
-            document.getElementById('menu').style.display = 'block'
+            // document.getElementById('menu').style.display = 'block'
+            document.getElementById('menu').style.cssText = 'display:block;'
         },
       toHome() { //点击logo 跳至首页
         this.$router.push('/home')

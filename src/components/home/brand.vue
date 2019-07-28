@@ -22,7 +22,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import menuList from '../specialEdition/menu'
+import menuList from '../subMenu/menu'
 export default {
   components: {
     menuList

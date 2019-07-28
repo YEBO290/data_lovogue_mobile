@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import menuList from './menu'
+import menuList from '../subMenu/menu'
 import { mapState } from 'vuex'
 export default {
   components: {

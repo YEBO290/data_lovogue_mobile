@@ -1,12 +1,28 @@
 <template>
+  <div>
+    <div class="menu_filter" @click.stop="expand">
+      <!-- <span class="menu_del"><i class="icon_f_btn"></i>筛选</span>
+      <span class="">价格排序</span>
+      <span class="">上市时间</span> -->
+      <el-row>
+        <el-col :span="8"><div class="grid-content bg-purple"><span class="">上市时间</span></div></el-col>
+        <el-col :span="8"><div class="grid-content bg-purple-light"></div> <span class="">价格排序</span></el-col>
+        <el-col :span="8"><div class="grid-content bg-purple" @click="drawer = true"><span class="menu_del"><i class="icon_f_btn"></i>筛选</span></div></el-col>
+      </el-row>
+    </div>
     <div class="category_home" style="min-height:4rem;">
-      <div class="menu_filter" @click.stop="expand" v-if="!showSubMenu">
-        <span class="menu_del"><i class="icon_f_btn"></i>筛选</span>
-      </div>  
-      <div class="menu_filter" @click.stop="expand" v-else>
+      
+      <!-- <div class="menu_filter" @click.stop="expand" v-else>
         <span class="menu_del">清除</span>
-      </div>
-      <menuList class="menu_list" v-if="showSubMenu"></menuList>
+      </div> -->
+      <el-drawer
+        title="筛选"
+        :visible.sync="drawer"
+        direction="rtl"
+        size="80%">
+        <menuList class="menu_list" id="menu_select" @handlerMenu="handlerMenu"></menuList>
+      </el-drawer>
+      <!-- <menuList class="menu_list" id="menu_select" v-if="showSubMenu"></menuList> -->
       <!-- <screen-select class="menu_list"></screen-select> -->
       <!-- <img src="~@/assets/image/timg.png" style="width:100%" v-if="categoryTotal == 0"/> -->
       <div v-if="categoryTotal == 0" style="padding-top:0.5rem;">
@@ -35,10 +51,11 @@
         </el-row>
       </div>
     </div>
+  </div>
 </template>
 <script>
 import { mapState } from 'vuex'
-import menuList from '../specialEdition/menu'
+import menuList from '../subMenu/menu'
 import screenSelect from '../home/screenSelect'
 import workspace from '../../common.js'
 export default {
@@ -49,7 +66,8 @@ export default {
   data() {
     return {
       showMore: true,
-      isShow:false
+      isShow:false,
+      drawer: false
     }
   },
   watch: {
@@ -57,7 +75,6 @@ export default {
     handler(to, from) {   //监听路由是否变化
       let param =  this.searchParam(30, 1)
       this.$store.dispatch('home/queryCategoryList', param)
-      this.$store.commit('showSubMenu', false)
     },
     immediate: true
     } 
@@ -66,20 +83,8 @@ export default {
     categoryList: function(state) {
       return state.home.categoryTypeList
     },
-    categoryTotal:  state => state.home.categoryTotal,
-    showSubMenu: state => state.showSubMenu
-    // brandList() {
-    //   return this.brandLists.slice(0, 30)
-    // }
+    categoryTotal:  state => state.home.categoryTotal
   }),
-  // watch: {
-  //   categoryLists: {
-  //     handler(val) {
-  //       this.categoryList = val.slice(0, 30)
-  //     },
-  //     immediate: true
-  //   }
-  // },
   created() {
     this.$router.afterEach((to, from, next) => {
         window.scrollTo(0, 0)
@@ -91,6 +96,10 @@ export default {
     }
   },
   methods: {
+    handlerMenu(val) {
+      debugger
+      this.drawer = false
+    },
     changePrice(val) {
       return workspace.thousandBitSeparator(val)
     },
@@ -110,11 +119,13 @@ export default {
       return param
     },
     expand() {
-      if(this.showSubMenu){
-        this.$store.commit('showSubMenu', false)
-      }else {
-        this.$store.commit('showSubMenu', true)
-      }
+        this.showSubMenu = true;
+      // if(this.showSubMenu){
+      //   this.$store.commit('showSubMenu', false)
+      // }else {
+      //   this.$store.commit('showSubMenu', true)
+      // }
+
     },
     // 载入更多
     toMore() {
