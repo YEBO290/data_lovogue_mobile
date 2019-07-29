@@ -48,9 +48,8 @@ export default {
   },
   watch: {
       filterLists: {
-        handler(val){
-            debugger
-            console.log(val)
+        handler(val){ 
+          console.log(val)
         }
       }
   },

@@ -364,17 +364,16 @@ export default {
       this.$router.push(`/contact/${val}`)
     },
     successTip() {
-      // let me = this
-      // this.$confirm('密码重置成功，是否前往登录页面?', '提示', {
-      //   confirmButtonText: '确定',
-      //   cancelButtonText: '取消',
-      //   type: 'warning'
-      // }).then(() => {
-      //   debugger
-      //   me.$router.push('/login/resetPassword')
-      // }).catch(() => {         
-      // })
-       this.$router.push('/home')
+      let me = this
+      this.$confirm('密码重置成功，是否前往登录页面?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        me.$router.push('/login/resetPassword')
+      }).catch(() => {         
+      })
+      //  this.$router.push('/home')
 
     }
   }

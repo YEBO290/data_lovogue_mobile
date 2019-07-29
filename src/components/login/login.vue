@@ -113,10 +113,10 @@ export default {
                 workspace.setCookie(res, me.ruleForm.pass, 30)                
               } else {
                 workspace.setCookie(res[0].userid, me.ruleForm.pass, 30)
-              } 
-              console.log(me.id)
+              }  
+              let loginId = me.id || me.$route.params.id
               let fromPath = me.$router.history.current.query && me.$router.history.current.query.fromPath
-              if(fromPath && fromPath != '' && fromPath != null && fromPath != '/' && me.id!='resetPassword') {
+              if(fromPath && fromPath != '' && fromPath != null && fromPath != '/' && loginId!='resetPassword') {
                 me.$router.push(fromPath)
               } else {
                 me.$router.push('/home')
