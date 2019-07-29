@@ -340,7 +340,7 @@ export default {
                 // stauts: '1',
               }
               me.$store.dispatch('login/changePass', param).then(res => {
-                if(res.msg > 0) {
+                if(res.err == 0) {
                   me.successTip()
                   me.$refs[formName].resetFields()
                 } else {
@@ -356,7 +356,6 @@ export default {
           })
           // this.$store.dispatch('savePassWord') // 提交客服
         } else {
-          console.log('error submit!!');
           return false;
         }
       }) 
@@ -365,15 +364,18 @@ export default {
       this.$router.push(`/contact/${val}`)
     },
     successTip() {
-      let me = this
-      this.$confirm('密码重置成功，是否前往登录页面?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        me.$router.push('/login/resetPassword')
-      }).catch(() => {         
-      })
+      // let me = this
+      // this.$confirm('密码重置成功，是否前往登录页面?', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   type: 'warning'
+      // }).then(() => {
+      //   debugger
+      //   me.$router.push('/login/resetPassword')
+      // }).catch(() => {         
+      // })
+       this.$router.push('/home')
+
     }
   }
 }

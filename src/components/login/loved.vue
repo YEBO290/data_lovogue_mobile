@@ -2,8 +2,8 @@
   <div class="loved">
     <div class="loved_lists" v-if="!showToLogin && lovesList.length > 0">
       <el-row :gutter="20" class="loved_list" v-for="(item, index) in lovesList" :key="index">
-        <el-col :span="8"><img :src="item.imgpath" class="loved_img" style="width:100%;"  @click="toDetail(item)"/></el-col>
-        <el-col :span="16">
+        <el-col :span="8" v-if="item.name"><img :src="item.imgpath" class="loved_img" style="width:100%;"  @click="toDetail(item)"/></el-col>
+        <el-col :span="16" v-if="item.name">
           <div  @click="toDetail(item)">
             <div>
               <span class="loved_text">{{item.name}}</span>
@@ -57,7 +57,7 @@ export default {
     computed: mapState({
       // 箭头函数可使代码更简练
       lovesList: function(state){
-        return state.login.lovesList
+        return state.login.lovesList || []
       }
       // 传字符串参数 'count' 等同于 `state => state.count`
       // countAlias: 'count',

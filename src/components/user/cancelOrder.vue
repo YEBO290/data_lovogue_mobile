@@ -4,7 +4,7 @@
         <div v-if="returnOrderInfo.returnStatus == 0 ">不受理</div>
         <div v-if="returnOrderInfo.returnStatus == 1 ">受理中</div>
         <div v-if="returnOrderInfo.returnStatus == 2 ">已受理</div>
-        <div v-if="returnOrderInfo.returnStatus == 3 ">已完成</div>
+        <div v-if="returnOrderInfo.returnStatus == 3 && returnOrderInfo.checkstatus == 2">对账成功，已完成</div>
         <div v-if="returnOrderInfo.returnStatus == 9 ">异常</div>
         <div>{{returnOrderInfo.defaultTime}}</div>
       </div>
@@ -138,7 +138,8 @@ import workspace from '../../common.js'
                 defaultTime:'', //退货订单时间
                 returnStatus:'' , //退货状态
                 couriernumber:'',  //快递单号
-                couriername:'' //物流公司
+                couriername:'', //物流公司
+                checkstatus:''  //对账状态
           },
           submitStatus:false,
           isView:false,
@@ -176,6 +177,7 @@ import workspace from '../../common.js'
           self.returnOrderInfo.returnStatus = res.data.return.status
           self.returnOrderInfo.couriernumber = res.data.return.couriernumber
           self.returnOrderInfo.couriername = res.data.return.couriername
+          self.returnOrderInfo.checkstatus = res.data.checkstatus
           if(self.returnOrderInfo.returnStatus ==2 && (self.returnOrderInfo.couriernumber==null || self.returnOrderInfo.couriernumber=="")){
             self.submitStatus = true
           }else{
