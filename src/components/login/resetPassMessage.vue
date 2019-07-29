@@ -9,9 +9,9 @@
             <p  class="desc_txt_p">欲重设密码，您只需在下面的项栏里输入您的邮件地址并点击“提交"即可。我们将会向您发送邮件，邮件中将包含一个可以重设密码的链接。为安全起见，此链接将会在24小时后立刻失效。之后，您可以再次在下面的项栏里输入电邮地址，重获一组重设密码的链接。</p>
         </div>
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="loginForm">
-            <label class="label_txt">用户名</label><span class="req">*</span>
+            <label class="label_txt">用户名/手机号码/电邮地址</label><span class="req">*</span>
             <el-form-item prop="name">
-                <el-input type="text" v-model="ruleForm.name" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="text" v-model="ruleForm.name" :clearable="true" autocomplete="off" placeholder="用户名/手机号/邮箱" ></el-input>
             </el-form-item>
             <label class="label_txt" v-if="showMessage">手机号码</label><span class="req"  v-if="false">*</span>
             <label class="label_txt" v-if="!showMessage">电邮地址</label><span class="req">*</span>
@@ -23,7 +23,7 @@
             </el-form-item>
 
             <el-form-item prop="email" v-if="!showMessage">
-                <el-input type="text" v-model="ruleForm.email" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="text" v-model="ruleForm.email" :clearable="true" autocomplete="off" placeholder="注册时预留的电邮地址，可接收验证码"></el-input>
                 <el-button class="verificationCode" @click="sendMsg" :disabled="codeDis">{{code}}</el-button>
                 <!-- <a class="link" @click="showMessage = false" style="color:#C5A480">使用短信验证码?</a> -->
             </el-form-item>
@@ -115,7 +115,7 @@ import md5 from "js-md5"
         },
         rules: {
             name: [{
-              required: true, message: '请选择用户名', trigger: ['blur', 'change']
+              required: true, message: '请输入用户名、手机号码、电邮地址', trigger: ['blur', 'change']
             }],
             pass: [
                 { validator: validatePass, trigger: ['blur', 'change'] }
