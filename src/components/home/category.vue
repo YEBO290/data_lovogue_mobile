@@ -1,27 +1,8 @@
 <template>
   <div>
-    <div class="menu_filter" @click.stop="expand">
-      <!-- <span class="menu_del"><i class="icon_f_btn"></i>筛选</span>
-      <span class="">价格排序</span>
-      <span class="">上市时间</span> -->
-      <el-row>
-        <el-col :span="8"><div class="grid-content bg-purple"><span class="">上市时间</span></div></el-col>
-        <el-col :span="8"><div class="grid-content bg-purple-light"></div> <span class="">价格排序</span></el-col>
-        <el-col :span="8"><div class="grid-content bg-purple" @click="drawer = true"><span class="menu_del"><i class="icon_f_btn"></i>筛选</span></div></el-col>
-      </el-row>
-    </div>
+    <subMenu @changeFilter="changeFilter"/>
     <div class="category_home" style="min-height:4rem;">
       
-      <!-- <div class="menu_filter" @click.stop="expand" v-else>
-        <span class="menu_del">清除</span>
-      </div> -->
-      <el-drawer
-        title="筛选"
-        :visible.sync="drawer"
-        direction="rtl"
-        size="80%">
-        <menuList class="menu_list" id="menu_select" @handlerMenu="handlerMenu"></menuList>
-      </el-drawer>
       <!-- <menuList class="menu_list" id="menu_select" v-if="showSubMenu"></menuList> -->
       <!-- <screen-select class="menu_list"></screen-select> -->
       <!-- <img src="~@/assets/image/timg.png" style="width:100%" v-if="categoryTotal == 0"/> -->
@@ -55,19 +36,21 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import menuList from '../subMenu/menu'
+import subMenu from '../subMenu/index'
 import screenSelect from '../home/screenSelect'
 import workspace from '../../common.js'
+import api from '../../axios/api.js'
+import {post} from '../../axios/index'
 export default {
   components: {
-    menuList,
+    subMenu,
     'screen-select':screenSelect
   },
   data() {
     return {
       showMore: true,
       isShow:false,
-      drawer: false
+      activeSeleted: [],
     }
   },
   watch: {
@@ -96,9 +79,53 @@ export default {
     }
   },
   methods: {
-    handlerMenu(val) {
+    changeFilter(value){
       debugger
-      this.drawer = false
+      console.log(value)  // 过滤条件
+      let type_ = Object.prototype.toString.call(value)
+      let param = {}
+      if(type_  === '[object Array]') { // 筛选
+          param = {
+            data: {
+                "language":"cn",
+                "userid": workspace.getCookie().name,
+              },
+              "listQuery": {
+                "pageSize": 30,
+                "pageNum": 1
+              }
+            }
+            value.forEach(item => {
+              let {type, val} = item
+              type === 'category' && (param.data.category = val.value) // 商品的品类
+              type === 'theme' && (param.data.theme = val.value) // 商品的商品材质
+              type === 'typegem' && (param.data.typegem = val.value) // 商品的宝石材质
+              type === 'occasion' && (param.data.occasion = val.value) // 场景
+              if(type === 'tagprice') { // 商品的价格
+                let price = val.value && val.value.indexOf('-') > -1 && val.value.split('-') || ''
+                param.data.tagpricemin = price && price[0] && parseInt(price[0])
+                || parseInt(val.value) >=8000 && parseInt(val.value) || ''
+                param.data.tagpricemax = price && price[1] && parseInt(price[1]) || parseInt(val.value) <= 1000 && 1000
+                || ''
+              }
+            });
+      } else if(type_  === '[object Object]'){
+        param = {
+          data: {
+              "language":"cn",
+              "userid": workspace.getCookie().name,
+              ...value
+            },
+            "listQuery": {
+              "pageSize": 30,
+              "pageNum": 1
+            }
+          }
+        }
+      this.$store.dispatch('home/filterSearch', param).then(res => {
+        console.log(res)
+      })
+      // let res = await post(api.getScreenSelect, param)
     },
     changePrice(val) {
       return workspace.thousandBitSeparator(val)
@@ -207,5 +234,26 @@ export default {
 }
 .showTip{
   color: #C5A480;
+}
+.box-card ul{
+  text-align:left;
+}
+.box-card ul>li{
+    position: relative;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    white-space: nowrap;
+    background: #fff;
+    line-height: 39px;
+    border-bottom: solid 1px #c8c7cc;
+}
+.box-card /deep/ .el-card__body{
+  padding-top:0;
+}
+.box-card{
+  position: absolute;
+  z-index: 10;
+  width: 100%;
 }
 </style>

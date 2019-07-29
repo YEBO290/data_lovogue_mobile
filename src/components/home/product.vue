@@ -42,11 +42,10 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import menuList from '../subMenu/menu'
+// import menuList from '../subMenu/menu'
 import workspace from '../../common.js'
 export default {
   components: {
-    menuList
   },
   data() {
     return {

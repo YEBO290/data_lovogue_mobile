@@ -40,6 +40,16 @@ export default {
             
         }
     },
+    watch:{
+        selectedVal: {
+            handler(val){
+                if(val.length === 0) {
+                    this.activelist = []
+                }
+            },
+            immediate: true
+        }
+    },
     data(){
         return{
            activeIndex: ['1'],

@@ -1,34 +1,5 @@
 <template>
   <div class="menu-select" :class="{'menu_sub':menu_sub}">  
-    <!-- <div class="menu_del">  -->
-      <!--<span class="menu_filter_btn"><i class="icon_f_btn"></i>筛选</span>-->
-    <!--  <span @click.stop="expandMenu">清除</span>
-    </div>
-    <span class="el-icon-plus" @click.stop="expandSituationFunc" v-if="!expandSituation"></span>
-    <span class="el-icon-minus" @click.stop="expandSituationFunc" v-if="expandSituation"></span>
-    <p class="menu_title"  @click.stop="expandSituationFunc">按穿着场合</p>       
-    <ul v-if="expandSituation">
-      <li v-for="(item, index) in situationList" :key="item.id" class="menu_txt" :class="{'checked_list': situationCheckList[index]}" @click.stop="checkList(index, item)">{{item.name}}
-        <i class="el-icon-check" v-if="situationCheckList[index] || false"></i>
-      </li>
-    </ul>
-    <span class="el-icon-plus" @click.stop="expandcolorCheckFunc" v-if="!expandcolorCheck"></span>
-    <span class="el-icon-minus" @click.stop="expandcolorCheckFunc" v-if="expandcolorCheck"></span>
-    <p class="menu_title" @click.stop="expandcolorCheckFunc">颜色</p>       
-    <ul v-if="expandcolorCheck">
-      <li v-for="(item, index) in colorList" :key="item.id" class="menu_txt"
-      
-        :class="{'checked_list': colorCheckList[index]}" @click.stop="checkColorList(index, item)">{{item.name}}
-        <i class="el-icon-check"  v-if="colorCheckList[index] || false"></i>
-      </li>
-    </ul>
-    <span class="more_list"><i class="el-icon-plus"></i>查看更多</span>
-    <ul>
-      <li v-for="item in moreList" :key="item.id" class="menu_txt">{{item.name}}</li>
-    </ul>
-    <p class="menu_tip">
-      可同时选择多个选项
-    </p> -->
     <div class="subMenu">
       <subList 
         v-for="(item, index) in menuLists" 
@@ -36,51 +7,12 @@
         :name="index + 1" 
         :key="index" 
         :activeNames="['1']"
+        :selectedVal="selectedVal"
         @handlerList="handlerList"
       />
     </div>
-
-
-    <!-- <el-collapse class="select-table" v-model="activeNames" @change="handleChange">
-      <el-collapse-item title="商品品类" name="1">
-        <div class="Category">
-          <ul>
-            <li v-for="item  in CommodityCategory" :key="item.value" >{{item.lable}}</li>
-        </ul>
-        </div>
-        
-      </el-collapse-item>
-      <el-collapse-item title="商品材质" name="2">
-        <div class="Category">
-          <ul>
-            <li v-for="item  in quality" :key="item.value" >{{item.lable}}</li>
-        </ul>
-        </div>
-      </el-collapse-item>
-      <el-collapse-item title="宝石材质" name="3">
-        <div class="Category">
-          <ul>
-            <li v-for="item  in jewel" :key="item.value" >{{item.lable}}</li>
-          </ul>
-        </div>
-      </el-collapse-item>
-      <el-collapse-item title="商品场景" name="4">
-        <div class="Category">
-          <ul>
-            <li v-for="item  in scenes" :key="item.value" >{{item.lable}}</li>
-          </ul>
-        </div>
-      </el-collapse-item>
-      <el-collapse-item title="价格区间" name="5">
-        <div class="Category">
-          <ul>
-            <li v-for="item  in price" :key="item.value" >{{item.lable}}</li>
-          </ul>
-        </div>
-      </el-collapse-item>
-    </el-collapse> -->
     <div class="sift-bottom">
-      <div class="sift-clear sift-btn" id="J_SiftClear" data-spm-anchor-id="0.0.0.i8.568748ccCik6jV">重置</div>
+      <div class="sift-clear sift-btn" id="J_SiftClear" data-spm-anchor-id="0.0.0.i8.568748ccCik6jV" @click="handlerReset">重置</div>
       <div class="sift-btn-ok sift-btn" id="J_SiftCommit" data-spm-anchor-id="0.0.0.i14.568748ccCik6jV" @click="handlerOk">确定</div>
     </div>
   </div>
@@ -95,20 +27,16 @@ import workspace from '../../common.js'
 export default {
   data() {
     return {
-      situationCheckList: [],
-      colorCheckList: [],
-      situationCheckData: [],
-      colorCheckData: [],
       menu_sub: false,
       expandSituation: false,
       expandcolorCheck: false,
-      activeNames: ['1','2','3','4','5'],
       CommodityCategory:[],
       quality:[],//商品材质
       jewel:[], //宝石材质
       scenes:[], //场景
       price:[], //价格区间
       selectedMenu: [], // 选中的数据
+      selectedVal: [],
       menuLists: {
         productCategory: {
             name: '商品品类',
@@ -208,6 +136,7 @@ export default {
             }
 
     }
+    
   },
   components: {
     subList
@@ -217,13 +146,6 @@ export default {
     situationList: state => state.list.situationList,
     colorList: state => state.list.colorList,
     moreList: state => state.list.moreList
-    // 传字符串参数 'count' 等同于 `state => state.count`
-    // countAlias: 'count',
-
-    // // 为了能够使用 `this` 获取局部状态，必须使用常规函数
-    // countPlusLocalState (state) {
-    //   return state.count + this.localCount
-    // }
   }),
   created() {
     this.$store.commit('showMenu', false),
@@ -241,67 +163,13 @@ export default {
       console.log('选中的数据' + JSON.stringify(value))
       
     },
-    async handlerOk(value) {
-       let param = {
-        data: {
-          "language":"cn",
-          "userid": workspace.getCookie().name,
-          "sortype":"tagprice"
-          },
-          "listQuery":{"pageSize":30,"pageNum":1}
-        }
-        this.selectedMenu.forEach(item => {
-          let {type, val} = item
-          type === 'category' && (param.data.category = val.value) // 商品的品类
-          type === 'theme' && (param.data.theme = val.value) // 商品的商品材质
-          type === 'typegem' && (param.data.typegem = val.value) // 商品的宝石材质
-          type === 'occasion' && (param.data.occasion = val.value) // 场景
-          if(type === 'tagprice') { // 商品的价格
-            let price = val.value && val.value.indexOf('-') > -1 && val.value.split('-') || ''
-            param.data.tagpricemin = price && price[0] && parseInt(price[0])
-            || parseInt(val.value) >=8000 && parseInt(val.value) || ''
-            param.data.tagpricemax = price && price[1] && parseInt(price[1]) || parseInt(val.value) <= 1000 && 1000
-             || ''
-          }
-        });
-      
-      // this.$emit('handlerMenu', [])
-      let res = await post(api.getScreenSelect, param)
-      this.$emit('handlerMenu', res.data || [])
+    handlerOk(value) {
+      this.$emit('changeFilter', this.selectedMenu || []) // 将选中的数据抛出
+      this.selectedVal = []
     },
-    // 列表选择
-    checkList(index, value) {
-      if (this.situationCheckList[index]) {
-        this.$set(this.situationCheckList, index, false)
-        // 目前通过id处理 具体看后台返回的唯一识别码
-        this.situationCheckData.filter(item => item.id === value.id)     
-      } else {
-        this.$set(this.situationCheckList, index, true)
-        this.situationCheckData.push(value)
-      }
-      console.log('场合穿着选中数据------' + this.situationCheckData)
-    },
-    // 颜色选择
-    checkColorList(index, value) { 
-      if (this.colorCheckList[index]) {
-        this.$set(this.colorCheckList, index, false)
-        // 目前通过id处理 具体看后台返回的唯一识别码
-        this.colorCheckData.filter(item => item.id === value.id)
-      } else {
-        this.$set(this.colorCheckList, index, true)
-        this.colorCheckData.push(value)       
-      }
-      console.log('颜色选中数据------' + this.colorCheckData)
-    },
-    expandSituationFunc() {
-      this.expandSituation = !this.expandSituation
-    },
-    expandcolorCheckFunc() {
-      this.expandcolorCheck = !this.expandcolorCheck
-    },
-    // expandMenu() {
-    //   this.$store.commit('showSubMenu', false)     
-    // }
+    handlerReset(){
+      this.selectedVal = []
+    }
   }
 }
 </script>

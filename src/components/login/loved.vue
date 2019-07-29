@@ -39,7 +39,7 @@ import workspace from '../../common.js'
 export default {
     data() {
       return {
-        lovesList:[]  //收藏列表数据
+        // lovesList:[]  //收藏列表数据
       }
     },
     watch: {

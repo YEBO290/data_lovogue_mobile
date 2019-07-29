@@ -173,6 +173,19 @@ const actions = {
                 console.log(err);
             })
         })
+    },
+    // 菜单
+    filterSearch(context, param) {
+        return new Promise((resolve, reject) => {
+            let params = param || {}
+            post(api.getScreenSelect, params)
+            .then(res => {
+                resolve(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        })
     }
 };
 

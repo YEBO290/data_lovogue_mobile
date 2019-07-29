@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import menuList from '../subMenu/menu'
+// import menuList from '../subMenu/filter'
 import { mapState } from 'vuex'
 export default {
   components: {
-    menuList
+
   },
   data() {
     return {

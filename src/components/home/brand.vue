@@ -7,7 +7,6 @@
         <!--<span class="menu_filter_btn"><i class="icon_f_btn"></i>筛选</span>-->
         <span class="menu_del">清除</span>
       </div>
-      <menuList class="menu_list" v-if="showSubMenu"/>
       <el-row :gutter="10">
         <el-col :span="12" v-for="(item, index) in brandList" :key="index">
           <div class="brand_list">
@@ -22,10 +21,8 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import menuList from '../subMenu/menu'
 export default {
   components: {
-    menuList
   },
   data() {
     return {
