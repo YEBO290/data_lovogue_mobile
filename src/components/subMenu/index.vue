@@ -25,8 +25,8 @@
       </el-card>
       <el-card class="box-card" v-if="showFilter[1]">
         <ul >
-          <li @click="filterTime()" :class="{'menu_del': activeSelectedList[0]}">上市时间从低到高</li>
-          <li @click="filterTime('1')" :class="{'menu_del': activeSelectedList[1]}">上市时间从高到低</li>
+          <li @click="filterTime()" :class="{'menu_del': activeSelectedList[0]}">上市时间默认</li>
+          <li @click="filterTime('1')" :class="{'menu_del': activeSelectedList[1]}">上市时间最新</li>
         </ul>
       </el-card>
       
