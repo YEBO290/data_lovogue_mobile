@@ -11,7 +11,7 @@
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="loginForm">
             <label class="label_txt">用户名/手机号码/电邮地址</label><span class="req">*</span>
             <el-form-item prop="name">
-                <el-input type="text" v-model="ruleForm.name" :clearable="true" autocomplete="off" placeholder="用户名/手机号/邮箱" ></el-input>
+                <el-input type="text" v-model="ruleForm.name" :clearable="true" autocomplete="off" placeholder="用户名、手机号、邮箱" ></el-input>
             </el-form-item>
             <label class="label_txt" v-if="showMessage">手机号码</label><span class="req"  v-if="false">*</span>
             <label class="label_txt" v-if="!showMessage">电邮地址</label><span class="req">*</span>

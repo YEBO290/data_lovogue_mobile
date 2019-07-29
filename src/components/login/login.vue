@@ -1,9 +1,9 @@
 <template>
   <div class="login" :from="from">
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="loginForm" key="login">
-      <label class="label_txt">手机号/邮箱</label><span class="req">*</span>
+      <label class="label_txt">用户名/手机号/邮箱</label><span class="req">*</span>
       <el-form-item prop="phone" key="loginPhone">
-        <el-input type="text" v-model="ruleForm.phone" :clearable="true" autocomplete="off"></el-input>
+        <el-input type="text" v-model="ruleForm.phone" :clearable="true" autocomplete="off" placeholder="用户名、手机号码、电子邮箱"></el-input>
       </el-form-item>
       <label class="label_txt">密码</label><span class="req">*</span>
       <el-form-item prop="pass">
