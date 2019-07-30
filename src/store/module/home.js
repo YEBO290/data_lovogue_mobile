@@ -180,7 +180,6 @@ const actions = {
             let params = param || {}
             post(api.getScreenSelect, params)
             .then(res => {
-                debugger
                 context.commit("categoryTotal", res.total)
                 context.commit("categoryTypeList", res.data)
             })

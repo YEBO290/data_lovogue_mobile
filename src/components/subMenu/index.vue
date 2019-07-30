@@ -16,7 +16,7 @@
       :visible.sync="drawer"
       :direction="direction"
       :showClose="false"
-      size="80%">
+      :size="drawerSize">
       <el-card class="box-card" v-if="showFilter[0]">
         <ul >
           <li @click="filterPrice()" :class="{'active-li': activeSelectedList[0]}">价格从低到高</li>
@@ -30,7 +30,7 @@
         </ul>
       </el-card>
       
-      <filterSearch class="menu_list" v-if="showFilter[2]" id="menu_select" @changeFilter="changeFilter" :isMulti="isMulti"/>
+      <filterSearch @click="setSize" class="menu_list" v-if="showFilter[2]" id="menu_select" @changeFilter="changeFilter" :isMulti="isMulti"/>
     </el-drawer>
   </div>
 </template>
@@ -98,15 +98,26 @@ export default {
         }
       ],
       activeSeleted: [],
+      drawerSize:'80%'
     }
   },
   watch: {
+    showFilter:{
+      handler(){
+        if(this.showFilter[2]){
+          this.drawerSize= '80%'
+        }else{
+          this.drawerSize= '35%'
+        }
+      },
+      immediate: true
+    }
   },
   created() {
+    
   },
   methods: {
     changeFilter(val) {
-      debugger
         console.log(val)
         this.$emit('changeFilter', val || [])
         this.drawer = false
@@ -144,6 +155,7 @@ export default {
       this.activeSelectedList = []
     },
     filterPrice(val){
+        this.drawerSize = '35%'
         let index = val && 1 || 0
         this.activeSelectedList = []
         this.$set(this.activeSelectedList, index, true)
@@ -153,7 +165,11 @@ export default {
         }
         this.$emit('changeFilter', obj || {})
     },
+    setSize(){
+       this.drawerSize = '80%'
+    },
     filterTime(val){
+        this.drawerSize = '35%'
         let index = val && 1 || 0
         this.activeSelectedList = []
         this.$set(this.activeSelectedList, index, true)
@@ -182,6 +198,7 @@ export default {
 }
 .box-card /deep/ .el-card__body{
   padding-top:0;
+  min-height:1.6rem
 }
 .box-card{
   position: absolute;

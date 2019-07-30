@@ -81,7 +81,6 @@ export default {
   },
   methods: {
     changeFilter(value){
-      debugger
       console.log(value)  // 过滤条件
       let type_ = Object.prototype.toString.call(value)
       let param = {}

@@ -47,7 +47,6 @@ export default {
     watch:{
         selectedVal: {
             handler(val){
-                debugger
                 let {name, type} = val
                 if(val.length === 0) {
                     this.activelist = []
