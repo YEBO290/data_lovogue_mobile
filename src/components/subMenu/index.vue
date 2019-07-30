@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="menu_filter">
+    <div class="menu_filter" style="height:0.4rem;line-height:0.4rem;">
       <el-row>
           <el-col :span="8" v-for="(item, index) in filterLists" :key="index">
             <div class="grid-content bg-purple" @click="item.action(index)">
-              <span :class="{'menu_del': activeSeleted[index]}">
+              <span :class="{'active-li': activeSeleted[index]}">
                 <i :class="item.icon"></i>{{item.label}}
               </span>
             </div>
@@ -19,14 +19,14 @@
       size="80%">
       <el-card class="box-card" v-if="showFilter[0]">
         <ul >
-          <li @click="filterPrice()" :class="{'menu_del': activeSelectedList[0]}">价格从低到高</li>
-          <li @click="filterPrice('1')" :class="{'menu_del': activeSelectedList[1]}">价格从高到低</li>
+          <li @click="filterPrice()" :class="{'active-li': activeSelectedList[0]}">价格从低到高</li>
+          <li @click="filterPrice('1')" :class="{'active-li': activeSelectedList[1]}">价格从高到低</li>
         </ul>
       </el-card>
       <el-card class="box-card" v-if="showFilter[1]">
         <ul >
-          <li @click="filterTime()" :class="{'menu_del': activeSelectedList[0]}">上市时间默认</li>
-          <li @click="filterTime('1')" :class="{'menu_del': activeSelectedList[1]}">上市时间最新</li>
+          <li @click="filterTime()" :class="{'active-li': activeSelectedList[0]}">上市时间默认</li>
+          <li @click="filterTime('1')" :class="{'active-li': activeSelectedList[1]}">上市时间最新</li>
         </ul>
       </el-card>
       
@@ -187,5 +187,8 @@ export default {
   position: absolute;
   z-index: 10;
   width: 100%;
+}
+.active-li{
+  color: #C5A480;
 }
 </style>
