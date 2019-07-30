@@ -8,6 +8,7 @@
         :key="index" 
         :activeNames="['1']"
         :selectedVal="selectedVal"
+        :isMulti="isMulti"
         @handlerList="handlerList"
       />
     </div>
@@ -25,6 +26,12 @@ import api from '../../axios/api.js'
 import {post} from '../../axios/index'
 import workspace from '../../common.js'
 export default {
+  props: {
+    isMulti: {
+        type: Boolean,
+        default: false
+    }
+  },
   data() {
     return {
       menu_sub: false,
@@ -138,15 +145,14 @@ export default {
     }
     
   },
+  // computed:{
+  //   isMulti() {
+  //     return this.props.isMulti
+  //   }
+  // },
   components: {
     subList
   },
-  computed: mapState({
-    // 箭头函数可使代码更简练
-    situationList: state => state.list.situationList,
-    colorList: state => state.list.colorList,
-    moreList: state => state.list.moreList
-  }),
   created() {
     this.$store.commit('showMenu', false),
     // this.$store.dispatch('list/querySituationList', '123')
@@ -159,13 +165,15 @@ export default {
   },
   methods: {
     handlerList(value) {
+      this.selectedMenu = this.selectedMenu.filter(item => item.type !== value.type)
       this.selectedMenu = this.selectedMenu.concat(value)
-      console.log('选中的数据' + JSON.stringify(value))
+      console.log('选中的数据' + JSON.stringify(this.selectedMenu))
       
     },
     handlerOk(value) {
+      debugger
       this.$emit('changeFilter', this.selectedMenu || []) // 将选中的数据抛出
-      this.selectedVal = []
+      // this.selectedVal = []
     },
     handlerReset(){
       this.selectedVal = []

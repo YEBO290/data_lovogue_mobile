@@ -180,7 +180,9 @@ const actions = {
             let params = param || {}
             post(api.getScreenSelect, params)
             .then(res => {
-                resolve(res.data);
+                debugger
+                context.commit("categoryTotal", res.total)
+                context.commit("categoryTypeList", res.data)
             })
             .catch(err => {
                 console.log(err);

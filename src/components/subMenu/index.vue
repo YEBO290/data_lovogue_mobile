@@ -30,7 +30,7 @@
         </ul>
       </el-card>
       
-      <filterSearch class="menu_list" v-if="showFilter[2]" id="menu_select" @changeFilter="changeFilter"/>
+      <filterSearch class="menu_list" v-if="showFilter[2]" id="menu_select" @changeFilter="changeFilter" :isMulti="isMulti"/>
     </el-drawer>
   </div>
 </template>
@@ -46,6 +46,12 @@ export default {
     filterSearch,
     'screen-select':screenSelect
   },
+  props: {
+    isMulti: {
+      type: Boolean,
+      default: false
+    }
+  },
   watch: {
       filterLists: {
         handler(val){ 
@@ -53,6 +59,11 @@ export default {
         }
       }
   },
+  // computed:{
+  //   isMulti() {
+  //     return this.props.isMulti
+  //   }
+  // },
   data() {
     return {
       showMore: true,
@@ -95,6 +106,7 @@ export default {
   },
   methods: {
     changeFilter(val) {
+      debugger
         console.log(val)
         this.$emit('changeFilter', val || [])
         this.drawer = false

@@ -5,7 +5,7 @@
             <ul>
                 <li v-for="(item, index) in menuList.lists" 
                 :key="item.value" 
-                @click="handlerList(item, index, menuList)" 
+                @click="handlerList(item, index, menuList,)" 
                 :class="{'activelist': activelist[index]}"
             >{{item.lable}}</li>
             </ul>
@@ -38,6 +38,10 @@ export default {
                 }
             }
             
+        },
+        isMulti: {
+            type: Boolean,
+            default: false
         }
     },
     watch:{
@@ -54,26 +58,45 @@ export default {
         return{
            activeIndex: ['1'],
            activelist: [],
-           selectedData: this.selectedVal
+           selectedData: this.selectedVal,
+           filterVal: []
         }
     },
+    // computed:{
+    //     isMulti() {
+    //     return this.props.isMulti
+    //     }
+    // },
     methods:{
         handlerList(val, index, menuList){
             let {name, type} = menuList
+            let list = [] // 取消选中的数据
             if(!this.activelist[index]) {
-                this.activelist = []
-                this.selectedData = []
+                if(!this.isMulti || type === 'tagprice') { // 是否单选,价格区间目前只支持单选
+                    this.activelist = []
+                    this.filterVal = []
+                } 
+                this.filterVal.push(val)
                 this.$set(this.activelist, index, true) 
-                let obj = {
-                    name,
-                    type,
-                    val: val 
-                }
-                this.selectedData.push(obj)
+                
             } else {
-                this.selectedData = this.selectedData.filter(item => item.type != type)
+                let list = this.selectedData[0].val
+                this.selectedData = list.length > 0 
+                ? list.filter(item => item.value !== val.value)
+                : [{
+                    name, type, val: []
+                }] // 所选中的数据
+                
+                this.filterVal = this.filterVal.filter(item => item.value != val.value)
                 this.$set(this.activelist, index, false) 
             }
+            let obj = [{
+                name,
+                type,
+                val: this.filterVal
+            }]
+            this.selectedData = obj
+            console.log('选中的数据' ,this.selectedData)
             // 抛出选中的数据
             this.$emit('handlerList', this.selectedData)   
         }

@@ -51,6 +51,7 @@ export default {
       showMore: true,
       isShow:false,
       activeSeleted: [],
+      filterParam: {}
     }
   },
   watch: {
@@ -80,62 +81,46 @@ export default {
   },
   methods: {
     changeFilter(value){
+      debugger
       console.log(value)  // 过滤条件
       let type_ = Object.prototype.toString.call(value)
       let param = {}
       if(type_  === '[object Array]') { // 筛选
-          param = {
-            data: {
-                "language":"cn",
-                "userid": workspace.getCookie().name,
-              },
-              "listQuery": {
-                "pageSize": 30,
-                "pageNum": 1
-              }
+          let obj = {}
+          value.forEach(item => {
+            let {type, val} = item
+            let lists = [] 
+            val.forEach(e => lists.push(e.value)) // 取出所有指定属性集合
+            obj[type] = lists.join(',')
+            if(type === 'tagprice') { // 商品的价格
+              let price = lists.join(',') && lists.join(',').indexOf('-') > -1 && lists.join(',').split('-') || ''
+              obj.tagpricemin = price && price[0] && parseInt(price[0])
+              || parseInt(lists.join(',')) >=8000 && parseInt(lists.join(',')) || ''
+              obj.tagpricemax = price && price[1] && parseInt(price[1]) || parseInt(lists.join(',')) <= 1000 && 1000
+              || ''
             }
-            value.forEach(item => {
-              let {type, val} = item
-              type === 'category' && (param.data.category = val.value) // 商品的品类
-              type === 'theme' && (param.data.theme = val.value) // 商品的商品材质
-              type === 'typegem' && (param.data.typegem = val.value) // 商品的宝石材质
-              type === 'occasion' && (param.data.occasion = val.value) // 场景
-              if(type === 'tagprice') { // 商品的价格
-                let price = val.value && val.value.indexOf('-') > -1 && val.value.split('-') || ''
-                param.data.tagpricemin = price && price[0] && parseInt(price[0])
-                || parseInt(val.value) >=8000 && parseInt(val.value) || ''
-                param.data.tagpricemax = price && price[1] && parseInt(price[1]) || parseInt(val.value) <= 1000 && 1000
-                || ''
-              }
-            });
+          });
+          let {category, tagpricemax, tagpricemin, theme, typegem, occasion} = obj
+          let newObj = {category, tagpricemax, tagpricemin, theme, typegem, occasion}
+          this.filterParam = newObj
+          param = this.searchParam(30, 1, newObj)
       } else if(type_  === '[object Object]'){
-        param = {
-          data: {
-              "language":"cn",
-              "userid": workspace.getCookie().name,
-              ...value
-            },
-            "listQuery": {
-              "pageSize": 30,
-              "pageNum": 1
-            }
-          }
+        this.filterParam = value
+        param = this.searchParam(30, 1, value)
         }
-      this.$store.dispatch('home/filterSearch', param).then(res => {
-        console.log(res)
-      })
-      // let res = await post(api.getScreenSelect, param)
+      this.$store.dispatch('home/filterSearch', param)
     },
     changePrice(val) {
       return workspace.thousandBitSeparator(val)
     },
-    searchParam(size, page) {
+    searchParam(size, page, value) {
       let id = this.$router.history.current.params.id
       let param =  {
         data: {
           language: 'cn',
           category: id || '',
-           userid: workspace.getCookie().name,
+          userid: workspace.getCookie().name,
+          ...value
         },       
         listQuery: {
           pageSize: size,
@@ -156,7 +141,7 @@ export default {
     // 载入更多
     toMore() {
       this.showMore = false
-      let param =  this.searchParam(this.categoryTotal, 1)
+      let param =  this.searchParam(this.categoryTotal, 1, this.filterParam)
       this.$store.dispatch('home/queryCategoryList', param)
     },
     toHide() {
