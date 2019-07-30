@@ -342,3 +342,9 @@ input::-webkit-input-placeholder,textarea::-webkit-input-placeholder {
     -ms-flex-align: center;
     align-items: center;
 }
+.el-dialog__wrapper{
+    top: 0.5rem;
+  }
+.el-drawer__header{
+    margin-bottom:0.15rem;
+}

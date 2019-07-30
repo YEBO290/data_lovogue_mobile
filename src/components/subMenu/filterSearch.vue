@@ -202,7 +202,7 @@ export default {
 }
 .sift-bottom /deep/ .sift-btn-ok {
     color: #fff;
-    background: #ff5000;
+    background: #c5a480;
     border-top-color: #e7e7e7;
 }
 .select /deep/ .el-collapse-item .el-collapse-item__header {
@@ -221,4 +221,5 @@ export default {
 .select-table{
   padding-left:0.18rem;
 }
+
 </style>

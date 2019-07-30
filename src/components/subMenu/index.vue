@@ -17,6 +17,7 @@
       :direction="direction"
       :showClose="false"
       :size="drawerSize">
+      <!-- <slot name="title"><h1>ddd</h1></slot> -->
       <el-card class="box-card" v-if="showFilter[0]">
         <ul >
           <li @click="filterPrice()" :class="{'active-li': activeSelectedList[0]}">价格从低到高</li>
@@ -135,7 +136,7 @@ export default {
       this.$set(this.activeSeleted, index, true)
     },
     handlerTime(index) {
-      this.title= '时间排序'
+      this.title= '上市时间'
       this.direction = 'ttb'
       this.drawer = true
       this.showFilter = []
