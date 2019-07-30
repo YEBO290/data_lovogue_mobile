@@ -15,7 +15,7 @@
             </div>
             <div class="loved_country">
               <span class="loved_price">RMB {{changePrice(item.tagprice)}}</span>
-              <i class="icon_bag" @click.stop="addBag"></i>
+              <!-- <i class="icon_bag" @click.stop="addBag"></i> -->
             </div>
           </div>
         </el-col>
