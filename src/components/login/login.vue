@@ -7,7 +7,7 @@
       </el-form-item>
       <label class="label_txt">密码</label><span class="req">*</span>
       <el-form-item prop="pass">
-        <el-input type="password" v-model="ruleForm.pass" :clearable="true" autocomplete="off" key="loginPass"></el-input>
+        <el-input type="password" v-model="ruleForm.pass" :clearable="true" autocomplete="off" placeholder="请输入密码" key="loginPass"></el-input>
         <router-link to="/resetPassMessage" class="link">忘记密码?</router-link>
       </el-form-item>        
     </el-form>

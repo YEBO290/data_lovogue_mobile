@@ -4,7 +4,7 @@
         <div v-if="returnOrderInfo.returnStatus == 0 ">不受理</div>
         <div v-if="returnOrderInfo.returnStatus == 1 ">受理中</div>
         <div v-if="returnOrderInfo.returnStatus == 2 ">已受理</div>
-        <div v-if="returnOrderInfo.returnStatus == 3 && returnOrderInfo.checkstatus == 2">对账成功，已完成</div>
+        <div v-if="returnOrderInfo.returnStatus == 3 ">已完成</div>
         <div v-if="returnOrderInfo.returnStatus == 9 ">异常</div>
         <div>{{returnOrderInfo.defaultTime}}</div>
       </div>
