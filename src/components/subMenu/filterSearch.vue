@@ -171,11 +171,12 @@ export default {
       
     },
     handlerOk(value) {
-      debugger
       this.$emit('changeFilter', this.selectedMenu || []) // 将选中的数据抛出
       // this.selectedVal = []
     },
     handlerReset(){
+      this.$emit('changeFilter', []) 
+      this.selectedMenu = []
       this.selectedVal = []
     }
   }
