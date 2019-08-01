@@ -1,7 +1,6 @@
 <template>
-  <div class="menu_home">
-    <div class="menu_bgr" @click="headerOut()"></div>
-    <div class="menu_index">  
+    <!-- <div class="menu_bgr" @click="headerOut()"></div> -->
+    <div class="">  
       <img src="../../assets/image/menulogo.png" style="width: 0.6rem;height: 0.54rem;margin: 0 auto;display: inherit;margin-bottom: 0.36rem;"/>
       <el-row style="margin-bottom:20px;">
         <el-col :span="3" :class="{'userImg': showLogin}">
@@ -34,7 +33,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -60,7 +58,7 @@ export default {
   watch: {
     $route: {
       handler: function(val, oldVal){
-        this.headerOut()
+        this.$emit('hideMenu', false)
         this.expand = []
       },
       // 深度观察监听
@@ -71,9 +69,6 @@ export default {
     this.$store.dispatch('home/queryMenuList')
   },
   methods: {
-    headerOut(){
-      document.getElementById('menu') && (document.getElementById('menu').style.display = 'none')
-    },
     expandFunc(val, index) {
       if (this.expand[index]) {
         this.$set(this.expand, index, false)

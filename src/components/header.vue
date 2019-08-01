@@ -2,8 +2,7 @@
     <div class="header">
         <el-row :gutter="20" style=" margin-bottom: 14px;">
             <el-col :span="3">
-                <div class="grid-content bg-purple" @click="headerOver()">
-                    <!--<img src="../assets/image/menu.png" class="header_menu" @click.stop="showMenu"/>-->
+                <div class="grid-content bg-purple" @click="showMainMenu">
                     <img src="../assets/image/menu.png" class="header_menu" />
                 </div>
             </el-col>
@@ -39,7 +38,16 @@
                 </div>
             </el-col>
         </el-row> 
-        <menuList class="menuList" id="menu" v-if="user"/>
+        <el-drawer
+            :visible.sync="drawer"
+            direction="ltr"
+            :show-close="false"
+            size="80%"
+            custom-class="main-menu"
+            :modal-append-to-body="false"
+            >
+            <menuList  id="menu" @hideMenu="hideMenu" v-if="drawer"/>
+        </el-drawer>     
     </div>
 </template>
 
@@ -48,19 +56,14 @@ import store from '../store'
 import { mapState } from 'vuex'
 import workspace from '../common.js'
 import menuList from './menu'
-document.onclick=function(){
-    store.commit('showMenu', false)
-    store.commit('showSubMenu', false)
-//   let child = document.getElementById("menu") 
-//   let parent = document.getElementById("home") 
-//   document.getElementById("menu") && (parent.removeChild(child))
-}
+
 export default {
   components: {
       menuList
   },
   data() {
     return {
+        drawer: false,
         search: false,
         // showLoved: false
     }
@@ -72,30 +75,17 @@ export default {
       shopBagNumber: state => state.login.shopBagNumber,
       user(){
         return workspace.getCookie().name
-        }
-    }),
-  created() {
-  },
+    }
+}),
   methods: {
-      headerOver(){
-            // document.getElementById('menu').style.display = 'block'
-            document.getElementById('menu').style.cssText = 'display:block;'
-        },
+      showMainMenu() {
+          this.drawer = true
+      },
+      hideMenu(res) {
+          this.drawer = false
+      },
       toHome() { //点击logo 跳至首页
-        this.$router.push('/home')
-        // let status = workspace.getCookie().name
-        // if(status !== '' && status !== null && status !== undefined) {
-        //     this.$router.push('/home')
-        // } else {
-        //     this.$router.push('/login')
-        // }   
-      },
-      showMenu() {
-        this.$store.commit('showMenu', true)
-        this.$store.commit('showSubMenu', false)
-      },
-      hideMenu() {
-        this.$store.commit('showMenu', false)
+        this.$router.push('/home')  
       },
       toLoved() {
         this.$store.commit("showLoved", true)
@@ -172,14 +162,5 @@ export default {
         position: relative;
         top: -3px;
     }
-    .menuList{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    width: 60%;
-    background: #EFDED1;
-    display: none;
-    
-}
+
 </style>

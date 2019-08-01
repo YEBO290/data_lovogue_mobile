@@ -216,7 +216,7 @@ export default {
 }
 .subMenu{
   overflow: scroll;
-  max-height: 5.8rem;
+  max-height: 5.3rem;
 } 
 .select-table{
   padding-left:0.18rem;

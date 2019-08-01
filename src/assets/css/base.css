@@ -348,3 +348,11 @@ input::-webkit-input-placeholder,textarea::-webkit-input-placeholder {
 .el-drawer__header{
     margin-bottom:0.15rem;
 }
+.main-menu{
+    background: #C5A480;
+    color:#EFDED1;
+    padding: 0 18px;
+}
+.main-menu .el-icon-plus, .main-menu .el-icon-minus,.main-menu .el-icon-close{
+    color:#EFDED1; 
+}
