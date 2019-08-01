@@ -11,7 +11,7 @@
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="1rem" class="loginForm">
             <label class="label_txt">用户名/手机号码/电邮地址</label><span class="req">*</span>
             <el-form-item prop="name">
-                <el-input type="text" v-model="ruleForm.name" :clearable="true" autocomplete="off" placeholder="用户名、手机号、邮箱" ></el-input>
+                <el-input type="text" v-model="ruleForm.name" :clearable="true" autocomplete="off" placeholder="请输入所注册用户名/手机号/电邮地址" ></el-input>
             </el-form-item>
             <label class="label_txt" v-if="showMessage">手机号码</label><span class="req"  v-if="false">*</span>
             <label class="label_txt" v-if="!showMessage">电邮地址</label><span class="req">*</span>
@@ -23,7 +23,7 @@
             </el-form-item>
 
             <el-form-item prop="email" v-if="!showMessage">
-                <el-input type="text" v-model="ruleForm.email" :clearable="true" autocomplete="off" placeholder="注册时预留的电邮地址，可接收验证码"></el-input>
+                <el-input type="text" v-model="ruleForm.email" :clearable="true" autocomplete="off" placeholder="请输入所注册的电邮地址"></el-input>
                 <el-button class="verificationCode" @click="sendMsg" :disabled="codeDis">{{code}}</el-button>
                 <!-- <a class="link" @click="showMessage = false" style="color:#C5A480">使用短信验证码?</a> -->
             </el-form-item>
@@ -149,7 +149,7 @@ import md5 from "js-md5"
                     me.successTip()
                 }
             }).catch(err => {
-              
+              console.log(err)
             })
           } else {
             console.log('error submit!!')
@@ -173,15 +173,25 @@ import md5 from "js-md5"
         }
         me.$store.dispatch('login/resetPwEmail', param).then(res => {
           if(res.msg === 1) {
-            me.$message({
-              message: '验证码已发送至登记邮箱上，请查收。',
-              type: 'success'
-            })
+            // me.$message({
+            //   message: '验证码已发送至登记邮箱上，请查收。',
+            //   type: 'success'
+            // })
+            me.$confirm("验证码已发送至登记邮箱上，请查收。", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            });
           } else {
-            me.$message({
-              message: '操作失败！',
-              type: 'error'
-            })
+            // me.$message({
+            //   message: '操作失败！',
+            //   type: 'error'
+            // })
+             me.$confirm("操作失败！", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            });
           }
         }).catch(err => {
           
@@ -226,7 +236,7 @@ import md5 from "js-md5"
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$router.push('/login')
+          this.$router.push('/login/resetPassword')
         }).catch(() => {         
         })
       }

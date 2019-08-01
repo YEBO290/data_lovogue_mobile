@@ -528,6 +528,10 @@ export default {
         this.$store.dispatch('address/queryAddressList', param).then(res=> {
           let defaultAddress = res.some(item => item.status == 2)
           if(!defaultAddress) {
+            me.$message({
+              message: '请先选择默认地址！',
+              type: 'error'
+            })
             me.$router.push(`/selectAddress/${this.detailInfo.typeno}`)
           } else {
               // 立即支付 默认数量传1

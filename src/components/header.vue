@@ -108,7 +108,7 @@ export default {
         padding:0.16rem 0;
         position: fixed;
         top: 0px;
-        z-index: 9999999;
+        z-index: 10;
     }
     .header_menu{
         /* position: absolute; */

@@ -107,6 +107,7 @@ export default {
         this.filterParam = value
         param = this.searchParam(30, 1, value)
         }
+      this.showMore = true
       this.$store.dispatch('home/filterSearch', param)
     },
     changePrice(val) {

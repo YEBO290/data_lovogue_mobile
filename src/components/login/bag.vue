@@ -13,7 +13,9 @@
               </el-checkbox>
             </el-checkbox-group> 
           </el-col>
-          <el-col :span="8"><img :src="item.imgpath" class="loved_img" style="width:100%;"  @click="$router.push(`/detail/${item.typeno}`)"/></el-col>
+          <el-col :span="8">
+            <img :src="item.imgpath" class="loved_img" style="width:100%;"  @click="$router.push(`/detail/${item.typeno}`)"/>
+          </el-col>
           <el-col :span="14">
             <div>
               <div @click="$router.push(`/detail/${item.typeno}`)">
@@ -22,13 +24,16 @@
                   <i class="el-icon-close" @click.stop="delBag(item)"></i>
                 </div>
                 <div>
+                  <span class="bag_code">库存{{item.inventory}}件</span>
+                  <br/>
                   <span class="bag_color"><span  class="bag_code">编号  - {{item.prodid}}</span></span>
                 </div>
               </div>
               <!--暂不考虑数量的加减-->
               <div class="number">
                 <label style="font-size:13px;">数量： </label>
-                <el-input-number v-model="item.amount" :min="1" label="数量"  :disabled="item.showAmount" @change="changeAmount(item)"></el-input-number>
+                <el-input-number v-model="item.amount" :min="1" label="数量"  :disabled="item.showAmount" 
+                @change="changeAmount(item, index)" ></el-input-number>
               </div>
               <div style="height: 0.2rem; margin-top: 0.40rem;">
                 <!--<div class="bag_size">
@@ -37,6 +42,8 @@
                 <div class="bag_country">
                   <span class="bag_price" style="float:left;" v-if="item.inventory == 0">暂无库存</span><span class="bag_price">RMB {{changePrice(item.tagprice)}}</span>
                 </div>
+                <div v-if="item.showAmount" style="color:#ff0000">库存紧张</div>
+                <div v-if="errTiplist[index]" style="color:#ff0000">库存不足</div>
               </div>
             </div>
           </el-col>         
@@ -100,7 +107,9 @@ export default {
         totalNmubel: 0, // 总数量
         totalPay: 0, // 总运费
         totalCost: 0, // 总计
-        delOrderId:[]  //待删除订单的 购物车序号Id
+        delOrderId:[],  //待删除订单的 购物车序号Id
+        errTiplist: [],
+        oldBagList: []
       }
     },
     watch: {
@@ -119,7 +128,10 @@ export default {
       // 箭头函数可使代码更简练
       bagList: function(state){
         state.login.bagList.forEach(item => {
-          this.$set(item, 'showAmount', false)       
+          this.$set(item, 'showAmount', false)    
+          if(item.inventory <= item.amount) {
+            this.$set(item, 'showAmount', true) 
+          }       
         })
         return state.login.bagList
       },
@@ -159,6 +171,13 @@ export default {
           
         }) // 推荐的列表查询 
       }    
+    },
+    beforeUpdate() {
+      console.log(this.bagList)
+      this.oldBagList = this.bagList
+    },
+    updated() {
+      console.log(this.bagList)
     },
     methods: {
       queryBag() {
@@ -252,7 +271,7 @@ export default {
             })
           }   
         }).catch((err) => {
-          if(err.err === 1){
+          if(err.msg.indexOf('默认的地址') > -1){
             this.$router.push('/selectAddress')
           }
         })
@@ -336,8 +355,13 @@ export default {
       toRemendDetail(val) {
         this.$router.push(`/detail/${val}`)
       },
-      changeAmount(val) {
+      changeAmount(val, index) {
         let me = this
+        if(Number(val.amount) > Number(val.inventory) ) {
+          // me.errTiplist = []
+          me.$set(me.errTiplist, index, true)
+          return  false
+        }
         /**调添加购物车接口 */
         let param = {
           id:val.id,

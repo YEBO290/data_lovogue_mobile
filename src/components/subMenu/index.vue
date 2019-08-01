@@ -20,14 +20,14 @@
       <!-- <slot name="title"><h1>ddd</h1></slot> -->
       <el-card class="box-card" v-if="showFilter[0]">
         <ul >
-          <li @click="filterPrice()" :class="{'active-li': activeSelectedList[0]}">价格从低到高</li>
-          <li @click="filterPrice('1')" :class="{'active-li': activeSelectedList[1]}">价格从高到低</li>
+          <li @click="filterPrice()" :class="{'active-li': activeSelectedList[0]}">价格升序</li>
+          <li @click="filterPrice('1')" :class="{'active-li': activeSelectedList[1]}">价格降序</li>
         </ul>
       </el-card>
       <el-card class="box-card" v-if="showFilter[1]">
         <ul >
-          <li @click="filterTime()" :class="{'active-li': activeSelectedList[0]}">上市时间默认</li>
-          <li @click="filterTime('1')" :class="{'active-li': activeSelectedList[1]}">上市时间最新</li>
+          <li @click="filterTime()" :class="{'active-li': activeSelectedList[0]}">上市时间升序</li>
+          <li @click="filterTime('1')" :class="{'active-li': activeSelectedList[1]}">上市时间降序</li>
         </ul>
       </el-card>
       

@@ -45,15 +45,15 @@
         <el-form :model="rulePassWordForm" status-icon :rules="rulesPassWord" ref="rulePassWordForm" label-width="1rem" class="loginForm">
             <label class="label_txt">原始密码</label><span class="req">*</span>
             <el-form-item prop="oldPass">
-                <el-input type="password" v-model="rulePassWordForm.oldPass" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="password" placeholder="请输入原始密码" v-model="rulePassWordForm.oldPass" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>
             <label class="label_txt">新密码</label><span class="req">*</span>
             <el-form-item prop="pass">
-                <el-input type="password" v-model="rulePassWordForm.pass" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="password" placeholder="请输入新密码" v-model="rulePassWordForm.pass" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>
             <label class="label_txt">确认新密码</label><span class="req">*</span>
             <el-form-item prop="checkPass">
-                <el-input type="password" v-model="rulePassWordForm.checkPass" :clearable="true" autocomplete="off" ></el-input>
+                <el-input type="password" placeholder="请再次输入新密码" v-model="rulePassWordForm.checkPass" :clearable="true" autocomplete="off" ></el-input>
             </el-form-item>           
         </el-form>
         <el-button class="ok_btn btn" type="primary" @click="submitPassWord('rulePassWordForm')" style="margin-top:0.15rem;margin-bottom:0rem;">确认更改</el-button>

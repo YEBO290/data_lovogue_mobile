@@ -121,10 +121,10 @@ axios.interceptors.response.use(
     params: params  
    })  
    .then(res => {   
-    resolve(res.data) 
+      resolve(res.data) 
    })  
    .catch(err => {   
-    reject(err.data)  
+      reject(err.data)  
    }) 
   });
  }
