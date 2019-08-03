@@ -32,8 +32,9 @@
               <!--暂不考虑数量的加减-->
               <div class="number">
                 <label style="font-size:13px;">数量： </label>
-                <el-input-number v-model="item.amount" :min="1" label="数量"  :disabled="item.showAmount" 
-                @change="changeAmount(item, index)" ></el-input-number>
+                <number-input :inputVal="item.amount" :index="index" :field="item" @change="changeAmount"/>
+                <!-- <el-input-number  :min="1" v-model="item.amount" label="数量" 
+                @change="changeAmount(item, index)" ></el-input-number>  -->
               </div>
               <div style="height: 0.2rem; margin-top: 0.40rem;">
                 <!--<div class="bag_size">
@@ -42,7 +43,7 @@
                 <div class="bag_country">
                   <span class="bag_price" style="float:left;" v-if="item.inventory == 0">暂无库存</span><span class="bag_price">RMB {{changePrice(item.tagprice)}}</span>
                 </div>
-                <div v-if="item.showAmount" style="color:#ff0000">库存紧张</div>
+                <!-- <div v-if="item.showAmount" style="color:#ff0000">库存紧张</div> -->
                 <div v-if="errTiplist[index]" style="color:#ff0000">库存不足</div>
               </div>
             </div>
@@ -97,6 +98,7 @@
 <script>
 import { mapState } from 'vuex'
 import workspace from '../../common.js'
+import numberInput from './numberInput'
 export default {
     data() {
       return {
@@ -114,7 +116,8 @@ export default {
     },
     watch: {
       bagList: {
-        handler(val){
+        handler(val, oldVal){
+          return false
           if(!(this.showToLogin)){
             this.$store.commit('writeBgr', true)
           } else {
@@ -123,6 +126,9 @@ export default {
         },
         immediate: true
       }
+    },
+    components:{
+      numberInput
     },
     computed: mapState({
       // 箭头函数可使代码更简练
@@ -355,19 +361,58 @@ export default {
       toRemendDetail(val) {
         this.$router.push(`/detail/${val}`)
       },
-      changeAmount(val, index) {
+      // changeAmount(val, index) {
+      //   let me = this
+      //   me.$set(me.errTiplist, index, false)
+      //   if(Number(val.amount) >= Number(val.inventory) ) {
+      //     debugger
+      //     // me.errTiplist = []
+      //     me.$set(this.bagList[index], 'amount', val.inventory)
+      //     me.$set(me.errTiplist, index, true)
+      //     return  false
+      //   }
+      //   /**调添加购物车接口 */
+      //   let param = {
+      //     id:val.id,
+      //     prodid: val.productid,
+      //     userid: workspace.getCookie().name,
+      //     amount: val.amount,
+      //     status: "1"
+      //   }
+      //   this.$store.dispatch('login/delBag', param).then(res => {
+      //     if(res.msg > 0) {              
+      //       me.queryBag()           
+      //     } else {
+      //       me.$message({
+      //         message: '操作失败！',
+      //         type: 'error'
+      //       })
+      //     }       
+      //   }) 
+      //   let list = []
+      //   this.checkedLists.forEach(el => {
+      //     me.bagList.forEach(item => {   
+      //       if(item.id === el) {
+      //         list.push(item)
+      //       }  
+      //     })
+      //   })
+      //   this.totalPayFun(list)
+      // },
+      changeAmount(res) {
         let me = this
-        if(Number(val.amount) > Number(val.inventory) ) {
-          // me.errTiplist = []
-          me.$set(me.errTiplist, index, true)
+        me.$set(me.errTiplist, res.index, false)
+        if(Number(res.inputValue) >= Number(res.field.inventory) || Number(res.inputValue) <= 1 ) {
+          Number(res.inputValue) >= Number(res.field.inventory) && me.$set(me.errTiplist, res.index, true)
           return  false
         }
+        let val = res.field
         /**调添加购物车接口 */
         let param = {
           id:val.id,
           prodid: val.productid,
           userid: workspace.getCookie().name,
-          amount: val.amount,
+          amount: res.inputValue,
           status: "1"
         }
         this.$store.dispatch('login/delBag', param).then(res => {
@@ -494,5 +539,11 @@ export default {
     display: inline-block;
     padding-right: 20px;
     height: 40px;
+}
+.inputValue>input{
+    height:0.2rem!important;
+}
+.number{
+  display: flex;
 }
 </style>
