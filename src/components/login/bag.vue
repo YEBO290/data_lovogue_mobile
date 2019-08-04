@@ -402,7 +402,7 @@ export default {
       changeAmount(res) {
         let me = this
         me.$set(me.errTiplist, res.index, false)
-        if(Number(res.inputValue) >= Number(res.field.inventory) || Number(res.inputValue) <= 1 ) {
+        if(Number(res.inputValue) > Number(res.field.inventory) || Number(res.inputValue) < 1 ) {
           Number(res.inputValue) >= Number(res.field.inventory) && me.$set(me.errTiplist, res.index, true)
           return  false
         }

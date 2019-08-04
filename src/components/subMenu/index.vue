@@ -165,6 +165,7 @@ export default {
             "sortdesc": val
         }
         this.$emit('changeFilter', obj || {})
+        this.drawer = false
     },
     setSize(){
        this.drawerSize = '80%'
@@ -179,6 +180,7 @@ export default {
             "sortdesc": val,
         }
         this.$emit('changeFilter', obj || {})
+        this.drawer = false
     }
   }
 }

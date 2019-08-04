@@ -9,6 +9,7 @@
         :activeNames="['1']"
         :selectedVal="selectedVal"
         :isMulti="isMulti"
+        :class="item.type"
         @handlerList="handlerList"
       />
     </div>
@@ -221,5 +222,7 @@ export default {
 .select-table{
   padding-left:0.18rem;
 }
-
+.tagprice{
+      min-height: 300px;
+}
 </style>

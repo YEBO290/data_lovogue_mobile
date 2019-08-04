@@ -371,7 +371,8 @@ export default {
         type: 'warning'
       }).then(() => {
         me.$router.push('/login/resetPassword')
-      }).catch(() => {         
+      }).catch((err) => {  
+        console.log(err)       
       })
       //  this.$router.push('/home')
 

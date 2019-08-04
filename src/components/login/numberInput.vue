@@ -22,18 +22,17 @@ export default {
                 index: this.index,
                 field: this.field
             }
-            this.$emit('change', res)
-
-            
+            this.$emit('change', res)   
         },
         handlerAdd() {
-            this.inputValue < this.field.inventory && this.inputValue++
+            this.inputValue <= this.field.inventory && this.inputValue++
             let res = {
                 inputValue: this.inputValue,
                 index: this.index,
                 field: this.field
             }
             this.$emit('change', res)      
+            this.inputValue >= this.field.inventory && (this.inputValue =  this.field.inventory)
         }
 
     }
@@ -41,8 +40,8 @@ export default {
 </script>
 <style scoped>
 .inputValue /deep/ .el-input__inner{
-    height: 20px;
-    width: 60px;
+    height: 0.2rem;
+    width: 0.4rem;
 }
 .inputNumber .el-icon-plus, .inputNumber .el-icon-minus, .inputNumber .el-icon-close {
     position: initial!important;
@@ -55,8 +54,8 @@ export default {
 }
 span{
         display: inline-block;
-    width: 18px;
-    height: 20px;
+    width: 0.18rem;
+    height: 0.2rem;
     border: 1px solid #e4e7ed;
     border-radius: 2px;
 }

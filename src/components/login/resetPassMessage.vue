@@ -152,7 +152,6 @@ import md5 from "js-md5"
               console.log(err)
             })
           } else {
-            console.log('error submit!!')
             return false
           }
         });
@@ -194,7 +193,7 @@ import md5 from "js-md5"
             });
           }
         }).catch(err => {
-          
+          console.log(err)
         })
       },
       // 获取验证码
@@ -213,6 +212,7 @@ import md5 from "js-md5"
                 clearInterval(inter)
             }
         }, 1000)
+        
         // if(num <= 0) {
         //     clearInterval(inter)
         // }

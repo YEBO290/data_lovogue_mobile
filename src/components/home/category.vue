@@ -100,13 +100,14 @@ export default {
             }
           });
           let {category, tagpricemax, tagpricemin, theme, typegem, occasion} = obj
-          let newObj = {category, tagpricemax, tagpricemin, theme, typegem, occasion}
+          let newObj = {}
+          category? (newObj = {category, tagpricemax, tagpricemin, theme, typegem, occasion}): (newObj = { tagpricemax, tagpricemin, theme, typegem, occasion})  
           this.filterParam = newObj
           param = this.searchParam(30, 1, newObj)
       } else if(type_  === '[object Object]'){
         this.filterParam = value
         param = this.searchParam(30, 1, value)
-        }
+      }
       this.showMore = true
       this.$store.dispatch('home/filterSearch', param)
     },
@@ -114,6 +115,7 @@ export default {
       return workspace.thousandBitSeparator(val)
     },
     searchParam(size, page, value) {
+      debugger
       let id = this.$router.history.current.params.id
       let param =  {
         data: {
@@ -142,7 +144,7 @@ export default {
     toMore() {
       this.showMore = false
       let param =  this.searchParam(this.categoryTotal, 1, this.filterParam)
-      this.$store.dispatch('home/queryCategoryList', param)
+      this.$store.dispatch('home/filterSearch', param)
     },
     toHide() {
       this.showMore = true
