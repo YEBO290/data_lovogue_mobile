@@ -11,7 +11,7 @@
         <div class="content-footer" :class="{'bgr': bgr}" v-if="showFooter"> 
             <footer-tab/>
         </div>
-        <div class='loading' v-if='showLoading'>
+        <div class='loading' v-if='showLoading'> <!-- v-if='showLoading'-->
             <img src='~@/assets/image/loading.gif'>
         </div>
         <to-top/>
@@ -110,11 +110,12 @@ html{height:100%;}
     margin-top: 0.5rem;
 }
 .loading{
-    position: absolute;
+    position: fixed;
     top: 0px;
     width: 100%;
     height: 700px;
     background: #fbfbfb;
+    z-index:100
 }
 .loading img{
     width:50%;

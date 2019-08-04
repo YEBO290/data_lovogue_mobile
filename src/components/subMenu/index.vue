@@ -4,7 +4,7 @@
       <el-row>
           <el-col :span="8" v-for="(item, index) in filterLists" :key="index">
             <div class="grid-content bg-purple" @click="item.action(index)">
-              <span :class="{'active-li': activeSeleted[index]}">
+              <span :class="{'active-li': activeSeleted[index]}" class="filterName">
                 <i :class="item.icon"></i>{{item.label}}
               </span>
             </div>
@@ -210,5 +210,9 @@ export default {
 }
 .active-li{
   color: #C5A480;
+}
+.bg-purple:hover .filterName{
+  color: #C5A480;
+  text-decoration: underline;
 }
 </style>
