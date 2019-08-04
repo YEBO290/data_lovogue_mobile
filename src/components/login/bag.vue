@@ -365,7 +365,6 @@ export default {
       //   let me = this
       //   me.$set(me.errTiplist, index, false)
       //   if(Number(val.amount) >= Number(val.inventory) ) {
-      //     debugger
       //     // me.errTiplist = []
       //     me.$set(this.bagList[index], 'amount', val.inventory)
       //     me.$set(me.errTiplist, index, true)

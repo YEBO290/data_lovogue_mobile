@@ -5,6 +5,7 @@
           <el-col :span="8" v-for="(item, index) in filterLists" :key="index">
             <div class="grid-content bg-purple" @click="item.action(index)">
               <span :class="{'active-li': activeSeleted[index]}" class="filterName">
+                <!-- <span :class="item.icon"></span>{{item.label}} -->
                 <i :class="item.icon"></i>{{item.label}}
               </span>
             </div>
@@ -12,12 +13,14 @@
       </el-row>
     </div>
     <el-drawer
-      :title="title"
       :visible.sync="drawer"
       :direction="direction"
       :showClose="false"
       :size="drawerSize">
       <!-- <slot name="title"><h1>ddd</h1></slot> -->
+      <template slot="title">
+       {{title}} <i class="el-icon-caret-bottom"></i>
+      </template>
       <el-card class="box-card" v-if="showFilter[0]">
         <ul >
           <li @click="filterPrice()" :class="{'active-li': activeSelectedList[0]}">价格升序</li>
@@ -79,6 +82,7 @@ export default {
         {
           label: '价格排序',
           icon: 'el-icon-caret-bottom',
+          // icon: 'glyphicon glyphicon-chevron-down',
           action: (index) => {
             return this.handlerPrice(index)
           }
@@ -86,6 +90,7 @@ export default {
         {
           label: '上市时间',
           icon: 'el-icon-caret-bottom',
+          // icon: 'glyphicon glyphicon-chevron-down',
           action: (index) => {
             return this.handlerTime(index)
           }
@@ -93,6 +98,7 @@ export default {
         {
           label: '筛选',
           icon: 'icon_f_btn',
+          // icon: 'glyphicon glyphicon-filter',
           action: (index) => {
             return this.handlerFilter(index)
           }

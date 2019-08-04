@@ -31,10 +31,10 @@
         </el-row>
         <div class="listMessageOne" v-if="user">
             <div class="list love" @click="$router.push('/loved')">
-                <span>商品收藏</span><i class="el-icon-arrow-right"></i>
+                <i class="el-icon-star-on order-icon"></i><span>商品收藏</span><i class="el-icon-arrow-right"></i>
             </div>
             <div class="list addressList" @click="$router.push('/selectAddress')">
-                <span>收货地址</span><i class="el-icon-arrow-right"></i>
+                <i class="el-icon-office-building order-icon"></i><span>收货地址</span><i class="el-icon-arrow-right"></i>
             </div>
         </div>
     <!--<div class="listMessageTwo">
@@ -42,7 +42,10 @@
             <span>我的订单</span><i class="el-icon-arrow-right"></i>
         </div>-->
         <el-collapse  v-if="user">
-            <el-collapse-item title="我的订单" name="1">
+            <el-collapse-item name="1">
+                <template slot="title">
+                    <i class="el-icon-s-goods order-icon"></i>我的订单
+                </template>
             <div style="width:100%;height:1px;background:#ddd;"></div>
             <div class="orderList">
                 <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -308,13 +311,13 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
 }
-.list i{
+.list /deep/ .el-icon-arrow-right{
     position: relative;
     left: 100%;
-    margin-left: -68px;
+    margin-left: -85px;
 }
-.love i,.setting i{
-    margin-left: -68px;
+.love /deep/ .el-icon-arrow-right,.setting i{
+    margin-left: -85px;
     
 }
 .user{
@@ -441,5 +444,8 @@ export default {
 .say-hello{
     display: inline-block;
     position: relative;
+}
+.order-icon{
+    margin-right:8px;
 }
 </style>

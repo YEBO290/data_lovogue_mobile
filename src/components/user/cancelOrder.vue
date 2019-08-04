@@ -73,7 +73,7 @@
               <div style="margin-bottom: 0.5rem;">
                 <el-col :span="6"><div class="grid-content bg-purple">物流公司：</div></el-col>
                 <el-col :span="18">
-                  <el-select v-model="returnOrderInfo.couriername" placeholder="请选择" class="color_select"  v-if="isView == false" :disabled="isView">
+                  <el-select v-model="returnOrderInfo.couriername" placeholder="请选择" class="color_select" v-if="!isView" :disabled="isView">
                     <el-option
                       v-for="item in logisticsCompanyList"
                       :key="item.id"
@@ -83,7 +83,7 @@
                   </el-select>
                   <span class="req" v-if="showTips">请选择</span>
                 </el-col>
-                <el-col :span="18"><span v-if="isView == true">{{returnOrderInfo.couriername}}</span></el-col>
+                <el-col :span="18"><span v-if="isView">{{filterFunc(returnOrderInfo.couriername)}}</span></el-col>
               </div>
               <div>
                 <el-col :span="6"><div class="grid-content bg-purple">快递单号：</div></el-col>
@@ -150,7 +150,7 @@ import workspace from '../../common.js'
     created(){
        let self = this;
        self.logisticsCompanyList = [
-         {"id":1,"title":"顺丰速递"},{"id":2,"title":"中国邮政"},{"id":3,"title":"圆通快递"},{"id":4,"title":"申通快递"},{"id":5,"title":"中通快递"},
+         {"id":1,"title":"顺丰速递"},{"id":2,"title":"中国邮政"},{"id":3,"title":"圆通快递"},{"id":4,"title":"申通快递"},{"id":"5","title":"中通快递"},
          {"id":6,"title":"韵达快递"},{"id":7,"title":"天天快递"},{"id":8,"title":"百世汇通"},{"id":9,"title":"宅急送"},{"id":10,"title":"其他"}
        ]
 
@@ -191,6 +191,25 @@ import workspace from '../../common.js'
       })
     },
     methods: {
+      filterFunc(val) {
+        let obj = {
+          "1": "顺丰速递",
+          "2": "中国邮政",
+          "3": "圆通快递",
+          "4": "申通快递",
+          "5": "中通快递",
+          "6": "韵达快递",
+          "7": "天天快递",
+          "8": "百世汇通",
+          "9": "宅急送",
+          "10": "其他"
+          }
+        return obj[val]
+      //   self.logisticsCompanyList = [
+      //    {"id":1,"title":"顺丰速递"},{"id":2,"title":"中国邮政"},{"id":3,"title":"圆通快递"},{"id":4,"title":"申通快递"},{"id":"5","title":"中通快递"},
+      //    {"id":6,"title":"韵达快递"},{"id":7,"title":"天天快递"},{"id":8,"title":"百世汇通"},{"id":9,"title":"宅急送"},{"id":10,"title":"其他"}
+      //  ]
+      },
       //快递信息提交
       submit(){
         let self = this;

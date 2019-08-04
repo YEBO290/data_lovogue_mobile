@@ -27,6 +27,9 @@
             <el-col :span="3">
                 <div class="grid-content bg-purple" @click="toBag">
                     <el-badge :value="shopBagNumber" class="item header_shop_bag" size="small" :hidden="shopBagNumber < 1">
+                        <!-- <i class="el-icon-shopping-cart-full"  v-if="!showbag"></i>
+                        <i class="el-icon-shopping-cart-2"  v-else></i> -->
+                        
                         <img src="../assets/image/shopBag.png" class="" v-if="!showbag"/>
                         <img src="../assets/image/shopBaged.png" class="" v-else/>
                     </el-badge>

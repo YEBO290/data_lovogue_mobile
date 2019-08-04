@@ -115,7 +115,6 @@ export default {
       return workspace.thousandBitSeparator(val)
     },
     searchParam(size, page, value) {
-      debugger
       let id = this.$router.history.current.params.id
       let param =  {
         data: {
