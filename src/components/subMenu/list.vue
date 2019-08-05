@@ -47,15 +47,21 @@ export default {
     watch:{
         selectedVal: {
             handler(val){
-                let {name, type} = val
-                if(val.length === 0) {
-                    this.activelist = []
-                    this.selectedData = [{
-                        name,
-                        type,
-                        val: []
-                    }]
-                }
+                this.selectedData = val
+                this.selectedData.forEach((e, eindex) => {
+                    if(this.menuList.type === e.type) {
+                        this.menuList.lists.forEach((item, index) => {
+                            this.$set(this.activelist, index, false)
+                            this.selectedData[eindex].val.forEach((el, elIndex) => {
+                                if(item.value === el.value) {
+                                    this.$set(this.activelist, index, true)
+                                }
+                            })
+                        });
+                    }
+                })
+                
+                
             },
             immediate: true
         }
@@ -64,7 +70,7 @@ export default {
         return{
            activeIndex: ['1'],
            activelist: [],
-           selectedData: this.selectedVal,
+           selectedData: [],
            filterVal: []
         }
     },
@@ -73,6 +79,9 @@ export default {
     //     return this.props.isMulti
     //     }
     // },
+    mounted() {
+
+    },
     methods:{
         handlerList(val, index, menuList){
             let {name, type} = menuList
@@ -101,7 +110,14 @@ export default {
                 type,
                 val: this.filterVal
             }]
-            this.selectedData = obj
+              
+            this.selectedData.forEach(item => {
+                if(item.type === obj[0].type) {
+                    item.val = obj[0].val
+                } else {
+                    this.selectedData = this.selectedData.concat(obj) 
+                }
+            })
             console.log('选中的数据' ,this.selectedData)
             // 抛出选中的数据
             this.$emit('handlerList', this.selectedData)   

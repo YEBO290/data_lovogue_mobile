@@ -31,7 +31,14 @@ export default {
     isMulti: {
         type: Boolean,
         default: false
+    },
+    selectedData: {
+      default: function(){
+        return []
+      },
+      type: Array
     }
+    
   },
   data() {
     return {
@@ -44,7 +51,7 @@ export default {
       scenes:[], //场景
       price:[], //价格区间
       selectedMenu: [], // 选中的数据
-      selectedVal: [],
+      selectedVal: this.selectedData,
       menuLists: {
         productCategory: {
             name: '商品品类',
@@ -178,7 +185,17 @@ export default {
     handlerReset(){
       this.$emit('changeFilter', []) 
       this.selectedMenu = []
-      this.selectedVal = []
+      this.selectedVal = [{
+        type: 'category', name: '商品品类',val: []
+      },{
+        type: 'theme', name: '商品材质',val: []
+      },{
+        type: 'typegem', name: '宝石材质',val: []
+      },{
+        type: 'occasion', name: '商品场景',val: []
+      },{
+        type: 'tagprice', name: '价格区间',val: []
+      }]
     }
   }
 }

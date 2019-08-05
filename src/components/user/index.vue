@@ -43,7 +43,7 @@
         </div>-->
         <el-collapse  v-if="user">
             <el-collapse-item name="1">
-                <template slot="title">
+                <template slot="title" style="font-size:14px;">
                     <i class="el-icon-s-goods order-icon"></i>我的订单
                 </template>
             <div style="width:100%;height:1px;background:#ddd;"></div>
@@ -383,6 +383,7 @@ export default {
 }
 .user /deep/ .el-tabs__content, .user /deep/ .el-collapse-item__header{
     padding: 0 0.02rem 0 0.1rem;
+    font-size: 14px;
 }
 .user /deep/ .el-tabs__content{
     padding: 0.1rem 0.2rem;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <subMenu @changeFilter="changeFilter"/>
+    <subMenu @changeFilter="changeFilter" :selectedData="selectedData"/>
     <div class="category_home" style="min-height:4rem;">
       
       <!-- <menuList class="menu_list" id="menu_select" v-if="showSubMenu"></menuList> -->
@@ -51,7 +51,8 @@ export default {
       showMore: true,
       isShow:false,
       activeSeleted: [],
-      filterParam: {}
+      filterParam: {},
+      selectedData: []
     }
   },
   watch: {
@@ -78,6 +79,16 @@ export default {
     }else {
        this.isShow = false;
     }
+    // 需要选中的数据
+    let list = [{
+        name: '商品品类',
+        type: "category",
+        val: [{
+          lable: "",
+          value: this.$route.params.id
+        }]
+    }]
+    this.selectedData = list || []
   },
   methods: {
     changeFilter(value){
@@ -99,11 +110,17 @@ export default {
               || ''
             }
           });
-          let {category, tagpricemax, tagpricemin, theme, typegem, occasion} = obj
-          let newObj = {}
-          category? (newObj = {category, tagpricemax, tagpricemin, theme, typegem, occasion}): (newObj = { tagpricemax, tagpricemin, theme, typegem, occasion})  
-          this.filterParam = newObj
-          param = this.searchParam(30, 1, newObj)
+          let feld = ['category', 'tagpricemax', 'tagpricemin', 'theme', 'typegem', 'occasion']
+          feld.forEach(item => {
+            if(!obj[item]) {
+              obj[item] = ''
+            }
+          })
+          // let {category = '', tagpricemax = '', tagpricemin = '', theme = '', typegem = '', occasion = ''} = obj
+          // let newObj = obj
+          // category? (newObj = {category, tagpricemax, tagpricemin, theme, typegem, occasion}): (newObj = { tagpricemax, tagpricemin, theme, typegem, occasion})  
+          this.filterParam = obj
+          param = this.searchParam(30, 1, obj)
       } else if(type_  === '[object Object]'){
         this.filterParam = value
         param = this.searchParam(30, 1, value)

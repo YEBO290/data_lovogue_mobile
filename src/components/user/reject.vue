@@ -1,5 +1,5 @@
 <template>
-  <div class="reject">  
+  <div class="reject" :infoList={infoList}>  
     <el-row :gutter="20" class="order_noPay_list">
         <el-col :span="6"><img :src="detailInfo.imgpath" class="loved_img" style="width:100%;" /></el-col>
         <el-col :span="18">
@@ -20,7 +20,7 @@
           </div>
         </el-col>
     </el-row>
-    <el-collapse class="address reason">
+    <el-collapse class="address reason" v-model="activeNames">
           <el-collapse-item title="退款/退货原因" name="1">  
           <div class="drop"> 
             <el-select v-model="returnMsg.returnReason" placeholder="请选择" :popper-class="'drop'">
@@ -95,26 +95,15 @@ import workspace from '../../common.js'
         return state.address.provinceList},   
       cityList: state => state.address.cityList,   
       areaList:  state => state.address.areaList,
-      detailInfo: function(state){
+      infoList: function(state){
+        this.detailInfo = state.address.provinceList
          return state.address.provinceList
       }
     }),
     props: ['id'],
     data() {
       return {
-          detailInfo:{
-                advancebooking: '',
-                amount: '',
-                createtime: '',
-                description: '',
-                id: '',
-                imgpath: '',
-                name: '',
-                price:'',
-                shipstatus: '',
-                status: '',
-                unit: '',
-          },
+          activeNames: '',
           radio: '',
           input:'',
           options: [{
@@ -155,7 +144,21 @@ import workspace from '../../common.js'
             formInline: {
               user: '',
               region: ''
-            }
+            },
+            shipstatus: '',
+            detailInfo: {
+                advancebooking: '',
+                amount: '',
+                createtime: '',
+                description: '',
+                id: '',
+                imgpath: '',
+                name: '',
+                price:'',
+                shipstatus: '',
+                status: '',
+                unit: '',
+          }
       }
     },
     created(){
@@ -165,9 +168,15 @@ import workspace from '../../common.js'
             orderid: this.id
         }
       this.$store.dispatch('address/getOrderDetail', param).then(res => {
+        self.shipstatus = res.data[0].shipstatus
         self.detailInfo = res.data[0];
-        console.log('数据:'+res);
-
+        if(self.shipstatus === '2') {
+          self.activeNames = '1'
+          self.returnMsg.returnReason = '仅退款'
+        } else {
+          self.returnMsg.returnReason = ''
+          self.activeNames = ''
+        }
       })
 
     },

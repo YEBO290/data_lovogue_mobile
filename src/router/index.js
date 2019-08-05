@@ -262,7 +262,7 @@ const router = new Router({
         },
         {
             // 退货退款
-            path: "/reject/:id?",
+            path: "/reject/:id?/:status?",
             name: "reject",
             component: reject,
             props: true,

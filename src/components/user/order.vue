@@ -5,11 +5,14 @@
         <el-col :span="18">
             <div>
                 <div>
-                    <span class="bag_text">{{item.name}} </span>
+                    <span class="bag_text" style="font-weight:bold;font-size:13px;">{{item.name}} </span>
                     <span class="txt_right">RMB {{changePrice(item.price)}}</span>
                 </div>
                 <div>
                     <span class="bag_color"> <span  class="bag_code">编号  {{item.productid}}</span></span>
+                </div>
+                <div v-if="item.payid">
+                    <span  class="bag_code">交易单号：  {{item.payid}}</span>
                 </div>
                 <div>
                     <div><span>{{ item.createtime | workspace}}</span></div>
@@ -267,7 +270,7 @@ export default {
                         el.description = ''
                     } else if (el.key === 2) {
                         el.processStatus = 'process'
-                        el.description = item.couriernumber? `您的商品已寄出，请注意查收。  物流公司：${item.couriername} 单号：${item.couriernumber}`: `您的商品已寄出，请注意查收。`
+                        el.description = item.couriernumber? `您的商品已寄出，请注意查收。  物流公司：${item.couriername} 物流单号：${item.couriernumber}`: `您的商品已寄出，请注意查收。`
                     } 
                 })
             } else if(item.couriernumber && item.shipstatus === '4'){ // 已到货

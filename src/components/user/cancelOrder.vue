@@ -48,7 +48,7 @@
           <div class="text item"><span>退款原因：</span><span>{{returnOrderInfo.returnReason}}</span></div>
           <div class="text item"><span>退款金额：</span><span>{{returnOrderInfo.price}}</span></div>
           <div class="text item"><span>申请时间：</span><span>{{returnOrderInfo.createtime}}</span></div>
-          <!-- <div class="text item"><span>退款编号：</span><span>{{returnOrderInfo.amount}}</span></div> -->
+          <div class="text item"><span>交易单号：</span><span>{{returnOrderInfo.payid}}</span></div>
         </el-card>
         <el-collapse accordion class="return-addr">
           <el-collapse-item title="退货地址">
@@ -139,7 +139,8 @@ import workspace from '../../common.js'
                 returnStatus:'' , //退货状态
                 couriernumber:'',  //快递单号
                 couriername:'', //物流公司
-                checkstatus:''  //对账状态
+                checkstatus:'' , //对账状态
+                payid:''
           },
           submitStatus:false,
           isView:false,
@@ -178,6 +179,7 @@ import workspace from '../../common.js'
           self.returnOrderInfo.couriernumber = res.data.return.couriernumber
           self.returnOrderInfo.couriername = res.data.return.couriername
           self.returnOrderInfo.checkstatus = res.data.checkstatus
+           self.returnOrderInfo.payid = res.data.detailInfo.payid
           if(self.returnOrderInfo.returnStatus ==2 && (self.returnOrderInfo.couriernumber==null || self.returnOrderInfo.couriernumber=="")){
             self.submitStatus = true
           }else{

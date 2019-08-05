@@ -23,18 +23,18 @@
       </template>
       <el-card class="box-card" v-if="showFilter[0]">
         <ul >
-          <li @click="filterPrice()" :class="{'active-li': activeSelectedList[0]}">价格升序</li>
-          <li @click="filterPrice('1')" :class="{'active-li': activeSelectedList[1]}">价格降序</li>
+          <li @click="filterPrice()" :class="{'active-li': activeSelectedList[0]}">价格从低到高</li>
+          <li @click="filterPrice('1')" :class="{'active-li': activeSelectedList[1]}">价格从高到底</li>
         </ul>
       </el-card>
       <el-card class="box-card" v-if="showFilter[1]">
         <ul >
-          <li @click="filterTime()" :class="{'active-li': activeSelectedList[0]}">上市时间升序</li>
-          <li @click="filterTime('1')" :class="{'active-li': activeSelectedList[1]}">上市时间降序</li>
+          <li @click="filterTime()" :class="{'active-li': activeSelectedList[0]}">历史上市时间</li>
+          <li @click="filterTime('1')" :class="{'active-li': activeSelectedList[1]}">最新上市时间</li>
         </ul>
       </el-card>
       
-      <filterSearch @click="setSize" class="menu_list" v-if="showFilter[2]" id="menu_select" @changeFilter="changeFilter" :isMulti="isMulti"/>
+      <filterSearch @click="setSize" class="menu_list" v-if="showFilter[2]" id="menu_select" :selectedData="selectedData" @changeFilter="changeFilter" :isMulti="isMulti"/>
     </el-drawer>
   </div>
 </template>
@@ -54,6 +54,12 @@ export default {
     isMulti: {
       type: Boolean,
       default: false
+    },
+    selectedData: {
+      default: function() {
+        return []
+      },
+      type: Array
     }
   },
   watch: {
@@ -97,7 +103,7 @@ export default {
         },
         {
           label: '筛选',
-          icon: 'icon_f_btn',
+          icon: 'el-icon-caret-bottom',
           // icon: 'glyphicon glyphicon-filter',
           action: (index) => {
             return this.handlerFilter(index)
