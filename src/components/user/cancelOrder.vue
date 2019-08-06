@@ -2,11 +2,11 @@
     <div class="reject"> 
       <div class="reject-status">
         <div v-if="returnOrderInfo.returnStatus == 0 ">不受理</div>
-        <div v-if="returnOrderInfo.returnStatus == 1 ">受理中</div>
-        <div v-if="returnOrderInfo.returnStatus == 2 ">已受理</div>
+        <div v-if="returnOrderInfo.returnStatus == 1 || returnOrderInfo.returnStatus == 2 ">对账正确后会在两个工作日内处理退款</div>
+        <!-- <div v-if="returnOrderInfo.returnStatus == 2 ">已受理</div> -->
         <div v-if="returnOrderInfo.returnStatus == 3 ">已完成</div>
         <div v-if="returnOrderInfo.returnStatus == 9 ">异常</div>
-        <div>{{returnOrderInfo.defaultTime}}</div>
+        <div style="font-size:12px;" v-if="returnOrderInfo.defaultTime">{{returnOrderInfo.defaultTime}}</div>
       </div>
       <div class="reject-msg"><span>退款总金额</span><span class="reject-price">￥ {{returnOrderInfo.price}}</span></div> 
       <div class="reject-title">退款信息</div> 
@@ -161,7 +161,7 @@ import workspace from '../../common.js'
         }
         this.$store.dispatch('address/getReturnOrderDetail', param).then(res => {
           self.detailInfo = res.data[0];
-          self.returnOrderInfo.defaultTime = self.timeFormat(res.data.return.statustime)
+          self.returnOrderInfo.defaultTime = (res.data.return.statustime) ? self.timeFormat(res.data.return.statustime):''
           self.returnOrderInfo.advancebooking = res.data.detailInfo.advancebooking,
           self.returnOrderInfo.amount = res.data.detailInfo.amount
           self.returnOrderInfo.createtime = self.timeFormat(res.data.return.createtime)
