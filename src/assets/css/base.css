@@ -356,3 +356,12 @@ input::-webkit-input-placeholder,textarea::-webkit-input-placeholder {
 .main-menu .el-icon-plus, .main-menu .el-icon-minus,.main-menu .el-icon-close{
     color:#EFDED1; 
 }
+.input-number-dialog /deep/ .el-dialog__header .el-dialog__title{
+    font-size:14px!important;
+}
+.input-number-dialog /deep/ .el-dialog__body{
+    padding:0 0.2rem 0.1rem 0.2rem !important;
+}
+.input-number-dialog{
+    border-radius: 5px;
+}

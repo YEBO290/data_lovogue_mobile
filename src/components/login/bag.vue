@@ -32,7 +32,7 @@
               <!--暂不考虑数量的加减-->
               <div class="number">
                 <label style="font-size:13px;">数量： </label>
-                <number-input :inputVal="item.amount" :index="index" :field="item" @change="changeAmount"/>
+                <number-input :inputVal="item.amount" :index="index" :field="item" @change="changeAmount" />
                 <!-- <el-input-number  :min="1" v-model="item.amount" label="数量" 
                 @change="changeAmount(item, index)" ></el-input-number>  -->
               </div>
@@ -186,6 +186,9 @@ export default {
       console.log(this.bagList)
     },
     methods: {
+      changeData(res) {
+        console.log(res)
+      },
       queryBag() {
         // 购物袋的列表查询
         let queryParam = {
@@ -544,5 +547,6 @@ export default {
 }
 .number{
   display: flex;
+  margin-top: 0.1rem;
 }
 </style>
