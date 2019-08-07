@@ -99,17 +99,17 @@ export default {
                 "value":'18K珍珠绿宝'
                 }]
             },
-            stoneMaterial: {
-                name: '宝石材质',
-                type: 'typegem',
-                lists: [{
-                    "lable":'珍珠',
-                    "value":'珍珠'
-                },{
-                    "lable":'宝石',
-                    "value":'宝石'
-                }]
-            },
+            // stoneMaterial: {
+            //     name: '宝石材质',
+            //     type: 'typegem',
+            //     lists: [{
+            //         "lable":'珍珠',
+            //         "value":'珍珠'
+            //     },{
+            //         "lable":'宝石',
+            //         "value":'宝石'
+            //     }]
+            // },
             productScene: {
                 name: '商品场景',
                 type: 'occasion',
