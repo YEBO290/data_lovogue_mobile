@@ -44,7 +44,7 @@
                   <span class="bag_price" style="float:left;" v-if="item.inventory == 0">暂无库存</span><span class="bag_price">RMB {{changePrice(item.tagprice)}}</span>
                 </div>
                 <!-- <div v-if="item.showAmount" style="color:#ff0000">库存紧张</div> -->
-                <div v-if="errTiplist[index]" style="color:#ff0000">库存不足</div>
+                <div v-if="errTiplist[index] && item.inventory != 0" style="color:#ff0000">库存不足</div>
               </div>
             </div>
           </el-col>         
