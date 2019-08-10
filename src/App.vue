@@ -12,7 +12,7 @@
             <footer-tab/>
         </div>
         <div class='loading' v-if='showLoading'> <!-- v-if='showLoading'-->
-            <img src='~@/assets/image/loading.gif'>
+            <img src='~@/assets/image/loading.jpg'>
         </div>
         <to-top/>
         </div>
@@ -114,7 +114,7 @@ html{height:100%;}
     top: 0px;
     width: 100%;
     height: 700px;
-    background: #fbfbfb;
+    background: #ffffff;
     z-index:100
 }
 .loading img{

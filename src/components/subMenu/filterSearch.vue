@@ -131,20 +131,20 @@ export default {
                 name: '价格区间',
                 type: 'tagprice',
                 lists: [{
-                    "lable":'1000以下',
-                    "value":'1000以下'
+                    "lable":'1000RMB以下',
+                    "value":'1000RMB以下'
                 },{
-                    "lable":'1001元-2999元',
-                    "value":'1001元-2999元'
+                    "lable":'1001RMB-2999RMB',
+                    "value":'1001RMB-2999RMB'
                 },{
-                    "lable":'3000元-4999元',
-                    "value":'3000元-4999元'
+                    "lable":'3000RMB-4999RMB',
+                    "value":'3000RMB-4999RMB'
                 },{
-                    "lable":'5000元-7999元',
-                    "value":'5000元-7999元'
+                    "lable":'5000RMB-7999RMB',
+                    "value":'5000RMB-7999RMB'
                 },{
-                    "lable":'8000元以上',
-                    "value":'8000元以上'
+                    "lable":'8000RMB以上',
+                    "value":'8000RMB以上'
                 }]
             }
                 

@@ -130,7 +130,8 @@ export default {
     border-radius: 8px;
     line-height: 28px;
     height: 28px;
-    width: 30%;
+    max-width: 45%;
+    min-width: 30%;
     margin: 0 3% 10px 0;
     text-align: center;
     background: #f2f2f2;
