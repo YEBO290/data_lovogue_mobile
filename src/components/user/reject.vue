@@ -165,7 +165,7 @@ import workspace from '../../common.js'
       let self = this;
        let param = {
             userid: workspace.getCookie().name,
-            orderid: this.id
+            id: this.id
         }
       this.$store.dispatch('address/getOrderDetail', param).then(res => {
         self.shipstatus = res.data[0].shipstatus

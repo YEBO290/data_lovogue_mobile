@@ -216,7 +216,8 @@ export default {
             console.log(val)
         },
         rejectOrder(val) {
-            this.$router.push(`/reject/${val.orderid}`)
+            // this.$router.push(`/reject/${val.orderid}`)
+            this.$router.push(`/reject/${val.id}`)
         },
          //跳转退货详情
         returnOrder(val){

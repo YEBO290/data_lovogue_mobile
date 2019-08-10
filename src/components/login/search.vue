@@ -3,7 +3,7 @@
     <img src="../../assets/image/back.png" @click="$router.push('/home')">
     <el-input
     placeholder="耳饰搜索..." class="productname"
-    v-model.trim="productname" @change="search">
+    v-model.trim="searchData.productname" @change="search">
     <i slot="prefix" class="el-input__icon el-icon-search"></i>
   </el-input>
   <!-- <div class="login_none" v-if="showToLogin">
@@ -65,7 +65,7 @@ export default {
         showTip: true,
         searchData: {
               language: "cn",
-              productname: this.productname,
+              productname: "",
               category: '',
               subcategory: '' ,
               brand: '',
